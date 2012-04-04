@@ -62,12 +62,12 @@ make-directories:
 .IGNORE: make-symlinks
 make-symlinks: 
 	$(IGNORE_RESULT)$(MUTE)$(ECHO) "Creating symbolic links."
-	$(MUTE)$(LN) $(foreach bib, $(BIB_SRC), $(realpath $(bib))) $(BUILD_DIR)/ $(VERYSILENT) || true
-	$(MUTE)$(LN) $(foreach bst, $(BST_SRC), $(realpath $(bst))) $(BUILD_DIR)/ $(VERYSILENT) || true
-	$(MUTE)$(LN) $(foreach fig, $(FIG_SRC), $(realpath $(fig))) $(BUILD_DIR)/ $(VERYSILENT) || true
-	$(MUTE)$(LN) $(foreach sty, $(STY_SRC), $(realpath $(sty))) $(BUILD_DIR)/ $(VERYSILENT) || true
-	$(MUTE)$(LN) $(foreach tex, $(TEX_SRC), $(realpath $(tex))) $(BUILD_DIR)/ $(VERYSILENT) || true
-	$(MUTE)$(LN) $(realpath $(IMG_DIR)) $(BUILD_DIR)/ $(VERYSILENT) || true
+	$(MUTE)$(LN) $(foreach bib, $(BIB_SRC), "$(realpath $(bib))") $(BUILD_DIR)/ $(VERYSILENT) || true
+	$(MUTE)$(LN) $(foreach bst, $(BST_SRC), "$(realpath $(bst))") $(BUILD_DIR)/ $(VERYSILENT) || true
+	$(MUTE)$(LN) $(foreach fig, $(FIG_SRC), "$(realpath $(fig))") $(BUILD_DIR)/ $(VERYSILENT) || true
+	$(MUTE)$(LN) $(foreach sty, $(STY_SRC), "$(realpath $(sty))") $(BUILD_DIR)/ $(VERYSILENT) || true
+	$(MUTE)$(LN) $(foreach tex, $(TEX_SRC), "$(realpath $(tex))") $(BUILD_DIR)/ $(VERYSILENT) || true
+	$(MUTE)$(LN) "$(realpath $(IMG_DIR))" $(BUILD_DIR)/ $(VERYSILENT) || true
 
 # To be run after make
 post: 

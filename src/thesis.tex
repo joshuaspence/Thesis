@@ -1,0 +1,62 @@
+\documentclass[a4paper]{report}
+
+% Use an index
+\usepackage{makeidx}
+\makeindex
+
+% Use a glossary
+\usepackage{glossaries}
+\makeglossaries
+
+\begin{document}
+
+\title{Thesis}
+\author{Joshua Spence}
+%\date{2012}
+
+\maketitle
+
+\pagenumbering{roman}
+
+\chapter*{Acknowledgements}
+
+\chapter*{Publications}
+
+\begin{abstract}
+\end{abstract}
+
+\tableofcontents
+\listoffigures
+\listoftables
+
+\pagenumbering{arabic}
+
+% CHAPTER 01: Introduction
+\include{ch01-intro}
+
+% CHAPTER 02: Background
+\include{ch02-background}
+
+% CHAPTER 01: Introduction
+\include{ch03-rc}
+
+\chapter{Technical Introduction}
+\label{ch:techintro}
+
+\chapter{Method}
+\label{ch:method}
+
+\chapter{Results}
+\label{ch:results}
+
+\chapter{Conclusions}
+\label{ch:conc}
+
+\nocite{*}
+\bibliographystyle{IEEE}
+\bibliography{thesis}
+
+\printglossary
+\printindex
+
+\end{document}

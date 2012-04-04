@@ -46,7 +46,7 @@ RESTORE_COLOUR	:= $(MUTE)$(ECHO) -n "\\033[0;37m"
 # Configuration
 ##################################################################
 
-MAIN_DOC		:= SemiAuto
+MAIN_DOC		:= thesis
 OUT_DIR			:= ../output
 HTML_OUT_DIR	:= $(OUT_DIR)/html
 
@@ -73,7 +73,7 @@ all: dvi ps pdf
 delete-files:
 	$(IGNORE_RESULT)$(MUTE)$(VERBOSE) $(ECHO) "Building target: $@"
 	$(IGNORE_RESULT)$(MUTE)$(ECHO) "Deleting files."
-	$(MUTE)$(RM) *.aux *.bbl *.blg *.dvi *.log *.pdf *.ps *.toc
+	$(MUTE)$(RM) *.aux *.bbl *.blg *.glo *.idx *.ilg *.ind *.ist *.lof *.log *.lot *.toc
 
 # Clean
 .PHONY: clean
@@ -107,13 +107,13 @@ ps: $(OUT_DIR)/$(MAIN_DOC).ps $(FIG_SRC)
 html: $(HTML_OUT_DIR)/$(MAIN_DOC).html $(FIG_SRC)
 	$(IGNORE_RESULT)$(MUTE)$(VERBOSE) $(ECHO) "Building target: $@"
 
+# Index generation	
+index: $(MAIN_DOC).aux $(MAIN_DOC).idx $(MAIN_DOC).ilg $(MAIN_DOC).ind
+
 
 ##################################################################
 # Rules
 ##################################################################
-
-# Do not delete the following targets:
-.PRECIOUS: %.aux %.bbl %.eps %.ind
 
 # AUX file
 %.aux: %.tex
@@ -125,7 +125,7 @@ html: $(HTML_OUT_DIR)/$(MAIN_DOC).html $(FIG_SRC)
 	$(IGNORE_RESULT)$(RESTORE_COLOUR)
 
 # BBL file
-%.bbl: %.aux
+%.bbl: %.tex
 	$(IGNORE_RESULT)$(MUTE)$(VERBOSE) $(ECHO) "Building	target: $@"
 ifneq ($(strip $(BIB_SRC)),)
 #	$(IGNORE_RESULT)$(MUTE)$(MOVE_TO_COL)
@@ -141,6 +141,14 @@ endif
 %.eps: %.fig
 	$(MUTE)$(ECHO) "Generating figure $@..."
 	$(MUTE)$(FIG2DEV) -L ps $< $@
+
+# To generate a .idx file from a .tex file
+%.ilg :	%.idx
+#	$(IGNORE_RESULT)$(MUTE)$(MOVE_TO_COL)
+	$(IGNORE_RESULT)$(MUTE)$(SETCOLOUR_BLUE)
+	$(IGNORE_RESULT)$(MUTE)$(ECHO) "=========================Indexing Pass================================"
+	$(MUTE)$(MAKEINDEX) $(*F)
+	$(MUTE)$(TEX) $(*F)
 
 # To generate a .dvi file from a .aux file
 $(OUT_DIR)/%.dvi: %.aux
@@ -176,7 +184,7 @@ $(OUT_DIR)/%.pdf: %.aux $(TEX_SRC) $(BBL_SRC) $(BST_SRC)
 $(MAIN_DOC).tex:             $(filter-out $(MAIN_DOC).tex, $(TEX_SRC))
 $(MAIN_DOC).aux:             $(TEX_SRC)
 $(MAIN_DOC).bbl:             $(TEX_SRC) $(BIB_SRC)
-$(OUT_DIR)/$(MAIN_DOC).dvi:  $(TEX_SRC) $(FIG_SRC) $(STY_SRC) $(BBL_SRC) $(BST_SRC)
-$(OUT_DIR)/$(MAIN_DOC).html: $(TEX_SRC) $(FIG_SRC) $(STY_SRC) $(BBL_SRC) $(BST_SRC)
-$(OUT_DIR)/$(MAIN_DOC).ps:   $(TEX_SRC) $(FIG_SRC) $(STY_SRC) $(BBL_SRC) $(BST_SRC)
-$(OUT_DIR)/$(MAIN_DOC).pdf:  $(TEX_SRC) $(FIG_SRC) $(STY_SRC) $(BBL_SRC) $(BST_SRC)
+$(OUT_DIR)/$(MAIN_DOC).dvi:  $(TEX_SRC) $(FIG_SRC) $(STY_SRC) $(BBL_SRC) $(BST_SRC) index
+$(OUT_DIR)/$(MAIN_DOC).html: $(TEX_SRC) $(FIG_SRC) $(STY_SRC) $(BBL_SRC) $(BST_SRC) index
+$(OUT_DIR)/$(MAIN_DOC).ps:   $(TEX_SRC) $(FIG_SRC) $(STY_SRC) $(BBL_SRC) $(BST_SRC) index
+$(OUT_DIR)/$(MAIN_DOC).pdf:  $(TEX_SRC) $(FIG_SRC) $(STY_SRC) $(BBL_SRC) $(BST_SRC) index
