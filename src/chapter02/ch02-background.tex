@@ -2,7 +2,6 @@
 \label{ch:background}
 
 \section{Anomaly detection}
-\index{anomaly detection}
 \newglossaryentry{anomaly}{
     name=anomaly,
     plural=anomalies,
@@ -104,15 +103,28 @@ close or far away data points in some space are from each other \cite{KHOA12}.
 \subsection{Eigenvectors}
 
 \subsection{Laplacian Matrices}
-\newglossaryentry{LaplacianMatrix}
-{
+\nocite{BERKEYLEY99}
+\newglossaryentry{LaplacianMatrix}{
     name={Laplacian Matrix},
     plural={Laplacian Matrices},
     description={a matrix representation of a graph}
 }
-A \gls{LaplacianMatrix} is a matrix representation of a graph. Given a simple 
-graph $G$ with $n$ vertices, its Laplacian matrix $L := 
-({\ell}_{i,j})_{n{\times}n}$ is defined as follows:
+A \gls{LaplacianMatrix} is a matrix representation of a graph. Given an 
+undirected, unweighted graph $G = (V, E)$ with $n=|V|$ vertices, its 
+$n{\times}n$ \gls{LaplacianMatrix} $L := ({\ell}_{i,j})_{n{\times}n}$ is 
+$L = D - A$ where $D$ is the diagonal degree matrix and $A$ is the adjacency 
+matrix.
+\begin{displaymath}
+A_{i,j} =
+    \left\{
+        \begin{array}{ll}
+            1 & \quad \text{if $i$ is adjacent to $j$} \\
+            0 & \quad \text{otherwise}
+        \end{array}
+    \right.
+\end{displaymath}
+
+Equivalently, the \gls{LaplacianMatrix} is defined as follows:
 \begin{displaymath}
 {\ell}_{i,j} := 
     \left\{
@@ -124,7 +136,7 @@ graph $G$ with $n$ vertices, its Laplacian matrix $L :=
     \right.
 \end{displaymath}
 
-The normalized Laplacian matrix is defined as:
+The normalized \gls{LaplacianMatrix} is defined as:
 \begin{displaymath}
 {\ell}_{i,j} := 
     \left\{
@@ -137,37 +149,40 @@ The normalized Laplacian matrix is defined as:
 \end{displaymath}
 
 \subsection{Properties}
-For a graph $G$ and its Laplacian Matrix $L$ with eigenvalues $\lambda_{0} <
-\lambda_{1} < \ldots < \lambda_{n-1}$:
+For a graph $G$ and its \gls{LaplacianMatrix} $L$ with eigenvalues 
+$\lambda_{0} < \lambda_{1} < \ldots < \lambda_{n-1}$:
+
+\nocite{PATI11}
 
 \begin{itemize}
+\item $L$ is a symmetric matrix. This means the eigenvalues of $L$ are real, and
+its eigenvectors are real and orthogonal.
 \item $L$ is always positive-semidefinite ($\forall i, \lambda_{i} \geq 0; 
 \lambda_{0} = 0$).
 \item The number of times $0$ appears as an eigenvalue in the Laplacian Matrix 
 is the number of connected components in the graph.
-\item $\lambda_{0}$ is always $0$ because every Laplacian Matrix has an 
+\item $\lambda_{0}$ is always $0$ because every \gls{LaplacianMatrix} has an 
 eigenvector of $\begin{bmatrix} 1 & 1 & \ldots & 1 \end{bmatrix}$ that, for each
 row, adds the corresponding node's degree to a ``-1'' for each neighbour, 
 thereby producing zero by definition.
 \item The smallest non-zero eigenvalue of $L$ is called the spectral gap.
-\item If we define an oriented incidence matrix $M$ with element $M_{ev}$ for 
-edge $e$ (connecting vertex $i$ and $j$, with $i < j$) and vertex $v$ given by
+\item If we arbitarily assign an orientation to the edges in $G$ and labell each
+edge, then we can define the vertex edge incidence matrix $Q$ by:
 \begin{displaymath}
-M_{ev} := 
+Q_{ij} := 
     \left\{
         \begin{array}{ll}
-            1 &     \quad \text{if $v = i$} \\
-            -1 &    \quad \text{if $v = j$} \\
+            1 &     \quad \text{if $e_{j}$ starts from $i$} \\
+            -1 &    \quad \text{if $e_{j}$ ends at $i$} \\
             0 &     \quad \text{otherwise}
         \end{array}
     \right.
 \end{displaymath}
-then the Laplacian Matrix $L$ satisfies
-\begin{displaymath}
-L = M^{T}M
+then the \gls{LaplacianMatrix $L$} satisfies $L = Q^{T}Q$, regardless of the 
+orientation of the edges.
 \end{displaymath}
-\item The second smallest eigenvalue of $L$ is the algebraic connectivity of 
-$G$.
+\item The second smallest eigenvalue of $L$ ($\lambda_{2}$) is the algebraic 
+connectivity of $G$. $\lambda_{2} > 0$ if and only if $G$ is connected.
 \end{itemize}
 
 \section{Commute Time}
