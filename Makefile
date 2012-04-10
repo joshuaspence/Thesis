@@ -4,15 +4,15 @@
 
 ACROREAD		:= acroread
 BACKGROUND		:= &
+DELETE			:= rm -f
 ECHO			:= echo
 EVINCE			:= evince
 FIND			:= find
 IGNORE_RESULT 	:= -
-LN			  	:= ln -s
+LINK		  	:= ln -s
 MAKE			:= make
 MKDIR			:= mkdir -p
 MUTE			:= @
-RM				:= rm -f
 SILENT			:= >/dev/null
 SPACE 			:= $(empty) $(empty)
 VERYSILENT		:= 1>/dev/null 2>/dev/null
@@ -23,7 +23,7 @@ XDVI		  	:= xdvi
 # Configuration
 ##################################################################
 
-MAIN_DOC		:= SemiAuto
+MAIN_DOC		:= thesis
 
 BUILD_DIR		:= build
 EXT_DIR			:= ext
@@ -36,7 +36,7 @@ HTML_OUT_DIR	:= $(OUT_DIR)/
 BIB_SRC			:= $(shell $(FIND) $(SRC_DIR) -type f -name "*.bib")
 BST_SRC			:= $(shell $(FIND) $(EXT_DIR) -type f -name "*.bst")
 FIG_SRC			:= $(shell $(FIND) $(FIG_DIR) -type f -name "*.eps" -o -name "*.png")
-STY_SRC			:= $(shell $(FIND) $(EXT_DIR) -type f -name "*.sty")
+STY_SRC			:= $(shell $(FIND) $(EXT_DIR) -type f -name "*.sty") $(shell $(FIND) $(SRC_DIR) -type f -name "*.sty")
 TEX_SRC			:= $(shell $(FIND) $(SRC_DIR) -type f -name "*.tex")
 
 
@@ -45,9 +45,8 @@ TEX_SRC			:= $(shell $(FIND) $(SRC_DIR) -type f -name "*.tex")
 ##################################################################
 
 # Main target
-all: pre makeall post
-makeall:
-	$(MUTE)$(MAKE) -C $(BUILD_DIR) all
+all: pre
+	$(MUTE)$(MAKE) -C $(BUILD_DIR) $@
 		
 # To be run before make
 pre: make-directories make-symlinks
@@ -62,74 +61,67 @@ make-directories:
 .IGNORE: make-symlinks
 make-symlinks: 
 	$(IGNORE_RESULT)$(MUTE)$(ECHO) "Creating symbolic links."
-	$(MUTE)$(LN) $(foreach bib, $(BIB_SRC), "$(realpath $(bib))") $(BUILD_DIR)/ $(VERYSILENT) || true
-	$(MUTE)$(LN) $(foreach bst, $(BST_SRC), "$(realpath $(bst))") $(BUILD_DIR)/ $(VERYSILENT) || true
-	$(MUTE)$(LN) $(foreach fig, $(FIG_SRC), "$(realpath $(fig))") $(BUILD_DIR)/ $(VERYSILENT) || true
-	$(MUTE)$(LN) $(foreach sty, $(STY_SRC), "$(realpath $(sty))") $(BUILD_DIR)/ $(VERYSILENT) || true
-	$(MUTE)$(LN) $(foreach tex, $(TEX_SRC), "$(realpath $(tex))") $(BUILD_DIR)/ $(VERYSILENT) || true
-	$(MUTE)$(LN) "$(realpath $(IMG_DIR))" $(BUILD_DIR)/ $(VERYSILENT) || true
-
-# To be run after make
-post: 
+	$(MUTE)$(LINK) $(foreach bib, $(BIB_SRC), "$(realpath $(bib))") $(BUILD_DIR)/ $(VERYSILENT) || true
+	$(MUTE)$(LINK) $(foreach bst, $(BST_SRC), "$(realpath $(bst))") $(BUILD_DIR)/ $(VERYSILENT) || true
+	$(MUTE)$(LINK) $(foreach sty, $(STY_SRC), "$(realpath $(sty))") $(BUILD_DIR)/ $(VERYSILENT) || true
+	$(MUTE)$(LINK) $(foreach tex, $(TEX_SRC), "$(realpath $(tex))") $(BUILD_DIR)/ $(VERYSILENT) || true
+	$(MUTE)$(LINK) "$(realpath $(IMG_DIR))" $(BUILD_DIR)/ $(VERYSILENT) || true
 
 delete-out-directories:
 	$(IGNORE_RESULT)$(MUTE)$(ECHO) "Deleting directories."
-	$(MUTE)$(RM) -r $(OUT_DIR)
+	$(MUTE)$(DELETE) -r $(OUT_DIR)
 	
-delete-aux-files:
+delete-build-files:
 	$(IGNORE_RESULT)$(MUTE)$(ECHO) "Deleting files."
-	$(MUTE)$(RM) $(shell find $(BUILD_DIR) -mindepth 1 -name Makefile -prune -o -print)
+	$(MUTE)$(DELETE) $(shell find $(BUILD_DIR) -mindepth 1 \( -name Makefile -o -name gitHeadInfo.gin \) -prune -o -print)
 
 ##################################################################
 
-# Clean (removes auxillary files but not output files)
+# Clean (removes build files but not output files)
 .PHONY: clean
-clean: delete-aux-files
+clean: delete-build-files
 	$(MUTE)$(MAKE) -C $(BUILD_DIR) $@
 
 # Dist-clean (also removes output files)
 .PHONY: distclean
-distclean: delete-out-directories delete-aux-files
+distclean: delete-out-directories delete-build-files
 	$(MUTE)$(MAKE) -C $(BUILD_DIR) $@
 
 ##################################################################
 
 # DVI Output
-dvi: pre makedvi post
-makedvi:
-	$(MUTE)$(MAKE) -C $(BUILD_DIR) dvi
+dvi: pre
+	$(MUTE)$(MAKE) -C $(BUILD_DIR) $@
 	
 # Postscript Output
-ps: pre makeps post
-makeps:
-	$(MUTE)$(MAKE) -C $(BUILD_DIR) ps
+ps: pre
+	$(MUTE)$(MAKE) -C $(BUILD_DIR) $@
 	
 # HTML Output
-html: pre makehtml post
-makehtml:
-	$(MUTE)$(MAKE) -C $(BUILD_DIR) html
+html: pre
+	$(MUTE)$(MAKE) -C $(BUILD_DIR) $@
 
 # Portable Document Format (PDF) Output
-pdf: pre makepdf post
-makepdf:
-	$(MUTE)$(MAKE) -C $(BUILD_DIR) pdf
+pdf: pre
+	$(MUTE)$(MAKE) -C $(BUILD_DIR) $@
+
+# Spellcheck target
+spellcheck: pre
+	$(MUTE)$(MAKE) -C $(BUILD_DIR) $@
 
 ##################################################################
 
 # Read the DVI
 .PHONY: dvi
-xdvi:
-	$(MUTE)$(MAKE) -C $(BUILD_DIR) dvi
+xdvi: dvi
 	$(MUTE)$(XDVI) $(OUT_DIR)/$(MAIN_DOC) $(SILENT) $(BACKGROUND)
 
 # Read the PDF
 .PHONY: read
-read:
-	$(MUTE)$(MAKE) -C $(BUILD_DIR) pdf
+read: pdf
 	$(EVINCE) $(OUT_DIR)/$(MAIN_DOC).pdf $(BACKGROUND)
 
 # Read the PDF using Acrobat
 .PHONY: aread
-aread:
-	$(MUTE)$(MAKE) -C $(BUILD_DIR) pdf
+aread: pdf
 	$(ACROREAD) $(OUT_DIR)/$(MAIN_DOC).pdf $(BACKGROUND)

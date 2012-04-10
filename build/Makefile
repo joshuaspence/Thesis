@@ -5,7 +5,8 @@
 BACKGROUND		:= &
 BIBTEX			:= bibtex
 CLEAR			:= clear
-CP				:= cp
+COPY			:= cp
+DELETE			:= rm -f
 DIFF			:= diff
 DVIPS			:= dvips -Ppdf -G0
 ECHO			:= echo
@@ -16,12 +17,12 @@ LATEX2HTML 		:= latex2html
 IGNORE_RESULT 	:= -
 MAKEINDEX		:= makeindex
 MUTE			:= @
-MV				:= mv
+MOVE			:= mv
 PDFLATEX		:= pdflatex
 PS2PDF			:= ps2pdf
-RM				:= rm -f
 SILENT			:= >/dev/null
 SPACE 			:= $(empty) $(empty)
+SPELL			:= aspell
 TEX				:= latex
 TOUCH			:= touch
 VERBOSE_OFF		:= false &&
@@ -62,6 +63,9 @@ ifneq ($(strip $(BIB_SRC)),)
 BBL_SRC			:= $(MAIN_DOC).bbl
 endif
 
+# Remove all built-in rules
+.SUFFIXES:
+
 ##################################################################
 # Targets
 ##################################################################
@@ -73,7 +77,7 @@ all: dvi ps pdf
 delete-files:
 	$(IGNORE_RESULT)$(MUTE)$(VERBOSE) $(ECHO) "Building target: $@"
 	$(IGNORE_RESULT)$(MUTE)$(ECHO) "Deleting files."
-	$(MUTE)$(RM) *.aux *.bbl *.blg *.glo *.idx *.ilg *.ind *.ist *.lof *.log *.lot *.toc
+	$(MUTE)$(DELETE) *.aux *.bbl *.blg *.glo *.idx *.ilg *.ind *.ist *.lof *.log *.lot *.toc
 
 # Clean
 .PHONY: clean
@@ -84,7 +88,11 @@ clean: delete-files
 .PHONY: distclean
 distclean: delete-files	
 	$(IGNORE_RESULT)$(MUTE)$(VERBOSE) $(ECHO) "Building target: $@"
-
+	
+# Spellcheck
+.PHONY: spellcheck
+spellcheck: $(STY_SRC)
+	$(IGNORE_RESULT)$(foreach tex, $(TEX_SRC), $(SPELL) --mode=tex -c $(realpath $(tex)))
 
 ##################################################################
 # Output Targets
@@ -95,7 +103,7 @@ dvi: $(OUT_DIR)/$(MAIN_DOC).dvi
 	$(IGNORE_RESULT)$(MUTE)$(VERBOSE) $(ECHO) "Building target: $@"
 
 # Portable Document Format (PDF) Output
-pdf: $(BIB_SRC) $(OUT_DIR)/$(MAIN_DOC).pdf
+pdf: $(OUT_DIR)/$(MAIN_DOC).pdf
 	$(IGNORE_RESULT)$(MUTE)$(VERBOSE) $(ECHO) "Building target: $@"
 	
 # Postscript Output
@@ -107,7 +115,7 @@ ps: $(OUT_DIR)/$(MAIN_DOC).ps $(FIG_SRC)
 html: $(HTML_OUT_DIR)/$(MAIN_DOC).html $(FIG_SRC)
 	$(IGNORE_RESULT)$(MUTE)$(VERBOSE) $(ECHO) "Building target: $@"
 
-# Index generation	
+# Index generation
 index: $(MAIN_DOC).aux $(MAIN_DOC).idx $(MAIN_DOC).ilg $(MAIN_DOC).ind
 
 
@@ -143,12 +151,15 @@ endif
 	$(MUTE)$(FIG2DEV) -L ps $< $@
 
 # To generate a .idx file from a .tex file
-%.ilg :	%.idx
+%.ilg: %.idx
 #	$(IGNORE_RESULT)$(MUTE)$(MOVE_TO_COL)
 	$(IGNORE_RESULT)$(MUTE)$(SETCOLOUR_BLUE)
 	$(IGNORE_RESULT)$(MUTE)$(ECHO) "=========================Indexing Pass================================"
 	$(MUTE)$(MAKEINDEX) $(*F)
 	$(MUTE)$(TEX) $(*F)
+	
+$(MAIN_DOC).idx:
+	$(TOUCH) $@
 
 # To generate a .dvi file from a .aux file
 $(OUT_DIR)/%.dvi: %.aux

@@ -1,43 +1,126 @@
 \documentclass[a4paper]{report}
 
-% Use an index
-\usepackage{makeidx}
-\makeindex
+\usepackage{thesis}
 
-% Use a glossary
-\usepackage{glossaries}
-\makeglossaries
+% Graphics directory
+\ifpdf
+    % pdflatex requires bitmap images.
+    \graphicspath{{./img/png/}}
+\else
+    % latex requires vector images.
+    \graphicspath{{./img/eps/}}
+\fi
+
+\title{\thesisTitle{}}
+\author{\studentName{}}
+\date{\thesisDate{}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{document}
 
-\title{Thesis}
-\author{Joshua Spence}
-%\date{2012}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Title Page
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{titlepage}
+\begin{center}
 
-\maketitle
+% Upper part of the page
+\ifpdf
+    \includegraphics[width=0.25\textwidth]{sydney_uni_coat_of_arms.png}\\[1cm]
+\else
+    \includegraphics[width=0.25\textwidth]{sydney_uni_coat_of_arms.eps  }\\[1cm]
+\fi
+
+\textsc{\LARGE \universityName{}}\\[1.5cm]
+
+\textsc{\Large Final year thesis}\\[0.5cm]
+
+% Title
+\HRule \\[0.4cm]
+{\huge \bfseries \thesisTitle{}}\\[0.4cm]
+\HRule \\[1.5cm]
+
+% Author and supervisor
+\begin{minipage}{0.4\textwidth}
+    \begin{flushleft} \large
+        \emph{Author:}\\
+        \studentName{}
+    \end{flushleft}
+\end{minipage}
+\begin{minipage}{0.4\textwidth}
+    \begin{flushright} \large
+        \emph{Supervisor:} \\
+        \supervisorName{}
+    \end{flushright}
+\end{minipage}
+
+% strech vertical space so that it fills all empty space
+\vfill
+
+% Thesis description
+{\large A thesis submitted in fulfilment of the requirements for the\\
+degree of Bachelor of Engineering (Computer) in the \\
+School of Electrical Engeering at\\
+The University of Sydney}
+
+% strech vertical space so that it fills all empty space
+\vfill
+
+% Bottom of the page
+{\large \thesisDate{}}
+
+\end{center}
+\end{titlepage}
 
 \pagenumbering{roman}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Acknowledgements
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter*{Acknowledgements}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  Publications
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter*{Publications}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Abstract
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{abstract}
 \end{abstract}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Table of Contents
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \tableofcontents
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% List of Figures
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \listoffigures
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% List of Tables
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \listoftables
 
 \pagenumbering{arabic}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % CHAPTER 01: Introduction
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \include{ch01-intro}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % CHAPTER 02: Background
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \include{ch02-background}
 
-% CHAPTER 01: Introduction
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CHAPTER 03: Reconfigurable Computing
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \include{ch03-rc}
 
 \chapter{Technical Introduction}
@@ -52,11 +135,22 @@
 \chapter{Conclusions}
 \label{ch:conc}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Bibliography
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \nocite{*}
 \bibliographystyle{IEEE}
 \bibliography{thesis}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Glossary
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\glsaddall
 \printglossary
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Index
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \printindex
 
 \end{document}
