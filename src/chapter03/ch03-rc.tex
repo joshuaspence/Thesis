@@ -2,5 +2,26 @@
 \label{ch:reconfigurableComputing}
 
 \section{Introduction}
+In the computer and electronics world, computations are performed either in 
+hardware or in software. Computer hardware provides highly optimized resources
+for quickly performing critical tasks, but is permanently configured to a 
+single task or application. Computer software offers a flexible approach, but is
+orders of magnitude worse than a hardware implementation in terms of 
+performance, silicon area efficiency and power consumption.
+
+\Glspl{FPGA} are devices that combine the advantages of hardware implementations
+with the flexibility of software implementations. The computations are 
+programmed into the silicon chip such that an \gls{FPGA} system can be 
+programmed and reprogrammed many times. The utility of \glspl{FPGA} does, 
+however, come at a price. Whilst, compared to a microprocessor, \glspl{FPGA}
+are typically several orders of magnitude faster and more power efficient, the 
+task of creating efficient programs for these devices is difficult.
+
+Typically, \glspl{FPGA} are useful only for operations that process large 
+streams of data, such as signal processing, networking, and the like. Compared
+to integrated circuit, they may be 5 to 25 times worse in terms of area, delay,
+and performance \cite{HAUCK08}. However, while an integrated circuit design may 
+take months to years to develop and have a multimillion-dollar price tag, an 
+FPGA design might only take days to create and cost tens to hundreds of dollars.
 
 \section{Field-Programmable Gate Array (FPGA)}
