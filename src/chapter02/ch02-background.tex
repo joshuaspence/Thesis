@@ -5,12 +5,7 @@
 % ANOMALY DETECTION
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Anomaly detection}
-\newglossaryentry{anomaly}{
-    name=anomaly,
-    plural=anomalies,
-    description={patterns in data that do not conform to a well defined notion 
-                 of normal behavior}
-}
+\label{sec:anomalyDetection}
 Anomaly detection is the process of detecting patterns in a given data set that 
 do not conform to an established normal behavior \cite{CHANDOLA07}.
 
@@ -20,15 +15,15 @@ variety of application domains \cite{CHANDOLA07}.
 
 % WHAT ARE ANOMALIES?
 \subsection{What are anomalies?}
-\index{anomaly}
-\Gls{anomaly} are patterns in data that do not conform to a well defined notion 
-of normal behavior. Figure~\ref{fig:2d-anomalies} illustrates anomalies in a 
-simple 2-dimensional data set. The data has two normal regions, $N_{1}$ and 
-$N_{2}$, since most observations lie in these two regions. Points that are 
-sufficiently far away from the regions, such as points $o_{1}$ and $o_{2}$, and 
-points in region $O_{3}$, are anomalies.
+\label{sec:anomalyDetection:whatAreAnomalies}
+Anomalies are patterns in data that do not conform to a well defined notion of
+normal behavior. \hyperref[fig:2d-anomlies]{Figure~\ref{fig:2d-anomalies}} 
+illustrates anomalies in a simple 2-dimensional data set. The data has two 
+normal regions, $N_{1}$ and $N_{2}$, since most observations lie in these two 
+regions. Points that are sufficiently far away from the regions, such as points 
+$o_{1}$ and $o_{2}$, and points in region $O_{3}$, are anomalies.
 
-\begin{figure}[H]
+\begin{figure}
 \centering
 \ifpdf
 	\includegraphics[width=0.5\textwidth]{2d-anomalies.png}
@@ -41,14 +36,16 @@ points in region $O_{3}$, are anomalies.
 
 % CHALLENGES
 \subsection{Challenges}
+\label{sec:anomalyDetection:challenges}
 At an abstract level, an anomaly is defined as a pattern that does not conform 
-to expected normal behavior. A straightforward anomaly detection approach, 
-therefore, is to define a region representing normal behavior and declare any 
-observation in the data which does not belong to this normal region as an 
-anomaly. But several factors make this apparently simple approach very 
-challenging:
+to expected normal behavior \cite{CHANDOLA07}. A straightforward anomaly 
+detection approach, therefore, is to define a region representing normal 
+behaviour and declare any observation in the data which does not belong to this 
+normal region as an anomaly. But several factors make this apparently simple 
+approach very challenging:
+
 \begin{itemize}
-\item Defining a normal region which encompasses every possible normal behavior 
+\item Defining a normal region which encompasses every possible normal behaviour 
 is very difficult. In addition, the boundary between normal and anomalous 
 behaviour is often not precise. Thus an anomalous observation which lies close
 to the boundary can actually be normal, and vice-versa.
@@ -79,50 +76,111 @@ Researchers have adopted concepts from diverse disciplines such as statistics,
 machine learning, data mining, information theory, spectral theory, and have 
 applied them to specific problem formulations.
 
+\subsection{Types of anomalies}
+\label{sec:anomalyDetection:typesOfAnomalies}
+Anomalies can be classified into three categories \cite{CHANDOLA07}:
+
+\begin{description}
+\item[Point anomaly] If an individual data instance can be considered as 
+anomalous with respect to the rest of data, then the instance is termed as a 
+point anomaly. This is the simplest type of anomaly. Referring to 
+\hyperref[fig:2d-anomlies]{Figure~\ref{fig:2d-anomalies}}, points $o_{1}$ and 
+$o_{2}$, as well as all points in region $O_{3}$ lie outside the boundary of the
+normal regions, and are hence point anomalies.
+
+\item[Contextual anomalies] If a data instance is anomalous in a certain 
+context, but not otherwise, then it is termed a contextual anomaly. The notion 
+of a context is induced by the structure in the data set and has to be specified
+as part of the problem formulation.
+
+\begin{figure}
+\centering
+\ifpdf
+	\includegraphics[width=0.5\textwidth]{contextual-anomalies.png}
+\else
+	\includegraphics[width=0.5\textwidth]{contextual-anomalies.eps}
+\fi
+\caption{Contextual anomaly $t_{2}$ in a temperature time series. Note that the 
+temperature at time $t_{1}$ is same as that at time $t_{2}$ but occurs in a 
+different context and hence is not considered as an anomaly.}
+\label{fig:contextual-anomalies}
+\end{figure}
+
+Contextual anomalies have been most commonly explored in time-series data and 
+spatial data. \hyperref[fig:contextual-anomalies]
+{Figure~\ref{fig:contextual-anomalies}} shows one such example for a temperature
+time series which shows the monthly temperature of an area over last few years. 
+A temperature of 35F might be normal during the winter (at time $t_{1}$) at that
+place, but the same value during summer (at time $t_{2}$) would be an anomaly.
+
+\item[Collection anomalies] If a collection of related data instances is 
+anomalous with respect to the entire data set, it is termed as a collective 
+anomaly. The individual data instances in a collective anomaly may not be 
+anomalies by themselves, but their occurrence together as a collection is 
+anomalous. \hyperref[fig:collective-anomalies]
+{Figure~\ref{fig:collective-anomalies}} illustrates an example which shows a 
+human electrocardiogram output \cite{GOLDBERGER00}. The highlighted region 
+denotes an anomaly because the same low value exists for an abnormally long 
+time. Note that that low value by itself is not an anomaly.
+
+\end{description}
+
+% TODO
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % RANDOM PROJECTIONS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Random projections}
+\label{sec:randomProjections}
+% TODO
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % DISTANCE METRICS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Distance metrics}
-\index{distance,metric}
-\newglossaryentry{distance}{
-    name=distance,
-    description={a quantitative description of how far apart three objects are}
-}
-\newglossaryentry{metric}{
-    name=metric,
-    description={a function describing how close or far away data points in some 
-                 space are from each other}
-}
-\gls{distance} is a quantitative description of how far apart two objects are. 
-Mathematically, a \gls{distance} or \gls{metric} is a function describing how 
-close or far away data points in some space are from each other \cite{KHOA12}.
+\label{sec:distanceMetrics}
+Distance is a quantitative description of how far apart two objects are. 
+Mathematically, a distance or metric is a function describing how close or far 
+away data points in some space are from each other \cite{KHOA12}.
 
 % EUCLIDEAN DISTANCE
 \subsection{Euclidean distance}
+\label{sec:distanceMetrics:euclideanDistance}
+An Euclidean distance between two data points in a space is the norm of the 
+difference between two vectors corresponding to these data points \cite{KHOA12}.
+Euclidean distance is extremely sensitive to the scale of the features involved.
+When dealing with features of vastly different scales, the effects of the larger
+feature dominant over the smaller feature in terms of the Euclidean distance. 
+This problem is usually solved by normalizing the data values. Another issue, 
+however, with Euclidean distance is that it is unable to take into account any 
+correlation between data features.
 
 % MAHALANOBIS DISTANCE
 \subsection{Mahalanobis distance}
+\label{sec:distanceMetrics:mahalanobisDistance}
+Mahalanobis distance is a distance measure that considers the covariance between
+data features. Mahalanobis distance, however, is extremely sensitive to 
+anomalies as anomalies affect both the mean and the covariance of the data.
 
 % GRAPH GEODESIC DISTANCE
 \subsection{Graph geodesic distance}
+\label{sec:distanceMetrics:graphGeodesicDistance}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % NEAREST NEIGHBOUR ALGORITHMS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Nearest Neighbour Algorithms}
+\label{sec:nearestNeighbourAlgorithms}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% MATRICES
+% VECTORS AND MATRICES
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Matrices}
+\section{Vectors and Matrices}
+\label{sec:vectorsAndMatrices}
 
 % EIGENVECTORS AND EIGENVALUES
 \subsection{Eigenvectors and Eigenvalues}
+\label{sec:vectorsAndMatrices:eigenvectorsAndEigenvalues}
 This section will briefly recall some basic definitions of eigenvectors and
 eigenvalues, as well as some of their basic properties.
 
@@ -159,16 +217,16 @@ Multiplying by $V^{T}$ on the right, we obtain the eigen-decompisition of $M$:
 M = MVV^{T} = V{\Lambda}V^{T} = \sum_{i} \lambda_{i}\mathbf{v_{i}}\mathbf{v_{i}^{T}}
 \end{displaymath}
 
+% EIGEN DECOMPOSITION
+\subsection{Eigen decomposition}
+\label{sec:vectorsAndMatrices:eigenDecomposition}
+
 % LAPLACIAN MATRICES
 \subsection{Laplacian Matrices}
+\label{sec:vectorsAndMatrices:laplacianMatrices}
 \nocite{BERKEYLEY99}
 \nocite{PATI11}
 \nocite{SPIELMAN09}
-\newglossaryentry{LaplacianMatrix}{
-    name={Laplacian Matrix},
-    plural={Laplacian Matrices},
-    description={a matrix representation of a graph}
-}
 Recall that a weighted, undirected graph $G = (V,E,w)$ is essentially an 
 undirected graph $G = (V,E)$ along with a function $w : E \rightarrow 
 \Re^{+}$, where $\Re^{+}$ denotes the set of positive real numbers.
@@ -191,7 +249,7 @@ diagonal matrix such that:
 D_{G}(i,i) = \sum_{j} A_{G}(i,j)
 \end{displaymath}
 
-A \gls{LaplacianMatrix} is a matrix representation of a graph, defined by the
+A Laplacian Matrix is a matrix representation of a graph, defined by the
 equation:
 \begin{displaymath}
 L_{G} = D_{G} - A_{G}
@@ -207,11 +265,11 @@ L_{G_{1,2}} :=
 \end{displaymath}
 
 For the graph with $n$ vertices and just one edge between vertices $u$ and $v$, 
-we can define the \gls{LaplacianMatrix} similarly. For concreteness, I'll call 
-this graph $G_{u,v}$. It's \gls{LaplacianMatrix} is the $n{\times}n$ matrix 
-whose only non-zero entries are in the intersections of rows and columns $u$ and
-$v$. The $2{\times}2$ matrix at the intersections of these rows and columns is, 
-of course:
+we can define the Laplacian Matrix similarly. For concreteness, I'll call this
+graph $G_{u,v}$. It's Laplacian Matrix}is the $n{\times}n$ matrix whose only 
+non-zero entries are in the intersections of rows and columns $u$ and $v$. The 
+$2{\times}2$ matrix at the intersections of these rows and columns is, of 
+course:
 \begin{displaymath}
     \begin{bmatrix}
         1 & -1 \\
@@ -225,8 +283,8 @@ L_{G} := \sum_{(u,v) \in E} w(u,v)L_{G_{u,v}}
 \end{displaymath}
 
 \paragraph{Properties}
-For a graph $G$ and its \gls{LaplacianMatrix} $L$ with eigenvalues 
-$\lambda_{0} < \lambda_{1} < \ldots < \lambda_{n-1}$:
+For a graph $G$ and its Laplacian Matrix $L$ with eigenvalues $\lambda_{0} < 
+\lambda_{1} < \ldots < \lambda_{n-1}$:
 
 \begin{itemize}
 \item $L$ is a symmetric matrix. This means the eigenvalues of $L$ are real, and
@@ -255,7 +313,7 @@ Q_{ij} :=
         \end{array}
     \right.
 \end{displaymath}
-Then the \gls{LaplacianMatrix} $L$ satisfies $L = Q^{T}Q$, regardless of the 
+Then the Laplacian Matrix $L$ satisfies $L = Q^{T}Q$, regardless of the 
 orientation of the edges.
 \item The second smallest eigenvalue of $L$ ($\lambda_{2}$) is the algebraic 
 connectivity of $G$. $\lambda_{2} > 0$ if and only if $G$ is connected.
@@ -265,17 +323,59 @@ connectivity of $G$. $\lambda_{2} > 0$ if and only if $G$ is connected.
 % COMMUTE TIME
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Commute Time}
+\label{sec:commuteTime}
+
+% INTRODUCTION
+\subsection{Introduction}
+\label{sec:commuteTime:introduction}
+Commute time is a robust distance metric derived from a random walk on graphs 
+\cite{KHOA12}. In his thesis on ``Large Scale Anomaly Detection and Clustering 
+Using Random Walks'', Khoa demonstrated how commute time can be used as a 
+distance measure for data mining tasks such as anomaly detection and clustering.
+A prohibitive limitation of this techniue is that the calculation of commute 
+time involves the eigen decomposition of the graph Laplacian, making it 
+impractical for large graphs.
+
+A major advantage of using commute time as a distance metric for outlier 
+detection is that it effectively captures not only the distances between data 
+points but also the density of the data. This property results in a distance 
+metric that can be effectively used to capture global, local and group 
+anomalies.
+
+The commute time between two nodes $i$ and $j$ in a graph is the number of steps
+that a random walk, starting from $i$ will take to visit $j$ and then come back 
+to $i$ for the first time. The fact that the commute time is averaged over all 
+paths (and not justthe shortest path) makes it more robust to data perturbations
+and it can also capture graph density \cite{KHOA12}. Since it is a measure which
+can capture the geometrical structure of the data and is robust to noise, 
+commute time can be applied in methods where Euclidean or other distances are 
+used and thus the limitations of these metrics can be avoided.
+
+% LIMITATIONS
+\subsection{Limitations}
+\label{sec:commuteTime:limitations}
+The computation of commute time requires the eigen decomposition (see 
+\hyperref[sec:vectorsAndMatrices:eigenDecomposition]
+{Section~\ref{sec:vectorsAndMatrices:eigenDecomposition}}) of the graph 
+Laplacianmatrix (see \hyperref[sec:vectorsAndMatrices:laplacianMatrix]
+{Section~\ref{sec:vectorsAndMatrices:laplacianMatrix}}), a computation which 
+takes $O(n^{3})$ time and thus is not practical for large graphs. Methods to 
+approximate the commute time to reduce the computational time are required in 
+order to efficiently use commute time in large datasets.
 
 % ANOMALY DETECTION USING COMMUTE TIME
 \subsection{Anomaly Detection Using Commute Time}
+\label{sec:commuteTime:anomalyDetectionUsingCommuteTime}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % SOLVERS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Solvers}
+\label{sec:solvers:
 
 % SPIELMAN-TENG SOLVER
 \subsection{Spielman-Teng Solver}
+\label{sec:solvers:spielmanTengSolver}
 \nocite{SPIELMANTANG09}
 Spielman and Teng presented a randomised algorithm that, on input a symmetric, 
 weakly diagonally dominant $n{\times}x$ matrix $A$ with $m$ non-zero entries and
