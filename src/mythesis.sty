@@ -1,0 +1,45 @@
+\ProvidesPackage{mythesis}
+
+% Provides page numbers and headings at the top of each page
+\pagestyle{headings}
+
+% Packages
+\usepackage{amsfonts}           	% for formatting mathematical symbols
+\usepackage{amsmath,amssymb,amsthm}	% for math support
+\usepackage[small,bf]{caption}		% for changing the appearance of captions
+\usepackage{color}					% for highlighting
+\usepackage{float}					% for preventing floating tables
+\usepackage[hidelinks]{hyperref}	% for PDF hyperlinks
+\usepackage{ifpdf}					% to check if we are using latex/pdflatex
+\usepackage{graphicx}				% for graphics
+\usepackage{url}					% for web URLs
+\usepackage{verbatim}				% for block commenting and code support
+
+% Use an index
+%\usepackage{makeidx}
+%\makeindex
+
+% Use a glossary
+%\usepackage[acronym,toc]{glossaries}
+%\makeglossaries
+
+% To allow us to easily format a table row
+% See http://www.latex-community.org/forum/viewtopic.php?f=5&t=3293
+\usepackage{array}
+\newcolumntype{+}{>{\global\let\currentrowstyle\relax}}
+\newcolumntype{^}{>{\currentrowstyle}}
+\newcommand{\rowstyle}[1]{\gdef\currentrowstyle{#1}%
+#1\ignorespaces
+}
+
+% Variables (to save retyping and reformatting these throughout the document)
+\newcommand{\thesisTitle}{Implementation of Random Projection Algorithms Using an FPGA}
+\newcommand{\thesisDate}{2012}
+\newcommand{\studentName}{Joshua Spence}
+\newcommand{\studentID}{308216350}
+\newcommand{\supervisorName}{Philip Leong}
+\newcommand{\universityName}{University of Sydney}
+
+% Custom commands
+\newcommand{\highlight}[1]{\colorbox{yellow}{#1}}
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
