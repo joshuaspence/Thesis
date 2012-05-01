@@ -7,17 +7,17 @@
 \section{Anomaly detection}
 \label{sec:anomalyDetection}
 Anomaly detection is the process of detecting patterns in a given data set that 
-do not conform to an established normal behavior \cite{CHANDOLA07}.
+do not conform to an established normal behavior \cite{Chandola:2007}.
 
 The importance of anomaly detection is due to the fact that anomalies in data
 translate to significant (and often critical) actionable information in a wide 
-variety of application domains \cite{CHANDOLA07}.
+variety of application domains \cite{Chandola:2007}.
 
 % WHAT ARE ANOMALIES?
 \subsection{What are anomalies?}
-\label{sec:anomalyDetection:whatAreAnomalies}
+\label{sec:whatAreAnomalies}
 Anomalies are patterns in data that do not conform to a well defined notion of
-normal behavior. \hyperref[fig:2d-anomlies]{Figure~\ref{fig:2d-anomalies}} 
+normal behavior. \hyperref[fig:2d-anomalies]{Figure~\ref{fig:2d-anomalies}} 
 illustrates anomalies in a simple 2-dimensional data set. The data has two 
 normal regions, $N_{1}$ and $N_{2}$, since most observations lie in these two 
 regions. Points that are sufficiently far away from the regions, such as points 
@@ -38,7 +38,7 @@ $o_{1}$ and $o_{2}$, and points in region $O_{3}$, are anomalies.
 \subsection{Challenges}
 \label{sec:anomalyDetection:challenges}
 At an abstract level, an anomaly is defined as a pattern that does not conform 
-to expected normal behavior \cite{CHANDOLA07}. A straightforward anomaly 
+to expected normal behavior \cite{Chandola:2007}. A straightforward anomaly 
 detection approach, therefore, is to define a region representing normal 
 behaviour and declare any observation in the data which does not belong to this 
 normal region as an anomaly. But several factors make this apparently simple 
@@ -77,14 +77,14 @@ machine learning, data mining, information theory, spectral theory, and have
 applied them to specific problem formulations.
 
 \subsection{Types of anomalies}
-\label{sec:anomalyDetection:typesOfAnomalies}
-Anomalies can be classified into three categories \cite{CHANDOLA07}:
+\label{sec:typesOfAnomalies}
+Anomalies can be classified into three categories \cite{Chandola:2007}:
 
 \begin{description}
 \item[Point anomaly] If an individual data instance can be considered as 
 anomalous with respect to the rest of data, then the instance is termed as a 
 point anomaly. This is the simplest type of anomaly. Referring to 
-\hyperref[fig:2d-anomlies]{Figure~\ref{fig:2d-anomalies}}, points $o_{1}$ and 
+\hyperref[fig:2d-anomalies]{Figure~\ref{fig:2d-anomalies}}, points $o_{1}$ and 
 $o_{2}$, as well as all points in region $O_{3}$ lie outside the boundary of the
 normal regions, and are hence point anomalies.
 
@@ -113,19 +113,74 @@ time series which shows the monthly temperature of an area over last few years.
 A temperature of 35F might be normal during the winter (at time $t_{1}$) at that
 place, but the same value during summer (at time $t_{2}$) would be an anomaly.
 
-\item[Collection anomalies] If a collection of related data instances is 
+\item[Collective anomalies] If a collection of related data instances is 
 anomalous with respect to the entire data set, it is termed as a collective 
 anomaly. The individual data instances in a collective anomaly may not be 
 anomalies by themselves, but their occurrence together as a collection is 
 anomalous. \hyperref[fig:collective-anomalies]
 {Figure~\ref{fig:collective-anomalies}} illustrates an example which shows a 
-human electrocardiogram output \cite{GOLDBERGER00}. The highlighted region 
+human electrocardiogram output \cite{Goldberger:2000}. The highlighted region 
 denotes an anomaly because the same low value exists for an abnormally long 
 time. Note that that low value by itself is not an anomaly.
 
+\begin{figure}
+\centering
+\ifpdf
+	\includegraphics[width=0.5\textwidth]{collective-anomalies.png}
+\else
+	\includegraphics[width=0.5\textwidth]{collective-anomalies.eps}
+\fi
+\caption{TODO}
+\label{fig:collective-anomalies}
+\end{figure}
+
 \end{description}
 
-% TODO
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% OUTLIERS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Outliers}
+\label{sec:outliers}
+A similar concept to that of anomalies is the concept of outlier. The terms 
+``anomaly'' and ``outlier'' are almost used synonymously, but do vary slightly 
+in their definition.
+
+In general, two different kinds of outliers exist: global outliers and local 
+outliers. Global outliers are distinct with respect to the whole data set, while
+local outliers are distinct with respect to data points in their local 
+neighbourhood \cite{Vries:2011}. The task of global outlier detection has 
+undergone much research, but this has not been the case for local outlier 
+detection. In their paper ``Density-preserving projections for large-scale local
+anomaly detection'', De Vries et al optimise the use of local outlier factor 
+(LOF) for large and high-dimensional data and propose projection-indexed 
+nearest-neighbours (PINN) --- a novel technique that exploits extended 
+nearest-neighbour sets in a reduced-dimensional space to create an accurate 
+approximation for k-nearest-neighbour distances, which is used as the core 
+density measurement within LOF \cite{Vries:2011}.
+
+\subsection{Local Outlier Factor}
+\label{sec:localOutlierFactor}
+`Local Outlier Factor' is a formula that captures the degree to which a data 
+point is an outlier with respect to its local neighbourhood. In this context,
+`local' means that the determination of the data points does not depend on 
+knowledge of the global distribution of the data set.
+
+\subsection{Outlier detection}
+\label{sec:outlierDetection}
+In this section we will review some general definitions which may be used to 
+classify local outliers.
+
+\begin{description}
+
+\item[Classical] A point is declared to be an outlier if its distance from the 
+mean is sufficiently large.
+\item[Principal Component Analysis] An outlier is usually declared if the point 
+is sufficiently far away from the subspace spanned by the eigenvectors 
+corresponding to the highest eigenvalues.
+\item[Distance based] A point can be declared to be an outlier if its distance 
+to its kth nearest-neighbour is sufficiently large.
+
+\end{description}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % RANDOM PROJECTIONS
@@ -141,30 +196,30 @@ time. Note that that low value by itself is not an anomaly.
 \label{sec:distanceMetrics}
 Distance is a quantitative description of how far apart two objects are. 
 Mathematically, a distance or metric is a function describing how close or far 
-away data points in some space are from each other \cite{KHOA12}.
+away data points in some space are from each other \cite{Khoa:2012}.
 
 % EUCLIDEAN DISTANCE
 \subsection{Euclidean distance}
-\label{sec:distanceMetrics:euclideanDistance}
+\label{sec:euclideanDistance}
 An Euclidean distance between two data points in a space is the norm of the 
-difference between two vectors corresponding to these data points \cite{KHOA12}.
-Euclidean distance is extremely sensitive to the scale of the features involved.
-When dealing with features of vastly different scales, the effects of the larger
-feature dominant over the smaller feature in terms of the Euclidean distance. 
-This problem is usually solved by normalizing the data values. Another issue, 
-however, with Euclidean distance is that it is unable to take into account any 
-correlation between data features.
+difference between two vectors corresponding to these data points 
+\cite{Khoa:2012}. Euclidean distance is extremely sensitive to the scale of the 
+features involved. When dealing with features of vastly different scales, the 
+effects of the larger feature dominant over the smaller feature in terms of the 
+Euclidean distance. This problem is usually solved by normalizing the data 
+values. Another issue, however, with Euclidean distance is that it is unable to 
+take into account any correlation between data features.
 
 % MAHALANOBIS DISTANCE
 \subsection{Mahalanobis distance}
-\label{sec:distanceMetrics:mahalanobisDistance}
+\label{sec:mahalanobisDistance}
 Mahalanobis distance is a distance measure that considers the covariance between
 data features. Mahalanobis distance, however, is extremely sensitive to 
 anomalies as anomalies affect both the mean and the covariance of the data.
 
 % GRAPH GEODESIC DISTANCE
 \subsection{Graph geodesic distance}
-\label{sec:distanceMetrics:graphGeodesicDistance}
+\label{sec:graphGeodesicDistance}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % NEAREST NEIGHBOUR ALGORITHMS
@@ -180,7 +235,7 @@ anomalies as anomalies affect both the mean and the covariance of the data.
 
 % EIGENVECTORS AND EIGENVALUES
 \subsection{Eigenvectors and Eigenvalues}
-\label{sec:vectorsAndMatrices:eigenvectorsAndEigenvalues}
+\label{sec:eigenvectorsAndEigenvalues}
 This section will briefly recall some basic definitions of eigenvectors and
 eigenvalues, as well as some of their basic properties.
 
@@ -219,14 +274,14 @@ M = MVV^{T} = V{\Lambda}V^{T} = \sum_{i} \lambda_{i}\mathbf{v_{i}}\mathbf{v_{i}^
 
 % EIGEN DECOMPOSITION
 \subsection{Eigen decomposition}
-\label{sec:vectorsAndMatrices:eigenDecomposition}
+\label{sec:eigenDecomposition}
 
 % LAPLACIAN MATRICES
 \subsection{Laplacian Matrices}
-\label{sec:vectorsAndMatrices:laplacianMatrices}
-\nocite{BERKEYLEY99}
-\nocite{PATI11}
-\nocite{SPIELMAN09}
+\label{sec:laplacianMatrices}
+\nocite{Berkeley:1999}
+\nocite{Pati:2011}
+\nocite{Spielman:2009}
 Recall that a weighted, undirected graph $G = (V,E,w)$ is essentially an 
 undirected graph $G = (V,E)$ along with a function $w : E \rightarrow 
 \Re^{+}$, where $\Re^{+}$ denotes the set of positive real numbers.
@@ -329,11 +384,11 @@ connectivity of $G$. $\lambda_{2} > 0$ if and only if $G$ is connected.
 \subsection{Introduction}
 \label{sec:commuteTime:introduction}
 Commute time is a robust distance metric derived from a random walk on graphs 
-\cite{KHOA12}. In his thesis on ``Large Scale Anomaly Detection and Clustering 
-Using Random Walks'', Khoa demonstrated how commute time can be used as a 
-distance measure for data mining tasks such as anomaly detection and clustering.
-A prohibitive limitation of this techniue is that the calculation of commute 
-time involves the eigen decomposition of the graph Laplacian, making it 
+\cite{Khoa:2012}. In his thesis on ``Large Scale Anomaly Detection and 
+Clustering Using Random Walks'', Khoa demonstrated how commute time can be used 
+as a distance measure for data mining tasks such as anomaly detection and 
+clustering. A prohibitive limitation of this techniue is that the calculation of
+commute time involves the eigen decomposition of the graph Laplacian, making it 
 impractical for large graphs.
 
 A major advantage of using commute time as a distance metric for outlier 
@@ -346,8 +401,8 @@ The commute time between two nodes $i$ and $j$ in a graph is the number of steps
 that a random walk, starting from $i$ will take to visit $j$ and then come back 
 to $i$ for the first time. The fact that the commute time is averaged over all 
 paths (and not justthe shortest path) makes it more robust to data perturbations
-and it can also capture graph density \cite{KHOA12}. Since it is a measure which
-can capture the geometrical structure of the data and is robust to noise, 
+and it can also capture graph density \cite{Khoa:2012}. Since it is a measure 
+which can capture the geometrical structure of the data and is robust to noise, 
 commute time can be applied in methods where Euclidean or other distances are 
 used and thus the limitations of these metrics can be avoided.
 
@@ -355,17 +410,16 @@ used and thus the limitations of these metrics can be avoided.
 \subsection{Limitations}
 \label{sec:commuteTime:limitations}
 The computation of commute time requires the eigen decomposition (see 
-\hyperref[sec:vectorsAndMatrices:eigenDecomposition]
-{Section~\ref{sec:vectorsAndMatrices:eigenDecomposition}}) of the graph 
-Laplacianmatrix (see \hyperref[sec:vectorsAndMatrices:laplacianMatrix]
-{Section~\ref{sec:vectorsAndMatrices:laplacianMatrix}}), a computation which 
-takes $O(n^{3})$ time and thus is not practical for large graphs. Methods to 
-approximate the commute time to reduce the computational time are required in 
-order to efficiently use commute time in large datasets.
+\hyperref[sec:eigenDecomposition] {Section~\ref{sec:eigenDecomposition}}) of the
+graph Laplacianmatrix (see \hyperref[sec:laplacianMatrix] 
+{Section~\ref{sec:laplacianMatrix}}), a computation which takes $O(n^{3})$ time 
+and thus is not practical for large graphs. Methods to approximate the commute 
+time to reduce the computational time are required in order to efficiently use 
+commute time in large datasets.
 
 % ANOMALY DETECTION USING COMMUTE TIME
 \subsection{Anomaly Detection Using Commute Time}
-\label{sec:commuteTime:anomalyDetection}
+\label{sec:anomalyDetectionUsingCommuteTime}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % SOLVERS
@@ -375,8 +429,8 @@ order to efficiently use commute time in large datasets.
 
 % SPIELMAN-TENG SOLVER
 \subsection{Spielman-Teng Solver}
-\label{sec:solvers:spielmanTengSolver}
-\nocite{SPIELMANTANG09}
+\label{sec:spielmanTengSolver}
+\nocite{Spielman:2009}
 Spielman and Teng presented a randomised algorithm that, on input a symmetric, 
 weakly diagonally dominant $n{\times}x$ matrix $A$ with $m$ non-zero entries and
 an $n$-vector $\mathbf{b}$, produces an $\tilde{\mathbf{x}}$ such that 

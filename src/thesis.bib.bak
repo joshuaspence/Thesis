@@ -1,7 +1,7 @@
 % This file was created with JabRef 2.7b.
 % Encoding: UTF-8
 
-@ARTICLE{Chandola:2007,
+@ARTICLE{CHANDOLA:2007,
   author = {Varun Chandola AND Arindam Banerjee AND Vipin Kumar},
   title = {Anomaly Detection: A Survey},
   journal = {ACM Computing Serveys},
@@ -190,7 +190,7 @@
   timestamp = {2012.05.01}
 }
 
-@ARTICLE{Knorr:2000,
+@ARTICLE{Knorr2000rohtua,
   author = {Edwin M. Knorr AND Raymond T. Ng AND Vladimir Tucakov},
   title = {Distance-based outliers: algorithms and applications},
   journal = {The VLDB Journal — The International Journal on Very Large Data Bases},
