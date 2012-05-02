@@ -42,6 +42,7 @@ Thumbs.db
 # Latex auxillary files
 build/*
 !build/Makefile
+!build/Variables.ini
 
 # Output files
 output/*
