@@ -136,6 +136,20 @@ time. Note that that low value by itself is not an anomaly.
 
 \end{description}
 
+% APPROACHES
+\subsection{Approaches}
+Traditional approaches to anomaly detection use statistical easures to judge 
+data points as outliers. Statistical methods are often model-based and assume 
+that the data should follow some distribution. With knowledge of the 
+distribution, data point are evaluated by their fitness to the assumed 
+distribution. If the probibility of a data instance is less than a certain 
+threshold, then that data point is considered an anomaly.
+
+A common distribution considered when modelling data is the `Normal' 
+distribution. The probability that a data instance lies within $k$ standard 
+deviations $\sigma$ from the mean $\mu$ is the area between $\mu - k\sigma$ and 
+$\mu + k\sigma$.
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % OUTLIERS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -188,6 +202,52 @@ to its kth nearest-neighbour is sufficiently large.
 \section{Random projections}
 \label{sec:randomProjections}
 % TODO
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% MARKOV CHAINS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Markov chains}
+\label{sec:markovChains}
+A `Markov chain' is a chance process in which the outcome of a given experiment 
+can affect the outcome of the next experiment \cite{Grinstead:1997}. For a 
+Markov chain, we have a set of states $S = \left\{ s_{1}, s_{2}, \ldots, s_{r} 
+\right\}$ with a process starting in one of the states and moving from state 
+$s_{i}$ to $s_{j}$ with a probability $p_{ij}$ not dependent upon which states 
+the chain was in before the current state. The probabilities $p_{ij}$ are called
+\emph{transition probabilities}, and the complete matrix $\mathbf{P}$ of 
+probabilities is known as the \emph{transition matrix}.
+
+The probability that, given the chain is in state $i$ now, it will be in state 
+$j$ in two steps is denoted by $p_{ij}^{(2)}$. In general, if a Markov chain has 
+$r$ states, then:
+
+\begin{displaymath}
+p_{ij}^{(2)} = \sum_{k=1}^{r} p_{ik}p{kj}
+\end{displaymath}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% RANDOM WALKS ON GRAPHS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Random walks on graphs}
+\label{sec:randomWalks}
+
+Assume we are given a connected undirected and weighted graph $G = (V,E,W)$ with
+edge weights $(w_{ij})_{i,j \in V} >= 0$ be the graph adjacency matrix. A degree
+of a node $i$ is $d_{i} = \sum_{j \in N(i)} w_{ij}$ where $N(i)$ is a set of 
+neighbours of node $i$. All nodes nonadjacent to $i$ are assumed to have a 
+weight of $w_{ij} = 0$.
+
+A random walk is a sequence of nodes on a graph visited by a random walkter: 
+starting from a node, the random walker moves to one of its neighbours with some
+probability. Then from that node, it proceeds to one of its own neighbours with 
+some probability, and so on \cite{Khoa:2012}. The random walk is a finite Markov
+chain that is time-reversible, which means the reverse Markov chain has the same
+transition probability matrix as the original Markov chain \cite{Lovasz:1996}.
+
+The probability that a random walker selects a particular node from is 
+neighbours is determined by the edge weights of the graph. The larger the weight
+${w_ij}$ of the edge connecting nodes $i$ and $j$, the more often the random 
+walker travels through that edge.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % DISTANCE METRICS
@@ -281,7 +341,7 @@ M = MVV^{T} = V{\Lambda}V^{T} = \sum_{i} \lambda_{i}\mathbf{v_{i}}\mathbf{v_{i}^
 \label{sec:laplacianMatrices}
 \nocite{Berkeley:1999}
 \nocite{Pati:2011}
-\nocite{Spielman:2009}
+\nocite{Spielman:2006}
 Recall that a weighted, undirected graph $G = (V,E,w)$ is essentially an 
 undirected graph $G = (V,E)$ along with a function $w : E \rightarrow 
 \Re^{+}$, where $\Re^{+}$ denotes the set of positive real numbers.
@@ -421,6 +481,16 @@ efficiently use commute time in large datasets.
 \subsection{Anomaly Detection Using Commute Time}
 \label{sec:anomalyDetectionUsingCommuteTime}
 
+\begin{algorithmic}
+\If {$i\geq maxval$}
+    \State $i\gets 0$
+\Else
+    \If {$i+k\leq maxval$}
+        \State $i\gets i+k$
+    \EndIf
+\EndIf
+\end{algorithmic}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % SOLVERS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -430,7 +500,7 @@ efficiently use commute time in large datasets.
 % SPIELMAN-TENG SOLVER
 \subsection{Spielman-Teng Solver}
 \label{sec:spielmanTengSolver}
-\nocite{Spielman:2009}
+\nocite{Spielman:2006}
 Spielman and Teng presented a randomised algorithm that, on input a symmetric, 
 weakly diagonally dominant $n{\times}x$ matrix $A$ with $m$ non-zero entries and
 an $n$-vector $\mathbf{b}$, produces an $\tilde{\mathbf{x}}$ such that 
