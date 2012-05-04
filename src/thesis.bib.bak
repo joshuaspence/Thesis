@@ -354,6 +354,7 @@
 	distance, a graph component sampling and an eigenspace approximation
 	combined with pruning technique reduce the time to $O(n \log n)$
 	while preserving the outlier ranking.},
+  doi = {10.1007/978-3-642-13672-6_41},
   file = {:/home/joshua/University/ELEC4712/Research/002. Chawla/Khoa_pakdd10.pdf:PDF},
   keywords = {outlier detection, commute distance, eigenspace embedding, booktitle
 	= {PAKDD}, year = {2010}, pages = {422-434}, volume = {2},
@@ -500,6 +501,31 @@
   file = {:/home/joshua/University/ELEC4712/Research/008. Outlier detection/outlier.pdf:PDF},
   isbn = {9780387244358},
   timestamp = {2012.05.03}
+}
+
+@ARTICLE{Moonesinghe:2008,
+  author = {H. D. K. Moonesinghe AND Pang-Ning Tan},
+  title = {Outrank: a Graph-Based Outlier Detection Framework Using Random Walk},
+  journal = {International Journal on Artificial Intelligence Tools},
+  year = {2008},
+  volume = {17},
+  pages = {19--36},
+  number = {1},
+  abstract = {This paper introduces a stochastic graph-based algorithm, called OutRank,
+	for detecting outliers in data. We consider two approaches for constructing
+	a graph representation of the data, based on the object similarity
+	and number of shared neighbors between objects. The heart of this
+	approach is the Markov chain model that is built upon this graph,
+	which assigns an outlier score to each object. Using this framework,
+	we show that our algorithm is more robust than the existing outlier
+	detection schemes and can effectively address the inherent problems
+	of such schemes. Empirical studies conducted on both real and synthetic
+	data sets show that significant improvements in detection rate and
+	false alarm rate are achieved using the proposed framework.},
+  doi = {10.1142/S0218213008003753},
+  file = {:/home/joshua/University/ELEC4712/Research/007. Random walks on graphs/IJAIT.pdf:PDF},
+  keywords = {Outlier detection, random walk, Markov chain},
+  timestamp = {2012.05.04}
 }
 
 @INPROCEEDINGS{Nakayama:2000,
