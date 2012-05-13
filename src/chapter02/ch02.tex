@@ -19,12 +19,12 @@ outliers. Global outliers are distinct with respect to the whole data set, while
 local outliers are distinct with respect to data points in their local 
 neighbourhood \cite{Vries:2011}. The task of global outlier detection has 
 undergone much research, but this has not been the case for local outlier 
-detection. In their paper \citetitle{Vries:2011}, De Vries et al optimise the use of local outlier factor 
-(LOF) for large and high-dimensional data and propose projection-indexed 
-nearest-neighbours (PINN) --- a novel technique that exploits extended 
-nearest-neighbour sets in a reduced-dimensional space to create an accurate 
-approximation for k-nearest-neighbour distances, which is used as the core 
-density measurement within LOF \cite{Vries:2011}.
+detection. In their paper \citetitle{Vries:2011}, \citeauthor{Vries:2011} 
+optimise the use of local outlier factor (LOF) for large and high-dimensional 
+data and propose projection-indexed nearest-neighbours (PINN) --- a novel 
+technique that exploits extended nearest-neighbour sets in a reduced-dimensional
+space to create an accurate approximation for k-nearest-neighbour distances, 
+which is used as the core density measurement within LOF \cite{Vries:2011}.
 
 % WHAT ARE ANOMALIES?
 \subsection{What are anomalies?}
@@ -50,7 +50,7 @@ $o_{1}$ and $o_{2}$, and points in region $O_{3}$, are anomalies.
 
 % CHALLENGES
 \subsection{Challenges}
-\label{sec:anomalyDetection:challenges}
+\label{sec:anomalyDetectionChallenges}
 At an abstract level, an anomaly is defined as a pattern that does not conform 
 to expected normal behavior \cite{Chandola:2007}. A straightforward anomaly 
 detection approach, therefore, is to define a region representing normal 
@@ -164,6 +164,7 @@ distribution. The probability that a data instance lies within $k$ standard
 deviations $\sigma$ from the mean $\mu$ is the area between $\mu - k\sigma$ and 
 $\mu + k\sigma$.
 
+% LOCAL OUTLIER FACTOR
 \subsection{Local Outlier Factor}
 \label{sec:localOutlierFactor}
 `Local Outlier Factor' is a formula that captures the degree to which a data 
@@ -171,6 +172,7 @@ point is an outlier with respect to its local neighbourhood. In this context,
 `local' means that the determination of the data points does not depend on 
 knowledge of the global distribution of the data set.
 
+% OUTLIER DETECTION
 \subsection{Outlier detection}
 \label{sec:outlierDetection}
 In this section we will review some general definitions which may be used to 
@@ -278,6 +280,7 @@ anomalies as anomalies affect both the mean and the covariance of the data.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Nearest Neighbour Algorithms}
 \label{sec:nearestNeighbourAlgorithms}
+% TODO
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % VECTORS AND MATRICES
@@ -297,8 +300,8 @@ if:
 M\mathbf{v} = \lambda\textbf{v}
 \end{displaymath}
 
-If $\mathbf{v_{1}}$ is an eigenvector of M of eigenvalue $\lambda_{1}$, 
-$\mathbf{v_{2}}$ is an eigenvector of M of eigenvalue $\lambda_{2} \neq 
+If $\mathbf{v_{1}}$ is an eigenvector of $M$ of eigenvalue $\lambda_{1}$, 
+$\mathbf{v_{2}}$ is an eigenvector of $M$ of eigenvalue $\lambda_{2} \neq 
 \lambda_{1}$, and $M$ is symmetric, then $\mathbf{v_{1}}$ is orthogonal to 
 $\mathbf{v_{2}}$.
 
@@ -327,6 +330,7 @@ M = MVV^{T} = V{\Lambda}V^{T} = \sum_{i} \lambda_{i}\mathbf{v_{i}}\mathbf{v_{i}^
 % EIGEN DECOMPOSITION
 \subsection{Eigen decomposition}
 \label{sec:eigenDecomposition}
+% TODO
 
 % LAPLACIAN MATRICES
 \subsection{Laplacian Matrices}
@@ -434,14 +438,13 @@ connectivity of $G$. $\lambda_{2} > 0$ if and only if $G$ is connected.
 
 % INTRODUCTION
 \subsection{Introduction}
-\label{sec:commuteTime:introduction}
+\label{sec:commuteTimeIntroduction}
 Commute time is a robust distance metric derived from a random walk on graphs 
-\cite{Khoa:2012}. In his thesis on ``Large Scale Anomaly Detection and 
-Clustering Using Random Walks'', Khoa demonstrated how commute time can be used 
-as a distance measure for data mining tasks such as anomaly detection and 
-clustering. A prohibitive limitation of this techniue is that the calculation of
-commute time involves the eigen decomposition of the graph Laplacian, making it 
-impractical for large graphs.
+\cite{Khoa:2012}. In \citetitle{Khoa:2012}, \citeauthor{Khoa:2012} demonstrated 
+how commute time can be used as a distance measure for data mining tasks such as
+anomaly detection and clustering. A prohibitive limitation of this techniue is 
+that the calculation of commute time involves the eigen decomposition of the 
+graph Laplacian, making it impractical for large graphs.
 
 A major advantage of using commute time as a distance metric for outlier 
 detection is that it effectively captures not only the distances between data 
@@ -463,7 +466,7 @@ used and thus the limitations of these metrics can be avoided.
 \label{sec:commuteTime:limitations}
 The computation of commute time requires the eigen decomposition (see 
 \hyperref[sec:eigenDecomposition] {Section~\ref{sec:eigenDecomposition}}) of the
-graph Laplacianmatrix (see \hyperref[sec:laplacianMatrices] 
+graph Laplacian matrix (see \hyperref[sec:laplacianMatrices] 
 {Section~\ref{sec:laplacianMatrices}}), a computation which takes $O(n^{3})$ 
 time and thus is not practical for large graphs. Methods to approximate the 
 commute time to reduce the computational time are required in order to 
@@ -472,6 +475,7 @@ efficiently use commute time in large datasets.
 % ANOMALY DETECTION USING COMMUTE TIME
 \subsection{Anomaly Detection Using Commute Time}
 \label{sec:anomalyDetectionUsingCommuteTime}
+% TODO
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % SOLVERS
