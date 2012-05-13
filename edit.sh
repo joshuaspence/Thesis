@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Open browser
-nautilus "$(readlink -f `dirname $0`)" 2>/dev/null & 
+nautilus "$(readlink -f `dirname $0`)/.."  2>/dev/null &
 
 # Edit LaTeX files
 LATEX_FILES=$(find `dirname $0`/src -type f \( -name "*.tex" -o -name "*.sty" \) -print0 | xargs -0 echo)
