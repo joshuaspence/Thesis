@@ -1,4 +1,3 @@
-/* test */
 #include "mex.h"
 #include "math.h"
 
