@@ -67,8 +67,6 @@ function [O,OF] = TopN_Outlier_Pruning_Block(X,k,N,block_size)
 		            
 					if l>=k && score(j)<c
 						B(j) = 0;                    
-						%neighbours(j,:) = 0;
-						%neighbours_dist(j,:) = 0;
 						score(j) = 0;                   
 					end                                            
 				end
@@ -86,7 +84,7 @@ function [O,OF] = TopN_Outlier_Pruning_Block(X,k,N,block_size)
 		OF = BOF(1:N);    
 		% c = weakest outlier
 		c = OF(N);
-end
+	end
 \end{lstlisting}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
