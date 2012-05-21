@@ -168,6 +168,14 @@ distribution, data point are evaluated by their fitness to the assumed
 distribution. If the probibility of a data instance is less than a certain 
 threshold, then that data point is considered an anomaly.
 
+Although distance is an effective non-parametric approach to detecting outliers,
+the drawback is the amount of computation time required. Straightforward 
+algorithms, such as those based on nested loops, typically require $O(N^{2})$
+distance computations. This quadratic scaling means that it will be very 
+diffcult to mine outliers as we tackle increasingly larger data sets. This is a 
+major problem for many real databases where there are often millions of records 
+\cite{Bay:2003}.
+
 A common distribution considered when modelling data is the `Normal' 
 distribution. The probability that a data instance lies within $k$ standard 
 deviations $\sigma$ from the mean $\mu$ is the area between $\mu - k\sigma$ and 
