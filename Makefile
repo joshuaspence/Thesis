@@ -24,6 +24,7 @@ XDVI		  	:= xdvi
 ##################################################################
 
 BUILD_DIR		:= build
+DATA_DIR		:= data
 EXT_DIR			:= ext
 IMG_DIR			:= img
 SRC_DIR			:= src
@@ -63,6 +64,7 @@ create-symlinks: remove-symlinks
 	$(MUTE)$(LINK) $(foreach sty, $(STY_SRC), "$(realpath $(sty))") $(BUILD_DIR)/ || true
 	$(MUTE)$(LINK) $(foreach tex, $(TEX_SRC), "$(realpath $(tex))") $(BUILD_DIR)/ || true
 	$(MUTE)$(LINK) "$(realpath $(IMG_DIR))" $(BUILD_DIR)/ || true
+	$(MUTE)$(LINK) "$(realpath $(DATA_DIR))" $(BUILD_DIR)/ || true
 
 # Remove output directories
 .PHONY: remove-out-directories
