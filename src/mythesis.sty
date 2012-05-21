@@ -1,27 +1,11 @@
 \ProvidesPackage{mythesis}
 
-% For displaying data
-\usepackage{tikz}
-\usepackage{datatool}
-\usepackage{databar}
-
-\usepackage{forloop}
-\newcounter{color1}
-\newcounter{color2}
-\setcounter{color2}{1}
-\forloop{color1}{9}{\value{color1} < 100}{
-	\DTLsetbarcolor{\value{color1}}{\DTLgetbarcolor{\value{color2}}}
-	
-	\addtocounter{color2}{1}
-	\ifnum \value{color2}=9
-		\setcounter{color2}{1}
-	\fi
-}
-
 % Provides page numbers and headings at the top of each page
 \pagestyle{headings}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Packages
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage{amsfonts}           	% for formatting mathematical symbols
 \usepackage{amsmath,amssymb,amsthm}	% for math support
 \usepackage{biblatex}				% use biblatex instead of bibtex
@@ -29,25 +13,32 @@
 \usepackage[hidelinks]{hyperref}	% for PDF hyperlinks
 \usepackage{ifpdf}					% to check if we are using latex/pdflatex
 \usepackage{graphicx}				% for graphics
-\usepackage{longtable}				% for displaying large datasets in a table
 \usepackage{url}					% for web URLs
 
-% Use an index
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Index
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %\usepackage{makeidx}
 %\makeindex
 
-% Use a glossary
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Glossary
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %\usepackage[acronym,toc]{glossaries}
 %\makeglossaries
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Source code formatting
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage{color}					% for colouring listings source code
 \usepackage{listings}				% for source code formatting
 
+% Custom colours
 \definecolor{dkgreen}{rgb}{0,0.6,0}
 \definecolor{gray}{rgb}{0.5,0.5,0.5}
 \definecolor{mauve}{rgb}{0.58,0,0.82}
 
+% Default settings
 \lstset{
  	basicstyle=\small\ttfamily,     % Use small true type font
   	numbers=left,                   % where to put the line-numbers
@@ -70,8 +61,10 @@
   	morekeywords={*,...}            % if you want to add more keywords to the set
 }
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % To allow us to easily format a table row
 % See http://www.latex-community.org/forum/viewtopic.php?f=5&t=3293
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage{array}
 \newcolumntype{+}{>{\global\let\currentrowstyle\relax}}
 \newcolumntype{^}{>{\currentrowstyle}}
@@ -79,7 +72,30 @@
 #1\ignorespaces
 }
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% For displaying data
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{tikz}
+\usepackage{datatool}
+\usepackage{databar}
+\usepackage{longtable}
+
+\usepackage{forloop}
+\newcounter{color1}
+\newcounter{color2}
+\setcounter{color2}{1}
+\forloop{color1}{9}{\value{color1} < 100}{
+	\DTLsetbarcolor{\value{color1}}{\DTLgetbarcolor{\value{color2}}}
+	
+	\addtocounter{color2}{1}
+	\ifnum \value{color2}=9
+		\setcounter{color2}{1}
+	\fi
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Variables (to save retyping and reformatting these throughout the document)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\thesisTitle}{Implementation of Random Projection Algorithms Using an FPGA}
 \newcommand{\thesisDate}{2012}
 \newcommand{\studentName}{Joshua Spence}
@@ -87,5 +103,7 @@
 \newcommand{\supervisorName}{Philip Leong}
 \newcommand{\universityName}{University of Sydney}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Custom commands
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
