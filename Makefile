@@ -9,14 +9,14 @@ ECHO			:= echo
 EVINCE			:= evince
 FIND			:= find
 IGNORE_RESULT 	:= -
-LINK		  	:= ln --symbolic --verbose
+LINK		  	:= ln --symbolic
 MAKE			:= make
 MKDIR			:= mkdir --parents
 MUTE			:= @
 SILENT			:= >/dev/null
 SPACE 			:= $(empty) $(empty)
+TOUCH			:= touch
 VERYSILENT		:= 1>/dev/null 2>/dev/null
-XDVI		  	:= xdvi
 
 
 ##################################################################
@@ -47,46 +47,54 @@ all: pre
 		
 # To be run before make
 .PHONY: pre
-pre: create-out-directories create-symlinks
+pre: .directories.done .symlinks.done
 	
 # Create output directories
-.PHONY: create-out-directories
-create-out-directories:
+.directories.done:
 	$(IGNORE_RESULT)$(MUTE)$(ECHO) "Creating directories."
 	$(MUTE)$(MKDIR) $(OUT_DIR)
+	$(MUTE)$(TOUCH) $@
 	
 # Create symbolic links
-.PHONY: create-symlinks
-create-symlinks: remove-symlinks
+.symlinks.done:
 	$(IGNORE_RESULT)$(MUTE)$(ECHO) "Creating symbolic links."
-	$(MUTE)$(LINK) $(foreach bib, $(BIB_SRC), "$(realpath $(bib))") $(BUILD_DIR)/ || true
-	$(MUTE)$(LINK) $(foreach bst, $(BST_SRC), "$(realpath $(bst))") $(BUILD_DIR)/ || true
-	$(MUTE)$(LINK) $(foreach sty, $(STY_SRC), "$(realpath $(sty))") $(BUILD_DIR)/ || true
-	$(MUTE)$(LINK) $(foreach tex, $(TEX_SRC), "$(realpath $(tex))") $(BUILD_DIR)/ || true
-	$(MUTE)$(LINK) "$(realpath $(IMG_DIR))" $(BUILD_DIR)/ || true
-	$(MUTE)$(LINK) "$(realpath $(DATA_DIR))" $(BUILD_DIR)/ || true
+	$(MUTE)$(LINK) $(foreach bib, $(BIB_SRC), "$(realpath $(bib))") $(BUILD_DIR)/
+	$(MUTE)$(LINK) $(foreach bst, $(BST_SRC), "$(realpath $(bst))") $(BUILD_DIR)/
+	$(MUTE)$(LINK) $(foreach sty, $(STY_SRC), "$(realpath $(sty))") $(BUILD_DIR)/
+	$(MUTE)$(LINK) $(foreach tex, $(TEX_SRC), "$(realpath $(tex))") $(BUILD_DIR)/
+	$(MUTE)$(LINK) "$(realpath $(IMG_DIR))" $(BUILD_DIR)/
+	$(MUTE)$(LINK) "$(realpath $(DATA_DIR))" $(BUILD_DIR)/
+	$(MUTE)$(TOUCH) $@
 
 # Remove output directories
-.PHONY: remove-out-directories
-remove-out-directories:
+.PHONY: rm-directories
+rm-directories:
 	$(IGNORE_RESULT)$(MUTE)$(ECHO) "Deleting directories."
 	$(MUTE)$(DELETE) -r $(OUT_DIR)
+	$(MUTE)$(DELETE) .directories.done
 
 # Remove symbolic links
-.PHONY: remove-symlinks
-remove-symlinks:
+.PHONY: rm-symlinks
+rm-symlinks:
 	$(IGNORE_RESULT)$(MUTE)$(ECHO) "Deleting symbolic links."
 	$(MUTE)$(DELETE) $(shell find $(BUILD_DIR) -mindepth 1 \( -type l \) -print)
-
+	$(MUTE)$(DELETE) .symlinks.done
+	
 
 ##################################################################
 
 # Removes build files but not output files
 .PHONY: clean
-clean: remove-symlinks
+clean: rm-symlinks
 	$(MUTE)$(MAKE) -C $(BUILD_DIR) $@
 
 # Remove build files and output files
 .PHONY: distclean
-distclean: remove-out-directories remove-symlinks
+distclean: rm-directories rm-symlinks
 	$(MUTE)$(MAKE) -C $(BUILD_DIR) clean
+	
+##################################################################
+
+.PHONY: read
+read: all
+	$(MUTE)$(ACROREAD) $(OUT_DIR)/*.pdf

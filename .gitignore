@@ -46,3 +46,6 @@ build/*
 
 # Output files
 output/*
+
+# Makefile helper files
+*.done
