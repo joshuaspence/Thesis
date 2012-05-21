@@ -1,5 +1,23 @@
 \ProvidesPackage{mythesis}
 
+% For displaying data
+\usepackage{tikz}
+\usepackage{datatool}
+\usepackage{databar}
+
+\usepackage{forloop}
+\newcounter{color1}
+\newcounter{color2}
+\setcounter{color2}{1}
+\forloop{color1}{9}{\value{color1} < 100}{
+	\DTLsetbarcolor{\value{color1}}{\DTLgetbarcolor{\value{color2}}}
+	
+	\addtocounter{color2}{1}
+	\ifnum \value{color2}=9
+		\setcounter{color2}{1}
+	\fi
+}
+
 % Provides page numbers and headings at the top of each page
 \pagestyle{headings}
 
@@ -21,10 +39,6 @@
 % Use a glossary
 %\usepackage[acronym,toc]{glossaries}
 %\makeglossaries
-
-% For displaying data
-\usepackage{datatool}
-\usepackage{datapie}
 
 % Source code formatting
 \usepackage{color}					% for colouring listings source code

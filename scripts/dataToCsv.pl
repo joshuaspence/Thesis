@@ -23,9 +23,7 @@ foreach my $ts ($te->tables()) {
 	print "$function_name_header,$calls_header,$total_time_header,$self_time_header\n";
 
     foreach my $row (@$data_rows) {
-    	my $function_name = @$row[0];
-    	$function_name =~ s/_/\\_/g;
-    	
+    	my $function_name = @$row[0];    	
     	my $calls = @$row[1];
     	
     	my $total_time = @$row[2];
@@ -34,6 +32,6 @@ foreach my $ts ($te->tables()) {
     	my $self_time = @$row[3];
     	$self_time =~ s/\s*s//;
     
-	    print "$function_name,$calls,$total_time,$self_time\n";
+	    print "\"$function_name\",$calls,$total_time,$self_time\n";
     }
 }
