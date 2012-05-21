@@ -1,5 +1,7 @@
 #!/usr/bin/perl
 
+# Script to convert Matlab profiler output into CSV format
+
 use strict;
 use warnings;
 use HTML::TableExtract;
