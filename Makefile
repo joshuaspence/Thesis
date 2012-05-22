@@ -103,4 +103,4 @@ distclean: rm-directories rm-symlinks rm-files
 
 .PHONY: read
 read: all
-	$(ACROREAD) $(OUT_DIR)/*.pdf
+	$(ACROREAD) $(OUT_DIR)/thesis.pdf $(BACKGROUND)
