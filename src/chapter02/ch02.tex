@@ -235,9 +235,9 @@ eigenvalues, as well as some of their basic properties.
 
 A vector $\mathbf{v}$ is an eigenvector of a matrix $M$ of eigenvalue $\lambda$ 
 if:
-\begin{displaymath}
+\begin{equation}
 M\mathbf{v} = \lambda\textbf{v}
-\end{displaymath}
+\end{equation}
 
 If $\mathbf{v_{1}}$ is an eigenvector of $M$ of eigenvalue $\lambda_{1}$, 
 $\mathbf{v_{2}}$ is an eigenvector of $M$ of eigenvalue $\lambda_{2} \neq 
@@ -250,21 +250,21 @@ every $n{\times}n$ symmetric matrix has $n$ eigenvalues, counted with
 multiplicity. Thus, it has an orthonormal basis of eigenvectors, 
 $\begin{Bmatrix} \mathbf{v_{1}} & \ldots & \mathbf{v_{n}} \end{Bmatrix}$ with
 eigenvalues $\lambda_{1} \leq \lambda_{2} \leq \ldots \leq \lambda_{n}$ so that:
-\begin{displaymath}
+\begin{equation}
 M\mathbf{v_{i}} = \lambda_{i}\mathbf{v_{i}} \quad \forall i
-\end{displaymath}
+\end{equation}
 
 If we let $V$ be the matrix whose $i$th column is $v_{i}$ and $\Lambda$ be the 
 diagonal matrix whose $i$th diagonal is $\lambda_{i}$, we can write this more 
 compactly as:
-\begin{displaymath}
+\begin{equation}
 MV = V\Lambda
-\end{displaymath}
+\end{equation}
 
 Multiplying by $V^{T}$ on the right, we obtain the eigen-decomposition of $M$:
-\begin{displaymath}
+\begin{equation}
 M = MVV^{T} = V{\Lambda}V^{T} = \sum_{i} \lambda_{i}\mathbf{v_{i}}\mathbf{v_{i}^{T}}
-\end{displaymath}
+\end{equation}
 
 % EIGEN DECOMPOSITION
 \subsection{Eigen decomposition}
@@ -283,7 +283,7 @@ undirected graph $G = (V,E)$ along with a function $w : E \rightarrow
 
 The adjacency matrix of a weighted graph $G$ will be denoted $A_{G}$, and is
 given by:
-\begin{displaymath}
+\begin{equation}
 A_{G}(i,j) := 
     \left\{
         \begin{array}{ll}
@@ -291,28 +291,28 @@ A_{G}(i,j) :=
             0 &                 \quad \text{otherwise}
         \end{array}
     \right.
-\end{displaymath}
+\end{equation}
 
 The degree matrix of a weighted graph $G$ will be denoted $D_{G}$, and is the
 diagonal matrix such that:
-\begin{displaymath}
+\begin{equation}
 D_{G}(i,i) = \sum_{j} A_{G}(i,j)
-\end{displaymath}
+\end{equation}
 
 A Laplacian Matrix is a matrix representation of a graph, defined by the
 equation:
-\begin{displaymath}
+\begin{equation}
 L_{G} = D_{G} - A_{G}
-\end{displaymath}
+\end{equation}
 
 Now, let $G_{1,2}$ be a graph on two vertices with a single edge of weight $1$.
-\begin{displaymath}
+\begin{equation}
 L_{G_{1,2}} :=
     \begin{bmatrix}
         1 & -1 \\
         -1 & 1
     \end{bmatrix}
-\end{displaymath}
+\end{equation}
 
 For the graph with $n$ vertices and just one edge between vertices $u$ and $v$, 
 we can define the Laplacian Matrix similarly. For concreteness, I'll call this
@@ -320,17 +320,17 @@ graph $G_{u,v}$. It's Laplacian Matrix is the $n{\times}n$ matrix whose only
 non-zero entries are in the intersections of rows and columns $u$ and $v$. The 
 $2{\times}2$ matrix at the intersections of these rows and columns is, of 
 course:
-\begin{displaymath}
+\begin{equation}
     \begin{bmatrix}
         1 & -1 \\
         -1 & 1
     \end{bmatrix}
-\end{displaymath}
+\end{equation}
 
 For a weighted graph $G = (V,E,w)$, we define:
-\begin{displaymath}
+\begin{equation}
 L_{G} := \sum_{(u,v) \in E} w(u,v)L_{G_{u,v}}
-\end{displaymath}
+\end{equation}
 
 \paragraph{Properties}
 For a graph $G$ and its Laplacian Matrix $L$ with eigenvalues $\lambda_{0} < 
@@ -353,7 +353,7 @@ thereby producing zero by definition.
 \item The smallest non-zero eigenvalue of $L$ is called the spectral gap.
 \item If we arbitrarily assign an orientation to the edges in $G$ and label each
 edge, then we can define the vertex edge incidence matrix $Q$ by:
-\begin{displaymath}
+\begin{equation}
 Q_{ij} := 
     \left\{
         \begin{array}{ll}
@@ -362,7 +362,7 @@ Q_{ij} :=
             0 &     \quad \text{otherwise}
         \end{array}
     \right.
-\end{displaymath}
+\end{equation}
 Then the Laplacian Matrix $L$ satisfies $L = Q^{T}Q$, regardless of the 
 orientation of the edges.
 \item The second smallest eigenvalue of $L$ ($\lambda_{2}$) is the algebraic 
@@ -467,9 +467,9 @@ The probability that, given the chain is in state $i$ now, it will be in state
 $j$ in two steps is denoted by $p_{ij}^{(2)}$. In general, if a Markov chain has 
 $r$ states, then:
 
-\begin{displaymath}
+\begin{equation}
 p_{ij}^{(2)} = \sum_{k=1}^{r} p_{ik}p{kj}
-\end{displaymath}
+\end{equation}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % RANDOM PROJECTIONS
@@ -525,6 +525,6 @@ an $n$-vector $\mathbf{b}$, produces an $\tilde{\mathbf{x}}$ such that
 $\begin{Vmatrix} \tilde{\textbf{x}} - A^{\dagger}\textbf{b} \end{Vmatrix}_{A} 
 \leq \epsilon \begin{Vmatrix} A^{\dagger}\mathbf{b} \end{Vmatrix}_{A}$ in 
 expected time:
-\begin{displaymath}
+\begin{equation}
 m \log^{O(1)} n \log (1/\epsilon)
-\end{displaymath}
+\end{equation}
