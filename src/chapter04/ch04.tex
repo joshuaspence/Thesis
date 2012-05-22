@@ -10,12 +10,21 @@
 In order to choose which step of the algorithm would be best suited for 
 implementation on FPGA hardware, it was first necessary to first profile the 
 execution of the algorithm using various test cases. This task was performed 
-using \emph{MATLAB}, using code supplied by \citeauthor{Khoa:2012} that was used
-to test and verify the conclusions of \citetitle{Khoa:2012}. Using 
-\emph{MATLAB}'s \verb+profile+ command, I was able to analyse the algorithm and 
-make an assessment of the running time of the algorithm.
+using MATLAB, using code supplied by \citeauthor{Khoa:2012} that was used to 
+test and verify the conclusions of \citetitle{Khoa:2012}. Using \emph{MATLAB}'s 
+\verb+profile+ command, I was able to analyse the algorithm and make an 
+assessment of the running time of the algorithm. The results of the algorithm 
+profiling can be found in 
+\hyperref[apdx:algorithmProfiling]{Appendix~\ref{apdx:algorithmProfiling}}. 
 
 % PERFORMANCE BOTTLENECK
 \subsection{Performance Bottleneck}
 \label{sec:algorithmPerformanceBottleneck}
-From observations of the MATLAB execution profile.
+From observations of the results of the algorithm profiling, it was observed 
+that the performance of the `anomaly detection using commute-distance' 
+algorithm is bottlenecked significantly by a function named 
+\verb+TopN_Outlier_Pruning_Block+. The MATLAB code for this function can be 
+found in \hyperref[apdx:matlabCode]{Appendix~\ref{apdx:matlabCode}}. Analysis of
+this function, as well as discussions with \citeauthor{Khoa:2012} revealed that
+the algorithm was originally devised by \citeauthor{Bay:2003} and published in
+the paper \citetitle{Bay:2003}.
