@@ -72,6 +72,12 @@ rm-directories:
 	$(IGNORE_RESULT)$(MUTE)$(ECHO) "Deleting directories."
 	$(MUTE)$(DELETE) -r $(OUT_DIR)
 	$(MUTE)$(DELETE) .directories.done
+	
+# Delete leftover files
+.PHONY: rm-files
+rm-files:
+	$(IGNORE_RESULT)$(MUTE)$(ECHO) "Deleting any leftover build files."
+	$(MUTE)$(DELETE) $(shell find $(BUILD_DIR) -mindepth 1 -type f \( -name Makefile -o -name Variables.ini \) -prune -o -print)
 
 # Remove symbolic links
 .PHONY: rm-symlinks
@@ -90,11 +96,11 @@ clean: rm-symlinks
 
 # Remove build files and output files
 .PHONY: distclean
-distclean: rm-directories rm-symlinks
+distclean: rm-directories rm-symlinks rm-files
 	$(MUTE)$(MAKE) -C $(BUILD_DIR) clean
 	
 ##################################################################
 
 .PHONY: read
 read: all
-	$(MUTE)$(ACROREAD) $(OUT_DIR)/*.pdf
+	$(ACROREAD) $(OUT_DIR)/*.pdf
