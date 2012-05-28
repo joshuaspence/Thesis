@@ -65,3 +65,57 @@ this research, and making suggestions for further research in this topic.
  
 \section{Schedule}
 \label{sec:schedule}
+
+% Gantt chart
+\begin{landscape}
+	\begin{figure}
+		\begin{center}
+			\scalebox{0.8}{
+			\begin{gantt}[
+					xunitlength=0.5cm,
+					fontsize=\small,
+					titlefontsize=\small,
+					drawledgerline=true
+					]{12}{36}
+				\begin{ganttitle}
+					\titleelement{Mar}{4}
+					\titleelement{Apr}{4}
+					\titleelement{May}{4}
+					\titleelement{Jun}{4}
+					\titleelement{Jul}{4}
+					\titleelement{Aug}{4}
+					\titleelement{Sep}{4}
+					\titleelement{Oct}{4}
+					\titleelement{Nov}{4}
+				\end{ganttitle}
+				\begin{ganttitle}
+					\numtitle{1}{1}{4}{1}
+					\numtitle{1}{1}{4}{1}
+					\numtitle{1}{1}{4}{1}
+					\numtitle{1}{1}{4}{1}
+					\numtitle{1}{1}{4}{1}
+					\numtitle{1}{1}{4}{1}
+					\numtitle{1}{1}{4}{1}
+					\numtitle{1}{1}{4}{1}
+					\numtitle{1}{1}{4}{1}
+				\end{ganttitle}
+	
+				\ganttbar{Literature Review}{1}{24}
+				\ganttbar{Performance Benchmarking}{7}{4}
+				\ganttbar{Design}{9}{12}
+				\ganttbar{Implementation}{20}{12}
+				\ganttbar{Review}{28}{8}
+				
+				\ganttmilestone{Topic Proposal Due}{6.68} % April 20
+				\ganttmilestone{Progress Report Due}{12} % June 1
+				\ganttmilestone{Draft Treatise Due}{29.56} % October 12
+				\ganttmilestone{Final Treatise Due}{31.08} % October 24
+				\ganttmilestone{Project Presentations}{33.2} % November 9
+				%\ganttcon{4}{5}{4}{7}
+			\end{gantt}
+			}
+		\end{center}
+	\caption{Schedule for thesis work}
+	\end{figure}
+\end{landscape}
+
