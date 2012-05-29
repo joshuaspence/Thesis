@@ -95,9 +95,7 @@
 \usepackage{array}
 \newcolumntype{+}{>{\global\let\currentrowstyle\relax}}
 \newcolumntype{^}{>{\currentrowstyle}}
-\newcommand{\rowstyle}[1]{\gdef\currentrowstyle{#1}%
-#1\ignorespaces
-}
+\newcommand{\rowstyle}[1]{\gdef\currentrowstyle{#1}#1\ignorespaces}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Use “\citeneeded{}” to get Wikipedia-style “citation needed” in document

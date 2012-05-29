@@ -5,14 +5,13 @@
 \label{sec:motivation}
 Anomaly detection is an important technique which can be applied to a wide 
 range of applications. There are many techniques to detect and measure 
-anomalies, each usually most relevant to some specific problem domain. A general
-algorithm for anomaly detection is difficult to design, due to various 
-challenges associated with defining and measuring anomalies. Anomaly detection 
-is a widely researched area and there exists many algorithms for anomaly 
-detection. Most of these approaches are based on statistical or geometrical 
-measures involving distance. Whilst many algorithms work well for some subset of
-input data sets, it has been difficult to discover an algorithm which performs 
-both correctly and efficiently on all possible data sets.
+anomalies, each usually most applicable to some specific problem domain. A 
+general algorithm for anomaly detection has proved difficult to design, due to 
+various challenges associated with defining and measuring anomalies. Most 
+existing approaches are based on statistical or geometrical measures involving 
+distance. Whilst many algorithms work well for some subset of input data sets, 
+it has been difficult to discover an algorithm which performs both correctly and
+efficiently on all possible data sets.
 
 Previous research has found merit in applying randomization techniques to highly
 multivariate data sets in order to reduce the dimensionality of these data sets 
@@ -67,6 +66,7 @@ this research, and making suggestions for further research in this topic.
 \label{sec:schedule}
 
 % Gantt chart
+% See http://www.martin-kumm.de/tex_gantt_package.php
 \begin{landscape}
 	\begin{figure}
 		\begin{center}
@@ -76,7 +76,8 @@ this research, and making suggestions for further research in this topic.
 					fontsize=\small,
 					titlefontsize=\small,
 					drawledgerline=true
-					]{12}{36}
+					]{18}{36}
+				% Months
 				\begin{ganttitle}
 					\titleelement{Mar}{4}
 					\titleelement{Apr}{4}
@@ -88,6 +89,7 @@ this research, and making suggestions for further research in this topic.
 					\titleelement{Oct}{4}
 					\titleelement{Nov}{4}
 				\end{ganttitle}
+				% Split months into quarters
 				\begin{ganttitle}
 					\numtitle{1}{1}{4}{1}
 					\numtitle{1}{1}{4}{1}
@@ -100,18 +102,29 @@ this research, and making suggestions for further research in this topic.
 					\numtitle{1}{1}{4}{1}
 				\end{ganttitle}
 	
+				% Tasks
+				\ganttbar{Background Reading}{1}{6}
 				\ganttbar{Literature Review}{1}{24}
-				\ganttbar{Performance Benchmarking}{7}{4}
-				\ganttbar{Design}{9}{12}
-				\ganttbar{Implementation}{20}{12}
-				\ganttbar{Review}{28}{8}
 				
+				\ganttbar{Performance Benchmarking}{7}{1} \ganttcon{7}{2}{7}{4}
+				\ganttbarcon{Algorithm Analysis}{8}{1}				
+				\ganttbarcon{MATLAB-to-C code transformation}{9}{2}
+				\ganttbarcon{Code Improvements}{11}{4}			
+				
+				\ganttbarcon{Design of FPGA hardware}{15}{8}		
+				
+				\ganttbar{Implementation of FPGA hardware}{22}{4}
+				\ganttbar{Testing and Debugging}{25}{2}			
+				\ganttbar{Performance Benchmarking}{26}{2}
+				
+				\ganttbar{Review}{23}{8}
+				
+				% Milestones
 				\ganttmilestone{Topic Proposal Due}{6.68} % April 20
-				\ganttmilestone{Progress Report Due}{12} % June 1
-				\ganttmilestone{Draft Treatise Due}{29.56} % October 12
-				\ganttmilestone{Final Treatise Due}{31.08} % October 24
-				\ganttmilestone{Project Presentations}{33.2} % November 9
-				%\ganttcon{4}{5}{4}{7}
+				\ganttmilestonecon{Progress Report Due}{12} % June 1
+				\ganttmilestonecon{Draft Treatise Due}{29.56} % October 12
+				\ganttmilestonecon{Final Treatise Due}{31.08} % October 24
+				\ganttmilestonecon{Project Presentations}{33.2} % November 9
 			\end{gantt}
 			}
 		\end{center}
