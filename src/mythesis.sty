@@ -11,6 +11,7 @@
 \usepackage{amsmath,amssymb,amsthm}		% for math support
 \usepackage{biblatex}					% use biblatex instead of bibtex
 \usepackage[small,bf]{caption}			% for changing the appearance of captions
+\usepackage{float}						% for setting float specifiers
 \usepackage[hidelinks]{hyperref}		% for PDF hyperlinks
 \usepackage{graphicx}					% for graphics
 \usepackage{gantt}						% for gantt charts
@@ -29,29 +30,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %\usepackage[acronym,toc]{glossaries}
 %\makeglossaries
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% For displaying data
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\usepackage{tikz}
-\usepackage{datatool}
-\usepackage{databar}
-\usepackage{longtable}
-
-\begin{comment}
-\usepackage{forloop}
-\newcounter{color1}
-\newcounter{color2}
-\setcounter{color2}{1}
-\forloop{color1}{9}{\value{color1} < 100}{
-	\DTLsetbarcolor{\value{color1}}{\DTLgetbarcolor{\value{color2}}}
-	
-	\addtocounter{color2}{1}
-	\ifnum \value{color2}=9
-		\setcounter{color2}{1}
-	\fi
-}
-\end{comment}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Source code formatting

@@ -163,7 +163,7 @@ for my $dataset (@datasets) {
 			
 			# Output the "Other" data (if exists)
 			if ($other_self_time > 0) {
-				print("\"$dataset_string\",\"$iteration_string\",\Other\",$other_calls,$other_total_time,$other_self_time\n");
+				print("\"$dataset_string\",\"$iteration_string\",\"Other\",$other_calls,$other_total_time,$other_self_time\n");
 			}
 		}
 	}
