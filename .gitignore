@@ -49,3 +49,6 @@ output/*
 
 # Makefile helper files
 *.done
+
+# Backup files
+*.bak
