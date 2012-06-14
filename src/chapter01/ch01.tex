@@ -3,137 +3,16 @@
 
 \section{Motivation}
 \label{sec:motivation}
-Anomaly detection is an important technique which can be applied to a wide 
-range of applications. There are many techniques to detect and measure 
-anomalies, each usually most applicable to some specific problem domain. A 
-general algorithm for anomaly detection has proved difficult to design, due to 
-various challenges associated with defining and measuring anomalies. Most 
-existing approaches are based on statistical or geometrical measures involving 
-distance. Whilst many algorithms work well for some subset of input data sets, 
-it has been difficult to discover an algorithm which performs both correctly and
-efficiently on all possible data sets.
-
-Previous research has found merit in applying randomization techniques to highly
-multivariate data sets in order to reduce the dimensionality of these data sets 
-whilst maintaining their fundamental and statistical properties. Such reduction 
-of the dimensionality of data, assuming it can be performed efficiently, allows 
-previously-unscalable anomaly detection algorithms to be practically applied to 
-a wider range of data and applications.
-
-Anomaly detection is an important and contemporary problem in the field of 
-computer science, and is of particular interesting to stock market analysis, 
-network intrusion detection and image comparison.
+\input{ch01-motivation}
 
 \section{Contributions of this thesis}
 \label{sec:contributions}
-One key difficulty in anomaly detection is the efficient scaling of a general 
-algorithm to apply to highly multivariate data. In this thesis, I explore the 
-use of randomization techniques (such as random projections and commute time) 
-in anomaly detection algorithms. These techniques provide encouraging results 
-with regards to the run-time complexity of an algorithm.
-
-Furthermore, in this thesis I attempt to make observations and analysis of the 
-run-time of anomaly detection using randomization techniques, so as to identify
-steps in the algorithms that bottleneck the algorithm's performance. Through 
-this identification it would be possible to improve the \emph{actual} run-time 
-performance of the algorithm by utilisation the advantages of reconfigurable 
-computing.
+\input{ch01-contributions}
 
 \section{Organization}
 \label{sec:organization}
-The rest of this thesis is organized as follows. In \hyperref[ch:background]
-{Chapter~\ref{ch:background}}, we provide background to various anomaly 
-detection techniques, as well as randomization techniques. In order to provide 
-the reader with an understanding of the background topics, a brief background is
-given to various topics in linear algebra, vector calculus and graph theory. In
-\hyperref[ch:reconfigurableComputing]{Chapter~\ref{ch:reconfigurableComputing}}, 
-we provide an overview of reconfigurable computing, including an explanation of 
-Field-Programmable Gate Arrays (FPGAs).
-
-In \hyperref[ch:design] {Chapter~\ref{ch:design}}, we profile the execution of 
-an anomaly detection algorithm and explore possible improvements to the 
-algorithm, in particular by outsourcing various stages of the algorithm to an 
-FPGA device. In \hyperref[ch:implementation]{Chapter~\ref{ch:implementation}}, 
-we describe the implementation of the improved algorithm and detail the process 
-that was followed in order to construct the hardware processing device. In 
-\hyperref[ch:results]{Chapter~\ref{ch:results}}, we record results obtained by 
-benchmarking the device that was previously designed and constructed, and 
-comparing the expected improvements to the algorithm's execution with the 
-measured results.
-
-We conclude in \hyperref[ch:conclusions] {Chapter~\ref{ch:conclusions}} by 
-reflecting upon the results obtained through this research, and making 
-suggestions for further research in this topic.
+\input{ch01-organization}
  
 \section{Schedule}
 \label{sec:schedule}
-A Gantt chart showing the anticipated schedule for the project is shown in 
-\hyperref[fig:ganttChart]{Figure~\ref{fig:ganttChart}}. This will be updated as 
-the project progresses.
-
-% Gantt chart
-% See http://www.martin-kumm.de/tex_gantt_package.php
-\begin{figure}[h]
-	\begin{center}
-		\scalebox{0.5}{
-		\begin{gantt}[
-				xunitlength=0.5cm,
-				fontsize=\small,
-				titlefontsize=\small,
-				drawledgerline=true
-				]{18}{36}
-			% Months
-			\begin{ganttitle}
-				\titleelement{Mar}{4}
-				\titleelement{Apr}{4}
-				\titleelement{May}{4}
-				\titleelement{Jun}{4}
-				\titleelement{Jul}{4}
-				\titleelement{Aug}{4}
-				\titleelement{Sep}{4}
-				\titleelement{Oct}{4}
-				\titleelement{Nov}{4}
-			\end{ganttitle}
-			% Split months into quarters
-			\begin{ganttitle}
-				\numtitle{1}{1}{4}{1}
-				\numtitle{1}{1}{4}{1}
-				\numtitle{1}{1}{4}{1}
-				\numtitle{1}{1}{4}{1}
-				\numtitle{1}{1}{4}{1}
-				\numtitle{1}{1}{4}{1}
-				\numtitle{1}{1}{4}{1}
-				\numtitle{1}{1}{4}{1}
-				\numtitle{1}{1}{4}{1}
-			\end{ganttitle}
-
-			% Tasks
-			\ganttbar{Background Reading}{1}{6}
-			\ganttbar{Literature Review}{1}{24}
-			
-			\ganttbar{Performance Benchmarking}{7}{1} \ganttcon{7}{2}{7}{4}
-			\ganttbarcon{Algorithm Analysis}{8}{1}				
-			\ganttbarcon{MATLAB-to-C code transformation}{9}{2}
-			\ganttbarcon{Code Improvements}{11}{4}			
-			
-			\ganttbarcon{Design of FPGA hardware}{15}{8}		
-			
-			\ganttbar{Implementation of FPGA hardware}{22}{4}
-			\ganttbar{Testing and Debugging}{25}{2}			
-			\ganttbar{Performance Benchmarking}{26}{2}
-			
-			\ganttbar{Review}{23}{8}
-			
-			% Milestones
-			\ganttmilestone{Topic Proposal Due}{6.68} % April 20
-			\ganttmilestonecon{Progress Report Due}{12} % June 1
-			\ganttmilestonecon{Draft Treatise Due}{29.56} % October 12
-			\ganttmilestonecon{Final Treatise Due}{31.08} % October 24
-			\ganttmilestonecon{Project Presentations}{33.2} % November 9
-		\end{gantt}
-		}
-	\end{center}
-\caption{Schedule for thesis work}
-\label{fig:ganttChart}
-\end{figure}
-
+\input{ch01-schedule}
