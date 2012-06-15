@@ -1,0 +1,8 @@
+@default_files = ("thesis.tex");
+$dvi_mode = 0;
+#$latex_silent_switch = "-interaction=batchmode -c-style-errors";
+#$out_dir = "../output";
+$pdf_mode = 1;
+#$pdflatex_silent_switch = "-interaction=batchmode -c-style-errors";
+$postscript_mode = 0;
+$recorder = 1;

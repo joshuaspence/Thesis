@@ -6,13 +6,14 @@ ACROREAD		:= acroread
 BACKGROUND		:= &
 DELETE			:= rm --force
 ECHO			:= echo
-EVINCE			:= evince
 FIND			:= find
 IGNORE_RESULT 	:= -
+LATEXMK			:= latexmk
 LINK		  	:= ln --symbolic
 MAKE			:= make
-MKDIR			:= mkdir --parents
 MUTE			:= @
+PUSHD			:= pushd
+POPD			:= popd
 SILENT			:= >/dev/null
 SPACE 			:= $(empty) $(empty)
 TOUCH			:= touch
@@ -28,7 +29,8 @@ DATA_DIR		:= data
 EXT_DIR			:= ext
 IMG_DIR			:= img
 SRC_DIR			:= src
-OUT_DIR			:= output
+
+OUTPUT_FILE		:= thesis.pdf
 
 BIB_SRC			:= $(shell $(FIND) $(SRC_DIR) -type f -name "*.bib")
 BST_SRC			:= $(shell $(FIND) $(EXT_DIR) -type f -name "*.bst")
@@ -43,18 +45,14 @@ TEX_SRC			:= $(shell $(FIND) $(SRC_DIR) -type f -name "*.tex")
 # Main target
 .PHONY: all
 all: pre
-	$(MUTE)$(MAKE) -C $(BUILD_DIR) $@
+	$(MUTE)$(PUSHD) $(BUILD_DIR)
+	$(MUTE)$(LATEXMK)
+	$(MUTE)$(POPD)
 		
 # To be run before make
 .PHONY: pre
-pre: .directories.done .symlinks.done
-	
-# Create output directories
-.directories.done:
-	$(IGNORE_RESULT)$(MUTE)$(ECHO) "Creating directories."
-	$(MUTE)$(MKDIR) $(OUT_DIR)
-	$(MUTE)$(TOUCH) $@
-	
+pre: .symlinks.done
+
 # Create symbolic links
 .symlinks.done:
 	$(IGNORE_RESULT)$(MUTE)$(ECHO) "Creating symbolic links."
@@ -65,19 +63,12 @@ pre: .directories.done .symlinks.done
 	$(MUTE)$(LINK) "$(realpath $(IMG_DIR))" $(BUILD_DIR)/
 	$(MUTE)$(LINK) "$(realpath $(DATA_DIR))" $(BUILD_DIR)/
 	$(MUTE)$(TOUCH) $@
-
-# Remove output directories
-.PHONY: rm-directories
-rm-directories:
-	$(IGNORE_RESULT)$(MUTE)$(ECHO) "Deleting directories."
-	$(MUTE)$(DELETE) -r $(OUT_DIR)
-	$(MUTE)$(DELETE) .directories.done
 	
 # Delete leftover files
 .PHONY: rm-files
 rm-files:
 	$(IGNORE_RESULT)$(MUTE)$(ECHO) "Deleting any leftover build files."
-	$(MUTE)$(DELETE) $(shell find $(BUILD_DIR) -mindepth 1 -type f \( -name Makefile -o -name Variables.ini \) -prune -o -print)
+	$(MUTE)$(DELETE) $(shell find $(BUILD_DIR) -mindepth 1 -type f \( -name Makefile -o -name Variables.ini -o -name latexmkrc \) -prune -o -print)
 
 # Remove symbolic links
 .PHONY: rm-symlinks
@@ -92,15 +83,19 @@ rm-symlinks:
 # Removes build files but not output files
 .PHONY: clean
 clean: rm-symlinks
-	$(MUTE)$(MAKE) -C $(BUILD_DIR) $@
+	$(MUTE)$(PUSHD) $(BUILD_DIR)
+	$(MUTE)$(LATEXMK) -c
+	$(MUTE)$(POPD)
 
 # Remove build files and output files
 .PHONY: distclean
-distclean: rm-directories rm-symlinks rm-files
-	$(MUTE)$(MAKE) -C $(BUILD_DIR) clean
+distclean: rm-symlinks rm-files
+	$(MUTE)$(PUSHD) $(BUILD_DIR)
+	$(MUTE)$(LATEXMK) -C
+	$(MUTE)$(POPD)
 	
 ##################################################################
 
 .PHONY: read
 read: all
-	$(ACROREAD) $(OUT_DIR)/thesis.pdf $(BACKGROUND)
+	$(ACROREAD) $(OUTPUT_FILE) $(BACKGROUND)
