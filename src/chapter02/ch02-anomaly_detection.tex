@@ -14,9 +14,9 @@ Anomaly and outlier detection are challenging areas that have gained much
 interest within the field of computer science. The importance of anomaly 
 detection is due to the fact that anomalies in data translate to significant 
 (and often critical) actionable information in a wide variety of application 
-domains \cite{Chandola:2007}. Over time, many techniques for anomaly 
-detection have been developed for specific application domains, as well as more 
-generic techniques \cite{Chandola:2007}.
+domains \cite{Chandola:2007}. Over time, many techniques for anomaly detection 
+have been developed for specific application domains, as well as more generic 
+techniques \cite{Chandola:2007}.
 
 % WHAT ARE ANOMALIES?
 \subsection{What are anomalies?}
@@ -30,11 +30,12 @@ $o_{1}$ and $o_{2}$, and points in region $O_{3}$, are considered to be
 anomalies.
 
 \begin{figure}
-\centering
-\includegraphics[width=0.5\textwidth]{2d-anomalies}
-\caption[A simple example of anomalies in a 2-dimensional data set.]{A simple 
-example of anomalies in a 2-dimensional data set \cite{Chandola:2007}.}
-\label{fig:2d-anomalies}
+	\centering
+	\includegraphics[width=0.5\textwidth]{2d-anomalies}
+	\caption[A simple example of anomalies in a 2-dimensional data set.]{A
+		simple example of anomalies in a 2-dimensional data set 
+		\cite{Chandola:2007}.}
+	\label{fig:2d-anomalies}
 \end{figure}
 
 % CHALLENGES
@@ -46,25 +47,32 @@ to this normal region as an anomaly. But several factors make this apparently
 simple approach very challenging:
 
 \begin{itemize}
+
 \item Defining a normal region which encompasses every possible normal behaviour 
 is very difficult. In addition, the boundary between normal and anomalous 
 behaviour is often not precise. Thus an anomalous observation which lies close
 to the boundary can actually be normal, and vice-versa.
+
 \item When anomalies are the result of malicious actions, the malicious 
 adversaries often adapt themselves to make the anomalous observations appear 
 like normal, thereby making the task of defining normal behavior more difficult.
+
 \item In many domains normal behavior keeps evolving and a current notion of
 normal behavior might not be sufficiently representative in the future.
+
 \item The exact notion of an anomaly is different for different application 
 domains. For example, in the medical domain a small deviation from normal (for
 example, fluctuations in body temperature) might be an anomaly, while similar 
 deviation in the stock market domain (for example, fluctuations in the value of 
 a stock) might be considered as normal. Thus applying a technique developed in 
 one domain to another is not straightforward.
+
 \item Availability of labeled data for training/validation of models used by 
 anomaly detection techniques is usually a major issue.
+
 \item Often the data contains noise which tends to be similar to the actual 
 anomalies and hence is difficult to distinguish and remove.
+
 \end{itemize}
 
 Due to the above challenges, the anomaly detection problem, in its most general
@@ -72,10 +80,7 @@ form, is not easy to solve. In fact, most of the existing anomaly detection
 techniques solve a specific formulation of the problem. The formulation is 
 induced by various factors such as nature of the data, availability of labeled 
 data, type of anomalies to be detected, etc. Often, these factors are determined
-by the application domain in which the anomalies need to be detected. 
-Researchers have adopted concepts from diverse disciplines such as statistics, 
-machine learning, data mining, information theory, spectral theory, and have 
-applied them to specific problem formulations.
+by the application domain in which the anomalies need to be detected.
 
 Researchers have adopted concepts from diverse disciplines such as statistics, 
 data mining, statistics, information theory and spectral theory in order to gain
@@ -121,6 +126,7 @@ which is used as the core density measurement within LOF \cite{Vries:2011}.
 Anomalies can be classified into three categories \cite{Chandola:2007}:
 
 \begin{description}
+
 \item[Point anomaly] If an individual data instance can be considered as 
 anomalous with respect to the rest of data, then the instance is termed as a 
 point anomaly. This is the simplest type of anomaly. Referring to 
@@ -134,13 +140,14 @@ of a context is induced by the structure in the data set and has to be specified
 as part of the problem formulation.
 
 \begin{figure}
-\centering
-\includegraphics[width=0.5\textwidth]{contextual-anomalies}
-\caption[Contextual anomaly $t_{2}$ in a temperature time series.]{Contextual 
-anomaly $t_{2}$ in a temperature time series. Note that the temperature at time 
-$t_{1}$ is same as that at time $t_{2}$ but occurs in a different context and 
-hence is not considered as an anomaly \cite{Chandola:2007}.}
-\label{fig:contextual-anomalies}
+	\centering
+	\includegraphics[width=0.5\textwidth]{contextual-anomalies}
+	\caption[Contextual anomaly $t_{2}$ in a temperature time series.]{
+		Contextual anomaly $t_{2}$ in a temperature time series. Note that the 
+		temperature at time $t_{1}$ is same as that at time $t_{2}$ but occurs 
+		in a different context and hence is not considered as an anomaly 
+		\cite{Chandola:2007}.}
+	\label{fig:contextual-anomalies}
 \end{figure}
 
 Contextual anomalies have been most commonly explored in time-series data and 
@@ -162,13 +169,13 @@ because the same low value exists for an abnormally long time. Note that that
 low value by itself is not an anomaly.
 
 \begin{figure}
-\centering
-\includegraphics[width=0.5\textwidth]{collective-anomalies}
-\caption[Collective anomaly corresponding to an \emph{Atrial Premature 
-Contraction} in an human electrocardiogram output.]{Collective anomaly 
-corresponding to an \emph{Atrial Premature Contraction} in an human 
-electrocardiogram output \cite{Goldberger:2000}.}
-\label{fig:collective-anomalies}
+	\centering
+	\includegraphics[width=0.5\textwidth]{collective-anomalies}
+	\caption[Collective anomaly corresponding to an \emph{Atrial Premature 
+		Contraction} in an human electrocardiogram output.]{Collective anomaly 
+		corresponding to an \emph{Atrial Premature Contraction} in an human 
+		electrocardiogram output \cite{Goldberger:2000}.}
+	\label{fig:collective-anomalies}
 \end{figure}
 
 \end{description}
@@ -177,18 +184,23 @@ electrocardiogram output \cite{Goldberger:2000}.}
 \subsection{Approaches}
 
 \begin{description}
+
 \item[Classical] A point is declared to be an outlier if its distance from the 
 mean is sufficiently large.
+
 \item[Principal Component Analysis] An outlier is usually declared if the point 
 is sufficiently far away from the subspace spanned by the eigenvectors 
 corresponding to the highest eigenvalues.
+
 \item[Distance based] A point can be declared to be an outlier if its distance 
 to its kth nearest-neighbour is sufficiently large.
+
 \item[Statistical based] Statistical methods are often model-based and assume 
 that the data should follow some distribution. With knowledge of the 
 distribution, data point are evaluated by their fitness to the assumed 
 distribution. If the probability of a data instance is less than a certain 
 threshold, then that data point is considered an anomaly.
+
 \end{description}
 
 Although distance is an effective non-parametric approach to detecting outliers,
