@@ -4,6 +4,7 @@
 
 ACROREAD		:= acroread
 BACKGROUND		:= &
+CHANGE_DIR		:= cd
 DELETE			:= rm --force
 ECHO			:= echo
 FIND			:= find
@@ -12,8 +13,6 @@ LATEXMK			:= latexmk
 LINK		  	:= ln --symbolic
 MAKE			:= make
 MUTE			:= @
-PUSHD			:= pushd
-POPD			:= popd
 SILENT			:= >/dev/null
 SPACE 			:= $(empty) $(empty)
 TOUCH			:= touch
@@ -45,9 +44,7 @@ TEX_SRC			:= $(shell $(FIND) $(SRC_DIR) -type f -name "*.tex")
 # Main target
 .PHONY: all
 all: pre
-	$(MUTE)$(PUSHD) $(BUILD_DIR)
-	$(MUTE)$(LATEXMK)
-	$(MUTE)$(POPD)
+	$(MUTE)$(CHANGE_DIR) $(BUILD_DIR); $(LATEXMK)
 		
 # To be run before make
 .PHONY: pre
@@ -82,17 +79,12 @@ rm-symlinks:
 
 # Removes build files but not output files
 .PHONY: clean
-clean: rm-symlinks
-	$(MUTE)$(PUSHD) $(BUILD_DIR)
-	$(MUTE)$(LATEXMK) -c
-	$(MUTE)$(POPD)
+clean: 
+	$(MUTE)$(CHANGE_DIR) $(BUILD_DIR); $(LATEXMK) -c
 
 # Remove build files and output files
 .PHONY: distclean
 distclean: rm-symlinks rm-files
-	$(MUTE)$(PUSHD) $(BUILD_DIR)
-	$(MUTE)$(LATEXMK) -C
-	$(MUTE)$(POPD)
 	
 ##################################################################
 
