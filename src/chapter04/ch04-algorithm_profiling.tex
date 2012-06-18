@@ -1,133 +1,71 @@
-In order to choose which step of the algorithm would be best suited for 
-implementation on FPGA hardware, it was first necessary to first profile the 
-execution of the algorithm using various test cases. This task was performed 
-using MATLAB, using code supplied by \citeauthor{Khoa:2012} that was used to 
-test and verify the conclusions of \citetitle{Khoa:2012}. Using \emph{MATLAB}'s 
-\verb+profile+ command, I was able to analyse the algorithm and make an 
-assessment of the running time of the algorithm. 
+In order to choose which step/steps of the outlier detection algorithm would be 
+best suited for implementation on FPGA hardware, it was first necessary to 
+profile the execution of the algorithm using various test cases. This task was 
+performed using MATLAB, using code supplied by \citeauthor{Khoa:2012} that was 
+used to test and verify the conclusions of \citetitle{Khoa:2012}. Using 
+\emph{MATLAB}'s \verb+profile+ command, I was able to analyse the algorithm and 
+make an assessment of the running time of the algorithm. 
 
 The results of the algorithm profiling appear in the following sections.
 
 \begin{table}
-\label{tbl:dataSetDescriptions}
 \centering
-
-\begin{tabularx}{\linewidth}{|+X|^X|^X|^X|}
-Number &	Size ($M$) &	Dimensionality ($N$) &	Summary \\
-1 &			640 &			2 &						\\
-2 &			2000 &			2 &						\\
-3 &			2000 &			2 &						\\
-4 &			2000 &			2 &						\\
-5 &			441 &			2 &						\\
-6 &			4601 &			58 &					\\
-7 &			67557 &			43 &					\\
-8 &			10992 &			17 &					\\
-9 &			6598 &			167 &					\\
+\begin{tabularx}{\linewidth}{|+l|^c|^c|^X|}
+																			\hline
+\rowstyle{\bfseries}
+Name &				Size ($M$) &	Dimensionality ($N$) &	Comments 		\\\hline
+testCD &			640 &			2 &										\\
+testCDST &			2000 &			2 &										\\
+testCDST2 &			2000 &			2 &										\\
+testCDST3 &			2000 &			2 &										\\
+testoutrank &		441 &			2 &										\\
+pendigits &			4601 &			58 &									\\
+musk &				67557 &			43 &									\\
+connect4 &			10992 &			17 &									\\
+spam &				6598 &			167 &									\\\hline
 \end{tabularx}
 \caption{Data set descriptions}
+\label{tbl:dataSetDescriptions}
 \end{table}
 
-% testCD
-\section{Data set 1}
+\DTLrawmap{>}{$>$}
+\DTLloadrawdb{initialProfilingDataH}{data/profiling/original-horizontal.csv}
+\DTLloadrawdb{initialProfilingDataV}{data/profiling/original-vertical.csv}
 
-\subsection{Data set summary}
+% DATA SET = testCD
+\subsection{testCD}
 
-\subsection{MATLAB execution profile}
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.8\textwidth]{profiling/original/testCD-profile}
-\end{figure}
-
-\subsection{Results}
+\subsubsection{Results}
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.8\textwidth]{profiling/original/testCD}
 \end{figure}
+	
+\begin{landscape}
+	\subsubsection{Profile data}
+	\begin{longtable}{|l|c|c|c|}
+		\hline
+		\bfseries Function Name & 
+		\bfseries Calls & 
+		\bfseries Total Time &
+		\bfseries Self Time \endhead
 
-% testCDST
-\section{Data set 2}
+		\DTLforeach*[\equal{\dataSet}{testCD.txt} \and \equal{\iteration}{average}]{initialProfilingDataV}{%
+			\dataSet={Data set},\iteration=Iteration,\functionName={Function Name},\calls=Calls,\totalTime={Total Time},\selfTime={Self Time}}{%
+			\functionName & \calls & \totalTime & \selfTime \\}
+	\end{longtable}
+\end{landscape}
 
-\subsection{Data set summary}
+\begin{comment}
+\DTLpiechart[]{variable=\selfTime}{initialProfilingDataH}{\function=Function,\selfTime={testCD.txt}}
 
-\subsection{MATLAB execution profile}
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.8\textwidth]{profiling/original/testCDST-profile}
-\end{figure}
-
-\subsection{Results}
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.8\textwidth]{profiling/original/testCDST}
-\end{figure}
-
-% testCDST2
-\section{Data set 3}
-
-\subsection{Data set summary}
-
-\subsection{MATLAB execution profile}
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.8\textwidth]{profiling/original/testCDST2-profile}
-\end{figure}
-
-\subsection{Results}
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.8\textwidth]{profiling/original/testCDST2}
-\end{figure}
-
-% testCDST3
-\section{Data set 4}
-
-\subsection{Data set summary}
-
-\subsection{MATLAB execution profile}
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.8\textwidth]{profiling/original/testCDST3-profile}
-\end{figure}
-
-\subsection{Results}
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.8\textwidth]{profiling/original/testCDST3}
-\end{figure}
-
-% testoutrank
-\section{Data set 5}
-
-\subsection{Data set summary}
-
-\subsection{MATLAB execution profile}
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.8\textwidth]{profiling/original/testoutrank-profile}
-\end{figure}
-
-\subsection{Results}
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.8\textwidth]{profiling/original/testoutrank}
-\end{figure}
-
-% spam
-\section{Data set 6}
-
-\subsection{Data set summary}
-
-\subsection{MATLAB execution profile}
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.8\textwidth]{profiling/original/spam-profile}
-\end{figure}
-
-\subsection{Results}
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.8\textwidth]{profiling/original/spam}
-\end{figure}
+% Legend
+\begin{tabular}[b]{ll}
+	\DTLforeach{fruit}{\name=Name}{\DTLiffirstrow{}{\\}%
+		\DTLdocurrentpiesegmentcolor\rule{10pt}{10pt} & \name
+}
+\end{tabular}
+\end{comment}
 
 % PERFORMANCE BOTTLENECK
 \subsection{Performance Bottleneck}

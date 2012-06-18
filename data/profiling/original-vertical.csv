@@ -1,0 +1,914 @@
+Data set,Iteration,Function Name,Calls,Total Time,Self Time
+"connect4.csv","average","...-4.0.1/private/get_matlab_bgl_options",2,0,0
+"connect4.csv","average","...aly>TopN_Outlier_Pruning_Block_CTD_ST",1,57478.0914,0.1889
+"connect4.csv","average","...ce_anomaly>TopN_Outlier_Pruning_Block",1,57350.5019,54979.1754
+"connect4.csv","average","...d>create@(b)mx_d_preconditioner(sH,b)",1,0,0
+"connect4.csv","average","...istance_anomaly>knn_components_sparse",1,4361.8605,2878.7034
+"connect4.csv","average","...stance_anomaly>connect_components_MST",1,95.1198,0.3289
+"connect4.csv","average","...stance_anomaly>connect_components_mix",1,95.7344,0.5854
+"connect4.csv","average","PCADR",1,0.4817,0.001
+"connect4.csv","average","adjacency_cmg (MEX-file)",11,0.0138,0.0138
+"connect4.csv","average","approx_resistance",1,127.4004,1.4654
+"connect4.csv","average","axescheck",2,0,0
+"connect4.csv","average","axis",1,0,0
+"connect4.csv","average","axis>LocSetEqual",1,0,0
+"connect4.csv","average","axis>allAxes",1,0,0
+"connect4.csv","average","cell.ismember",1,0.0206,0.005
+"connect4.csv","average","cell.ismember>cellismemberlegacy",1,0.0157,0.0089
+"connect4.csv","average","cell.strcat",1,0.002,0.002
+"connect4.csv","average","cellstr",1,0,0
+"connect4.csv","average","cholGsparse",1,0.1777,0.1777
+"connect4.csv","average","cmg_dd",1,0.4751,0.009
+"connect4.csv","average","cmg_dd>@(b)mx_d_preconditioner(sH,b)",6683.6,50.7,0.9982
+"connect4.csv","average","cmg_sdd",1,0.4868,0.0119
+"connect4.csv","average","commute_distance_anomaly",1,62265.3744,0.009
+"connect4.csv","average","commute_distance_anomaly>dist",92033917.8,2412.4625,2412.4625
+"connect4.csv","average","commute_distance_anomaly>drawGraph",1,328.2946,110.0349
+"connect4.csv","average","commute_distance_anomaly>euclidean",1,92.333,57.3068
+"connect4.csv","average","commute_distance_anomaly>sim",675570,52.8013,41.5966
+"connect4.csv","average","commute_distance_anomaly>sim_d",2092,0.1804,0.1804
+"connect4.csv","average","components",1,0.0291,0.009
+"connect4.csv","average","csvread",1,0.8672,0
+"connect4.csv","average","csvwrite",1,0.0332,0
+"connect4.csv","average","dlmread",1,0.8672,0.8488
+"connect4.csv","average","dlmwrite",1,0.0332,0.0128
+"connect4.csv","average","dlmwrite>parseinput",1,0.0206,0
+"connect4.csv","average","dlmwrite>setcoffset",1,0,0
+"connect4.csv","average","dlmwrite>setdlm",1,0,0
+"connect4.csv","average","dlmwrite>setroffset",1,0,0
+"connect4.csv","average","effective_degrees",6,0.0059,0.0059
+"connect4.csv","average","fcnchk",400,0.3542,0.2684
+"connect4.csv","average","forest_components (MEX-file)",6,0,0
+"connect4.csv","average","graph2d/private/lineseriesmex (MEX-file)",229041,1.9124,1.9124
+"connect4.csv","average","graph2dhelper",229041,40.2508,23.3967
+"connect4.csv","average","graphprofile (MEX-file)",6,0.002,0.002
+"connect4.csv","average","hierarchy",1,0.4117,0.1755
+"connect4.csv","average","hold",2,0.003,0.003
+"connect4.csv","average","initprintexporttemplate",1,0.001,0.001
+"connect4.csv","average","int2str",2,0.001,0.001
+"connect4.csv","average","inv_permutation",1,0,0
+"connect4.csv","average","iscellstr",2,0.001,0.001
+"connect4.csv","average","ismember",2,0.007,0.002
+"connect4.csv","average","ismember>ismemberlegacy",2,0.005,0.003
+"connect4.csv","average","kdtree_build (MEX-file)",1,4.9264,4.9264
+"connect4.csv","average","kdtree_k_nearest_neighbors (MEX-file)",67557,1425.2036,1425.2036
+"connect4.csv","average","laplacian2 (MEX-file)",1,0.006,0.006
+"connect4.csv","average","lineseries",229041,79.2798,37.1165
+"connect4.csv","average","matlab_bgl-4.0.1/...ate/check_matlab_bgl",2,0.2801,0.2801
+"connect4.csv","average","matlab_bgl-4.0.1/private/components_mex (MEX-file)",1,0.0206,0.0206
+"connect4.csv","average","matlab_bgl-4.0.1/private/merge_options",1,0.001,0.001
+"connect4.csv","average","matlab_bgl-4.0.1/private/mst_mex (MEX-file)",1,1.9952,1.9952
+"connect4.csv","average","mean",67582,5.1011,5.1011
+"connect4.csv","average","message",600,0.1767,0.1767
+"connect4.csv","average","mst",1,2.2773,0.001
+"connect4.csv","average","mx_d_preconditioner (MEX-file)",6683.6,49.7018,49.7018
+"connect4.csv","average","newplot",229041,138.9713,71.9966
+"connect4.csv","average","newplot>ObserveAxesNextPlot",229041,42.9637,42.9637
+"connect4.csv","average","newplot>ObserveFigureNextPlot",229041,24.0111,24.0111
+"connect4.csv","average","num2str",2,0.004,0.002
+"connect4.csv","average","num2str>convertUsingRecycledSprintf",2,0.002,0.002
+"connect4.csv","average","num2str>handleNumericPrecision",2,0.002,0
+"connect4.csv","average","pcg",200,119.3765,43.4746
+"connect4.csv","average","princomp",1,0.4807,0.4749
+"connect4.csv","average","process_hierarchy",1,0.0548,0.003
+"connect4.csv","average","process_sparse_matrix",9,0.0556,0.0361
+"connect4.csv","average","randsrc",1,6.0717,5.2649
+"connect4.csv","average","randsrc>@(a,b)rand(a,b)",1,0.8069,0.8069
+"connect4.csv","average","randsrc>create@(a,b)rand(a,b)",1,0,0
+"connect4.csv","average","repmat",2,0.002,0.002
+"connect4.csv","average","scribe/private/getplotmanager",229041,16.8539,16.8539
+"connect4.csv","average","set_matlab_bgl_default",2,0,0
+"connect4.csv","average","setdiff",1,0.0187,0
+"connect4.csv","average","setdiff>setdifflegacy",1,0.0187,0.001
+"connect4.csv","average","sortrows",1,0.1961,0.008
+"connect4.csv","average","sortrows>sort_back_to_front",1,0.1883,0.1883
+"connect4.csv","average","sparfun/private/iterapp",13767.2,75.1664,24.4663
+"connect4.csv","average","sparfun/private/iterchk",400,0.4742,0.12
+"connect4.csv","average","sparfun/private/itermsg",200,0.2614,0.1062
+"connect4.csv","average","sparfun/private/itermsg>getIterationInfo",200,0.1121,0.0643
+"connect4.csv","average","splitforest (MEX-file)",6,0.0099,0.0099
+"connect4.csv","average","steiner_group",6,0.0291,0.0099
+"connect4.csv","average","unique",11,0.2627,0.0089
+"connect4.csv","average","unique>uniquelegacy",11,0.2538,0.0575
+"connect4.csv","average","update_groups (MEX-file)",6,0.008,0.008
+"musk.csv","average","...-4.0.1/private/get_matlab_bgl_options",2,0.001,0.001
+"musk.csv","average","...aly>TopN_Outlier_Pruning_Block_CTD_ST",1,1400.1416,0.017
+"musk.csv","average","...ce_anomaly>TopN_Outlier_Pruning_Block",1,1387.4626,1179.4173
+"musk.csv","average","...d>create@(b)mx_d_preconditioner(sH,b)",1,0,0
+"musk.csv","average","...istance_anomaly>knn_components_sparse",1,84.5218,30.9457
+"musk.csv","average","...stance_anomaly>connect_components_MST",1,0.6245,0.012
+"musk.csv","average","...stance_anomaly>connect_components_mix",1,0.6483,0.022
+"musk.csv","average","PCADR",1,2.3804,0.001
+"musk.csv","average","adjacency_cmg (MEX-file)",5,0,0
+"musk.csv","average","approx_resistance",1,12.662,0.1469
+"musk.csv","average","axescheck",2,0,0
+"musk.csv","average","axis",1,0.002,0
+"musk.csv","average","axis>LocSetEqual",1,0.002,0.002
+"musk.csv","average","axis>allAxes",1,0,0
+"musk.csv","average","cell.ismember",1,0.018,0.003
+"musk.csv","average","cell.ismember>cellismemberlegacy",1,0.015,0.007
+"musk.csv","average","cell.strcat",1,0,0
+"musk.csv","average","cellstr",1,0,0
+"musk.csv","average","cholGsparse",1,0.046,0.046
+"musk.csv","average","cmg_dd",1,0.0966,0.002
+"musk.csv","average","cmg_dd>@(b)mx_d_preconditioner(sH,b)",2489,3.5515,0.3301
+"musk.csv","average","cmg_sdd",1,0.0996,0.003
+"musk.csv","average","commute_distance_anomaly",1,1521.8937,0.001
+"musk.csv","average","commute_distance_anomaly>dist",8409755.3,209.0801,209.0801
+"musk.csv","average","commute_distance_anomaly>drawGraph",1,33.6658,9.246
+"musk.csv","average","commute_distance_anomaly>euclidean",1,0.5875,0.3569
+"musk.csv","average","commute_distance_anomaly>sim",65980,6.0176,4.735
+"musk.csv","average","commute_distance_anomaly>sim_d",159,0.016,0.016
+"musk.csv","average","components",1,0.002,0
+"musk.csv","average","csvread",1,0.5032,0.002
+"musk.csv","average","csvwrite",1,0.032,0
+"musk.csv","average","dlmread",1,0.5013,0.4854
+"musk.csv","average","dlmwrite",1,0.032,0.014
+"musk.csv","average","dlmwrite>parseinput",1,0.018,0
+"musk.csv","average","dlmwrite>setcoffset",1,0,0
+"musk.csv","average","dlmwrite>setdlm",1,0,0
+"musk.csv","average","dlmwrite>setroffset",1,0,0
+"musk.csv","average","effective_degrees",3,0.001,0.001
+"musk.csv","average","fcnchk",400,0.2844,0.2127
+"musk.csv","average","forest_components (MEX-file)",3,0,0
+"musk.csv","average","graph2d/private/lineseriesmex (MEX-file)",25149,0.2169,0.2169
+"musk.csv","average","graph2dhelper",25149,4.4207,2.5218
+"musk.csv","average","graphprofile (MEX-file)",3,0.001,0.001
+"musk.csv","average","hierarchy",1,0.0689,0.016
+"musk.csv","average","hold",2,0.005,0.005
+"musk.csv","average","initprintexporttemplate",1,0,0
+"musk.csv","average","int2str",2,0.002,0.002
+"musk.csv","average","inv_permutation",1,0,0
+"musk.csv","average","iscellstr",2,0,0
+"musk.csv","average","ismember",2,0.008,0.001
+"musk.csv","average","ismember>ismemberlegacy",2,0.007,0
+"musk.csv","average","kdtree_build (MEX-file)",1,0.2994,0.2994
+"musk.csv","average","kdtree_k_nearest_neighbors (MEX-file)",6598,47.2292,47.2292
+"musk.csv","average","laplacian2 (MEX-file)",1,0,0
+"musk.csv","average","lineseries",25149,8.8438,4.2062
+"musk.csv","average","matlab_bgl-4.0.1/...ate/check_matlab_bgl",2,0.001,0.001
+"musk.csv","average","matlab_bgl-4.0.1/private/components_mex (MEX-file)",1,0.002,0.002
+"musk.csv","average","matlab_bgl-4.0.1/private/merge_options",1,0,0
+"musk.csv","average","matlab_bgl-4.0.1/private/mst_mex (MEX-file)",1,0.007,0.007
+"musk.csv","average","mean",6623,0.4812,0.4812
+"musk.csv","average","message",600,0.159,0.159
+"musk.csv","average","mst",1,0.009,0
+"musk.csv","average","mx_d_preconditioner (MEX-file)",2489,3.2213,3.2213
+"musk.csv","average","newplot",25149,15.567,8.1374
+"musk.csv","average","newplot>ObserveAxesNextPlot",25149,4.6267,4.6267
+"musk.csv","average","newplot>ObserveFigureNextPlot",25149,2.8028,2.8028
+"musk.csv","average","num2str",2,0,0
+"musk.csv","average","num2str>convertUsingRecycledSprintf",2,0,0
+"musk.csv","average","num2str>handleNumericPrecision",2,0,0
+"musk.csv","average","pcg",200,11.793,5.4944
+"musk.csv","average","princomp",1,2.3794,2.3764
+"musk.csv","average","process_hierarchy",1,0.0259,0.002
+"musk.csv","average","process_sparse_matrix",6,0.0259,0.0179
+"musk.csv","average","randsrc",1,0.6224,0.5429
+"musk.csv","average","randsrc>@(a,b)rand(a,b)",1,0.0798,0.0798
+"musk.csv","average","randsrc>create@(a,b)rand(a,b)",1,0,0
+"musk.csv","average","repmat",2,0.007,0.007
+"musk.csv","average","scribe/private/getplotmanager",25149,1.8992,1.8992
+"musk.csv","average","set_matlab_bgl_default",2,0,0
+"musk.csv","average","setdiff",1,0.016,0
+"musk.csv","average","setdiff>setdifflegacy",1,0.016,0
+"musk.csv","average","sortrows",1,0.027,0
+"musk.csv","average","sortrows>sort_back_to_front",1,0.027,0.027
+"musk.csv","average","sparfun/private/iterapp",5378,5.6693,2.1178
+"musk.csv","average","sparfun/private/iterchk",400,0.3739,0.0896
+"musk.csv","average","sparfun/private/itermsg",200,0.2556,0.1005
+"musk.csv","average","sparfun/private/itermsg>getIterationInfo",200,0.1152,0.0678
+"musk.csv","average","splitforest (MEX-file)",3,0,0
+"musk.csv","average","steiner_group",3,0.004,0.001
+"musk.csv","average","unique",8,0.0538,0.007
+"musk.csv","average","unique>uniquelegacy",8,0.0468,0.02
+"musk.csv","average","update_groups (MEX-file)",2,0.002,0.002
+"pendigits.csv","average","...-4.0.1/private/get_matlab_bgl_options",2,0.001,0
+"pendigits.csv","average","...aly>TopN_Outlier_Pruning_Block_CTD_ST",1,1951.2726,0.0294
+"pendigits.csv","average","...ce_anomaly>TopN_Outlier_Pruning_Block",1,1930.3799,1793.4331
+"pendigits.csv","average","...d>create@(b)mx_d_preconditioner(sH,b)",1,0,0
+"pendigits.csv","average","...istance_anomaly>knn_components_sparse",1,121.2652,106.4938
+"pendigits.csv","average","...stance_anomaly>connect_components_MST",1,0.7949,0.0216
+"pendigits.csv","average","...stance_anomaly>connect_components_mix",1,0.8223,0.0216
+"pendigits.csv","average","PCADR",1,0.0314,0.0039
+"pendigits.csv","average","adjacency_cmg (MEX-file)",5,0.001,0.001
+"pendigits.csv","average","approx_resistance",1,20.8634,0.3363
+"pendigits.csv","average","axescheck",2,0.001,0.001
+"pendigits.csv","average","axis",1,0.007,0.005
+"pendigits.csv","average","axis>LocSetEqual",1,0.002,0.002
+"pendigits.csv","average","axis>allAxes",1,0,0
+"pendigits.csv","average","cell.ismember",1,0.0315,0.005
+"pendigits.csv","average","cell.ismember>cellismemberlegacy",1,0.0265,0.0177
+"pendigits.csv","average","cell.strcat",1,0.004,0.003
+"pendigits.csv","average","cellstr",1,0.001,0.001
+"pendigits.csv","average","cholGsparse",1,0.0656,0.0656
+"pendigits.csv","average","cmg_dd",1,0.1789,0.0059
+"pendigits.csv","average","cmg_dd>@(b)mx_d_preconditioner(sH,b)",3465.7,6.8458,0.3998
+"pendigits.csv","average","cmg_sdd",1,0.1809,0.002
+"pendigits.csv","average","commute_distance_anomaly",1,2120.4705,0.0078
+"pendigits.csv","average","commute_distance_anomaly>dist",5203394.9,138.3517,138.3517
+"pendigits.csv","average","commute_distance_anomaly>drawGraph",1,46.9233,13.0705
+"pendigits.csv","average","commute_distance_anomaly>euclidean",1,0.7459,0.4792
+"pendigits.csv","average","commute_distance_anomaly>sim",109920,10.0183,8.0171
+"pendigits.csv","average","commute_distance_anomaly>sim_d",190,0.0148,0.0148
+"pendigits.csv","average","components",1,0.006,0.003
+"pendigits.csv","average","csvread",1,0.1007,0.001
+"pendigits.csv","average","csvwrite",1,0.043,0
+"pendigits.csv","average","datamanager.schema",0.1,0.001,0.001
+"pendigits.csv","average","dlmread",1,0.0997,0.0723
+"pendigits.csv","average","dlmwrite",1,0.043,0.004
+"pendigits.csv","average","dlmwrite>parseinput",1,0.0391,0.0049
+"pendigits.csv","average","dlmwrite>setcoffset",1,0.001,0.001
+"pendigits.csv","average","dlmwrite>setdlm",1,0.002,0.002
+"pendigits.csv","average","dlmwrite>setroffset",1,0,0
+"pendigits.csv","average","effective_degrees",3,0,0
+"pendigits.csv","average","fcnchk",400,0.3041,0.2483
+"pendigits.csv","average","forest_components (MEX-file)",3,0,0
+"pendigits.csv","average","graph2d.schema",0.1,0,0
+"pendigits.csv","average","graph2d/private/lineseriesmex (MEX-file)",35180.1,0.2972,0.2972
+"pendigits.csv","average","graph2dhelper",35180,6.3177,3.5564
+"pendigits.csv","average","graphprofile (MEX-file)",3,0,0
+"pendigits.csv","average","hierarchy",1,0.1193,0.0352
+"pendigits.csv","average","hold",2,0.003,0.002
+"pendigits.csv","average","initprintexporttemplate",1,0.001,0.001
+"pendigits.csv","average","int2str",2,0.003,0.003
+"pendigits.csv","average","inv_permutation",1,0,0
+"pendigits.csv","average","iscellstr",2,0.002,0.002
+"pendigits.csv","average","ismember",2,0.0109,0.001
+"pendigits.csv","average","ismember>ismemberlegacy",2,0.0099,0.0059
+"pendigits.csv","average","kdtree_build (MEX-file)",1,0.1758,0.1758
+"pendigits.csv","average","kdtree_k_nearest_neighbors (MEX-file)",10992,4.5333,4.5333
+"pendigits.csv","average","laplacian2 (MEX-file)",1,0,0
+"pendigits.csv","average","lineseries",35180.1,12.2667,5.6517
+"pendigits.csv","average","matlab_bgl-4.0.1/...ate/check_matlab_bgl",2,0.001,0.001
+"pendigits.csv","average","matlab_bgl-4.0.1/private/components_mex (MEX-file)",1,0.003,0.003
+"pendigits.csv","average","matlab_bgl-4.0.1/private/merge_options",1,0,0
+"pendigits.csv","average","matlab_bgl-4.0.1/private/mst_mex (MEX-file)",1,0.0109,0.0109
+"pendigits.csv","average","mean",11017,0.8634,0.8634
+"pendigits.csv","average","message",600,0.1554,0.1554
+"pendigits.csv","average","mst",1,0.0129,0
+"pendigits.csv","average","mx_d_preconditioner (MEX-file)",3465.7,6.4461,6.4461
+"pendigits.csv","average","newplot",35180,21.5676,11.2516
+"pendigits.csv","average","newplot>ObserveAxesNextPlot",35180,6.4175,6.4175
+"pendigits.csv","average","newplot>ObserveFigureNextPlot",35180,3.8984,3.8984
+"pendigits.csv","average","num2str",2,0.004,0.002
+"pendigits.csv","average","num2str>convertUsingRecycledSprintf",2,0.001,0.001
+"pendigits.csv","average","num2str>handleNumericPrecision",2,0.002,0.001
+"pendigits.csv","average","pcg",200,19.4029,8.4183
+"pendigits.csv","average","princomp",1,0.0276,0.0276
+"pendigits.csv","average","process_hierarchy",1,0.054,0.003
+"pendigits.csv","average","process_sparse_matrix",6,0.0568,0.045
+"pendigits.csv","average","randsrc",1,0.9434,0.8291
+"pendigits.csv","average","randsrc>@(a,b)rand(a,b)",1,0.1144,0.1144
+"pendigits.csv","average","randsrc>create@(a,b)rand(a,b)",1,0,0
+"pendigits.csv","average","repmat",2,0.004,0.004
+"pendigits.csv","average","scribe/private/getplotmanager",35180,2.7614,2.7614
+"pendigits.csv","average","set_matlab_bgl_default",2,0.001,0.001
+"pendigits.csv","average","setdiff",1,0.0275,0
+"pendigits.csv","average","setdiff>setdifflegacy",1,0.0275,0.004
+"pendigits.csv","average","sortrows",1,0.0311,0.002
+"pendigits.csv","average","sortrows>sort_back_to_front",1,0.0292,0.0292
+"pendigits.csv","average","sparfun/private/iterapp",7331.4,10.2775,3.4318
+"pendigits.csv","average","sparfun/private/iterchk",400,0.4146,0.1106
+"pendigits.csv","average","sparfun/private/itermsg",200,0.2923,0.128
+"pendigits.csv","average","sparfun/private/itermsg>getIterationInfo",200,0.1213,0.0643
+"pendigits.csv","average","splitforest (MEX-file)",3,0.003,0.003
+"pendigits.csv","average","steiner_group",3,0.0117,0.0068
+"pendigits.csv","average","unique",8,0.0753,0.0118
+"pendigits.csv","average","unique>uniquelegacy",8,0.0636,0.0323
+"pendigits.csv","average","update_groups (MEX-file)",3,0.002,0.002
+"spam.csv","average","...-4.0.1/private/get_matlab_bgl_options",2,0,0
+"spam.csv","average","...aly>TopN_Outlier_Pruning_Block_CTD_ST",1,440.9753,0.014
+"spam.csv","average","...ce_anomaly>TopN_Outlier_Pruning_Block",1,427.4817,381.8001
+"spam.csv","average","...d>create@(b)mx_d_preconditioner(sH,b)",1,0,0
+"spam.csv","average","...istance_anomaly>knn_components_sparse",1,29.3468,15.8283
+"spam.csv","average","...stance_anomaly>connect_components_MST",1,4.2465,0.0485
+"spam.csv","average","...stance_anomaly>connect_components_mix",1,4.275,0.028
+"spam.csv","average","PCADR",1,0.3887,0.0079
+"spam.csv","average","adjacency_cmg (MEX-file)",3,0,0
+"spam.csv","average","approx_resistance",1,13.4798,0.1353
+"spam.csv","average","axescheck",2,0,0
+"spam.csv","average","axis",1,0.002,0.001
+"spam.csv","average","axis>LocSetEqual",1,0.001,0.001
+"spam.csv","average","axis>allAxes",1,0,0
+"spam.csv","average","cell.ismember",1,0.019,0.003
+"spam.csv","average","cell.ismember>cellismemberlegacy",1,0.016,0.011
+"spam.csv","average","cell.strcat",1,0.001,0
+"spam.csv","average","cellstr",1,0.001,0.001
+"spam.csv","average","cholGsparse",1,0.079,0.079
+"spam.csv","average","cmg_dd",1,0.1078,0
+"spam.csv","average","cmg_dd>@(b)mx_d_preconditioner(sH,b)",3351.3,2.8393,0.3674
+"spam.csv","average","cmg_sdd",1,0.1107,0.003
+"spam.csv","average","commute_distance_anomaly",1,494.0922,0.005
+"spam.csv","average","commute_distance_anomaly>dist",1979199.8,47.5984,47.5984
+"spam.csv","average","commute_distance_anomaly>drawGraph",1,18.958,4.917
+"spam.csv","average","commute_distance_anomaly>euclidean",1,4.0785,2.5439
+"spam.csv","average","commute_distance_anomaly>sim",46010,3.7427,3.013
+"spam.csv","average","commute_distance_anomaly>sim_d",435,0.0327,0.0327
+"spam.csv","average","components",1,0.001,0
+"spam.csv","average","csvread",1,0.1157,0.002
+"spam.csv","average","csvwrite",1,0.027,0
+"spam.csv","average","dlmread",1,0.1137,0.09
+"spam.csv","average","dlmwrite",1,0.027,0.007
+"spam.csv","average","dlmwrite>parseinput",1,0.02,0.001
+"spam.csv","average","dlmwrite>setcoffset",1,0,0
+"spam.csv","average","dlmwrite>setdlm",1,0,0
+"spam.csv","average","dlmwrite>setroffset",1,0,0
+"spam.csv","average","effective_degrees",2,0,0
+"spam.csv","average","fcnchk",400,0.227,0.1799
+"spam.csv","average","forest_components (MEX-file)",2,0,0
+"spam.csv","average","graph2d/private/lineseriesmex (MEX-file)",14354,0.1263,0.1263
+"spam.csv","average","graph2dhelper",14354,2.6091,1.4882
+"spam.csv","average","graphprofile (MEX-file)",2,0.001,0.001
+"spam.csv","average","hierarchy",1,0.0969,0.013
+"spam.csv","average","hold",2,0,0
+"spam.csv","average","initprintexporttemplate",1,0,0
+"spam.csv","average","int2str",2,0.002,0.002
+"spam.csv","average","inv_permutation",1,0,0
+"spam.csv","average","iscellstr",2,0,0
+"spam.csv","average","ismember",2,0.005,0
+"spam.csv","average","ismember>ismemberlegacy",2,0.005,0
+"spam.csv","average","kdtree_build (MEX-file)",1,0.072,0.072
+"spam.csv","average","kdtree_k_nearest_neighbors (MEX-file)",4601,9.6887,9.6887
+"spam.csv","average","laplacian2 (MEX-file)",1,0,0
+"spam.csv","average","lineseries",14354,5.1224,2.3869
+"spam.csv","average","matlab_bgl-4.0.1/...ate/check_matlab_bgl",2,0.007,0.007
+"spam.csv","average","matlab_bgl-4.0.1/private/components_mex (MEX-file)",1,0.001,0.001
+"spam.csv","average","matlab_bgl-4.0.1/private/merge_options",1,0,0
+"spam.csv","average","matlab_bgl-4.0.1/private/mst_mex (MEX-file)",1,0.079,0.079
+"spam.csv","average","mean",4626,0.3476,0.3476
+"spam.csv","average","message",600,0.1167,0.1167
+"spam.csv","average","mst",1,0.087,0.001
+"spam.csv","average","mx_d_preconditioner (MEX-file)",3351.3,2.4719,2.4719
+"spam.csv","average","newplot",14354,8.9147,4.6514
+"spam.csv","average","newplot>ObserveAxesNextPlot",14354,2.6426,2.6426
+"spam.csv","average","newplot>ObserveFigureNextPlot",14354,1.6206,1.6206
+"spam.csv","average","num2str",2,0,0
+"spam.csv","average","num2str>convertUsingRecycledSprintf",2,0,0
+"spam.csv","average","num2str>handleNumericPrecision",2,0,0
+"spam.csv","average","pcg",200,12.9002,7.4626
+"spam.csv","average","princomp",1,0.3809,0.3809
+"spam.csv","average","process_hierarchy",1,0.011,0.001
+"spam.csv","average","process_sparse_matrix",5,0.012,0.005
+"spam.csv","average","randsrc",1,0.3339,0.2785
+"spam.csv","average","randsrc>@(a,b)rand(a,b)",1,0.0551,0.0551
+"spam.csv","average","randsrc>create@(a,b)rand(a,b)",1,0,0
+"spam.csv","average","repmat",2,0.005,0.005
+"spam.csv","average","scribe/private/getplotmanager",14354,1.1208,1.1208
+"spam.csv","average","set_matlab_bgl_default",2,0,0
+"spam.csv","average","setdiff",1,0.024,0
+"spam.csv","average","setdiff>setdifflegacy",1,0.024,0.001
+"spam.csv","average","sortrows",1,0.011,0.001
+"spam.csv","average","sortrows>sort_back_to_front",1,0.01,0.01
+"spam.csv","average","sparfun/private/iterapp",7102.6,4.8925,2.0531
+"spam.csv","average","sparfun/private/iterchk",400,0.2935,0.066
+"spam.csv","average","sparfun/private/itermsg",200,0.2518,0.1156
+"spam.csv","average","sparfun/private/itermsg>getIterationInfo",200,0.1117,0.0671
+"spam.csv","average","splitforest (MEX-file)",2,0,0
+"spam.csv","average","steiner_group",2,0.003,0.002
+"spam.csv","average","unique",7,0.0443,0.007
+"spam.csv","average","unique>uniquelegacy",7,0.0375,0.027
+"spam.csv","average","update_groups (MEX-file)",2,0,0
+"testCD.txt","average","...-4.0.1/private/get_matlab_bgl_options",2,0,0
+"testCD.txt","average","...aly>TopN_Outlier_Pruning_Block_CTD_ST",1,32.2548,0.003
+"testCD.txt","average","...ce_anomaly>TopN_Outlier_Pruning_Block",1,28.2242,22.8512
+"testCD.txt","average","...d>create@(b)mx_d_preconditioner(sH,b)",1,0,0
+"testCD.txt","average","...istance_anomaly>knn_components_sparse",1,1.3759,0.7597
+"testCD.txt","average","...stance_anomaly>connect_components_MST",1,0.005,0.001
+"testCD.txt","average","...stance_anomaly>connect_components_mix",1,0.0069,0.002
+"testCD.txt","average","PCADR",1,0,0
+"testCD.txt","average","adjacency_cmg (MEX-file)",1,0,0
+"testCD.txt","average","approx_resistance",1,4.0274,0.0624
+"testCD.txt","average","axescheck",2,0.001,0.001
+"testCD.txt","average","axis",1,0.002,0.001
+"testCD.txt","average","axis>LocSetEqual",1,0.001,0.001
+"testCD.txt","average","axis>allAxes",1,0,0
+"testCD.txt","average","cell.ismember",1,0.0173,0.004
+"testCD.txt","average","cell.ismember>cellismemberlegacy",1,0.0136,0.0069
+"testCD.txt","average","cell.strcat",1,0.002,0.001
+"testCD.txt","average","cellstr",1,0.001,0.001
+"testCD.txt","average","cholGsparse",1,0.0452,0.0452
+"testCD.txt","average","cmg_dd",1,0.0596,0.001
+"testCD.txt","average","cmg_dd>@(b)mx_d_preconditioner(sH,b)",2181.3,0.5347,0.2355
+"testCD.txt","average","cmg_sdd",1,0.0606,0.001
+"testCD.txt","average","commute_distance_anomaly",1,37.044,0.0049
+"testCD.txt","average","commute_distance_anomaly>dist",280878,5.452,5.452
+"testCD.txt","average","commute_distance_anomaly>drawGraph",1,3.3461,0.8527
+"testCD.txt","average","commute_distance_anomaly>euclidean",1,0.003,0.001
+"testCD.txt","average","commute_distance_anomaly>sim",6400,0.5982,0.4863
+"testCD.txt","average","commute_distance_anomaly>sim_d",8,0.001,0.001
+"testCD.txt","average","components",1,0,0
+"testCD.txt","average","csvread",1,0.0297,0
+"testCD.txt","average","csvwrite",1,0.024,0
+"testCD.txt","average","dlmread",1,0.0297,0.002
+"testCD.txt","average","dlmwrite",1,0.024,0.007
+"testCD.txt","average","dlmwrite>parseinput",1,0.0173,0
+"testCD.txt","average","dlmwrite>setcoffset",1,0,0
+"testCD.txt","average","dlmwrite>setdlm",1,0,0
+"testCD.txt","average","dlmwrite>setroffset",1,0,0
+"testCD.txt","average","effective_degrees",1,0,0
+"testCD.txt","average","fcnchk",400,0.2721,0.2134
+"testCD.txt","average","forest_components (MEX-file)",1,0,0
+"testCD.txt","average","graph2d/private/lineseriesmex (MEX-file)",2691,0.0232,0.0232
+"testCD.txt","average","graph2dhelper",2691,0.453,0.2575
+"testCD.txt","average","graphprofile (MEX-file)",1,0,0
+"testCD.txt","average","hierarchy",1,0.0529,0.0049
+"testCD.txt","average","hold",2,0.002,0.001
+"testCD.txt","average","initprintexporttemplate",1,0,0
+"testCD.txt","average","int2str",2,0.001,0.001
+"testCD.txt","average","inv_permutation",1,0,0
+"testCD.txt","average","iscellstr",2,0.001,0.001
+"testCD.txt","average","ismember",2,0.006,0
+"testCD.txt","average","ismember>ismemberlegacy",2,0.006,0
+"testCD.txt","average","kdtree_build (MEX-file)",1,0.002,0.002
+"testCD.txt","average","kdtree_k_nearest_neighbors (MEX-file)",640,0.0134,0.0134
+"testCD.txt","average","laplacian2 (MEX-file)",1,0,0
+"testCD.txt","average","lineseries",2691,0.9116,0.4356
+"testCD.txt","average","matlab_bgl-4.0.1/...ate/check_matlab_bgl",2,0,0
+"testCD.txt","average","matlab_bgl-4.0.1/private/components_mex (MEX-file)",1,0,0
+"testCD.txt","average","matlab_bgl-4.0.1/private/merge_options",1,0,0
+"testCD.txt","average","matlab_bgl-4.0.1/private/mst_mex (MEX-file)",1,0,0
+"testCD.txt","average","mean",664,0.0346,0.0346
+"testCD.txt","average","message",600,0.1559,0.1559
+"testCD.txt","average","mst",1,0,0
+"testCD.txt","average","mx_d_preconditioner (MEX-file)",2181.3,0.2992,0.2992
+"testCD.txt","average","newplot",2691,1.575,0.7992
+"testCD.txt","average","newplot>ObserveAxesNextPlot",2691,0.4856,0.4856
+"testCD.txt","average","newplot>ObserveFigureNextPlot",2691,0.2905,0.2905
+"testCD.txt","average","num2str",2,0.002,0.001
+"testCD.txt","average","num2str>convertUsingRecycledSprintf",2,0.001,0.001
+"testCD.txt","average","num2str>handleNumericPrecision",2,0.001,0
+"testCD.txt","average","pcg",200,3.8729,1.7479
+"testCD.txt","average","process_hierarchy",1,0.006,0.001
+"testCD.txt","average","process_sparse_matrix",4,0.0069,0.001
+"testCD.txt","average","randsrc",1,0.0317,0.0258
+"testCD.txt","average","randsrc>@(a,b)rand(a,b)",1,0.006,0.006
+"testCD.txt","average","randsrc>create@(a,b)rand(a,b)",1,0,0
+"testCD.txt","average","repmat",2,0.006,0.006
+"testCD.txt","average","scribe/private/getplotmanager",2691,0.1952,0.1952
+"testCD.txt","average","set_matlab_bgl_default",2,0,0
+"testCD.txt","average","setdiff",1,0.0279,0.001
+"testCD.txt","average","setdiff>setdifflegacy",1,0.027,0
+"testCD.txt","average","sortrows",1,0.002,0
+"testCD.txt","average","sortrows>sort_back_to_front",1,0.002,0.002
+"testCD.txt","average","sparfun/private/iterapp",4762.6,1.5124,0.9778
+"testCD.txt","average","sparfun/private/iterchk",400,0.3557,0.0837
+"testCD.txt","average","sparfun/private/itermsg",200,0.2566,0.0971
+"testCD.txt","average","sparfun/private/itermsg>getIterationInfo",200,0.1173,0.0625
+"testCD.txt","average","splitforest (MEX-file)",1,0,0
+"testCD.txt","average","steiner_group",1,0.001,0.001
+"testCD.txt","average","unique",6,0.0354,0.0069
+"testCD.txt","average","unique>uniquelegacy",6,0.0286,0.0267
+"testCD.txt","average","update_groups (MEX-file)",1,0,0
+"testCDST.txt","average","...-4.0.1/private/get_matlab_bgl_options",2,0.001,0
+"testCDST.txt","average","...aly>TopN_Outlier_Pruning_Block_CTD_ST",1,209.4977,0.004
+"testCDST.txt","average","...ce_anomaly>TopN_Outlier_Pruning_Block",1,204.5942,165.9119
+"testCDST.txt","average","...d>create@(b)mx_d_preconditioner(sH,b)",1,0.001,0.001
+"testCDST.txt","average","...istance_anomaly>knn_components_sparse",1,5.8599,4.0193
+"testCDST.txt","average","...stance_anomaly>connect_components_MST",1,0.007,0
+"testCDST.txt","average","...stance_anomaly>connect_components_mix",1,0.01,0.001
+"testCDST.txt","average","PCADR",1,0,0
+"testCDST.txt","average","adjacency_cmg (MEX-file)",3,0,0
+"testCDST.txt","average","approx_resistance",1,4.8995,0.0557
+"testCDST.txt","average","axescheck",2,0.001,0.001
+"testCDST.txt","average","axis",1,0.001,0
+"testCDST.txt","average","axis>LocSetEqual",1,0.001,0.001
+"testCDST.txt","average","axis>allAxes",1,0,0
+"testCDST.txt","average","cell.ismember",1,0.016,0.002
+"testCDST.txt","average","cell.ismember>cellismemberlegacy",1,0.014,0.003
+"testCDST.txt","average","cell.strcat",1,0.001,0
+"testCDST.txt","average","cellstr",1,0.001,0.001
+"testCDST.txt","average","cholGsparse",1,0.037,0.037
+"testCDST.txt","average","cmg_dd",1,0.0614,0.001
+"testCDST.txt","average","cmg_dd>@(b)mx_d_preconditioner(sH,b)",2190.8,1.232,0.2568
+"testCDST.txt","average","cmg_sdd",1,0.0614,0
+"testCDST.txt","average","commute_distance_anomaly",1,225.962,0.001
+"testCDST.txt","average","commute_distance_anomaly>dist",1775160.7,38.9052,38.9052
+"testCDST.txt","average","commute_distance_anomaly>drawGraph",1,10.5316,2.8033
+"testCDST.txt","average","commute_distance_anomaly>euclidean",1,0.004,0.003
+"testCDST.txt","average","commute_distance_anomaly>sim",20000,1.7753,1.4244
+"testCDST.txt","average","commute_distance_anomaly>sim_d",6,0,0
+"testCDST.txt","average","components",1,0.002,0.001
+"testCDST.txt","average","csvread",1,0.0379,0.001
+"testCDST.txt","average","csvwrite",1,0.023,0
+"testCDST.txt","average","dlmread",1,0.0369,0.006
+"testCDST.txt","average","dlmwrite",1,0.023,0.004
+"testCDST.txt","average","dlmwrite>parseinput",1,0.019,0.003
+"testCDST.txt","average","dlmwrite>setcoffset",1,0,0
+"testCDST.txt","average","dlmwrite>setdlm",1,0,0
+"testCDST.txt","average","dlmwrite>setroffset",1,0,0
+"testCDST.txt","average","effective_degrees",2,0.001,0.001
+"testCDST.txt","average","fcnchk",400,0.1676,0.1329
+"testCDST.txt","average","forest_components (MEX-file)",2,0,0
+"testCDST.txt","average","graph2d/private/lineseriesmex (MEX-file)",8325,0.0723,0.0723
+"testCDST.txt","average","graph2dhelper",8325,1.469,0.8535
+"testCDST.txt","average","graphprofile (MEX-file)",2,0,0
+"testCDST.txt","average","hierarchy",1,0.0517,0.01
+"testCDST.txt","average","hold",2,0.003,0.002
+"testCDST.txt","average","initprintexporttemplate",1,0,0
+"testCDST.txt","average","int2str",2,0.002,0.002
+"testCDST.txt","average","inv_permutation",1,0,0
+"testCDST.txt","average","iscellstr",2,0.002,0.002
+"testCDST.txt","average","ismember",2,0.009,0.001
+"testCDST.txt","average","ismember>ismemberlegacy",2,0.008,0.001
+"testCDST.txt","average","kdtree_build (MEX-file)",1,0.011,0.011
+"testCDST.txt","average","kdtree_k_nearest_neighbors (MEX-file)",2000,0.0466,0.0466
+"testCDST.txt","average","laplacian2 (MEX-file)",1,0.001,0.001
+"testCDST.txt","average","lineseries",8325,2.8834,1.3422
+"testCDST.txt","average","matlab_bgl-4.0.1/...ate/check_matlab_bgl",2,0.002,0.002
+"testCDST.txt","average","matlab_bgl-4.0.1/private/components_mex (MEX-file)",1,0,0
+"testCDST.txt","average","matlab_bgl-4.0.1/private/merge_options",1,0,0
+"testCDST.txt","average","matlab_bgl-4.0.1/private/mst_mex (MEX-file)",1,0,0
+"testCDST.txt","average","mean",2024,0.1289,0.1289
+"testCDST.txt","average","message",600,0.113,0.113
+"testCDST.txt","average","mst",1,0.003,0.001
+"testCDST.txt","average","mx_d_preconditioner (MEX-file)",2190.8,0.9753,0.9753
+"testCDST.txt","average","newplot",8325,4.8393,2.5079
+"testCDST.txt","average","newplot>ObserveAxesNextPlot",8325,1.3897,1.3897
+"testCDST.txt","average","newplot>ObserveFigureNextPlot",8325,0.9415,0.9415
+"testCDST.txt","average","num2str",2,0,0
+"testCDST.txt","average","num2str>convertUsingRecycledSprintf",2,0,0
+"testCDST.txt","average","num2str>handleNumericPrecision",2,0,0
+"testCDST.txt","average","pcg",200,4.5566,1.8068
+"testCDST.txt","average","process_hierarchy",1,0.008,0.003
+"testCDST.txt","average","process_sparse_matrix",5,0.006,0.002
+"testCDST.txt","average","randsrc",1,0.226,0.1901
+"testCDST.txt","average","randsrc>@(a,b)rand(a,b)",1,0.0359,0.0359
+"testCDST.txt","average","randsrc>create@(a,b)rand(a,b)",1,0,0
+"testCDST.txt","average","repmat",2,0.007,0.007
+"testCDST.txt","average","scribe/private/getplotmanager",8325,0.6154,0.6154
+"testCDST.txt","average","set_matlab_bgl_default",2,0.001,0.001
+"testCDST.txt","average","setdiff",1,0.0309,0
+"testCDST.txt","average","setdiff>setdifflegacy",1,0.0309,0
+"testCDST.txt","average","sortrows",1,0.007,0
+"testCDST.txt","average","sortrows>sort_back_to_front",1,0.007,0.007
+"testCDST.txt","average","sparfun/private/iterapp",4781.6,2.2877,1.0556
+"testCDST.txt","average","sparfun/private/iterchk",400,0.2447,0.0773
+"testCDST.txt","average","sparfun/private/itermsg",200,0.217,0.0723
+"testCDST.txt","average","sparfun/private/itermsg>getIterationInfo",200,0.1059,0.0664
+"testCDST.txt","average","splitforest (MEX-file)",2,0.001,0.001
+"testCDST.txt","average","steiner_group",2,0.002,0
+"testCDST.txt","average","unique",7,0.0429,0.008
+"testCDST.txt","average","unique>uniquelegacy",7,0.0349,0.0279
+"testCDST.txt","average","update_groups (MEX-file)",1,0.001,0.001
+"testCDST2.txt","average","...-4.0.1/private/get_matlab_bgl_options",2,0,0
+"testCDST2.txt","average","...aly>TopN_Outlier_Pruning_Block_CTD_ST",1,220.6585,0.006
+"testCDST2.txt","average","...ce_anomaly>TopN_Outlier_Pruning_Block",1,215.9104,174.1852
+"testCDST2.txt","average","...d>create@(b)mx_d_preconditioner(sH,b)",1,0.001,0.001
+"testCDST2.txt","average","...istance_anomaly>knn_components_sparse",1,5.8801,3.9691
+"testCDST2.txt","average","...stance_anomaly>connect_components_MST",1,0.007,0
+"testCDST2.txt","average","...stance_anomaly>connect_components_mix",1,0.013,0.003
+"testCDST2.txt","average","PCADR",1,0.001,0.001
+"testCDST2.txt","average","adjacency_cmg (MEX-file)",3,0,0
+"testCDST2.txt","average","approx_resistance",1,4.7421,0.0565
+"testCDST2.txt","average","axescheck",2,0.001,0.001
+"testCDST2.txt","average","axis",1,0.002,0
+"testCDST2.txt","average","axis>LocSetEqual",1,0.002,0.002
+"testCDST2.txt","average","axis>allAxes",1,0,0
+"testCDST2.txt","average","cell.ismember",1,0.017,0.003
+"testCDST2.txt","average","cell.ismember>cellismemberlegacy",1,0.014,0.006
+"testCDST2.txt","average","cell.strcat",1,0,0
+"testCDST2.txt","average","cellstr",1,0,0
+"testCDST2.txt","average","cholGsparse",1,0.037,0.037
+"testCDST2.txt","average","cmg_dd",1,0.0671,0.002
+"testCDST2.txt","average","cmg_dd>@(b)mx_d_preconditioner(sH,b)",2000,1.2163,0.229
+"testCDST2.txt","average","cmg_sdd",1,0.0671,0
+"testCDST2.txt","average","commute_distance_anomaly",1,237.1601,0.002
+"testCDST2.txt","average","commute_distance_anomaly>dist",1891592.6,41.9652,41.9652
+"testCDST2.txt","average","commute_distance_anomaly>drawGraph",1,10.5491,2.8885
+"testCDST2.txt","average","commute_distance_anomaly>euclidean",1,0.002,0
+"testCDST2.txt","average","commute_distance_anomaly>sim",20000,1.8387,1.4748
+"testCDST2.txt","average","commute_distance_anomaly>sim_d",9,0.003,0.003
+"testCDST2.txt","average","components",1,0.003,0.001
+"testCDST2.txt","average","csvread",1,0.033,0.004
+"testCDST2.txt","average","csvwrite",1,0.024,0
+"testCDST2.txt","average","dlmread",1,0.029,0.004
+"testCDST2.txt","average","dlmwrite",1,0.024,0.007
+"testCDST2.txt","average","dlmwrite>parseinput",1,0.017,0
+"testCDST2.txt","average","dlmwrite>setcoffset",1,0,0
+"testCDST2.txt","average","dlmwrite>setdlm",1,0,0
+"testCDST2.txt","average","dlmwrite>setroffset",1,0,0
+"testCDST2.txt","average","effective_degrees",2,0,0
+"testCDST2.txt","average","fcnchk",400,0.2072,0.1654
+"testCDST2.txt","average","forest_components (MEX-file)",2,0,0
+"testCDST2.txt","average","graph2d/private/lineseriesmex (MEX-file)",8334,0.0764,0.0764
+"testCDST2.txt","average","graph2dhelper",8334,1.4133,0.8306
+"testCDST2.txt","average","graphprofile (MEX-file)",2,0,0
+"testCDST2.txt","average","hierarchy",1,0.0546,0.013
+"testCDST2.txt","average","hold",2,0.001,0
+"testCDST2.txt","average","initprintexporttemplate",1,0,0
+"testCDST2.txt","average","int2str",2,0.001,0.001
+"testCDST2.txt","average","inv_permutation",1,0,0
+"testCDST2.txt","average","iscellstr",2,0,0
+"testCDST2.txt","average","ismember",2,0.009,0
+"testCDST2.txt","average","ismember>ismemberlegacy",2,0.009,0.002
+"testCDST2.txt","average","kdtree_build (MEX-file)",1,0.009,0.009
+"testCDST2.txt","average","kdtree_k_nearest_neighbors (MEX-file)",2000,0.0546,0.0546
+"testCDST2.txt","average","laplacian2 (MEX-file)",1,0,0
+"testCDST2.txt","average","lineseries",8334,2.7933,1.3034
+"testCDST2.txt","average","matlab_bgl-4.0.1/...ate/check_matlab_bgl",2,0.001,0.001
+"testCDST2.txt","average","matlab_bgl-4.0.1/private/components_mex (MEX-file)",1,0.002,0.002
+"testCDST2.txt","average","matlab_bgl-4.0.1/private/merge_options",1,0,0
+"testCDST2.txt","average","matlab_bgl-4.0.1/private/mst_mex (MEX-file)",1,0,0
+"testCDST2.txt","average","mean",2024,0.126,0.126
+"testCDST2.txt","average","message",600,0.1387,0.1387
+"testCDST2.txt","average","mst",1,0.002,0.001
+"testCDST2.txt","average","mx_d_preconditioner (MEX-file)",2000,0.9874,0.9874
+"testCDST2.txt","average","newplot",8334,4.8622,2.5167
+"testCDST2.txt","average","newplot>ObserveAxesNextPlot",8334,1.4324,1.4324
+"testCDST2.txt","average","newplot>ObserveFigureNextPlot",8334,0.9129,0.9129
+"testCDST2.txt","average","num2str",2,0.001,0
+"testCDST2.txt","average","num2str>convertUsingRecycledSprintf",2,0,0
+"testCDST2.txt","average","num2str>handleNumericPrecision",2,0.001,0.001
+"testCDST2.txt","average","pcg",200,4.3972,1.6763
+"testCDST2.txt","average","process_hierarchy",1,0.0099,0.001
+"testCDST2.txt","average","process_sparse_matrix",5,0.0119,0.003
+"testCDST2.txt","average","randsrc",1,0.221,0.1863
+"testCDST2.txt","average","randsrc>@(a,b)rand(a,b)",1,0.035,0.035
+"testCDST2.txt","average","randsrc>create@(a,b)rand(a,b)",1,0,0
+"testCDST2.txt","average","repmat",2,0.007,0.007
+"testCDST2.txt","average","scribe/private/getplotmanager",8334,0.5828,0.5828
+"testCDST2.txt","average","set_matlab_bgl_default",2,0,0
+"testCDST2.txt","average","setdiff",1,0.025,0
+"testCDST2.txt","average","setdiff>setdifflegacy",1,0.025,0
+"testCDST2.txt","average","sortrows",1,0.009,0.001
+"testCDST2.txt","average","sortrows>sort_back_to_front",1,0.008,0.008
+"testCDST2.txt","average","sparfun/private/iterapp",4400,2.2145,0.9981
+"testCDST2.txt","average","sparfun/private/iterchk",400,0.2756,0.0683
+"testCDST2.txt","average","sparfun/private/itermsg",200,0.2308,0.0714
+"testCDST2.txt","average","sparfun/private/itermsg>getIterationInfo",200,0.1218,0.0624
+"testCDST2.txt","average","splitforest (MEX-file)",2,0.002,0.002
+"testCDST2.txt","average","steiner_group",2,0.002,0
+"testCDST2.txt","average","unique",7,0.0419,0.009
+"testCDST2.txt","average","unique>uniquelegacy",7,0.0329,0.0239
+"testCDST2.txt","average","update_groups (MEX-file)",1,0,0
+"testCDST3.txt","average","...-4.0.1/private/get_matlab_bgl_options",2,0.001,0.001
+"testCDST3.txt","average","...aly>TopN_Outlier_Pruning_Block_CTD_ST",1,210.0887,0.0258
+"testCDST3.txt","average","...ce_anomaly>TopN_Outlier_Pruning_Block",1,204.9851,165.5944
+"testCDST3.txt","average","...d>create@(b)mx_d_preconditioner(sH,b)",1,0,0
+"testCDST3.txt","average","...istance_anomaly>knn_components_sparse",1,5.8973,4.0155
+"testCDST3.txt","average","...stance_anomaly>connect_components_MST",1,0.005,0.003
+"testCDST3.txt","average","...stance_anomaly>connect_components_mix",1,0.007,0
+"testCDST3.txt","average","PCADR",1,0,0
+"testCDST3.txt","average","adjacency_cmg (MEX-file)",3,0,0
+"testCDST3.txt","average","approx_resistance",1,5.0776,0.0515
+"testCDST3.txt","average","axescheck",2,0,0
+"testCDST3.txt","average","axis",1,0.002,0
+"testCDST3.txt","average","axis>LocSetEqual",1,0.002,0.002
+"testCDST3.txt","average","axis>allAxes",1,0,0
+"testCDST3.txt","average","cell.ismember",1,0.017,0
+"testCDST3.txt","average","cell.ismember>cellismemberlegacy",1,0.017,0.009
+"testCDST3.txt","average","cell.strcat",1,0.002,0.001
+"testCDST3.txt","average","cellstr",1,0.001,0.001
+"testCDST3.txt","average","cholGsparse",1,0.032,0.032
+"testCDST3.txt","average","cmg_dd",1,0.0603,0.002
+"testCDST3.txt","average","cmg_dd>@(b)mx_d_preconditioner(sH,b)",2405,1.3585,0.2507
+"testCDST3.txt","average","cmg_sdd",1,0.0621,0.002
+"testCDST3.txt","average","commute_distance_anomaly",1,226.509,0.005
+"testCDST3.txt","average","commute_distance_anomaly>dist",1765272.2,39.6088,39.6088
+"testCDST3.txt","average","commute_distance_anomaly>drawGraph",1,10.4577,2.7648
+"testCDST3.txt","average","commute_distance_anomaly>euclidean",1,0,0
+"testCDST3.txt","average","commute_distance_anomaly>sim",20000,1.8095,1.4449
+"testCDST3.txt","average","commute_distance_anomaly>sim_d",7,0.001,0.001
+"testCDST3.txt","average","components",1,0.002,0.001
+"testCDST3.txt","average","csvread",1,0.027,0
+"testCDST3.txt","average","csvwrite",1,0.025,0.002
+"testCDST3.txt","average","dlmread",1,0.027,0.002
+"testCDST3.txt","average","dlmwrite",1,0.023,0.005
+"testCDST3.txt","average","dlmwrite>parseinput",1,0.018,0
+"testCDST3.txt","average","dlmwrite>setcoffset",1,0,0
+"testCDST3.txt","average","dlmwrite>setdlm",1,0.001,0.001
+"testCDST3.txt","average","dlmwrite>setroffset",1,0,0
+"testCDST3.txt","average","effective_degrees",2,0,0
+"testCDST3.txt","average","fcnchk",400,0.1943,0.1596
+"testCDST3.txt","average","forest_components (MEX-file)",2,0,0
+"testCDST3.txt","average","graph2d/private/lineseriesmex (MEX-file)",8200,0.0565,0.0565
+"testCDST3.txt","average","graph2dhelper",8200,1.5221,0.8642
+"testCDST3.txt","average","graphprofile (MEX-file)",2,0,0
+"testCDST3.txt","average","hierarchy",1,0.0488,0.01
+"testCDST3.txt","average","hold",2,0.003,0.003
+"testCDST3.txt","average","initprintexporttemplate",1,0,0
+"testCDST3.txt","average","int2str",2,0.002,0.002
+"testCDST3.txt","average","inv_permutation",1,0,0
+"testCDST3.txt","average","iscellstr",2,0.002,0.002
+"testCDST3.txt","average","ismember",2,0.008,0.001
+"testCDST3.txt","average","ismember>ismemberlegacy",2,0.007,0.002
+"testCDST3.txt","average","kdtree_build (MEX-file)",1,0.01,0.01
+"testCDST3.txt","average","kdtree_k_nearest_neighbors (MEX-file)",2000,0.0526,0.0526
+"testCDST3.txt","average","laplacian2 (MEX-file)",1,0,0
+"testCDST3.txt","average","lineseries",8200,2.8797,1.301
+"testCDST3.txt","average","matlab_bgl-4.0.1/...ate/check_matlab_bgl",2,0,0
+"testCDST3.txt","average","matlab_bgl-4.0.1/private/components_mex (MEX-file)",1,0,0
+"testCDST3.txt","average","matlab_bgl-4.0.1/private/merge_options",1,0,0
+"testCDST3.txt","average","matlab_bgl-4.0.1/private/mst_mex (MEX-file)",1,0,0
+"testCDST3.txt","average","mean",2024,0.1467,0.1467
+"testCDST3.txt","average","message",600,0.108,0.108
+"testCDST3.txt","average","mst",1,0.001,0.001
+"testCDST3.txt","average","mx_d_preconditioner (MEX-file)",2405,1.108,1.108
+"testCDST3.txt","average","newplot",8200,4.8062,2.4169
+"testCDST3.txt","average","newplot>ObserveAxesNextPlot",8200,1.5212,1.5212
+"testCDST3.txt","average","newplot>ObserveFigureNextPlot",8200,0.8681,0.8681
+"testCDST3.txt","average","num2str",2,0,0
+"testCDST3.txt","average","num2str>convertUsingRecycledSprintf",2,0,0
+"testCDST3.txt","average","num2str>handleNumericPrecision",2,0,0
+"testCDST3.txt","average","pcg",200,4.7457,1.8045
+"testCDST3.txt","average","process_hierarchy",1,0.01,0
+"testCDST3.txt","average","process_sparse_matrix",5,0.013,0.004
+"testCDST3.txt","average","randsrc",1,0.2182,0.1763
+"testCDST3.txt","average","randsrc>@(a,b)rand(a,b)",1,0.0419,0.0419
+"testCDST3.txt","average","randsrc>create@(a,b)rand(a,b)",1,0,0
+"testCDST3.txt","average","repmat",2,0.005,0.005
+"testCDST3.txt","average","scribe/private/getplotmanager",8200,0.6581,0.6581
+"testCDST3.txt","average","set_matlab_bgl_default",2,0,0
+"testCDST3.txt","average","setdiff",1,0.025,0
+"testCDST3.txt","average","setdiff>setdifflegacy",1,0.025,0
+"testCDST3.txt","average","sortrows",1,0.008,0
+"testCDST3.txt","average","sortrows>sort_back_to_front",1,0.008,0.008
+"testCDST3.txt","average","sparfun/private/iterapp",5210,2.4456,1.0871
+"testCDST3.txt","average","sparfun/private/iterchk",400,0.2566,0.0623
+"testCDST3.txt","average","sparfun/private/itermsg",200,0.2388,0.0893
+"testCDST3.txt","average","sparfun/private/itermsg>getIterationInfo",200,0.1189,0.0763
+"testCDST3.txt","average","splitforest (MEX-file)",2,0,0
+"testCDST3.txt","average","steiner_group",2,0.004,0.003
+"testCDST3.txt","average","unique",7,0.042,0.011
+"testCDST3.txt","average","unique>uniquelegacy",7,0.031,0.023
+"testCDST3.txt","average","update_groups (MEX-file)",1,0.001,0.001
+"testoutrank.txt","average","...-4.0.1/private/get_matlab_bgl_options",2,0.0019,0
+"testoutrank.txt","average","...aly>TopN_Outlier_Pruning_Block_CTD_ST",1,24.9372,0.015
+"testoutrank.txt","average","...ce_anomaly>TopN_Outlier_Pruning_Block",1,12.1084,9.8927
+"testoutrank.txt","average","...d>create@(b)mx_d_preconditioner(sH,b)",1,0.0009,0.0009
+"testoutrank.txt","average","...istance_anomaly>knn_components_sparse",1,0.8782,0.4676
+"testoutrank.txt","average","...stance_anomaly>connect_components_MST",1,0.0085,0
+"testoutrank.txt","average","...stance_anomaly>connect_components_mix",1,0.0095,0.0009
+"testoutrank.txt","average","PCADR",1,0,0
+"testoutrank.txt","average","approx_resistance",1,12.8137,0.0238
+"testoutrank.txt","average","axescheck",2,0,0
+"testoutrank.txt","average","axis",1,0,0
+"testoutrank.txt","average","axis>LocSetEqual",1,0,0
+"testoutrank.txt","average","axis>allAxes",1,0,0
+"testoutrank.txt","average","cell.ismember",1,0.0171,0.0009
+"testoutrank.txt","average","cell.ismember>cellismemberlegacy",1,0.0161,0.0037
+"testoutrank.txt","average","cell.strcat",1,0,0
+"testoutrank.txt","average","cellstr",1,0,0
+"testoutrank.txt","average","cholGsparse",1,0.0989,0.0989
+"testoutrank.txt","average","cmg_dd",1,0.1123,0.0009
+"testoutrank.txt","average","cmg_dd>@(b)mx_d_preconditioner(sH,b)",14743.3,2.2331,0.963
+"testoutrank.txt","average","cmg_sdd",1,0.1123,0
+"testoutrank.txt","average","commute_distance_anomaly",1,28.4773,0.0018
+"testoutrank.txt","average","commute_distance_anomaly>dist",115100,2.2397,2.2397
+"testoutrank.txt","average","commute_distance_anomaly>drawGraph",1,2.6007,0.7744
+"testoutrank.txt","average","commute_distance_anomaly>euclidean",1,0.0019,0.0019
+"testoutrank.txt","average","commute_distance_anomaly>sim",4410,0.3957,0.331
+"testoutrank.txt","average","commute_distance_anomaly>sim_d",3,0,0
+"testoutrank.txt","average","components",1,0,0
+"testoutrank.txt","average","csvread",1,0.0275,0
+"testoutrank.txt","average","csvwrite",1,0.0218,0
+"testoutrank.txt","average","dlmread",1,0.0275,0.0029
+"testoutrank.txt","average","dlmwrite",1,0.0218,0.0039
+"testoutrank.txt","average","dlmwrite>parseinput",1,0.018,0
+"testoutrank.txt","average","dlmwrite>setcoffset",1,0,0
+"testoutrank.txt","average","dlmwrite>setdlm",1,0.001,0.001
+"testoutrank.txt","average","dlmwrite>setroffset",1,0,0
+"testoutrank.txt","average","fcnchk",400,0.1917,0.1612
+"testoutrank.txt","average","graph2d/private/lineseriesmex (MEX-file)",2045,0.0142,0.0142
+"testoutrank.txt","average","graph2dhelper",2045,0.3368,0.2055
+"testoutrank.txt","average","hierarchy",1,0.1094,0.0047
+"testoutrank.txt","average","hold",2,0.0019,0.0019
+"testoutrank.txt","average","initprintexporttemplate",1,0,0
+"testoutrank.txt","average","int2str",2,0.0019,0.0019
+"testoutrank.txt","average","inv_permutation",1,0,0
+"testoutrank.txt","average","iscellstr",2,0.0038,0.0038
+"testoutrank.txt","average","ismember",2,0.0085,0.001
+"testoutrank.txt","average","ismember>ismemberlegacy",2,0.0075,0.0029
+"testoutrank.txt","average","kdtree_build (MEX-file)",1,0.0019,0.0019
+"testoutrank.txt","average","kdtree_k_nearest_neighbors (MEX-file)",441,0.0124,0.0124
+"testoutrank.txt","average","laplacian",1,0,0
+"testoutrank.txt","average","lineseries",2045,0.6706,0.3196
+"testoutrank.txt","average","matlab_bgl-4.0.1/...ate/check_matlab_bgl",2,0,0
+"testoutrank.txt","average","matlab_bgl-4.0.1/private/components_mex (MEX-file)",1,0,0
+"testoutrank.txt","average","matlab_bgl-4.0.1/private/merge_options",1,0.0009,0.0009
+"testoutrank.txt","average","matlab_bgl-4.0.1/private/mst_mex (MEX-file)",1,0.001,0.001
+"testoutrank.txt","average","mean",465,0.0408,0.0408
+"testoutrank.txt","average","message",1002.6,0.1615,0.1615
+"testoutrank.txt","average","mst",1,0.0066,0.0029
+"testoutrank.txt","average","mx_d_preconditioner (MEX-file)",14743.3,1.27,1.27
+"testoutrank.txt","average","newplot",2045,1.151,0.5968
+"testoutrank.txt","average","newplot>ObserveAxesNextPlot",2045,0.3374,0.3374
+"testoutrank.txt","average","newplot>ObserveFigureNextPlot",2045,0.2168,0.2168
+"testoutrank.txt","average","num2str",2,0.001,0
+"testoutrank.txt","average","num2str>convertUsingRecycledSprintf",2,0.001,0.001
+"testoutrank.txt","average","num2str>handleNumericPrecision",2,0.001,0
+"testoutrank.txt","average","pcg",200,12.6379,6.2354
+"testoutrank.txt","average","process_hierarchy",1,0.0009,0
+"testoutrank.txt","average","process_sparse_matrix",3,0.0067,0.0029
+"testoutrank.txt","average","randsrc",1,0.0399,0.0333
+"testoutrank.txt","average","randsrc>@(a,b)rand(a,b)",1,0.0065,0.0065
+"testoutrank.txt","average","randsrc>create@(a,b)rand(a,b)",1,0,0
+"testoutrank.txt","average","repmat",2,0.0045,0.0045
+"testoutrank.txt","average","scribe/private/getplotmanager",2045,0.1312,0.1312
+"testoutrank.txt","average","set_matlab_bgl_default",2,0.0019,0.0019
+"testoutrank.txt","average","setdiff",1,0.0246,0
+"testoutrank.txt","average","setdiff>setdifflegacy",1,0.0246,0.0009
+"testoutrank.txt","average","sortrows",1,0.0009,0
+"testoutrank.txt","average","sortrows>sort_back_to_front",1,0.0009,0.0009
+"testoutrank.txt","average","sparfun/private/iterapp",30199.4,5.7482,3.5152
+"testoutrank.txt","average","sparfun/private/iterchk",400,0.2732,0.0818
+"testoutrank.txt","average","sparfun/private/itermsg",200,0.3799,0.1423
+"testoutrank.txt","average","sparfun/private/itermsg>getIterationInfo",400,0.171,0.1073
+"testoutrank.txt","average","unique",5,0.0286,0.0095
+"testoutrank.txt","average","unique>uniquelegacy",5,0.0189,0.018
+"average","average","...-4.0.1/private/get_matlab_bgl_options",2,0.000655555555555556,0.000222222222222222
+"average","average","...aly>TopN_Outlier_Pruning_Block_CTD_ST",1,6885.3242,0.0336777777777777
+"average","average","...ce_anomaly>TopN_Outlier_Pruning_Block",1,6862.40537777777,6541.36236666667
+"average","average","...d>create@(b)mx_d_preconditioner(sH,b)",1,0.000322222222222222,0.000322222222222222
+"average","average","...istance_anomaly>knn_components_sparse",1,512.9873,338.355822222222
+"average","average","...stance_anomaly>connect_components_MST",1,11.2020222222222,0.0461111111111111
+"average","average","...stance_anomaly>connect_components_mix",1,11.2807111111111,0.0737666666666666
+"average","average","PCADR",1,0.3648,0.00164444444444444
+"average","average","adjacency_cmg (MEX-file)",3.77777777777778,0.00164444444444444,0.00164444444444444
+"average","average","approx_resistance",1,22.8851,0.259311111111111
+"average","average","axescheck",2,0.000444444444444444,0.000444444444444444
+"average","average","axis",1,0.002,0.000777777777777778
+"average","average","axis>LocSetEqual",1,0.00122222222222222,0.00122222222222222
+"average","average","axis>allAxes",1,0,0
+"average","average","cell.ismember",1,0.0192777777777778,0.00287777777777778
+"average","average","cell.ismember>cellismemberlegacy",1,0.0164333333333333,0.00813333333333334
+"average","average","cell.strcat",1,0.00133333333333333,0.000777777777777778
+"average","average","cellstr",1,0.000555555555555556,0.000555555555555556
+"average","average","cholGsparse",1,0.0687111111111112,0.0687111111111112
+"average","average","cmg_dd",1,0.135455555555556,0.00264444444444445
+"average","average","cmg_dd>@(b)mx_d_preconditioner(sH,b)",4390,7.83457777777778,0.447833333333333
+"average","average","cmg_sdd",1,0.137944444444444,0.00254444444444445
+"average","average","commute_distance_anomaly",1,7461.88702222222,0.00416666666666667
+"average","average","commute_distance_anomaly>dist",12606030.1444444,326.184844444444,326.184844444444
+"average","average","commute_distance_anomaly>drawGraph",1,51.7029888888889,16.3724555555556
+"average","average","commute_distance_anomaly>euclidean",1,10.8617555555556,6.74363333333333
+"average","average","commute_distance_anomaly>sim",107587.777777778,8.77747777777778,6.94701111111111
+"average","average","commute_distance_anomaly>sim_d",323.222222222222,0.0276555555555555,0.0276555555555555
+"average","average","components",1,0.00501111111111111,0.00166666666666667
+"average","average","csvread",1,0.193544444444444,0.00111111111111111
+"average","average","csvwrite",1,0.0281111111111111,0.000222222222222222
+"average","average","datamanager.schema",0.0111111111111111,0.000111111111111111,0.000111111111111111
+"average","average","dlmread",1,0.192444444444444,0.168155555555556
+"average","average","dlmwrite",1,0.0278888888888889,0.00718888888888889
+"average","average","dlmwrite>parseinput",1,0.0207777777777778,0.000988888888888889
+"average","average","dlmwrite>setcoffset",1,0.000111111111111111,0.000111111111111111
+"average","average","dlmwrite>setdlm",1,0.000444444444444444,0.000444444444444444
+"average","average","dlmwrite>setroffset",1,0,0
+"average","average","effective_degrees",2.33333333333333,0.000877777777777778,0.000877777777777778
+"average","average","fcnchk",400,0.244733333333333,0.193533333333333
+"average","average","forest_components (MEX-file)",2.33333333333333,0,0
+"average","average","graph2d.schema",0.0111111111111111,0,0
+"average","average","graph2d/private/lineseriesmex (MEX-file)",37035.4555555556,0.3106,0.3106
+"average","average","graph2dhelper",37035.4444444444,6.5325,3.77493333333333
+"average","average","graphprofile (MEX-file)",2.33333333333333,0.000444444444444444,0.000444444444444444
+"average","average","hierarchy",1,0.112688888888889,0.0313666666666666
+"average","average","hold",2,0.00243333333333333,0.00198888888888889
+"average","average","initprintexporttemplate",1,0.000222222222222222,0.000222222222222222
+"average","average","int2str",2,0.00176666666666667,0.00176666666666667
+"average","average","inv_permutation",1,0,0
+"average","average","iscellstr",2,0.00131111111111111,0.00131111111111111
+"average","average","ismember",2,0.00793333333333334,0.000777777777777778
+"average","average","ismember>ismemberlegacy",2,0.00715555555555556,0.00186666666666667
+"average","average","kdtree_build (MEX-file)",1,0.611944444444444,0.611944444444444
+"average","average","kdtree_k_nearest_neighbors (MEX-file)",10758.7777777778,165.203822222222,165.203822222222
+"average","average","laplacian",0.111111111111111,0,0
+"average","average","laplacian2 (MEX-file)",0.888888888888889,0.000777777777777778,0.000777777777777778
+"average","average","lineseries",37035.4555555556,12.8501444444445,6.00701111111112
+"average","average","matlab_bgl-4.0.1/...ate/check_matlab_bgl",2,0.0324555555555555,0.0324555555555555
+"average","average","matlab_bgl-4.0.1/private/components_mex (MEX-file)",1,0.00317777777777778,0.00317777777777778
+"average","average","matlab_bgl-4.0.1/private/merge_options",1,0.000211111111111111,0.000211111111111111
+"average","average","matlab_bgl-4.0.1/private/mst_mex (MEX-file)",1,0.232566666666667,0.232566666666667
+"average","average","mean",10783.2222222222,0.807811111111112,0.807811111111112
+"average","average","message",644.733333333333,0.142766666666667,0.142766666666667
+"average","average","mst",1,0.266533333333334,0.000877777777777778
+"average","average","mx_d_preconditioner (MEX-file)",4390,7.38677777777778,7.38677777777778
+"average","average","newplot",37035.4444444444,22.4727,11.6527222222222
+"average","average","newplot>ObserveAxesNextPlot",37035.4444444444,6.86853333333334,6.86853333333334
+"average","average","newplot>ObserveFigureNextPlot",37035.4444444444,3.95141111111111,3.95141111111111
+"average","average","num2str",2,0.00133333333333333,0.000555555555555556
+"average","average","num2str>convertUsingRecycledSprintf",2,0.000555555555555556,0.000555555555555556
+"average","average","num2str>handleNumericPrecision",2,0.000777777777777778,0.000222222222222222
+"average","average","pcg",200,21.5203222222222,8.68008888888889
+"average","average","princomp",0.444444444444444,0.363177777777778,0.3622
+"average","average","process_hierarchy",1,0.0200555555555556,0.00155555555555556
+"average","average","process_sparse_matrix",5.33333333333333,0.0216444444444444,0.0129888888888889
+"average","average","randsrc",1,0.967577777777777,0.836355555555556
+"average","average","randsrc>@(a,b)rand(a,b)",1,0.131277777777778,0.131277777777778
+"average","average","randsrc>create@(a,b)rand(a,b)",1,0,0
+"average","average","repmat",2,0.00527777777777778,0.00527777777777778
+"average","average","scribe/private/getplotmanager",37035.4444444444,2.75755555555556,2.75755555555556
+"average","average","set_matlab_bgl_default",2,0.000433333333333333,0.000433333333333333
+"average","average","setdiff",1,0.0244,0.000111111111111111
+"average","average","setdiff>setdifflegacy",1,0.0243,0.000766666666666667
+"average","average","sortrows",1,0.0324555555555555,0.00133333333333333
+"average","average","sortrows>sort_back_to_front",1,0.0311555555555555,0.0311555555555555
+"average","average","sparfun/private/iterapp",9214.75555555556,12.2460111111111,4.41142222222222
+"average","average","sparfun/private/iterchk",400,0.329111111111111,0.0844
+"average","average","sparfun/private/itermsg",200,0.264911111111111,0.102522222222222
+"average","average","sparfun/private/itermsg>getIterationInfo",222.222222222222,0.121688888888889,0.0709333333333334
+"average","average","splitforest (MEX-file)",2.33333333333333,0.00176666666666667,0.00176666666666667
+"average","average","steiner_group",2.33333333333333,0.00631111111111111,0.00263333333333333
+"average","average","unique",7.33333333333333,0.0696555555555555,0.00878888888888889
+"average","average","unique>uniquelegacy",7.33333333333333,0.0608888888888889,0.0284777777777778
+"average","average","update_groups (MEX-file)",1.88888888888889,0.00155555555555556,0.00155555555555556
