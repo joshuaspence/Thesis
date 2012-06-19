@@ -45,7 +45,7 @@ build/*
 !build/Variables.ini
 
 # Output files
-output/*
+thesis.pdf
 
 # Makefile helper files
 *.done
