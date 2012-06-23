@@ -1,0 +1,2 @@
+* Change makefile to compare hashes of directory contents for symlink creation
+* Limit verbosity of makefile
