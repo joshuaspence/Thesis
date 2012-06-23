@@ -41,6 +41,7 @@ Thumbs.db
 
 # Latex auxillary files
 build/*
+!build/latexmkrc
 !build/Makefile
 !build/Variables.ini
 
@@ -48,7 +49,8 @@ build/*
 thesis.pdf
 
 # Makefile helper files
-*.done
+.symlinks
+.symlinks.new
 
 # Backup files
 *.bak
