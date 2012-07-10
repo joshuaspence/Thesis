@@ -1,4 +1,4 @@
-# Makefile for compiling my thesis
+# Makefile for compiling a latex document split into multiple directories.
 #
 # TO OBTAIN INSTRUCTIONS FOR USING THIS FILE, RUN:
 #    make help
@@ -9,7 +9,7 @@
 ################################################################################
 # Basic Shell Utilities
 BASENAME     ?= basename
-CAT          ?= cat
+CONCATENATE  ?= cat
 COMPARE      ?= cmp
 COPY_FORCE   ?= cp --force
 COPY_SAFE    ?= cp
@@ -17,7 +17,7 @@ DELETE_FORCE ?= rm --force
 DELETE_SAFE  ?= rm
 DIRNAME      ?= dirname
 ECHO         ?= echo
-EXPR         ?= expr
+EXPRESSION   ?= expr
 FIND         ?= find
 GREP         ?= egrep
 LINK         ?= ln --symbolic
@@ -50,20 +50,156 @@ endif
 # Non-essential programs
 PDF_READER   ?= acroread
 
-# Options
+# Define "DEBUG" to echo commands
 ifndef DEBUG
 MUTE        ?= @
 else
 MUTE        ?= 
 endif
+
+# Define "VERBOSE" to add verbose options to commands
 ifdef VERBOSE
 COPY        += --verbose
 DELETE      += --verbose
 LINK        += --verbose
+MAKE        += --debug
 MOVE        += --verbose
 endif
+
+# Suppress output
 NO_STDERR   ?= 2>/dev/null
 NO_STDOUT   ?= 1>/dev/null
+
+################################################################################
+# Utility macros
+################################################################################
+
+# $(call clean-whitespace,string)
+#
+# Note that "\$$" is used for a single "$" symbol. The backslash is used to 
+# escape the "$" symbol for the shell. The additional "$" symbol is used to 
+# escape the "$" symbol for make.
+define clean-whitespace
+$(shell $(ECHO) -n '$1' | \
+$(PERL) -e "
+use Text::ParseWords;
+@words = quotewords('\s+', 1, <STDIN>);
+my \$$output = "\"\"";
+foreach (@words) {
+	\$$output = "\""\$$output \$$_"\""
+}
+\$$output =~ s/^\s+//;
+\$$output =~ s/\s+\$$//;
+print(\$$output);")
+endef
+
+# $(call trace-message,msg)
+trace-message = -@$(ECHO) '$1'
+
+# $(call verbose-message,msg)
+ifdef VERBOSE
+verbose-message = -@$(ECHO) '$1'
+endif
+
+# $(call count,var)
+# Count the number of elements in a variable.
+count = $(shell $(EXPRESSION) 0 $(foreach V,$1,+ 1))
+
+# $(call print-variable,var)
+# Print the name and value of a variable.
+print-variable = $(info $1=$($1))
+
+# $(call print-variables)
+# Print all makefile variables
+define print-variables
+$(foreach V,$(sort $(filter-out print-variable%,$(.VARIABLES))), 
+	$(if $(filter file,$(origin $V)),
+		$(call print-variable,$V)))
+endef
+
+# $(call copy,source1 source2 ...,destination)
+copy = $(if $1,$(COPY) $1 $2,$(sh_true))
+
+# $(call copy-if-exists,source,destination)
+copy-if-exists = $(if $(call test-exists,$1),$(call copy,$1,$2),$(sh_true))
+
+# $(call create-symlinks,source1 source2 ...,destination)
+create-symlinks = $(if $1,$(LINK) $1 $2,$(sh_true))
+
+# $(call remove-temporary-files,filenames)
+remove-temporary-files = $(if $(KEEP_TEMP),$(sh_true),$(if $1,$(DELETE) $1,$(sh_true)))
+
+# Don't call this directly - it is here to avoid calling wildcard more than
+# once in remove-files.
+remove-files-helper	= $(if $(call test-exists,$1),$(DELETE) $1,$(sh_true))
+
+# $(call remove-files,file1 file2)
+remove-files = $(call remove-files-helper,$(wildcard $1))
+
+# Don't call this directly - it is here to avoid calling wildcard more than
+# once in remove-symlinks.
+remove-symlinks-helper = $(if $(call test-symlink,$1),$(DELETE) $1,$(sh_true))
+
+# $(call remove-symlinks,file1 file2)
+remove-symlinks = $(call remove-symlinks-helper,$(wildcard $1))
+
+# $(call touch-file,file1 file2 ...)
+touch-file = $(TOUCH) $1
+
+# $(call create-dependency-file,dependents,dependencies,dependency-file)
+create-dependency-file = @$(ECHO) '$1: $2' >> $3
+
+# Test that a file exists
+# $(call test-exists,file)
+test-exists		= [ -e '$1' ]
+# $(call test-not-exists,file)
+test-not-exists = [ ! -e '$1' ]
+
+# Test that a symlink exists
+# $(call test-symlink,file)
+test-symlink	= [ -L '$1' ]
+
+# $(call find-files,path,name)
+find-files = $(shell $(FIND) $1 -type f -name $2)
+
+# $(call find-all-files,directory1 directory2 ...,name)
+find-all-files = $(strip $(foreach d,$1,$(call find-files,$d,$2)))
+
+# $(call get-relative-path,from,to)
+get-relative-path = $(shell \
+source="$$($(READLINK) $1)"; \
+target="$$($(READLINK) $2)"; \
+\
+common_part="$$source"; \
+back="."; \
+while [ "$${target\#$$common_part}" = "$${target}" ]; do \
+	common_part="$$($(DIRNAME) $$common_part)"; \
+	back="$${back}/.."; \
+done; \
+\
+back=$$($(ECHO) $$back | $(SED) 's/\.\///'); \
+\
+echo $${back}$${target\#$$common_part}; \
+)
+
+# Characters that are hard to specify in certain places
+space := $(empty) $(empty)
+colon := \:
+comma := ,
+
+# Useful shell definitions
+sh_true	 := :
+sh_false := ! :
+
+# Removes all cleanable files in the given list
+# $(call clean-files,file1 file2 file3 ...)
+# Works exactly like remove-files, but filters out files in $(neverclean)
+clean-files = $(call remove-files-helper,$(call cleanable-files,$(wildcard $1)))
+
+# Utility function for obtaining all files not specified in $(neverclean)
+# $(call cleanable-files,file1 file2 file3 ...)
+# Returns the list of files that is not in $(wildcard $(neverclean))
+cleanable-files = $(filter-out $(wildcard $(neverclean)), $1)
 
 ################################################################################
 # Author details
@@ -71,7 +207,7 @@ NO_STDOUT   ?= 1>/dev/null
 # Author details are parsed from the 'AUTHORS' text file. This file should 
 # contain each author on a new line.
 ################################################################################	
-AUTHOR := $(shell $(CAT) AUTHORS | $(PERL) -p -n -e 's/\r?\n/, /;' | $(PERL) -p -e 's/, $$//;')
+AUTHOR := $(shell $(CONCATENATE) AUTHORS | $(PERL) -p -n -e 's/\r?\n/, /;' | $(PERL) -p -e 's/, $$//;')
 
 ################################################################################
 # Configuration
@@ -95,6 +231,10 @@ ifndef SRC_DIRS
 $(error Source directory not specified. 'SRC_DIRS' not defined.)
 endif
 
+ifneq ($(call count,$(BUILD_DIR)),1)
+$(error Only one build directory sould be specified.)
+endif
+
 # Set default configuration variables
 # If these variables were not set in the configuration file
 BUILD_DIR  ?=
@@ -102,37 +242,52 @@ EXT_DIRS   ?=
 IMG_DIRS   ?=
 OTHER_DIRS ?=
 SRC_DIRS   ?=
+
 BIB_DIRS   ?= $(strip $(SRC_DIRS))
 BST_DIRS   ?= $(strip $(EXT_DIRS))
 CLS_DIRS   ?= $(strip $(EXT_DIRS))
 STY_DIRS   ?= $(strip $(EXT_DIRS)) $(strip $(SRC_DIRS))
 TEX_DIRS   ?= $(strip $(SRC_DIRS))
 
-# Files in the build directory which should not be deleted on a 'clean'
-BUILD_PERSIST += Makefile Variables.ini latexmkrc
-
 # If set to something, will cause temporary files to not be deleted immediately
 KEEP_TEMP ?=
 
+# Some other directories
+ROOT_DIR   = .
+BUILD_DIR_RELATIVE = $(call get-relative-path,$(BUILD_DIR),$(ROOT_DIR))/
+
+################################################################################
+# Automatic stuff
+################################################################################
+# File extensions
+BIB_EXT       := .bib
+BST_EXT       := .bst
+CLS_EXT       := .cls
+DEPS_EXT      := .d
+STY_EXT       := .sty
+TEX_EXT       := .tex
+TIMESTAMP_EXT := .timestamp
+
 # The location of the LaTeX sources files
-BIB_SRC = $(strip $(foreach d, $(BIB_DIRS), $(shell $(FIND) $d -type f -name "*.bib")))
-BST_SRC	= $(strip $(foreach d, $(BST_DIRS), $(shell $(FIND) $d -type f -name "*.bst")))
-CLS_SRC	= $(strip $(foreach d, $(CLS_DIRS), $(shell $(FIND) $d -type f -name "*.cls")))
-STY_SRC	= $(strip $(foreach d, $(STY_DIRS), $(shell $(FIND) $d -type f -name "*.sty")))
-TEX_SRC	= $(strip $(foreach d, $(TEX_DIRS), $(shell $(FIND) $d -type f -name "*.tex")))
+BIB_SRC = $(call find-all-files,$(BIB_DIRS),"*$(BIB_EXT)")
+BST_SRC	= $(call find-all-files,$(BST_DIRS),"*$(BST_EXT)")
+CLS_SRC	= $(call find-all-files,$(CLS_DIRS),"*$(CLS_EXT)")
+STY_SRC	= $(call find-all-files,$(STY_DIRS),"*$(STY_EXT)")
+TEX_SRC	= $(call find-all-files,$(TEX_DIRS),"*$(TEX_EXT)")
 
 # Files/directories to symlink in the build directory
-SYMLINKS = $(foreach f, $(BIB_SRC), $(realpath $f)) \
-           $(foreach f, $(BST_SRC), $(realpath $f)) \
-		   $(foreach f, $(CLS_SRC), $(realpath $f)) \
-		   $(foreach f, $(STY_SRC), $(realpath $f)) \
-		   $(foreach f, $(TEX_SRC), $(realpath $f)) \
-		   $(realpath $(IMG_DIR)) \
-		   $(foreach d, $(DATA_DIR), $(realpath $d)) \
+SYMLINK_FILE_DIRS = $(BIB_DIRS) $(BST_DIRS) $(CLS_DIRS) $(STY_DIRS) $(TEX_DIRS)
+SYMLINK_FILES     = $(BIB_SRC) $(BST_SRC) $(CLS_SRC) $(STY_SRC) $(TEX_SRC)
+SYMLINK_DIRS      = $(IMG_DIRS) $(OTHER_DIRS)
+SYMLINKS = $(call clean-whitespace,\
+           $(foreach f,$(SYMLINK_FILES),$f) \
+		   $(foreach d,$(SYMLINK_DIRS),$d))
+SYMLINKS_RELATIVE = $(call clean-whitespace,\
+           $(foreach f,$(SYMLINK_FILES),$(call addprefix,$(BUILD_DIR_RELATIVE),$f)) \
+		   $(foreach d,$(SYMLINK_DIRS),$(call addprefix,$(BUILD_DIR_RELATIVE),$d)))
 
-# Files to indicate that symlinks have been created
-SYMLINKS_DONE ?= .symlinks
-SYMLINKS_NEW  ?= .symlinks.new
+all_d_targets         := $(BUILD_DIR)$(DEPS_EXT)
+all_timestamp_targets := $(BUILD_DIR)$(TIMESTAMP_EXT)
 
 ################################################################################
 # Make configuration
@@ -162,29 +317,108 @@ MAKE_LATEX += KEEP_TEMP=1
 endif
 
 ################################################################################
-# Utility macros
+# Automatic configuration
 ################################################################################
 
-# $(call trace-message,msg)
-trace-message = -@$(ECHO) $1
+BUILD_FILES          = $(strip $(shell $(FIND) $(BUILD_DIR) -mindepth 1 -type f \( -false $(foreach persist, $(BUILD_PERSIST), -o -name "$(persist)") \) -prune -o -print))
+BUILD_FILES_SYMLINKS = $(strip $(shell $(FIND) $(BUILD_DIR) -mindepth 1 \( -type l \) -print))
+OUTPUT_PDF 			 = $(strip $(shell $(FIND) $(BUILD_DIR) -mindepth 1 -name "*.pdf" -print))
+OUTPUT_PDF_SYMLINKS  = $(strip $(shell $(FIND) $(BUILD_DIR) -mindepth 1 -name "*.pdf" -exec $(BASENAME) {} \;))
+BUILD_DEPS           =
 
-# $(call verbose-message,msg)
-ifdef VERBOSE
-verbose-message = -@$(ECHO) $1
-endif
+################################################################################
+# Targets
+################################################################################
 
-# $(call count,var)
-count = $(shell $(EXPR) 0 $(foreach V,$1,+ 1))
+# Main target.
+.PHONY: all
+all: $(BUILD_DIR) $(OUTPUT_FILE)
 
-# $(call print-variable,var)
-print-variable = $(info $1=$($1))
+# Compile the LaTeX document.
+# Build directory depends on build directory timestamp, which will be 
+# out-of-date if symlinks need to be regenerated.
+.PHONY: $(BUILD_DIR)
+$(BUILD_DIR): $(BUILD_DIR)$(TIMESTAMP_EXT)
+	$(MAKE_LATEX)
 
-define print-variables
-	$(foreach V,$(sort $(filter-out print-variable%, $(.VARIABLES))), 
-		$(if $(filter file,$(origin $V)),
-			$(call print-variable,$V)))
-endef
+# Read the output PDF
+.PHONY: read
+read: $(BUILD_DIR) $(OUTPUT_PDF)
+	$(ACROREAD) $(OUTPUT_PDF) &
 
+################################################################################
+# Dependency targets
+################################################################################
+
+# Build directory dependencies
+$(BUILD_DIR)$(DEPS_EXT):
+	$(call verbose-message,"Creating $@.")
+	$(call create-dependency-file,$(BUILD_DIR)$(TIMESTAMP_EXT),$(SYMLINK_FILE_DIRS),$@)
+
+include $(BUILD_DIR)$(DEPS_EXT)
+$(BUILD_DIR)$(TIMESTAMP_EXT): $(BUILD_DIR)$(DEPS_EXT)
+	$(call trace-message,"Creating symbolic links.")
+	$(call verbose-message,"Deleting existing symlinks.")
+	$(call remove-symlinks,$(foreach s,$(SYMLINKS),$(BUILD_DIR)/$(shell $(BASENAME) $s)))
+	$(call verbose-message,"Creating new symlinks.")
+	$(call create-symlinks,$(SYMLINKS_RELATIVE),$(BUILD_DIR)/)
+	$(call verbose-message,"Updating $@.")
+	$(call touch-file,$@)
+
+############## ##################################################################
+# Symlink targets
+################################################################################
+
+# Create a symbolic link to the output PDF
+#$(OUTPUT_PDF_SYMLINKS):
+#	$(shell $(FIND) $(BUILD_DIR) -type f -name "$(OUTPUT_PDF)" -exec $(LINK) "`$(READLINK) {}`" "$@" \;)
+
+
+################################################################################
+# Clean targets
+################################################################################
+# Removes build files but not output files.
+.PHONY: clean
+clean:
+
+# Remove build files and output files
+.PHONY: distclean
+distclean: clean clean-deps rm-symlinks force-clean-build
+
+# Clean latex build
+.PHONY: clean-latex
+clean-latex:
+	$(call trace-message,"Cleaning latex build.")
+	$(MAKE_LATEX) clean
+
+# Remove dependency files
+.PHONY: clean-deps
+clean-deps:
+	$(call trace-message,"Cleaning dependency files.")
+	$(MUTE)$(call clean-files,$(all_d_targets))
+
+# Delete symbolic links from the build subdirectory.
+.PHONY: rm-symlinks
+rm-symlinks:
+	$(call trace-message,"Deleting symbolic links from build subdirectory.")
+	$(call remove-files,$(foreach s,$(SYMLINKS),$(BUILD_DIR)/$(shell $(BASENAME) $s)) $(SYMLINKS_DONE))
+
+# Delete leftover auxillary files from the build subdirectory.
+BUILD_DIR_FILES = $(strip $(shell $(FIND) $(BUILD_DIR) -mindepth 1 -type f \( -false $(foreach p, $(BUILD_PERSIST), -o -name '$p') \) -prune -o -print))
+x.PHONY: force-clean-build
+force-clean-build:
+	$(call trace-message,"Manually removing leftover build files.")
+	$(call remove-files,$(BUILD_DIR_FILES))
+	
+################################################################################
+# Informational targets
+################################################################################
+# Dump makefile variables
+.PHONY: info
+info:
+	$(call variable-dump)
+
+# TODO: Check
 define variable-dump
 	$(info # Basic Shell Utilities)
 	$(call print-variable,BASENAME)
@@ -238,185 +472,14 @@ define variable-dump
 	$(call print-variable,SYMLINKS)
 	$(call print-variable,SYMLINKS_DONE)
 	$(call print-variable,SYMLINKS_NEW)
-
 endef
 
-copy-if-exists = $(if $(call test-exists,$1),$(COPY) '$1' '$2')
-
-# $(call create-symlink,source,destination)
-create-symlink = $(if $(call test-exists,$1),$(LINK) '$1' '$2')
-
-# $(call remove-temporary-files,filenames)
-remove-temporary-files = $(if $(KEEP_TEMP),:,$(if $1,$(DELETE) $1,:))
-
-# Don't call this directly - it is here to avoid calling wildcard more than
-# once in remove-files.
-remove-files-helper	= $(if $(call test-exists,$1),$(DELETE) $1,$(sh_true))
-
-# $(call remove-files,file1 file2)
-remove-files = $(call remove-files-helper,$(wildcard $1))
-
-# Test that a file exists
-# $(call test-exists,file)
-test-exists		= [ -e '$1' ]
-# $(call test-not-exists,file)
-test-not-exists = [ ! -e '$1' ]
-
-# Characters that are hard to specify in certain places
-space := $(empty) $(empty)
-colon := \:
-comma := ,
-
-# Useful shell definitions
-sh_true	 := :
-sh_false := ! :
-
-
-# Create a hash based on the list of symlinks for the build directory
-CONTENT_SUFFIX := .content
-HASH_SUFFIX    := .hash
-define create-symlink-hash
-	$(call verbose-message, "Hashing list of build symlinks to '$@'. There are $(call count,$(SYMLINKS)) build symlinks.")
-	$(MUTE)$(call remove-files, $@$(CONTENT_SUFFIX) $@$(HASH_SUFFIX))
-	$(MUTE)$(foreach s, $(SYMLINKS), $(ECHO) $(realpath $s) >> $@$(CONTENT_SUFFIX);)
-	$(MUTE)$(SORT) $@$(CONTENT_SUFFIX) -o $@$(CONTENT_SUFFIX)
-	$(MUTE)$(UNIQUE) $@$(CONTENT_SUFFIX) > $@$(CONTENT_SUFFIX)
-	$(MUTE)$(MD5SUM) $@$(CONTENT_SUFFIX) > $@$(HASH_SUFFIX)
-	$(MUTE)$(SED) -n 's/\([0-9a-f]\{32\}\)\s\+$@$(CONTENT_SUFFIX)/\1/p' $@$(HASH_SUFFIX) >> $@
-	$(call remove-temporary-files,$@$(CONTENT_SUFFIX) $@$(HASH_SUFFIX))
-endef
-
-define check-and-recreate-symlinks
-	$(MUTE)$(TAIL) -n 1 .symlinks | $(COMPARE) -s .symlinks.new; \
-	if $(TEST) $$? -ne 0; then \
-		$(ECHO) "Symlinks out of date. Recreating symlinks."; \
-		$(MAKE) rm-symlinks create-symlinks; \
-	else \
-		$(ECHO) "Symlinks do not need updating."; \
-	fi
-	$(call remove-temporary-files,$(SYMLINKS_NEW))
-endef
-
-################################################################################
-# Automatic configuration
-################################################################################
-
-BUILD_FILES          = $(strip $(shell $(FIND) $(BUILD_DIR) -mindepth 1 -type f \( -false $(foreach persist, $(BUILD_PERSIST), -o -name "$(persist)") \) -prune -o -print))
-BUILD_FILES_SYMLINKS = $(strip $(shell $(FIND) $(BUILD_DIR) -mindepth 1 \( -type l \) -print))
-OUTPUT_PDF 			 = $(strip $(shell $(FIND) $(BUILD_DIR) -mindepth 1 -name "*.pdf" -print))
-OUTPUT_PDF_SYMLINKS  = $(strip $(shell $(FIND) $(BUILD_DIR) -mindepth 1 -name "*.pdf" -exec $(BASENAME) {} \;))
-
-################################################################################
-# Error checking
-################################################################################
-
-# Additional error checking
-ifneq ($(call count,$(BUILD_DIR)),1)
-$(error Only one build directory sould be specified.)
-endif
-
-################################################################################
-# Targets
-################################################################################
-
-.PHONY: info
-info:
-	$(variable-dump)
-
-# Main target.
-.PHONY: all
-all: pre compile $(OUTPUT_FILE)
-
-# Compile the LaTeX document.
-.PHONY: compile
-compile: pre
-ifneq ($(BUILD_DIR),)
-	
-else
-	$(error No build directory specified.)
-endif
-
-.PHONY: $(BUILD_DIR)
-$(BUILD_DIR):
-	$(build-latex)
-	$(MAKE) -C $@
-
-# Tasks to be execute before the thesis is compiled.
-.PHONY: pre
-pre: check-symlinks
-
-# Read the output PDF
-.PHONY: read
-read: all $(OUTPUT_PDF)
-	$(ACROREAD) $(OUTPUT_PDF) &
-
-################################################################################
-# Symlink targets
-################################################################################
-
-# Checks if the symlinks in the build directory are up to date.
-.PHONY: check-symlinks
-check-symlinks: $(SYMLINKS_DONE) $(SYMLINKS_NEW)
-	$(call trace-message,"Checking if symlinks are up to date... comparing hashes $(shell $(TAIL) -n 1 $(SYMLINKS_DONE)) and $(shell $(CAT) $(SYMLINKS_NEW)).")
-	$(check-and-recreate-symlinks)
-
-# Create a file containing a hash of the symlinks
-.PHONY: $(SYMLINKS_NEW)
-$(SYMLINKS_NEW):
-	$(call remove-files,$(SYMLINKS_NEW))
-	$(create-symlink-hash)
-
-# Create symbolic links to the LaTeX source files in the build subdirectory.
-create-symlinks: $(SYMLINKS_DONE)
-	$(call trace-message,"Creating symbolic links.")
-	$(foreach s,$(SYMLINKS),$(call create-symlink,$s,$(BUILD_DIR)/);)
-
-# Create a file to mark the symlink creation as done
-$(SYMLINKS_DONE):
-	$(call verbose-message,"Creating '$(SYMLINKS_DONE)' file.")
-	$(MUTE)$(ECHO) "This file prevents make from recreating symbolic links in the 'build' directory." >> $@
-	$(MUTE)$(ECHO) "================================================================================" >> $@
-	$(create-symlink-hash)
-	$(call verbose-message,"Creating '$(SYMLINKS_NEW)' file.")
-
-# Create a symbolic link to the output PDF
-#$(OUTPUT_PDF_SYMLINKS):
-#	$(shell $(FIND) $(BUILD_DIR) -type f -name "$(OUTPUT_PDF)" -exec $(LINK) "`$(READLINK) {}`" "$@" \;)
-
-
-################################################################################
-# Clean targets
-################################################################################
-# Removes build files but not output files.
-.PHONY: clean
-clean:
-	$(MAKE_LATEX) $@
-
-# Remove build files and output files
-.PHONY: distclean
-distclean: rm-symlinks rm-files
-
-# Delete leftover auxillary files from the build subdirectory.
-.PHONY: rm-files
-rm-files:
-	-@$(ECHO) "Deleting any leftover build files."
-	$(call remove-files,$(BUILD_FILES))
-
-# Delete symbolic links from the build subdirectory.
-.PHONY: rm-symlinks
-rm-symlinks:
-	-@$(ECHO) "Deleting symbolic links from build subdirectory."
-	$(call remove-files,$(BUILD_FILES_SYMLINKS) $(SYMLINKS_DONE))
-
-################################################################################
-# Help targets
-################################################################################
-	
 # Display help
 .PHONY: help
 help:
-	$(help-text)
-	
+	$(call help-text)
+
+# TODO: Finish
 define help-text
 #===============================================================================
 # Makefile for compiling my thesis.
