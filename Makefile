@@ -9,8 +9,8 @@
 ################################################################################
 # Basic Shell Utilities
 BASENAME     ?= basename
-CONCATENATE  ?= cat
 COMPARE      ?= cmp
+CONCATENATE  ?= cat
 COPY_FORCE   ?= cp --force
 COPY_SAFE    ?= cp
 DELETE_FORCE ?= rm --force
@@ -67,8 +67,8 @@ MOVE        += --verbose
 endif
 
 # Suppress output
-NO_STDERR   ?= 2>/dev/null
 NO_STDOUT   ?= 1>/dev/null
+NO_STDERR   ?= 2>/dev/null
 
 ################################################################################
 # Utility macros
@@ -94,11 +94,11 @@ print(\$$output);")
 endef
 
 # $(call trace-message,msg)
-trace-message = -@$(ECHO) '$1'
+trace-message = -@$(ECHO) $1
 
 # $(call verbose-message,msg)
 ifdef VERBOSE
-verbose-message = -@$(ECHO) '$1'
+verbose-message = -@$(ECHO) $1
 endif
 
 # $(call count,var)
@@ -146,8 +146,14 @@ remove-symlinks = $(call remove-symlinks-helper,$(wildcard $1))
 # $(call touch-file,file1 file2 ...)
 touch-file = $(TOUCH) $1
 
+# $(call write-text-to-file,file,text)
+write-text-to-file = @$(ECHO) $2 > $1
+
+# $(call append-text-to-file,file,text)
+append-text-to-file = @$(ECHO) $2 >> $1
+
 # $(call create-dependency-file,dependents,dependencies,dependency-file)
-create-dependency-file = @$(ECHO) '$1: $2' >> $3
+create-dependency-file = $(call append-text-to-file,$3,'$1: $2')
 
 # Test that a file exists
 # $(call test-exists,file)
@@ -201,6 +207,9 @@ clean-files = $(call remove-files-helper,$(call cleanable-files,$(wildcard $1)))
 # Returns the list of files that is not in $(wildcard $(neverclean))
 cleanable-files = $(filter-out $(wildcard $(neverclean)), $1)
 
+get-build-symlinks = $(foreach s,$(SYMLINKS),$(BUILD_DIR)/$(shell $(BASENAME) $s)
+get-build-dir-files = $(strip $(shell $(FIND) $(BUILD_DIR) -mindepth 1 -type f \( -false $(foreach p, $(BUILD_PERSIST), -o -name '$p') \) -prune -o -print))
+
 ################################################################################
 # Author details
 #-------------------------------------------------------------------------------
@@ -242,52 +251,42 @@ EXT_DIRS   ?=
 IMG_DIRS   ?=
 OTHER_DIRS ?=
 SRC_DIRS   ?=
+source_extensions ?= .bib .bst .cls .sty .tex
 
-BIB_DIRS   ?= $(strip $(SRC_DIRS))
-BST_DIRS   ?= $(strip $(EXT_DIRS))
-CLS_DIRS   ?= $(strip $(EXT_DIRS))
-STY_DIRS   ?= $(strip $(EXT_DIRS)) $(strip $(SRC_DIRS))
-TEX_DIRS   ?= $(strip $(SRC_DIRS))
+# TODO: Warn if a directory cannot be found.
+$(foreach e,$(source_extensions),$(eval $(e)_directories ?= $(empty)))
 
 # If set to something, will cause temporary files to not be deleted immediately
 KEEP_TEMP ?=
-
-# Some other directories
-ROOT_DIR   = .
-BUILD_DIR_RELATIVE = $(call get-relative-path,$(BUILD_DIR),$(ROOT_DIR))/
 
 ################################################################################
 # Automatic stuff
 ################################################################################
 # File extensions
-BIB_EXT       := .bib
-BST_EXT       := .bst
-CLS_EXT       := .cls
 DEPS_EXT      := .d
-STY_EXT       := .sty
-TEX_EXT       := .tex
 TIMESTAMP_EXT := .timestamp
 
+# Some relative paths
+ROOT_DIR           = .
+BUILD_DIR_RELATIVE = $(call get-relative-path,$(BUILD_DIR),$(ROOT_DIR))/
+
 # The location of the LaTeX sources files
-BIB_SRC = $(call find-all-files,$(BIB_DIRS),"*$(BIB_EXT)")
-BST_SRC	= $(call find-all-files,$(BST_DIRS),"*$(BST_EXT)")
-CLS_SRC	= $(call find-all-files,$(CLS_DIRS),"*$(CLS_EXT)")
-STY_SRC	= $(call find-all-files,$(STY_DIRS),"*$(STY_EXT)")
-TEX_SRC	= $(call find-all-files,$(TEX_DIRS),"*$(TEX_EXT)")
+SOURCES = $(foreach e,$(source_extensions),$(call find-all-files,$($(e)_directories),"*$e") )
 
 # Files/directories to symlink in the build directory
-SYMLINK_FILE_DIRS = $(BIB_DIRS) $(BST_DIRS) $(CLS_DIRS) $(STY_DIRS) $(TEX_DIRS)
-SYMLINK_FILES     = $(BIB_SRC) $(BST_SRC) $(CLS_SRC) $(STY_SRC) $(TEX_SRC)
+SYMLINK_FILE_DIRS = $(foreach e,$(source_extensions),$($(e)_directories))
+SYMLINK_FILES     = $(SOURCES)
 SYMLINK_DIRS      = $(IMG_DIRS) $(OTHER_DIRS)
-SYMLINKS = $(call clean-whitespace,\
+
+build_symlinks_sources = $(call clean-whitespace,\
            $(foreach f,$(SYMLINK_FILES),$f) \
 		   $(foreach d,$(SYMLINK_DIRS),$d))
-SYMLINKS_RELATIVE = $(call clean-whitespace,\
+build_symlinks_relative = $(call clean-whitespace,\
            $(foreach f,$(SYMLINK_FILES),$(call addprefix,$(BUILD_DIR_RELATIVE),$f)) \
 		   $(foreach d,$(SYMLINK_DIRS),$(call addprefix,$(BUILD_DIR_RELATIVE),$d)))
 
-all_d_targets         := $(BUILD_DIR)$(DEPS_EXT)
-all_timestamp_targets := $(BUILD_DIR)$(TIMESTAMP_EXT)
+all_deps       := $(BUILD_DIR)$(DEPS_EXT)
+all_timestamps := $(BUILD_DIR)$(TIMESTAMP_EXT)
 
 ################################################################################
 # Make configuration
@@ -317,16 +316,6 @@ MAKE_LATEX += KEEP_TEMP=1
 endif
 
 ################################################################################
-# Automatic configuration
-################################################################################
-
-BUILD_FILES          = $(strip $(shell $(FIND) $(BUILD_DIR) -mindepth 1 -type f \( -false $(foreach persist, $(BUILD_PERSIST), -o -name "$(persist)") \) -prune -o -print))
-BUILD_FILES_SYMLINKS = $(strip $(shell $(FIND) $(BUILD_DIR) -mindepth 1 \( -type l \) -print))
-OUTPUT_PDF 			 = $(strip $(shell $(FIND) $(BUILD_DIR) -mindepth 1 -name "*.pdf" -print))
-OUTPUT_PDF_SYMLINKS  = $(strip $(shell $(FIND) $(BUILD_DIR) -mindepth 1 -name "*.pdf" -exec $(BASENAME) {} \;))
-BUILD_DEPS           =
-
-################################################################################
 # Targets
 ################################################################################
 
@@ -343,7 +332,7 @@ $(BUILD_DIR): $(BUILD_DIR)$(TIMESTAMP_EXT)
 
 # Read the output PDF
 .PHONY: read
-read: $(BUILD_DIR) $(OUTPUT_PDF)
+read: $(BUILD_DIR) 
 	$(ACROREAD) $(OUTPUT_PDF) &
 
 ################################################################################
@@ -355,7 +344,7 @@ $(BUILD_DIR)$(DEPS_EXT):
 	$(call verbose-message,"Creating $@.")
 	$(call create-dependency-file,$(BUILD_DIR)$(TIMESTAMP_EXT),$(SYMLINK_FILE_DIRS),$@)
 
-include $(BUILD_DIR)$(DEPS_EXT)
+-include $(BUILD_DIR)$(DEPS_EXT)
 $(BUILD_DIR)$(TIMESTAMP_EXT): $(BUILD_DIR)$(DEPS_EXT)
 	$(call trace-message,"Creating symbolic links.")
 	$(call verbose-message,"Deleting existing symlinks.")
@@ -379,36 +368,41 @@ $(BUILD_DIR)$(TIMESTAMP_EXT): $(BUILD_DIR)$(DEPS_EXT)
 ################################################################################
 # Removes build files but not output files.
 .PHONY: clean
-clean:
+clean: clean-latex
 
 # Remove build files and output files
 .PHONY: distclean
-distclean: clean clean-deps rm-symlinks force-clean-build
+distclean: clean-latex clean-deps clean-timestamps clean-symlinks force-clean-build
 
 # Clean latex build
 .PHONY: clean-latex
 clean-latex:
-	$(call trace-message,"Cleaning latex build.")
+	$(call trace-message,"Cleaning LaTeX build.")
 	$(MAKE_LATEX) clean
 
 # Remove dependency files
 .PHONY: clean-deps
 clean-deps:
 	$(call trace-message,"Cleaning dependency files.")
-	$(MUTE)$(call clean-files,$(all_d_targets))
+	$(MUTE)$(call clean-files,$(all_deps))
+
+# Remove timestamp files
+.PHONY: clean-timestamps
+clean-timestamps:
+	$(call trace-message,"Cleaning timestamp files.")
+	$(MUTE)$(call clean-files,$(all_timestamps))
 
 # Delete symbolic links from the build subdirectory.
-.PHONY: rm-symlinks
-rm-symlinks:
+.PHONY: clean-symlinks
+clean-symlinks:
 	$(call trace-message,"Deleting symbolic links from build subdirectory.")
-	$(call remove-files,$(foreach s,$(SYMLINKS),$(BUILD_DIR)/$(shell $(BASENAME) $s)) $(SYMLINKS_DONE))
+	$(call remove-symlinks,$(call get-build-symlinks)
 
 # Delete leftover auxillary files from the build subdirectory.
-BUILD_DIR_FILES = $(strip $(shell $(FIND) $(BUILD_DIR) -mindepth 1 -type f \( -false $(foreach p, $(BUILD_PERSIST), -o -name '$p') \) -prune -o -print))
-x.PHONY: force-clean-build
+.PHONY: force-clean-build
 force-clean-build:
 	$(call trace-message,"Manually removing leftover build files.")
-	$(call remove-files,$(BUILD_DIR_FILES))
+	$(call remove-files,$(call get-build-dir-files))
 	
 ################################################################################
 # Informational targets
@@ -422,24 +416,55 @@ info:
 define variable-dump
 	$(info # Basic Shell Utilities)
 	$(call print-variable,BASENAME)
-	$(call print-variable,CAT)
+	$(call print-variable,COMPARE)
+	$(call print-variable,CONCATENATE)
 	$(call print-variable,COPY_FORCE)
 	$(call print-variable,COPY_SAFE)
 	$(call print-variable,DELETE_FORCE)
 	$(call print-variable,DELETE_SAFE)
 	$(call print-variable,DIRNAME)
 	$(call print-variable,ECHO)
+	$(call print-variable,EXPRESSION)
 	$(call print-variable,FIND)
 	$(call print-variable,GREP)
 	$(call print-variable,LINK)
 	$(call print-variable,MAKE)
 	$(call print-variable,MD5SUM)
-	$(call print-variable,MOVE)
+	$(call print-variable,MOVE_FORCE)
+	$(call print-variable,MOVE_SAFE)
 	$(call print-variable,PERL)
 	$(call print-variable,READLINK)
 	$(call print-variable,SED)
 	$(call print-variable,SLEEP)
 	$(call print-variable,SORT)
+	$(call print-variable,TAIL)
+	$(call print-variable,TEST)
+	$(call print-variable,TOUCH)
+	$(call print-variable,UNIQUE)
+	$(call print-variable,XARGS)
+	$(info )
+	
+	$(info # Other Utilities)
+	$(call print-variable,PDF_READER)
+	$(call print-variable,MUTE)
+	$(call print-variable,DEBUG)
+	$(call print-variable,VERBOSE)
+	$(call print-variable,NO_STDOUT)
+	$(call print-variable,NO_STDERR)
+	$(call print-variable,FIND)
+	$(call print-variable,GREP)
+	$(call print-variable,LINK)
+	$(call print-variable,MAKE)
+	$(call print-variable,MD5SUM)
+	$(call print-variable,MOVE_FORCE)
+	$(call print-variable,MOVE_SAFE)
+	$(call print-variable,PERL)
+	$(call print-variable,READLINK)
+	$(call print-variable,SED)
+	$(call print-variable,SLEEP)
+	$(call print-variable,SORT)
+	$(call print-variable,TAIL)
+	$(call print-variable,TEST)
 	$(call print-variable,TOUCH)
 	$(call print-variable,UNIQUE)
 	$(call print-variable,XARGS)
@@ -451,27 +476,32 @@ define variable-dump
 	$(call print-variable,IMG_DIRS)
 	$(call print-variable,OTHER_DIRS)
 	$(call print-variable,SRC_DIRS)
-	$(call print-variable,BIB_DIRS)
-	$(call print-variable,BST_DIRS)
-	$(call print-variable,CLS_DIRS)
-	$(call print-variable,STY_DIRS)
-	$(call print-variable,TEX_DIRS)
+	$(call print-variable,source_extensions)
+	$(foreach e,$(source_extensions),$(call print-variable,$(e)_directories))
 	$(call print-variable,KEEP_TEMP)
 	$(call print-variable,BUILD_PERSIST)
 	$(info )
 	
+	$(info # Automatic Stuff)
+	$(call print-variable,DEPS_EXT)
+	$(call print-variable,TIMESTAMP_EXT)
+	$(call print-variable,ROOT_DIR)
+	$(call print-variable BUILD_DIR_RELATIVE)
+	$(info )
+	
 	$(info # Sources)
-	$(call print-variable,BIB_SRC)
-	$(call print-variable,BST_SRC)
-	$(call print-variable,CLS_SRC)
-	$(call print-variable,STY_SRC)
-	$(call print-variable,TEX_SRC)
+	$(call print-variable,SOURCES)
+	$(call print-variable,all_deps)
+	$(call print-variable,all_timestamps)
 	$(info )
 	
 	$(info # Symlinks)
-	$(call print-variable,SYMLINKS)
-	$(call print-variable,SYMLINKS_DONE)
-	$(call print-variable,SYMLINKS_NEW)
+	$(call print-variable,build_symlinks_sources)
+	$(call print-variable,build_symlinks_relative)
+	$(info )
+	$(info # LaTeX)
+	$(call print-variable,MAKE_LATEX)
+	$(info )
 endef
 
 # Display help
