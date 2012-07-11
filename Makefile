@@ -9,6 +9,14 @@
 ################################################################################
 
 ################################################################################
+# File details
+################################################################################	
+FILENAME     := LaTeX Root Makefile
+AUTHOR       := Joshua Spence
+VERSION      := 1.0.0
+VERSION_DATE := 11 July 2012
+
+################################################################################
 # External Programs
 ################################################################################
 # Basic Shell Utilities
@@ -105,7 +113,7 @@ trace-message = -@$(ECHO) $1
 
 # $(call verbose-message,msg)
 ifdef VERBOSE
-verbose-message = $(call trace-message,$1)
+verbose-message = -@$(call trace-message,$1)
 endif
 
 # $(call count,var)
@@ -125,42 +133,42 @@ $(foreach V,$(sort $(filter-out print-variable%,$(.VARIABLES))),
 endef
 
 # $(call copy,source1 source2 ...,destination)
-copy = $(if $1,$(COPY) $1 $2,$(sh_true))
+copy = $(MUTE)$(if $1,$(COPY) $1 $2,$(sh_true))
 
 # $(call copy-if-exists,source,destination)
-copy-if-exists = $(if $(call test-exists,$1),$(call copy,$1,$2),$(sh_true))
+copy-if-exists = $(MUTE)$(if $(call test-exists,$1),$(call copy,$1,$2),$(sh_true))
 
 # $(call create-symlinks,source1 source2 ...,destination)
-create-symlinks = $(if $1,$(LINK) $1 $2,$(sh_true))
+create-symlinks = $(MUTE)$(if $1,$(LINK) $1 $2,$(sh_true))
 
 # $(call remove-temporary-files,filenames)
-remove-temporary-files = $(if $(KEEP_TEMP),$(sh_true),$(if $1,$(DELETE) $1,$(sh_true)))
+remove-temporary-files = $(MUTE)$(if $(KEEP_TEMP),$(sh_true),$(if $1,$(DELETE) $1,$(sh_true)))
 
 # Don't call this directly - it is here to avoid calling wildcard more than
 # once in remove-files.
-remove-files-helper	= $(if $(call test-exists,$1),$(DELETE) $1,$(sh_true))
+remove-files-helper	= $(MUTE)$(if $(call test-exists,$1),$(DELETE) $1,$(sh_true))
 
 # $(call remove-files,file1 file2)
-remove-files = $(call remove-files-helper,$(wildcard $1))
+remove-files = $(MUTE)$(call remove-files-helper,$(wildcard $1))
 
 # Don't call this directly - it is here to avoid calling wildcard more than
 # once in remove-symlinks.
-remove-symlinks-helper = $(if $(call test-symlink,$1),$(DELETE) $1,$(sh_true))
+remove-symlinks-helper = $(MUTE)$(if $(call test-symlink,$1),$(DELETE) $1,$(sh_true))
 
 # $(call remove-symlinks,file1 file2)
-remove-symlinks = $(call remove-symlinks-helper,$(wildcard $1))
+remove-symlinks = $(MUTE)$(call remove-symlinks-helper,$(wildcard $1))
 
 # $(call touch-file,file1 file2 ...)
-touch-file = $(TOUCH) $1
+touch-file = $(MUTE)$(TOUCH) $1
 
 # $(call write-text-to-file,file,text)
-write-text-to-file = @$(ECHO) $2 > $1
+write-text-to-file = $(MUTE)$(ECHO) $2 > $1
 
 # $(call append-text-to-file,file,text)
-append-text-to-file = @$(ECHO) $2 >> $1
+append-text-to-file = $(MUTE)$(ECHO) $2 >> $1
 
 # $(call create-dependency-file,dependents,dependencies,dependency-file)
-create-dependency-file = $(call append-text-to-file,$3,'$1: $2')
+create-dependency-file = $(MUTE)$(call append-text-to-file,$3,'$1: $2')
 
 # Test that a file exists
 # $(call test-exists,file)
@@ -215,14 +223,6 @@ clean-files = $(call remove-files-helper,$(call cleanable-files,$(wildcard $1)))
 # $(call cleanable-files,file1 file2 file3 ...)
 # Returns the list of files that is not in $(wildcard $(neverclean))
 cleanable-files = $(filter-out $(wildcard $(neverclean)), $1)
-
-################################################################################
-# Author details
-#-------------------------------------------------------------------------------
-# Author details are parsed from the 'AUTHORS' text file. This file should 
-# contain each author on a new line.
-################################################################################	
-AUTHOR := $(shell $(CONCATENATE) AUTHORS | $(PERL) -p -n -e 's/\r?\n/, /;' | $(PERL) -p -e 's/, $$//;')
 
 ################################################################################
 # Configuration
@@ -361,10 +361,9 @@ $(BUILD_DIR): $(BUILD_DIR)$(TIMESTAMP_EXT)
 	$(MAKE_LATEX)
 
 # Read the output PDF
-# TODO: This doesn't work yet
 .PHONY: read
-read: $(BUILD_DIR) 
-	$(ACROREAD) $(OUTPUT_PDF) &
+read: $(BUILD_DIR)
+	$(ACROREAD) $(BUILD_DIR)/*.pdf &
 
 ################################################################################
 # Dependency targets
@@ -385,15 +384,7 @@ $(BUILD_DIR)$(TIMESTAMP_EXT): $(BUILD_DIR)$(DEPS_EXT)
 	$(call verbose-message,"Creating new symlinks.")
 	$(call create-symlinks,$(build_symlinks_relative),$(BUILD_DIR)/)
 	$(call verbose-message,"Updating $@.")
-	$(call write-to-file,$@,"### This file is used to detect when $(BUILD_DIR) symlinks need to be regenerated.")
-
-################################################################################
-# Symlink targets
-################################################################################
-
-# Create a symbolic link to the output PDF
-#$(OUTPUT_PDF_SYMLINKS):
-#	$(shell $(FIND) $(BUILD_DIR) -type f -name "$(OUTPUT_PDF)" -exec $(LINK) "`$(READLINK) {}`" "$@" \;)
+	$(call write-text-to-file,$@,"### This file is used to detect when $(BUILD_DIR) symlinks need to be regenerated.")
 
 ################################################################################
 # Clean targets
@@ -405,6 +396,10 @@ clean: clean-latex
 # Remove build files and output files
 .PHONY: distclean
 distclean: clean-latex clean-deps clean-timestamps clean-symlinks
+
+# Force removal of leftover files in build directorty
+.PHONY: forceclean
+forceclean: force-clean-build
 
 # Clean latex build
 .PHONY: clean-latex
@@ -444,7 +439,6 @@ force-clean-build:
 info:
 	$(call variable-dump)
 
-# TODO: Check
 define variable-dump
 	$(info # Basic Shell Utilities)
 	$(call print-variable,BASENAME)
@@ -548,38 +542,78 @@ endef
 help:
 	$(call help-text)
 
-# TODO: Finish
 define help-text
 #===============================================================================
-# Makefile for compiling my thesis.
+# Makefile for compiling a LaTeX project split into multiple directories.
 #-------------------------------------------------------------------------------
-# Name:    $(fileinfo)
-# Author:  $(author)
-# Version: $(version)
+# Name:    $(FILENAME)
+# Author:  $(AUTHOR)
+# Version: $(VERSION)
+# Date:    $(VERSION_DATE)
 #===============================================================================
 #
 # USAGE:
 #     make [VERBOSE=1] [DEBUG=1] [KEEP_TEMP=1] <target(s)>
 #
+#
 # TARGETS:
-#     all                 Runs all tasks necessary to compile the thesis. The
-#                         thesis will be output to '$(OUTPUT_PDF)'.
-#     compile             Compile the thesis.
-#     pre                 Runs any tasks that must be executed before 
-#                         compilation can begin.
-#     clean               Cleans the '$(BUILD_DIR)' subdirectory.
-#     distclean           Removes symbolic links and remaining auxillary files 
-#                         from the '$(BUILD_DIR)' subdirectory.
-#     read                Compiles the thesis and then opens the document with 
-#                         '$(ACROREAD)'.
-#     help                Display the help file for instructions on how to 
-#                         compile the thesis.
-#     check-symlinks      Checks that the symbolic links in the '$(BUILD_DIR)' 
-#                         subdirectory are up-to-date. If not, recreate the 
-#                         symbolic links.
-#     rm-files            Deletes all remaining auxillary files from the 
-#                         '$(BUILD_DIR)' subdirectory."
-#     rm-symlinks         Deletes the symbolic links from the '$(BUILD_DIR)' 
-#                         subdirectory.
+#     all
+#           Runs all tasks necessary to compile the project.
+#
+#     $(BUILD_DIR)
+#           Compile the LaTeX project.
+#     
+#     $(BUILD_DIR)$(DEPS_EXT)
+#           TODO
+#
+#     $(BUILD_DIR)$(TIMESTAMP_EXT)
+#           TODO
+#
+#     clean
+#           Cleans the '$(BUILD_DIR)' subdirectory.
+#
+#     distclean
+#           Removes symbolic links and remaining auxillary files from the 
+#           '$(BUILD_DIR)' subdirectory.
+#
+#     help
+#           Display the help file for instructions on how to compile the LaTeX 
+#           project.
+#
+#     info
+#           Print out all variables used in the Makefile. Useful for debugging 
+#           purposes.
+#
+#     read
+#           Compiles the LaTeX project and then opens the document with 
+#           '$(PDF_READER)'.
+#
+#
+# CONFIGURATION VARIABLES:
+#   The following variables should be set in a file called 'Configuration.mk'.
+#
+#     BUILD_DIR
+#           TODO
+#
+#     EXT_DIRS
+#           TODO
+#
+#     IMG_DIRS
+#           TODO
+#
+#     SRC_DIRS
+#           TODO
+#
+#     source_extensions ?= .bib .bst .cls .sty .tex
+#           TODO
+#
+#     neverclean
+#           TODO
+#
+#     $(foreach e,$(source_extensions),$(e)_directories)
+#           TODO
+#
+#     build_persist ?= Makefile Variables.ini
+#           Files that should never be removed from the build directory.
 #------------------------------------------------------------------------------- 
 endef
