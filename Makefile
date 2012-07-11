@@ -207,9 +207,6 @@ clean-files = $(call remove-files-helper,$(call cleanable-files,$(wildcard $1)))
 # Returns the list of files that is not in $(wildcard $(neverclean))
 cleanable-files = $(filter-out $(wildcard $(neverclean)), $1)
 
-get-build-symlinks = $(foreach s,$(SYMLINKS),$(BUILD_DIR)/$(shell $(BASENAME) $s)
-get-build-dir-files = $(strip $(shell $(FIND) $(BUILD_DIR) -mindepth 1 -type f \( -false $(foreach p, $(BUILD_PERSIST), -o -name '$p') \) -prune -o -print))
-
 ################################################################################
 # Author details
 #-------------------------------------------------------------------------------
@@ -252,12 +249,16 @@ IMG_DIRS   ?=
 OTHER_DIRS ?=
 SRC_DIRS   ?=
 source_extensions ?= .bib .bst .cls .sty .tex
+neverclean ?=
 
 # TODO: Warn if a directory cannot be found.
 $(foreach e,$(source_extensions),$(eval $(e)_directories ?= $(empty)))
 
 # If set to something, will cause temporary files to not be deleted immediately
 KEEP_TEMP ?=
+
+# Files that should never be removed from the build directory.
+build_persist ?= Makefile Variables.ini
 
 ################################################################################
 # Automatic stuff
@@ -270,8 +271,9 @@ TIMESTAMP_EXT := .timestamp
 ROOT_DIR           = .
 BUILD_DIR_RELATIVE = $(call get-relative-path,$(BUILD_DIR),$(ROOT_DIR))/
 
-# The location of the LaTeX sources files
-SOURCES = $(foreach e,$(source_extensions),$(call find-all-files,$($(e)_directories),"*$e") )
+# The location of the LaTeX sources files. The files in this variable depend on
+# the source_extensions and $(source_extensions)_directories/
+SOURCES = $(call clean-whitespace,$(foreach e,$(source_extensions),$(call find-all-files,$($(e)_directories),"*$e")))
 
 # Files/directories to symlink in the build directory
 SYMLINK_FILE_DIRS = $(foreach e,$(source_extensions),$($(e)_directories))
@@ -281,9 +283,13 @@ SYMLINK_DIRS      = $(IMG_DIRS) $(OTHER_DIRS)
 build_symlinks_sources = $(call clean-whitespace,\
            $(foreach f,$(SYMLINK_FILES),$f) \
 		   $(foreach d,$(SYMLINK_DIRS),$d))
+build_symlinks = $(foreach s,$(build_symlinks_sources),$(BUILD_DIR)/$(shell $(BASENAME) $s))
 build_symlinks_relative = $(call clean-whitespace,\
            $(foreach f,$(SYMLINK_FILES),$(call addprefix,$(BUILD_DIR_RELATIVE),$f)) \
 		   $(foreach d,$(SYMLINK_DIRS),$(call addprefix,$(BUILD_DIR_RELATIVE),$d)))
+		   
+# Files in the build directory that shouldn't appear in a "clean" build.
+build_dirty_files := $(strip $(shell $(FIND) $(BUILD_DIR) -mindepth 1 -type f \( -false $(foreach p,$(build_persist), -o -name $p) \) -prune -o -print))
 
 all_deps       := $(BUILD_DIR)$(DEPS_EXT)
 all_timestamps := $(BUILD_DIR)$(TIMESTAMP_EXT)
@@ -348,20 +354,19 @@ $(BUILD_DIR)$(DEPS_EXT):
 $(BUILD_DIR)$(TIMESTAMP_EXT): $(BUILD_DIR)$(DEPS_EXT)
 	$(call trace-message,"Creating symbolic links.")
 	$(call verbose-message,"Deleting existing symlinks.")
-	$(call remove-symlinks,$(foreach s,$(SYMLINKS),$(BUILD_DIR)/$(shell $(BASENAME) $s)))
+	$(call remove-symlinks,$(build_symlinks))
 	$(call verbose-message,"Creating new symlinks.")
-	$(call create-symlinks,$(SYMLINKS_RELATIVE),$(BUILD_DIR)/)
+	$(call create-symlinks,$(build_symlinks_relative),$(BUILD_DIR)/)
 	$(call verbose-message,"Updating $@.")
-	$(call touch-file,$@)
+	$(call write-to-file,$@,"### This file is used to detect when $(BUILD_DIR) symlinks need to be regenerated.")
 
-############## ##################################################################
+################################################################################
 # Symlink targets
 ################################################################################
 
 # Create a symbolic link to the output PDF
 #$(OUTPUT_PDF_SYMLINKS):
 #	$(shell $(FIND) $(BUILD_DIR) -type f -name "$(OUTPUT_PDF)" -exec $(LINK) "`$(READLINK) {}`" "$@" \;)
-
 
 ################################################################################
 # Clean targets
@@ -372,7 +377,7 @@ clean: clean-latex
 
 # Remove build files and output files
 .PHONY: distclean
-distclean: clean-latex clean-deps clean-timestamps clean-symlinks force-clean-build
+distclean: clean-latex clean-deps clean-timestamps clean-symlinks
 
 # Clean latex build
 .PHONY: clean-latex
@@ -396,13 +401,13 @@ clean-timestamps:
 .PHONY: clean-symlinks
 clean-symlinks:
 	$(call trace-message,"Deleting symbolic links from build subdirectory.")
-	$(call remove-symlinks,$(call get-build-symlinks)
+	$(call remove-symlinks,$(build_symlinks))
 
 # Delete leftover auxillary files from the build subdirectory.
 .PHONY: force-clean-build
 force-clean-build:
 	$(call trace-message,"Manually removing leftover build files.")
-	$(call remove-files,$(call get-build-dir-files))
+	$(call remove-files,$(build_dirty_files))
 	
 ################################################################################
 # Informational targets
@@ -477,6 +482,7 @@ define variable-dump
 	$(call print-variable,OTHER_DIRS)
 	$(call print-variable,SRC_DIRS)
 	$(call print-variable,source_extensions)
+	$(call print-variable,never_clean)
 	$(foreach e,$(source_extensions),$(call print-variable,$(e)_directories))
 	$(call print-variable,KEEP_TEMP)
 	$(call print-variable,BUILD_PERSIST)
@@ -491,14 +497,20 @@ define variable-dump
 	
 	$(info # Sources)
 	$(call print-variable,SOURCES)
-	$(call print-variable,all_deps)
-	$(call print-variable,all_timestamps)
 	$(info )
 	
 	$(info # Symlinks)
 	$(call print-variable,build_symlinks_sources)
+	$(call print-variable,build_symlinks)
 	$(call print-variable,build_symlinks_relative)
 	$(info )
+	
+	$(info # Auxillary files)
+	$(call print-variable,all_deps)
+	$(call print-variable,all_timestamps)
+	$(call print-variable,build_dirty_files)
+	$(info )
+	
 	$(info # LaTeX)
 	$(call print-variable,MAKE_LATEX)
 	$(info )
