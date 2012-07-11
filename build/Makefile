@@ -3436,6 +3436,11 @@ clean-nographics: clean-tex clean-deps clean-backups clean-auxiliary ;
 .PHONY: clean
 clean: clean-generated clean-tex clean-graphics clean-deps clean-backups clean-auxiliary ;
 
+# Forceful clean
+.PHONY: distclean
+distclean: clean
+	$(call clean-files,$(foreach e,$(rm_ext),$(wildcard *.$e)))
+
 #
 # HELP TARGETS
 #

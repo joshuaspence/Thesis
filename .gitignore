@@ -39,17 +39,12 @@ Thumbs.db
 # PROJECT SPECIFIC
 #===============================================================================
 
-# Latex auxillary files
+# Build directory auxillary files
 build/*
 !build/Makefile
 !build/Variables.ini
-
-# Output files
-thesis.pdf
+!build/.gitignore
 
 # Makefile helper files
 *.d
 *.timestamp
-
-# Backup files
-*.bak
