@@ -268,7 +268,7 @@ $(foreach e,$(source_extensions),$(eval $(e)_directories ?= $(empty)))
 KEEP_TEMP ?=
 
 # Files that should never be removed from the build directory.
-build_persist ?= Makefile Variables.ini
+build_persist += Makefile Variables.ini .gitignore
 
 ################################################################################
 # Automatic stuff

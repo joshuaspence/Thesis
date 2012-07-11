@@ -1,0 +1,7 @@
+*.aux
+*.d
+*.fls
+*.log
+*.make
+*.out
+*.temp
