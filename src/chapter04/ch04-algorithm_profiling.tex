@@ -72,15 +72,15 @@ spam &				6598 &			167 &									\\\hline
 \subsection{Performance Bottleneck}
 \label{sec:algorithmPerformanceBottleneck}
 From observations of the results of the algorithm profiling, it was observed 
-that the performance of the `anomaly detection using commute-distance' 
-algorithm is bottle-necked significantly by a function named 
+that the performance of the 
+\singleQuote{anomaly detection using commute-distance} algorithm is 
+bottle-necked significantly by a function named 
 \verb+TopN_Outlier_Pruning_Block+. The MATLAB code for this function can be 
-found in \hyperref[apdx:matlabCode]{Appendix~\ref{apdx:matlabCode}}. Analysis of
-this function, as well as discussions with \citeauthor{Khoa:2012} revealed that
-the algorithm was originally devised by \citeauthor{Bay:2003} and published in
-the paper \citetitle{Bay:2003}. The general steps of the algorithm are described
-in \hyperref[algm:TopNOutlierPruningBlock]
-{Algorithm~\ref{algm:TopNOutlierPruningBlock}}.
+found in \autoref{apdx:matlabCode}. Analysis of this function, as well as 
+discussions with \citeauthor{Khoa:2012} revealed that the algorithm was 
+originally devised by \citeauthor{Bay:2003} and published in the paper 
+\citetitle{Bay:2003}. The general steps of the algorithm are described in 
+\autoref{algm:TopNOutlierPruningBlock}.
 
 \begin{algorithm}[t]
 \caption{TopN\_Outlier\_Pruning\_Block}
@@ -175,15 +175,14 @@ Where $\pi(x)$ is the probability that a random drawn example lies within
 distance $d$ of point $x$ and $P(Y=y)$ is the probability of obtaining the $k$th 
 success on trial $y$.
 
-The first term in \hyperref[eqn:outlierPruneComplexity]
-{Equation~\ref{eqn:outlierPruneComplexity}} represents the number of distance 
-computations to eliminate non-outliers, and does not depend on $N$. The second 
-term represents the expected cost of outliers, and does depend on $N$, yielding 
-an overall quadratic dependency to process $N$ examples in total. However, note 
-that we typically set the program parameters to return a small and possibly 
-fixed number of outliers. Thus the first term dominates and we obtain near 
-linear performance \cite{Bay:2003}. More specifically, it was determined that 
-the primary factor determining the scaling is how the cutoff changes as $N$ 
+The first term in \autoref{eqn:outlierPruneComplexity} represents the number of 
+distance computations to eliminate non-outliers, and does not depend on $N$. The 
+second term represents the expected cost of outliers, and does depend on $N$, 
+yielding an overall quadratic dependency to process $N$ examples in total. 
+However, note that we typically set the program parameters to return a small and
+possibly fixed number of outliers. Thus the first term dominates and we obtain 
+near linear performance \cite{Bay:2003}. More specifically, it was determined 
+that the primary factor determining the scaling is how the cutoff changes as $N$ 
 increases.
 
 There are, however, some limitations of the aforementioned algorithm. 

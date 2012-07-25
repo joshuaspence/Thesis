@@ -1,14 +1,17 @@
 \documentclass[a4paper]{report}
 
 \usepackage{mythesis}
+\usepackage{biblatex}					% use biblatex instead of bibtex
+\usepackage{gantt}						% for gantt charts
+\usepackage{graphicx}					% for graphics
 
 % Graphics directory
 \graphicspath{{img/}}
 
 % Title page options
-\title{\thesisTitle{}}
-\author{\studentName{}}
-\date{\thesisDate{}}
+\title{\thesisTitle*{}}
+\author{\studentName*{}}
+\date{\thesisDate*{}}
 
 % Bibliography
 \bibliography{thesis}
@@ -21,18 +24,16 @@
 % Title Page
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{titlepage}
-\begin{center}
+\centering
 
 % Upper part of the page
 \includegraphics[width=0.25\textwidth]{sydney_uni_coat_of_arms}\\[1cm]
-
-\textsc{\LARGE \universityName{}}\\[1.5cm]
-
+\textsc{\LARGE \universityName*{}}\\[1.5cm]
 \textsc{\Large Final year thesis}\\[0.5cm]
 
 % Title
 \HRule \\[0.4cm]
-{\huge \bfseries \thesisTitle{}}\\[0.4cm]
+{\huge \bfseries \thesisTitle*{}}\\[0.4cm]
 \HRule \\[1.5cm]
 
 % Author and supervisor
@@ -40,14 +41,14 @@
     \begin{flushleft}
     	\large
         \emph{Author:}\\
-        \studentName{}
+        \studentName*{}
     \end{flushleft}
 \end{minipage}
 \begin{minipage}{0.4\textwidth}
     \begin{flushright} 
     	\large
         \emph{Supervisor:} \\
-        \supervisorName{}
+        \supervisorName*{}
     \end{flushright}
 \end{minipage}
 
@@ -56,7 +57,7 @@
 
 % Thesis description
 {\large A thesis submitted in fulfilment of the requirements for the\\
-degree of Bachelor of Engineering (Computer) in the \\
+degree of Bachelor of Engineering (Computer) in the\\
 School of Electrical Engineering at\\
 The University of Sydney}
 
@@ -64,9 +65,8 @@ The University of Sydney}
 \vfill
 
 % Bottom of the page
-{\large \thesisDate{}}
+{\large \thesisDate*{}}
 
-\end{center}
 \end{titlepage}
 
 \pagenumbering{roman}
@@ -83,10 +83,9 @@ ideas explored in this thesis. His support and guidance was invaluable, and were
 instrumental to the success of my project. 
 
 Additionally, much of the works completed during this project could not have 
-been performed without the prior research of \contributorOne{} and 
-\contributorTwo{}. Both were generous enough to lend their own support and 
-expertise in order to gain an understanding of the implemented random projection
-algorithms.
+been performed without the prior research of \person{Chawla} and \person{Khoa}. 
+Both were generous enough to lend their own support and expertise in order to 
+gain an understanding of the implemented random projection algorithms.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %  Publications
@@ -117,25 +116,25 @@ had become a time-vs-correctness trade-off in which no acceptable compromise
 could be reached.
 
 However, researchers are starting to explore the relatively new concept of 
-applying ``random projections'' to the highly multidimensional data sets. 
-Research has suggested that by applying these random projections, they are able 
-to significantly reduce the dimensionality (and consequently the computational 
-complexity) of the data sets, whilst sufficiently retaining the inherent 
-properties of that data set --- at least so much so as anomaly detection is 
-concerned.
+applying \doubleQuote{random projections} to the highly multidimensional data 
+sets. Research has suggested that by applying these random projections, they are
+able to significantly reduce the dimensionality (and consequently the 
+computational complexity) of the data sets, whilst sufficiently retaining the 
+inherent properties of that data set --- at least so much so as anomaly 
+detection is concerned.
 
 Anomaly detection is important because it allows otherwise-accurate machine 
 learning algorithms such as neural networks to more accurately model and predict
 the stock exchange data by ignoring anomaly data, which likely doesn't effect 
 the state of the model to any significant degree.
 
-\contributorOne{} from the ``University of Sydney'' has in recent years 
-conducted and supervised new and exciting research oriented around random 
-projections. In particular, \contributorTwo{}, under the supervision of 
-\contributorOne{} evaluated the use of traditional distance metrics, such as 
-Euclidean distance and Mahalanobis distance, in the application of local anomaly
-detection. \contributorTwo{} proposed the use of the `commute time' metric, 
-derived from random walks on graphs, in anomaly detection.
+\person{Chawla} from the \universityName{} has in recent years conducted and 
+supervised new and exciting research oriented around random projections. In 
+particular, \person{Khoa}, under the supervision of \person{Chawla} evaluated 
+the use of traditional distance metrics, such as Euclidean distance and 
+Mahalanobis distance, in the application of local anomaly detection. 
+\person{Khoa} proposed the use of the \singleQuote{commute time} metric, derived
+from random walks on graphs, in anomaly detection.
 \end{abstract}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

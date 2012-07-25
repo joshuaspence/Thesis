@@ -1,8 +1,9 @@
 Anomaly detection is the process of detecting patterns in a given data set that 
-do not conform to an ``expected'' behavior \cite{Chandola:2007}, although it is
-often difficult to accurate predict expected patterns and distributions for data
-sets. The terms `anomaly' and `outlier' are used synonymously, both within this 
-thesis and more generally in the field of statistics.
+do not conform to an \doubleQuote{expected} behavior \cite{Chandola:2007}, 
+although it is often difficult to accurate predict expected patterns and 
+distributions for data sets. The terms \singleQuote{anomaly} and 
+\singleQuote{outlier} are used synonymously, both within this thesis and more 
+generally in the field of statistics.
 
 According to \citeauthor{Hawkins:1980} \cite{Hawkins:1980}:
 \begin{quote}
@@ -22,12 +23,11 @@ techniques \cite{Chandola:2007}.
 \subsection{What are anomalies?}
 \label{sec:whatAreAnomalies}
 Anomalies are patterns in data that do not conform to a well defined notion of
-normal behavior. \hyperref[fig:2d-anomalies]{Figure~\ref{fig:2d-anomalies}} 
-illustrates anomalies in a simple 2-dimensional data set. The data has two 
-normal regions, $N_{1}$ and $N_{2}$, since most observations lie in these two 
-regions. Points that are sufficiently far away from the regions, such as points 
-$o_{1}$ and $o_{2}$, and points in region $O_{3}$, are considered to be 
-anomalies.
+normal behavior. \autoref{fig:2d-anomalies} illustrates anomalies in a simple 
+2-dimensional data set. The data has two normal regions, $N_{1}$ and $N_{2}$, 
+since most observations lie in these two regions. Points that are sufficiently 
+far away from the regions, such as points $o_{1}$ and $o_{2}$, and points in 
+region $O_{3}$, are considered to be anomalies.
 
 \begin{figure}
 	\centering
@@ -42,9 +42,9 @@ anomalies.
 \subsection{Challenges}
 \label{sec:anomalyDetectionChallenges}
 A straightforward anomaly detection approach, is to define a region representing
-`normal' behaviour and declare any observation in the data which does not belong
-to this normal region as an anomaly. But several factors make this apparently 
-simple approach very challenging:
+\singleQuote{normal} behaviour and declare any observation in the data which 
+does not belong to this normal region as an anomaly. But several factors make 
+this apparently  simple approach very challenging:
 
 \begin{itemize}
 
@@ -130,9 +130,9 @@ Anomalies can be classified into three categories \cite{Chandola:2007}:
 \item[Point anomaly] If an individual data instance can be considered as 
 anomalous with respect to the rest of data, then the instance is termed as a 
 point anomaly. This is the simplest type of anomaly. Referring to 
-\hyperref[fig:2d-anomalies]{Figure~\ref{fig:2d-anomalies}}, points $o_{1}$ and 
-$o_{2}$, as well as all points in region $O_{3}$ lie outside the boundary of the
-normal regions, and are hence point anomalies.
+\autoref{fig:2d-anomalies}, points $o_{1}$ and $o_{2}$, as well as all points in
+region $O_{3}$ lie outside the boundary of the normal regions, and are hence 
+point anomalies.
 
 \item[Contextual anomalies] If a data instance is anomalous in a certain 
 context, but not otherwise, then it is termed a contextual anomaly. The notion 
@@ -151,20 +151,18 @@ as part of the problem formulation.
 \end{figure}
 
 Contextual anomalies have been most commonly explored in time-series data and 
-spatial data. \hyperref[fig:contextual-anomalies]
-{Figure~\ref{fig:contextual-anomalies}} shows one such example for a temperature
-time series which shows the monthly temperature of an area over last few years. 
-A temperature of $35\degree F$ might be normal during the winter (at time 
-$t_{1}$) at that place, but the same value during summer (at time $t_{2}$) would
-be an anomaly.
+spatial data. \autoref{fig:contextual-anomalies} shows one such example for a 
+temperature time series which shows the monthly temperature of an area over last
+few years. A temperature of $35\degree F$ might be normal during the winter 
+(at time $t_{1}$) at that place, but the same value during summer (at time 
+$t_{2}$) would be an anomaly.
 
 \item[Collective anomalies] If a collection of related data instances is 
 anomalous with respect to the entire data set, it is termed as a collective 
 anomaly. The individual data instances in a collective anomaly may not be 
 anomalies by themselves, but their occurrence together as a collection is 
-anomalous. \hyperref[fig:collective-anomalies]
-{Figure~\ref{fig:collective-anomalies}} illustrates an example which shows a 
-human electrocardiogram output. The highlighted region denotes an anomaly 
+anomalous. \autoref{fig:collective-anomalies} illustrates an example which shows
+a human electrocardiogram output. The highlighted region denotes an anomaly 
 because the same low value exists for an abnormally long time. Note that that 
 low value by itself is not an anomaly.
 
@@ -238,7 +236,7 @@ find an example's nearest neighbors in $\log N$ time. However, index structures
 break down as the dimensionality increases \cite{Bay:2003}.
 
 \subsubsection{Statistical based}
-A common distribution considered when modelling data is the `Normal' 
+A common distribution considered when modelling data is the \singleQuote{Normal}
 distribution. Using this model, the probability that a data instance lies within
 $k$ standard deviations $\sigma$ from the mean $\mu$ is the area between 
 $\mu - k\sigma$ and $\mu + k\sigma$.
@@ -246,7 +244,7 @@ $\mu - k\sigma$ and $\mu + k\sigma$.
 % LOCAL OUTLIER FACTOR
 \subsection{Local Outlier Factor}
 \label{sec:localOutlierFactor}
-`Local Outlier Factor' is a formula that captures the degree to which a data 
-point is an outlier with respect to its local neighbourhood. In this context,
-`local' means that the determination of the data points does not depend on 
-knowledge of the global distribution of the data set.
+\singleQuote{Local Outlier Factor} is a formula that captures the degree to 
+which a data point is an outlier with respect to its local neighbourhood. In 
+this context, \singleQuote{local} means that the determination of the data 
+points does not depend on knowledge of the global distribution of the data set.

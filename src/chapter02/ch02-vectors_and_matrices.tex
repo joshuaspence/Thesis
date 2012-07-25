@@ -80,8 +80,7 @@ For a vector $\textbf{x} \in \Re^{V}$, the Laplacian quadratic form of $G$ is:
 \textbf{x}^{T} L \textbf{x} = \sum_{(u,v) \in E} w_{u,v}(\textbf{x}(u) - \textbf{x}(v))^2
 \end{equation}
 
-From \hyperref[eqn:laplacianQuadraticForm]
-{Equation~\ref{eqn:laplacianQuadraticForm}}, it can be seen that $L$ provides a 
+From \autoref{eqn:laplacianQuadraticForm}}, it can be seen that $L$ provides a 
 measure of the smoothness of $\textbf{x}$ over the edges in $G$. The more 
 $\textbf{x}$ jumps over an edge, the larger the quadratic form becomes.
 
@@ -118,9 +117,10 @@ L_{G} := \sum_{(u,v) \in E} w(u,v)L_{G_{u,v}}
 \end{equation}
 
 \subsubsection{Properties}
-Laplacian matrices of graphs are symmetric, have zero row-sums, and have nonpositive
-off-diagonal entries. We call any matrix that satisfies these properties a
-Laplacian matrix, as there always exists some graph for which it is the Laplacian \cite{Spielman:2010}.
+Laplacian matrices of graphs are symmetric, have zero row-sums, and have 
+nonpositive off-diagonal entries. We call any matrix that satisfies these 
+properties a Laplacian matrix, as there always exists some graph for which it is
+the Laplacian \cite{Spielman:2010}.
 
 For a graph $G$ and its Laplacian Matrix $L$ with eigenvalues $\lambda_{0} < 
 \lambda_{1} < \ldots < \lambda_{n-1}$:
