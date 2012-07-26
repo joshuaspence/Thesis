@@ -1,0 +1,39 @@
+\ProvidesPackage{persons}
+
+\RequirePackage{expl3}  % for \ExplSyntaxOn, \ExplSyntaxOff
+\RequirePackage{xparse} % for \NewDocumentCommand
+
+%================================================%
+% Formatting
+%================================================%
+\newcommand\formatperson[1]{\emph{#1}}
+%------------------------------------------------%
+
+%================================================%
+% Lookup table
+%================================================%
+\ExplSyntaxOn
+\prop_new:N \g__JS_name_prop
+\cs_new_protected:Npn \__JS_format:n #1 {#1}
+
+% \defineperson{key}{name}
+\NewDocumentCommand{\defineperson}{mm}{%
+    \prop_gput:Nnn \g__JS_name_prop{#1}{#2}%
+}
+
+% \getperson{key}
+% \getperson{key}
+\NewDocumentCommand{\getperson}{sm}{%
+    \IfBooleanTF{#1}%
+        {\cs_set_eq:NN \__JS_format:n \formatperson}%
+        {\cs_set_eq:NN \__JS_format:n \use:n}%
+    \__JS_format:n{\prop_get:Nn \g__JS_name_prop{#2}}%
+}
+
+% \getpersonunformatted{key}
+\NewDocumentCommand{\getpersonunformatted}{m}{%
+    \cs_set_eq:NN \__JS_format:n \use:n%
+    \__JS_format:n{\prop_get:Nn \g__JS_name_prop{#1}}%
+}
+\ExplSyntaxOff
+%------------------------------------------------%

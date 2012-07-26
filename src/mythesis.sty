@@ -6,34 +6,40 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Packages
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\usepackage[noline,ruled]{algorithm2e}	% for algorithms
-\usepackage{amsfonts}           		% for formatting mathematical symbols
-\usepackage{amsmath,amssymb,amsthm}		% for math support
-\usepackage[small,bf]{caption}			% for changing the appearance of captions
-\usepackage{float}						% for setting float specifiers
-\usepackage[hidelinks]{hyperref}		% for PDF hyperlinks
-\usepackage{pdflscape}					% for landscape pages
-\usepackage{tabularx}					% for simple column stretching
-\usepackage{url}						% for web URLs
-\usepackage{verbatim}					% for comment environment
+\RequirePackage[noline,ruled]{algorithm2e}	% for algorithms
+\RequirePackage{amsfonts}           		% for formatting mathematical symbols
+\RequirePackage{amsmath,amssymb,amsthm}	% for math support
+\RequirePackage{biblatex}					% use biblatex instead of bibtex
+\RequirePackage{citationneeded}			% for \citationneeded
+\RequirePackage[small,bf]{caption}			% for changing the appearance of captions
+\RequirePackage[inline]{enumitem}			% for inline lists
+\RequirePackage{float}						% for setting float specifiers
+\RequirePackage{gantt}						% for gantt charts
+\RequirePackage{graphicx}					% for graphics
+\RequirePackage[hidelinks]{hyperref}		% for PDF hyperlinks
+\RequirePackage{pdflscape}					% for landscape pages
+\RequirePackage{tableformatting}
+\RequirePackage{tabularx}					% for simple column stretching
+\RequirePackage{url}						% for web URLs
+\RequirePackage{verbatim}					% for comment environment
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Index
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%\usepackage{makeidx}
+%\RequirePackage{makeidx}
 %\makeindex
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Glossary
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%\usepackage[acronym,toc]{glossaries}
+%\RequirePackage[acronym,toc]{glossaries}
 %\makeglossaries
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Source code formatting
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\usepackage{color}					% for colouring listings source code
-\usepackage{listings}				% for source code formatting
+\RequirePackage{color}				% for colouring listings source code
+\RequirePackage{listings}			% for source code formatting
 
 % Custom colours
 \definecolor{dkgreen}{rgb}{0,0.6,0}
@@ -64,44 +70,23 @@
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% To allow us to easily format a table row
-% See http://www.latex-community.org/forum/viewtopic.php?f=5&t=3293
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\usepackage{array}
-\newcolumntype{+}{>{\global\let\currentrowstyle\relax}}
-\newcolumntype{^}{>{\currentrowstyle}}
-\newcommand{\rowstyle}[1]{\gdef\currentrowstyle{#1}%
-#1\ignorespaces
-}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Use “\citeneeded{}” to get Wikipedia-style “citation needed” in document
-% See http://www.gijsk.com/blog/2008/06/absence-citation-needed/
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand{\citeneeded}{[citation~needed]}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % For displaying data
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\usepackage{tikz}
-\usepackage{datatool}
-\usepackage{databar}
-\usepackage{longtable}
+\RequirePackage{tikz}
+\RequirePackage{datatool}
+\RequirePackage{databar}
+\RequirePackage{longtable}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Variables (to save retyping and reformatting these throughout the document)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand{\thesisTitle}{Implementation of Random Projection Algorithms Using an FPGA}
-\newcommand{\thesisDate}{2012}
-\newcommand{\studentName}{Joshua Spence}
-\newcommand{\studentID}{308216350}
-\newcommand{\supervisorName}{Philip Leong}
-\newcommand{\universityName}{University of Sydney}
-\newcommand{\contributorOne}{Sanjay Chawla}
-\newcommand{\contributorTwo}{Nguyen Lu Dang Khoa}
+\input{variables}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Custom commands
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
 \newcommand{\degree}{\ensuremath{^\circ}}
+
+\newcommand\singleQuote[1]{`#1'}
+\newcommand\doubleQuote[1]{``#1''}

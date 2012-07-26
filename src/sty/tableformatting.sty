@@ -1,0 +1,18 @@
+\ProvidesPackage{tableformatting}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% To allow us to easily format a table row
+% See http://www.latex-community.org/forum/viewtopic.php?f=5&t=3293
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\RequirePackage{array} % for what???
+
+\newcolumntype{+}{>{\global\let\currentrowstyle\relax}}
+\newcolumntype{^}{>{\currentrowstyle}}
+\newcommand\rowstyle[1]{\gdef\currentrowstyle{#1}%
+	#1\ignorespaces
+}
+
+% \headerrow{...}
+\newcommand\headerrow[1]{%
+	\hline \rowstyle{\bfseries} #1 \\\hline
+}
