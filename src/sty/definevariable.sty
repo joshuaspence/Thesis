@@ -2,8 +2,10 @@
 
 \RequirePackage{xparse} % for \NewDocumentCommand
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % To allow (un)formatted variables
 % See http://tex.stackexchange.com/questions/51652/remove-formatting/
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \NewDocumentCommand\defineVariable{mmm}{%
     \NewDocumentCommand#1{s}{\IfBooleanTF{##1}{#3}{#2{#3}}}%
 }

@@ -2,18 +2,19 @@
 % Variables (to save retyping and reformatting these throughout the document)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\RequirePackage{definevariable}		% for \defineVariable
-\RequirePackage{persons}			% for \defineperson, \getperson, \formatperson
+\usepackage{definevariable}     % for \defineVariable
+\usepackage{persons}            % for \definePerson, \getPerson, \formatPerson
 
 \defineVariable\thesisTitle{}{Implementation of Random Projection Algorithms Using an FPGA}
 \defineVariable\thesisDate{}{2012}
-\defineVariable\studentName{\formatperson}{\getpersonunformatted{Spence}}
+\defineVariable\studentName{\formatPerson}{\getPerson*{Spence}}
 \defineVariable\studentID{}{308216350}
-\defineVariable\supervisorName{\formatperson}{\getpersonunformatted{Leong}}
+\defineVariable\supervisorName{\formatPerson}{\getPerson*{Leong}}
 \defineVariable\universityName{}{University of Sydney}
 
 % People
-\defineperson{Chawla}{Sanjay Chawla}
-\defineperson{Khoa}{Nguyen Lu Dang Khoa}
-\defineperson{Leong}{Philip Leong}
-\defineperson{Spence}{Joshua Spence}
+\definePerson{Chawla}{Sanjay Chawla}
+\definePerson{Frechtling}{Michael Frechtling}
+\definePerson{Khoa}{Nguyen Lu Dang Khoa}
+\definePerson{Leong}{Philip Leong}
+\definePerson{Spence}{Joshua Spence}

@@ -6,22 +6,23 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Packages
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\RequirePackage[noline,ruled]{algorithm2e}	% for algorithms
-\RequirePackage{amsfonts}           		% for formatting mathematical symbols
-\RequirePackage{amsmath,amssymb,amsthm}	% for math support
-\RequirePackage{biblatex}					% use biblatex instead of bibtex
-\RequirePackage{citationneeded}			% for \citationneeded
-\RequirePackage[small,bf]{caption}			% for changing the appearance of captions
-\RequirePackage[inline]{enumitem}			% for inline lists
-\RequirePackage{float}						% for setting float specifiers
-\RequirePackage{gantt}						% for gantt charts
-\RequirePackage{graphicx}					% for graphics
-\RequirePackage[hidelinks]{hyperref}		% for PDF hyperlinks
-\RequirePackage{pdflscape}					% for landscape pages
-\RequirePackage{tableformatting}
-\RequirePackage{tabularx}					% for simple column stretching
-\RequirePackage{url}						% for web URLs
-\RequirePackage{verbatim}					% for comment environment
+\RequirePackage[noline,ruled]{algorithm2e}  % for algorithms
+\RequirePackage{amsfonts}                   % for formatting mathematical symbols
+\RequirePackage{amsmath,amssymb,amsthm}     % for math support
+\RequirePackage{biblatex}                   % use biblatex instead of bibtex
+\RequirePackage[small,bf]{caption}          % for changing the appearance of captions
+\RequirePackage[inline]{enumitem}           % for inline lists
+\RequirePackage{float}                      % for setting float specifiers
+\RequirePackage{gantt}                      % for gantt charts
+\RequirePackage{graphicx}                   % for graphics
+\RequirePackage[hidelinks]{hyperref}        % for PDF hyperlinks
+\RequirePackage{pdflscape}                  % for landscape pages
+\RequirePackage{tabularx}                   % for simple column stretching
+\RequirePackage{url}                        % for web URLs
+\RequirePackage{verbatim}                   % for comment environment
+
+% My custom packages
+\RequirePackage{citationneeded}             % for \citeNeeded
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Index
@@ -34,6 +35,21 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %\RequirePackage[acronym,toc]{glossaries}
 %\makeglossaries
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% To allow us to easily format a table row
+% See http://www.latex-community.org/forum/viewtopic.php?f=5&t=3293
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcolumntype{+}{>{\global\let\currentrowstyle\relax}}
+\newcolumntype{^}{>{\currentrowstyle}}
+\newcommand\rowstyle[1]{\gdef\currentrowstyle{#1}%
+	#1\ignorespaces
+}
+
+% \headerrow{...}
+\newcommand\headerrow[1]{%
+	\hline \rowstyle{\bfseries} #1 \\\hline
+}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Source code formatting
@@ -61,7 +77,7 @@
   	captionpos=b,                   % sets the caption-position to bottom
   	breaklines=true,                % sets automatic line breaking
   	breakatwhitespace=false,        % sets if automatic breaks should only happen at whitespace
-  	title=\lstname,                 % show the filename of files included with \lstinputlisting;
+  	title=\lstname,                 % show the filename of files included with \lstinputlisting
   	keywordstyle=\color{blue},      % keyword style
   	commentstyle=\color{dkgreen},   % comment style
   	stringstyle=\color{mauve},      % string literal style
@@ -85,8 +101,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Custom commands
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
-\newcommand{\degree}{\ensuremath{^\circ}}
+\newcommand\HRule{\rule{\linewidth}{0.5mm}}
+\newcommand\degree{\ensuremath{^\circ}}
 
 \newcommand\singleQuote[1]{`#1'}
 \newcommand\doubleQuote[1]{``#1''}
