@@ -25,8 +25,8 @@
 % \getPerson*{key}
 \NewDocumentCommand{\getPerson}{sm}{%
     \IfBooleanTF{#1}%
-        {\cs_set_eq:NN \__JS_format:n \formatPerson}%
         {\cs_set_eq:NN \__JS_format:n \use:n}%
+        {\cs_set_eq:NN \__JS_format:n \formatPerson}%
     \__JS_format:n{\prop_get:Nn \g__JS_name_prop{#2}}%
 }
 \ExplSyntaxOff
