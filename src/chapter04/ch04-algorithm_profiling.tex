@@ -28,46 +28,6 @@ spam &				6598 &			167 &									\\\hline
 \label{tbl:dataSetDescriptions}
 \end{table}
 
-\begin{comment}
-\DTLrawmap{>}{$>$}
-\DTLloadrawdb{initialProfilingDataH}{data/profiling/original-horizontal.csv}
-\DTLloadrawdb{initialProfilingDataV}{data/profiling/original-vertical.csv}
-
-% DATA SET = testCD
-\subsection{testCD}
-
-\subsubsection{Results}
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.8\textwidth]{profiling/original/testCD}
-\end{figure}
-	
-\begin{landscape}
-	\subsubsection{Profile data}
-	\begin{longtable}{|l|c|c|c|}
-		\hline
-		\bfseries Function Name & 
-		\bfseries Calls & 
-		\bfseries Total Time &
-		\bfseries Self Time \endhead
-
-		\DTLforeach*[\equal{\dataSet}{testCD.txt} \and \equal{\iteration}{average}]{initialProfilingDataV}{%
-			\dataSet={Data set},\iteration=Iteration,\functionName={Function Name},\calls=Calls,\totalTime={Total Time},\selfTime={Self Time}}{%
-			\functionName & \calls & \totalTime & \selfTime \\}
-	\end{longtable}
-\end{landscape}
-
-\begin{comment}
-\DTLpiechart[]{variable=\selfTime}{initialProfilingDataH}{\function=Function,\selfTime={testCD.txt}}
-
-% Legend
-\begin{tabular}[b]{ll}
-	\DTLforeach{fruit}{\name=Name}{\DTLiffirstrow{}{\\}%
-		\DTLdocurrentpiesegmentcolor\rule{10pt}{10pt} & \name
-}
-\end{tabular}
-\end{comment}
-
 % PERFORMANCE BOTTLENECK
 \subsection{Performance Bottleneck}
 \label{sec:algorithmPerformanceBottleneck}
