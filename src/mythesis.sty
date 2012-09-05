@@ -7,35 +7,28 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Packages
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\RequirePackage[noline,ruled]{algorithm2e}  % for algorithms
-\RequirePackage{amsfonts}                   % for formatting mathematical symbols
-\RequirePackage{amsmath,amssymb,amsthm}     % for math support
-\RequirePackage[language=australian]{biblatex} % use biblatex instead of bibtex
-\RequirePackage[small,bf]{caption}          % for changing the appearance of captions
-\RequirePackage[inline]{enumitem}           % for inline lists
-\RequirePackage{float}                      % for setting float specifiers
-\RequirePackage{gantt}                      % for gantt charts
-\RequirePackage{gnuplot-lua-tikz}
-\RequirePackage{graphicx}                   % for graphics
-\RequirePackage[hidelinks]{hyperref}        % for PDF hyperlinks
-\RequirePackage{pdflscape}                  % for landscape pages
-\RequirePackage{tabularx}                   % for simple column stretching
-\RequirePackage{url}                        % for web URLs
-\RequirePackage{verbatim}                   % for comment environment
+\RequirePackage[noline,ruled]{algorithm2e}      % for algorithms
+\RequirePackage{amsfonts}                       % for formatting mathematical symbols
+\RequirePackage{amsmath,amssymb,amsthm}         % for math support
+\RequirePackage[language=australian]{biblatex}  % use biblatex instead of bibtex
+\RequirePackage[inline]{enumitem}               % for inline lists
+\RequirePackage{float}                          % for setting float specifiers
+\RequirePackage{gantt}                          % for gantt charts
+\RequirePackage{gnuplot-lua-tikz}               % for plots produced by GNUplot
+\RequirePackage{graphicx}                       % for graphics
+\RequirePackage[hidelinks]{hyperref}            % for PDF hyperlinks
+\RequirePackage{pdfpages}                       % for inserting compliance sheet as a PDF
+\RequirePackage{tabularx}                       % for simple column stretching
+\RequirePackage{url}                            % for web URLs
+\RequirePackage{verbatim}                       % for comment environment
 
 % My custom packages
-\RequirePackage{citationneeded}             % for \citeNeeded
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Index
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%\RequirePackage{makeidx}
-%\makeindex
+\RequirePackage{citationneeded}                 % for \citeNeeded
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Glossary
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\RequirePackage[acronym,toc]{glossaries}
+\RequirePackage[toc,xindy]{glossaries}
 \makeglossaries
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -66,33 +59,25 @@
 
 % Default settings
 \lstset{
-  	numbers=left,                   % where to put the line-numbers
-  	numberstyle=\tiny\color{gray},  % the style that is used for the line-numbers
-  	stepnumber=1,                   % the step between two line-numbers
-  	numbersep=5pt,                  % how far the line-numbers are from the code
-  	backgroundcolor=\color{white},  % choose the background color
-  	showspaces=false,               % show spaces adding particular underscores
-  	showstringspaces=false,         % underline spaces within strings
-	showtabs=false,                 % show tabs within strings adding particular underscores
-  	tabsize=2,                      % sets default tabsize
-  	captionpos=b,                   % sets the caption-position to bottom
-  	breaklines=true,                % sets automatic line breaking
-  	breakatwhitespace=false,        % sets if automatic breaks should only happen at whitespace
-  	title=\lstname,                 % show the filename of files included with \lstinputlisting
-  	keywordstyle=\color{blue},      % keyword style
-  	commentstyle=\color{dkgreen},   % comment style
-  	stringstyle=\color{mauve},      % string literal style
-  	escapeinside={\%*}{*)},         % if you want to add a comment within your code
-  	morekeywords={*,...}            % if you want to add more keywords to the set
+    numbers=left,                   % where to put the line-numbers
+    numberstyle=\tiny\color{gray},  % the style that is used for the line-numbers
+    stepnumber=1,                   % the step between two line-numbers
+    numbersep=5pt,                  % how far the line-numbers are from the code
+    backgroundcolor=\color{white},  % choose the background color
+    showspaces=false,               % show spaces adding particular underscores
+    showstringspaces=false,         % underline spaces within strings
+    showtabs=false,                 % show tabs within strings adding particular underscores
+    tabsize=2,                      % sets default tabsize
+    captionpos=b,                   % sets the caption-position to bottom
+    breaklines=true,                % sets automatic line breaking
+    breakatwhitespace=false,        % sets if automatic breaks should only happen at whitespace
+    title=\lstname,                 % show the filename of files included with \lstinputlisting
+    keywordstyle=\color{blue},      % keyword style
+    commentstyle=\color{dkgreen},   % comment style
+    stringstyle=\color{mauve},      % string literal style
+    escapeinside={\%*}{*)},         % if you want to add a comment within your code
+    morekeywords={*,...}            % if you want to add more keywords to the set
 }
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% For displaying data
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\RequirePackage{tikz}
-\RequirePackage{datatool}
-\RequirePackage{databar}
-\RequirePackage{longtable}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Variables (to save retyping and reformatting these throughout the document)

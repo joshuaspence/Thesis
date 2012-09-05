@@ -12,14 +12,16 @@
 # Dependencies
 *.d
 
-# Glossary and acronym
+# Glossaries, acronyms and indexes
 *.acn
 *.glg
 *.glo
-*.gls
-
-# Indexes
+*.gls*
+*.idx
+*.ilg
+*.ind
 *.ist
+*.xdy
 
 # List of algorithms, figures, tables
 *.loa
@@ -33,7 +35,7 @@
 *.log
 
 # Outputs
-*.pdf
+/*.pdf
 
 # Table of contents
 *.toc

@@ -1,8 +1,8 @@
 \documentclass[a4paper]{report}
 
 % Warn about commands, classes and packages that are outdated and superseded.
-% Orthodox checks for pitfalls that are not technically incorrect.
-\usepackage[l2tabu,orthodox, abort]{nag}
+%     * Orthodox checks for pitfalls that are not technically incorrect.
+\usepackage[l2tabu,orthodox,abort]{nag}
 
 % All styling is contained in "mythesis.sty"
 \usepackage{mythesis}
@@ -71,6 +71,17 @@ The University of Sydney}
 
 \end{titlepage}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Compliance Sheet
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\includepdf[scale=0.8]{forms/compliance_sheet}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Statement of Achievement
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter*{Statement of Achievement}
+% TODO
+
 \pagenumbering{roman}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -82,7 +93,7 @@ supervisor, \supervisorName{}. He always made himself available to assist me
 with the understanding of many new and unknown concepts. His expertise in the 
 field was a great asset and greatly contributed to my own understanding of the 
 ideas explored in this thesis. His support and guidance was invaluable, and were
-instrumental to the success of my project. 
+instrumental to the success of my project.
 
 Much of the works completed during this project could not have been performed 
 without the prior research of \getPerson{Chawla} and \getPerson{Khoa}. Both were
@@ -94,7 +105,7 @@ throughout the project. He assisted me with Xilnix tools such as ``AutoESL'',
 and also offered me valuable advice regarding my future professional career.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%  Publications
+% Publications
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter*{Publications}
 This thesis is based on the following publications:
@@ -163,6 +174,12 @@ derived from random walks on graphs, in anomaly detection.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \listoftables
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Glossary
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\glsaddall
+\printglossary
+
 \pagenumbering{arabic}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -210,16 +227,5 @@ derived from random walks on graphs, in anomaly detection.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \nocite{*}
 \printbibliography
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Glossary
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\glsaddall
-\printglossary
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Index
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%\printindex
 
 \end{document}
