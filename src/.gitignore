@@ -41,6 +41,7 @@
 *.toc
 
 # Other
+*.cookie
 *.make
 *.run.xml
 *.temp
