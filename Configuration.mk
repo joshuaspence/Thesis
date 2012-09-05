@@ -1,6 +1,6 @@
 # Directories
 BUILD_DIR  := build
-OTHER_DIRS := data
+OTHER_DIRS := 
 EXT_DIRS   := ext
 IMG_DIRS   := img
 SRC_DIRS   := src

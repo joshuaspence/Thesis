@@ -1,3 +1,7 @@
+% Glossary
+\newacronym{RTL}{RTL}{Register Transfer Level}
+\newacronym{VHDL}{VHDL}{VHSIC Hardware Description Language}
+
 % VHSIC Hardware Description Language (VHDL)
 \subsection{VHSIC Hardware Description Language (VHDL)}
 
@@ -5,4 +9,17 @@
 \subsection{Verilog (IEEE 1364)}
 
 % High-Level Synthesis
-\subsection{High-Level Synthesis}
+\subsection{High Level Synthesis}
+High level synthesis is a process which is able to transform a design 
+specification from a low-level programming language (such as C, C++ or SystemC) 
+into an \gls{RTL} implementation. In particular, this thesis will focus on the 
+\software{Xilinx AutoESL} High Level Synthesis tool.
+
+The design flow of AutoESL comprises three major stages \cite{XILINX:Tutorial}:
+\begin{description}
+    \item[Synthesis] Creates an \gls{RTL} implemenetation from the source code.
+    \item[Simulation] Verifies the \gls{RTL} through co-simulation with a test
+        bench.
+    \item[Implementation] Generates and executes scripts to perform logic 
+        analysis.
+\end{description}

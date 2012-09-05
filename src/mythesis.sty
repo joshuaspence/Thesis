@@ -11,9 +11,11 @@
 \RequirePackage{amsmath,amssymb,amsthm}     % for math support
 \RequirePackage[language=australian]{biblatex} % use biblatex instead of bibtex
 \RequirePackage[small,bf]{caption}          % for changing the appearance of captions
+%\RequirePackage{color}                      % for coloured graphs
 \RequirePackage[inline]{enumitem}           % for inline lists
 \RequirePackage{float}                      % for setting float specifiers
 \RequirePackage{gantt}                      % for gantt charts
+\RequirePackage{gnuplot-lua-tikz}
 \RequirePackage{graphicx}                   % for graphics
 \RequirePackage[hidelinks]{hyperref}        % for PDF hyperlinks
 \RequirePackage{pdflscape}                  % for landscape pages
@@ -33,8 +35,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Glossary
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%\RequirePackage[acronym,toc]{glossaries}
-%\makeglossaries
+\RequirePackage[acronym,toc]{glossaries}
+\makeglossaries
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % To allow us to easily format a table row
@@ -105,3 +107,5 @@
 
 \newcommand\singleQuote[1]{`#1'}
 \newcommand\doubleQuote[1]{``#1''}
+
+\newcommand\software[1]{\doubleQuote{#1}}
