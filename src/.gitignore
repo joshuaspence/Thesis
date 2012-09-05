@@ -32,6 +32,9 @@
 # Log files
 *.log
 
+# Outputs
+*.pdf
+
 # Table of contents
 *.toc
 
