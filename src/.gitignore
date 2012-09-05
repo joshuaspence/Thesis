@@ -1,0 +1,41 @@
+# Auxillary files
+*.aux
+
+# Bibliographies
+*-blx.bib
+*.bbl
+*.blg
+
+# Bookmarks
+*.out
+
+# Dependencies
+*.d
+
+# Glossary and acronym
+*.acn
+*.glg
+*.glo
+*.gls
+
+# Indexes
+*.ist
+
+# List of algorithms, figures, tables
+*.loa
+*.lof
+*.lot
+
+# List of used files
+*.fls
+
+# Log files
+*.log
+
+# Table of contents
+*.toc
+
+# Other
+*.make
+*.run.xml
+*.temp

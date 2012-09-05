@@ -1,11 +1,9 @@
 This directory contains the source files for the LaTeX code of my thesis report.
 To compile the thesis, execute the command `make' from the root directory. The 
-thesis will be output to `build/thesis.pdf'.
+thesis will be output to `thesis.pdf'.
 
 SUBDIRECTORIES
-	build		An auxillary directory used to build the document.
-	data		Contains data sets that appear in the thesis.
 	ext			Contains external "library" code.
 	img			Contains the images used in the thesis.
-	scripts		Contains useful scripts.
+	scripts		Contains useful scripts. 
 	src			Contains the LaTeX source files.
