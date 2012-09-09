@@ -58,6 +58,7 @@ export LC_ALL		?= C
 # will be treated as if they were _include_ files.
 #onlysources.tex	?= main.tex
 #onlysources.lhs	?=
+#onlysources.tex.bash	?=
 #onlysources.tex.sh	?=
 #onlysources.tex.pl	?=
 #onlysources.tex.py	?=
@@ -74,6 +75,7 @@ export LC_ALL		?= C
 # If you list files here, they will be treated as _include_ files
 #includes.tex		?= file1.tex file2.tex
 #includes.lhs		?=
+#includes.tex.bash	?=
 #includes.tex.sh	?=
 #includes.tex.pl	?=
 #includes.tex.py	?=
@@ -756,6 +758,7 @@ CYGPATH		?= cygpath
 # == Makefile Color Output ==
 TPUT		?= tput
 # == TeX Generation ==
+BASH        ?= bash
 PERL		?= perl
 PYTHON		?= python
 RST2LATEX	?= rst2latex.py
@@ -1175,6 +1178,7 @@ endif
 
 # Files of interest
 all_files.tex		?= $(wildcard *.tex)
+all_files.tex.bash	?= $(wildcard *.tex.bash)
 all_files.tex.sh	?= $(wildcard *.tex.sh)
 all_files.tex.pl	?= $(wildcard *.tex.pl)
 all_files.tex.py	?= $(wildcard *.tex.py)
@@ -1224,6 +1228,7 @@ filter-default		= \
 
 # Top level sources that can be built even when they are not by default
 files.tex	:= $(call filter-buildable,tex)
+files.tex.bash	:= $(call filter-buildable,tex.bash)
 files.tex.sh	:= $(call filter-buildable,tex.sh)
 files.tex.pl	:= $(call filter-buildable,tex.pl)
 files.tex.py	:= $(call filter-buildable,tex.py)
@@ -1254,6 +1259,7 @@ files.eps	:= $(call filter-buildable,eps)
 
 # Top level sources that are built by default targets
 default_files.tex	:= $(call filter-default,tex)
+default_files.tex.bash	:= $(call filter-default,tex.bash)
 default_files.tex.sh	:= $(call filter-default,tex.sh)
 default_files.tex.pl	:= $(call filter-default,tex.pl)
 default_files.tex.py	:= $(call filter-default,tex.py)
@@ -1278,17 +1284,17 @@ concat-files	= $(foreach s,$1,$($(if $2,$2_,)files.$s))
 # Useful file groupings
 all_files_source	:= $(call concat-files,tex,all)
 all_files_source_gen	:= $(call concat-files,rst rhs,all)
-all_files_scripts	:= $(call concat-files,tex.sh tex.pl tex.py,all)
+all_files_scripts	:= $(call concat-files,tex.bash tex.sh tex.pl tex.py,all)
 
 .PHONY: $(all_files_scripts)
 
 default_files_source		:= $(call concat-files,tex,default)
 default_files_source_gen	:= $(call concat-files,rhs lhs,default)
-default_files_scripts		:= $(call concat-files,tex.sh tex.pl tex.py,default)
+default_files_scripts		:= $(call concat-files,tex.bash tex.sh tex.pl tex.py,default)
 
 files_source		:= $(call concat-files,tex)
 files_source_gen	:= $(call concat-files,rst lhs)
-files_scripts		:= $(call concat-files,tex.sh tex.pl tex.py)
+files_scripts		:= $(call concat-files,tex.bash tex.sh tex.pl tex.py)
 
 # Utility function for obtaining stems
 # $(call get-stems,suffix,[prefix])
@@ -1296,6 +1302,7 @@ get-stems	= $(sort $($(if $2,$2_,)files.$1:%.$1=%))
 
 # List of all stems (including ._include_ and ._nobuild_ file stems)
 all_stems.tex		:= $(call get-stems,tex,all)
+all_stems.tex.bash	:= $(call get-stems,tex.bash,all)
 all_stems.tex.sh	:= $(call get-stems,tex.sh,all)
 all_stems.tex.pl	:= $(call get-stems,tex.pl,all)
 all_stems.tex.py	:= $(call get-stems,tex.py,all)
@@ -1334,6 +1341,7 @@ default_stems.eps		:= $(call get-stems,eps,default)
 
 # List of all stems (all possible bare PDF targets created here):
 stems.tex		:= $(call get-stems,tex)
+stems.tex.bash		:= $(call get-stems,tex.bash)
 stems.tex.sh		:= $(call get-stems,tex.sh)
 stems.tex.pl		:= $(call get-stems,tex.pl)
 stems.tex.py		:= $(call get-stems,tex.py)
@@ -1381,7 +1389,7 @@ endif
 
 all_stems_source	:= $(call concat-stems,tex,all)
 all_stems_source_gen	:= $(call concat-stems,rst lhs,all)
-all_stems_script	:= $(call concat-stems,tex.sh tex.pl tex.py,all)
+all_stems_script	:= $(call concat-stems,tex.bash tex.sh tex.pl tex.py,all)
 all_stems_graphic	:= $(call concat-stems,$(graphic_source_extensions),all)
 all_stems_ss		:= $(sort $(all_stems_source) $(all_stems_source_gen) $(all_stems_script))
 all_stems_sg		:= $(sort $(all_stems_script) $(all_stems_source_gen))
@@ -1389,14 +1397,14 @@ all_stems_ssg		:= $(sort $(all_stems_ss))
 
 default_stems_source		:= $(call concat-stems,tex,default)
 default_stems_source_gen	:= $(call concat-stems,rst lhs,default)
-default_stems_script		:= $(call concat-stems,tex.sh tex.pl tex.py,default)
+default_stems_script		:= $(call concat-stems,tex.bash tex.sh tex.pl tex.py,default)
 default_stems_ss	:= $(sort $(default_stems_source) $(default_stems_source_gen) $(default_stems_script))
 default_stems_sg	:= $(sort $(default_stems_script) $(default_stems_source_gen))
 default_stems_ssg	:= $(sort $(default_stems_ss))
 
 stems_source		:= $(call concat-stems,tex)
 stems_source_gen	:= $(call concat-stems,rst lhs)
-stems_script		:= $(call concat-stems,tex.sh tex.pl tex.py)
+stems_script		:= $(call concat-stems,tex.bash tex.sh tex.pl tex.py)
 stems_graphic		:= $(call concat-stems,$(graphic_source_extensions))
 stems_gg		:= $(sort $(stems_graphic))
 stems_ss		:= $(sort $(stems_source) $(stems_source_gen) $(stems_script))
@@ -3019,6 +3027,9 @@ endif
 #
 # Keep the generated .tex files around for debugging if needed.
 .SECONDARY: $(all_tex_targets)
+
+%.tex::	%.tex.bash
+	$(QUIET)$(call run-script,$(BASH),$<,$@)
 
 %.tex::	%.tex.sh
 	$(QUIET)$(call run-script,$(SHELL),$<,$@)
