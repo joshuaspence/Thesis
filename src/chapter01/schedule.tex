@@ -37,31 +37,7 @@ A Gantt chart showing the anticipated schedule for the project is shown in
 			\numtitle{1}{1}{4}{1}
 		\end{ganttitle}
 
-		% Tasks
-		\ganttbar{Background Reading}{1}{6} % TO FIX
-		\ganttbar{Literature Review}{1}{24} % TO FIX
-		
-		\ganttbar{Performance Benchmarking}{7}{1} \ganttcon{7}{2}{7}{4}
-		\ganttbarcon{Algorithm Analysis}{8}{1} % TO FIX
-		\ganttbarcon{MATLAB-to-C code transformation}{9}{2}
-		\ganttbarcon{Code Improvements}{11}{4}
-		
-		\ganttbarcon{Block size Analysis}{}{} % TO FIX			
-		
-		\ganttbarcon{Design of FPGA hardware}{15}{8} % TO FIX
-		
-		\ganttbar{Implementation of FPGA hardware}{22}{4} % TO FIX
-		\ganttbar{Testing and Debugging}{25}{2} % TO FIX
-		\ganttbar{Performance Benchmarking}{26}{2} % TO FIX
-		
-		\ganttbar{Review}{23}{8} % TO FIX
-		
-		% Milestones
-		\ganttmilestone{Topic Proposal Due}{6.68} % April 20
-		\ganttmilestonecon{Progress Report Due}{12} % June 1
-		\ganttmilestonecon{Draft Treatise Due}{29.56} % October 12
-		\ganttmilestonecon{Final Treatise Due}{31.08} % October 24
-		\ganttmilestonecon{Project Presentations}{33.2} % November 9
+		\input{ganttdata}
 	\end{gantt}
 	}
 	\caption{Schedule for thesis work}
