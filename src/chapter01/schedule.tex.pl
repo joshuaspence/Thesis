@@ -97,6 +97,13 @@ scalar(@ARGV) >= 1 || die("No output file specified!\n");
 my $output_file = $ARGV[0];
 open(FILE, ">$output_file") || die("Failed to open file: $output_file");
 
+my $csv = Text::CSV->new();
+my $in_header;
+my $is_first;
+
+################################################################################
+# HEADER
+################################################################################
 my $tabs = 0;
 my $rows = 18;
 my $cols = (END_MONTH - START_MONTH + 1) * DIVS_PER_MONTH;
@@ -132,9 +139,12 @@ for (my $month = START_MONTH; $month <= END_MONTH; $month++) {
 }
 print FILE to_tabs(--$tabs)."\\end{ganttitle}\n\n";
 
-my $csv = Text::CSV->new();
-open(TASKS, dirname($0)."/schedule.data") || die("Could not open file");
-my $in_header = 1;
+################################################################################
+# TASKS
+################################################################################
+open(TASKS, dirname($0)."/schedule_tasks.csv") || die("Could not open file");
+$in_header = 1;
+$is_first = 1;
 while (<TASKS>) {
     if ($in_header) {
         $in_header = 0;
@@ -147,6 +157,7 @@ while (<TASKS>) {
         my $task       = $columns[0];
         my $start_date = $columns[1];
         my $end_date   = $columns[2];
+        my $connected  = $columns[3];
         
         my $dummy;
         ($dummy,$dummy,$dummy,my $start_day,my $start_month,$dummy,$dummy) = strptime($start_date);
@@ -155,14 +166,62 @@ while (<TASKS>) {
         my $start       = date_position($start_month, $start_day);
         my $end         = date_position($end_month,   $end_day);
         my $length      = $end - $start;
-        print FILE to_tabs($tabs)."\\ganttbar{$task}{$start}{$length}\n";
+        
+        if (!$is_first && $connected) {
+            print FILE to_tabs($tabs)."\\ganttbarcon";
+        } else {
+            print FILE to_tabs($tabs)."\\ganttbar";
+        }
+        print FILE "{$task}{$start}{$length}\n";
     } else {
         my $err = $csv->error_input;
         die("Failed to parse line: $err");
     }
+    $is_first = 0;
 }
 close(TASKS);
+print FILE "\n";
 
+################################################################################
+# MILESTONES
+################################################################################
+open(MILESTONES, dirname($0)."/schedule_milestones.csv") || die("Could not open file");
+$in_header = 1;
+$is_first = 1;
+while (<MILESTONES>) {
+    if ($in_header) {
+        $in_header = 0;
+        next;
+    }
+    
+    # Parse CSV
+    if ($csv->parse($_)) {
+        my @columns = $csv->fields();
+        my $milestone  = $columns[0];
+        my $date       = $columns[1];
+        my $connected  = $columns[2];
+        
+        my $dummy;
+        ($dummy,$dummy,$dummy,my $day,my $month,$dummy,$dummy) = strptime($date);
+        
+        my $pos = date_position($month, $day);
+        if (!$is_first && $connected) {
+            print FILE to_tabs($tabs)."\\ganttmilestonecon";
+        } else {
+            print FILE to_tabs($tabs)."\\ganttmilestone";
+        }
+        print FILE "{$milestone}{$pos}\n";
+    } else {
+        my $err = $csv->error_input;
+        die("Failed to parse line: $err");
+    }
+    $is_first = 0;
+}
+close(MILESTONES);
+
+################################################################################
+# FOOTER
+################################################################################
 print FILE <<END;
         \\end{gantt}
     }
