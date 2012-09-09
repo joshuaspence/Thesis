@@ -9,6 +9,7 @@ use constant DIVS_PER_MONTH => 4;
 use constant START_INDEX    => 1;
 
 use Date::Parse;
+use File::Basename;
 use Text::CSV;
 
 sub get_month($) {
@@ -91,33 +92,48 @@ sub to_tabs($) {
 
 ################################################################################
 
+# The argument should be the base directory for the profiling data
+scalar(@ARGV) >= 1 || die("No output file specified!\n");
+my $output_file = $ARGV[0];
+open(FILE, ">$output_file") || die("Failed to open file: $output_file");
+
 my $tabs = 0;
-print <<END;
-\\begin{gantt}[
-    xunitlength=0.5cm,
-	fontsize=\\small,
-	titlefontsize=\\small,
-	drawledgerline=true
-	]{18}{36}
+my $rows = 18;
+my $cols = (END_MONTH - START_MONTH + 1) * DIVS_PER_MONTH;
+print FILE <<END;
+A Gantt chart showing the anticipated schedule for the project is shown in 
+\\autoref{fig:ganttChart}. This will be updated as the project progresses.
+
+% Gantt chart
+% See http://www.martin-kumm.de/tex_gantt_package.php
+\\begin{figure}[h]
+    \\centering
+    \\scalebox{0.5}{
+        \\begin{gantt}[
+            xunitlength=0.5cm,
+	        fontsize=\\small,
+	        titlefontsize=\\small,
+	        drawledgerline=true
+	        ]{$rows}{$cols}
 END
-$tabs++;
+$tabs = 3;
 
 # Months
-print to_tabs($tabs++)."\\begin{ganttitle}\n";
+print FILE to_tabs($tabs++)."\\begin{ganttitle}\n";
 for (my $month = START_MONTH; $month <= END_MONTH; $month++) {
-	print to_tabs($tabs)."\\titleelement{", get_month($month), "}{", DIVS_PER_MONTH, "}\n";
+	print FILE to_tabs($tabs)."\\titleelement{", get_month($month), "}{", DIVS_PER_MONTH, "}\n";
 }
-print to_tabs(--$tabs)."\\end{ganttitle}\n";
+print FILE to_tabs(--$tabs)."\\end{ganttitle}\n";
 
 # Split months into divisons
-print to_tabs($tabs++)."\\begin{ganttitle}\n";
+print FILE to_tabs($tabs++)."\\begin{ganttitle}\n";
 for (my $month = START_MONTH; $month <= END_MONTH; $month++) {
-	print to_tabs($tabs)."\\numtitle{1}{1}{", DIVS_PER_MONTH, "}{1}\n";
+	print FILE to_tabs($tabs)."\\numtitle{1}{1}{", DIVS_PER_MONTH, "}{1}\n";
 }
-print to_tabs(--$tabs)."\\end{ganttitle}\n\n";
+print FILE to_tabs(--$tabs)."\\end{ganttitle}\n\n";
 
 my $csv = Text::CSV->new();
-open(TASKS, "schedule.data") || die("Could not open file");
+open(TASKS, dirname($0)."/schedule.data") || die("Could not open file");
 my $in_header = 1;
 while (<TASKS>) {
     if ($in_header) {
@@ -139,7 +155,7 @@ while (<TASKS>) {
         my $start       = date_position($start_month, $start_day);
         my $end         = date_position($end_month,   $end_day);
         my $length      = $end - $start;
-        print to_tabs($tabs)."ganttbar{$task}{$start}{$length}\n";
+        print FILE to_tabs($tabs)."\\ganttbar{$task}{$start}{$length}\n";
     } else {
         my $err = $csv->error_input;
         die("Failed to parse line: $err");
@@ -147,4 +163,12 @@ while (<TASKS>) {
 }
 close(TASKS);
 
-print "\\end{gantt}";
+print FILE <<END;
+        \\end{gantt}
+    }
+    \\caption{Schedule for thesis work}
+    \\label{fig:ganttChart}
+\\end{figure}
+END
+
+close(FILE);

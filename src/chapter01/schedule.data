@@ -1,2 +1,13 @@
 Task,Start,End
-Background Reading,2012-03-01,2012-04-01
+Background reading,2012-03-05,2012-04-20
+Literature review,2012-03-05,2012-09-07
+Performance benchmarking,2012-04-23,2012-04-27
+Algorithm analysis,2012-04-30,2012-05-04
+MATLAB-to-C transformation,2012-05-07,2012-05-18
+Code improvements,2012-05-21,2012-06-22
+Block size analysis,2012-06-25,2012-08-24
+Design of FPGA hardware,2012-06-25,2012-08-24
+Implementation of FPGA hardware,2012-08-20,2012-09-14
+Testing and debugging,2012-09-10,2012-09-21
+Performance benchmarking,2012-09-17,2012-09-28
+Review,2012-08-24,2012-10-19

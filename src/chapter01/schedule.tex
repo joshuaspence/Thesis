@@ -4,42 +4,51 @@ A Gantt chart showing the anticipated schedule for the project is shown in
 % Gantt chart
 % See http://www.martin-kumm.de/tex_gantt_package.php
 \begin{figure}[h]
-	\centering
-	\scalebox{0.5}{
-	\begin{gantt}[
-			xunitlength=0.5cm,
-			fontsize=\small,
-			titlefontsize=\small,
-			drawledgerline=true
-			]{18}{36}
-		% Months
-		\begin{ganttitle}
-			\titleelement{Mar}{4}
-			\titleelement{Apr}{4}
-			\titleelement{May}{4}
-			\titleelement{Jun}{4}
-			\titleelement{Jul}{4}
-			\titleelement{Aug}{4}
-			\titleelement{Sep}{4}
-			\titleelement{Oct}{4}
-			\titleelement{Nov}{4}
-		\end{ganttitle}
-		% Split months into quarters
-		\begin{ganttitle}
-			\numtitle{1}{1}{4}{1}
-			\numtitle{1}{1}{4}{1}
-			\numtitle{1}{1}{4}{1}
-			\numtitle{1}{1}{4}{1}
-			\numtitle{1}{1}{4}{1}
-			\numtitle{1}{1}{4}{1}
-			\numtitle{1}{1}{4}{1}
-			\numtitle{1}{1}{4}{1}
-			\numtitle{1}{1}{4}{1}
-		\end{ganttitle}
+    \centering
+    \scalebox{0.5}{
+        \begin{gantt}[
+            xunitlength=0.5cm,
+	        fontsize=\small,
+	        titlefontsize=\small,
+	        drawledgerline=true
+	        ]{18}{36}
+            \begin{ganttitle}
+                \titleelement{Mar}{4}
+                \titleelement{Apr}{4}
+                \titleelement{May}{4}
+                \titleelement{Jun}{4}
+                \titleelement{Jul}{4}
+                \titleelement{Aug}{4}
+                \titleelement{Sep}{4}
+                \titleelement{Oct}{4}
+                \titleelement{Nov}{4}
+            \end{ganttitle}
+            \begin{ganttitle}
+                \numtitle{1}{1}{4}{1}
+                \numtitle{1}{1}{4}{1}
+                \numtitle{1}{1}{4}{1}
+                \numtitle{1}{1}{4}{1}
+                \numtitle{1}{1}{4}{1}
+                \numtitle{1}{1}{4}{1}
+                \numtitle{1}{1}{4}{1}
+                \numtitle{1}{1}{4}{1}
+                \numtitle{1}{1}{4}{1}
+            \end{ganttitle}
 
-		\input{ganttdata}
-	\end{gantt}
-	}
-	\caption{Schedule for thesis work}
-	\label{fig:ganttChart}
+            \ganttbar{Background reading}{1.12903225806452}{4.50430107526882}
+            \ganttbar{Literature review}{1.12903225806452}{24.0709677419355}
+            \ganttbar{Performance benchmarking}{5.73333333333333}{0.133333333333334}
+            \ganttbar{Algorithm analysis}{5.96666666666667}{3.13010752688172}
+            \ganttbar{MATLAB-to-C transformation}{9.19354838709677}{0.35483870967742}
+            \ganttbar{Code improvements}{9.64516129032258}{4.05483870967742}
+            \ganttbar{Block size analysis}{13.8}{7.94193548387097}
+            \ganttbar{Design of FPGA hardware}{13.8}{7.94193548387097}
+            \ganttbar{Implementation of FPGA hardware}{21.6129032258065}{3.82043010752688}
+            \ganttbar{Testing and debugging}{25.3}{0.366666666666667}
+            \ganttbar{Performance benchmarking}{25.5333333333333}{0.366666666666664}
+            \ganttbar{Review}{21.741935483871}{7.83870967741936}
+        \end{gantt}
+    }
+    \caption{Schedule for thesis work}
+    \label{fig:ganttChart}
 \end{figure}
