@@ -1,4 +1,4 @@
-<schedule start="3" end="11" divisions="4">
+<schedule start="3" end="11" divisions="4" options="vgrid,hgrid">
 	<task id="task1" name="Background reading" start="2012-03-05" end="2012-04-20" />
 	<task id="task2" name="Literature review" start="2012-03-05" end="2012-09-07" />
 	<task id="task3" name="Performance benchmarking" start="2012-04-23" end="2012-04-27" />

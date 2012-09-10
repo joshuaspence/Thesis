@@ -90,14 +90,15 @@ A Gantt chart showing the anticipated schedule for the project is shown in
 % Gantt chart
 \\begin{figure}[h]
     \\centering
-    \\begin{ganttchart}{$cols}
-        \\gantttitle{2012}{$cols}
-        \\gantttitlelist[title list options={%
-            var=\\y, evaluate=\\y as \\x%
-            using "\\pgfcalendarmonthshortname{\\y}"%
-            }]{$start_month,...,$end_month}{$divisions} \\\\
+    \\scalebox{0.5}{
+        \\begin{ganttchart}[$data->{options}]{$cols}
+            \\gantttitle{2012}{$cols} \\ganttnewline
+            \\gantttitlelist[title list options={%
+                var=\\y, evaluate=\\y as \\x%
+                using "\\pgfcalendarmonthshortname{\\y}"%
+                }]{$start_month,...,$end_month}{$divisions} \\ganttnewline
 END
-$tabs = 2;
+$tabs = 3;
 
 ################################################################################
 # TASKS
@@ -106,7 +107,7 @@ for my $task (@{$data->{task}}) {
     my $start       = date_position($task->{start});
     my $end         = date_position($task->{end});
     my $length      = $end - $start;
-    print FILE to_tabs($tabs)."\\ganttbar[name=$task->{id}]{$task->{name}}{$start}{$length}\n";
+    print FILE to_tabs($tabs)."\\ganttbar[name=$task->{id}]{$task->{name}}{$start}{$length} \\ganttnewline\n";
     
     for my $dep (%{$task->{dependency}}) {
         print FILE to_tabs($tabs)."\\ganttlink{$dep}{$task->{id}}\n";
@@ -126,7 +127,7 @@ print FILE "\n";
 ################################################################################
 for my $milestone (@{$data->{milestone}}) {    
     my $position = date_position($milestone->{date});
-    print FILE to_tabs($tabs)."\\ganttmilestone[name=$milestone->{id}]{$milestone->{name}}{$position}\n";
+    print FILE to_tabs($tabs)."\\ganttmilestone[name=$milestone->{id}]{$milestone->{name}}{$position} \\ganttnewline\n";
     
     if (ref($milestone->{dependency}) eq 'ARRAY') {
         for my $dep (@{$milestone->{dependency}}) {
@@ -141,7 +142,8 @@ for my $milestone (@{$data->{milestone}}) {
 # FOOTER
 ################################################################################
 print FILE <<END;
-    \\end{ganttchart}
+        \\end{ganttchart}
+    }
     \\caption{Schedule for thesis work}
     \\label{fig:ganttChart}
 \\end{figure}
