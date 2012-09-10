@@ -49,6 +49,8 @@ thesis.pdf
 # Project specific
 appendix/c.tex
 appendix/c.tex.bash.cookie
+appendix/matlab.tex
+appendix/matlab.tex.bash.cookie
 chapter01/schedule.tex
 chapter01/schedule.tex.pl.cookie
 chapter04/plots/distance_calls.tex

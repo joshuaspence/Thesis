@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/bin/sh
 
 # Make sure an output file was specified
-if [[ $# -ne 1 ]]; then
+if [ $# -ne 1 ]; then
 	echo "No output file specified" >&2
 	exit 1
 fi
@@ -14,12 +14,12 @@ OUTPUT_FILE="$1"
 
 rm --force $OUTPUT_FILE
 for SOURCE_FILE in $SOURCE_FILES; do
-    if [[ ! -f $SOURCE_FILE ]]; then
+    if [ ! -f $SOURCE_FILE ]; then
         echo "Source file not found: $SOURCE_FILE" >&2
         exit 1
     fi
     
-    cat <<EOF >> $OUTPUT_FILE
+    cat <<EOF >>$OUTPUT_FILE
 \\lstloadlanguages{Matlab}
 \\lstset{language=Matlab}
 \\begin{lstlisting}
