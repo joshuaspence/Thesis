@@ -9,8 +9,6 @@ use Date::Parse;
 use File::Basename;
 use XML::Simple;
 
-use POSIX;
-
 sub days_in_month($) {
     $_[0] = $_[0] % 12;
     
@@ -53,7 +51,7 @@ sub date_position($) {
     my $width = ($month - $start_month) * $divisions;
     $width = $width + (($day - 1) / days_in_month($month));
     $width = START_INDEX + $width;
-    return ceil($width);
+    return $width;
 }
 
 sub to_tabs($) {
