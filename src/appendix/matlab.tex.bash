@@ -8,9 +8,7 @@ fi
 
 SOURCE_FILES="
     $(dirname $0)/../../data/TopN_Outlier_Pruning_Block/TopN_Outlier_Pruning_Block_MATLAB_SORTED.m
-    $(dirname $0)/../../data/TopN_Outlier_Pruning_Block/TopN_Outlier_Pruning_Block_MATLAB_SORTED_INLINE.m
     $(dirname $0)/../../data/TopN_Outlier_Pruning_Block/TopN_Outlier_Pruning_Block_MATLAB_UNSORTED.m
-    $(dirname $0)/../../data/TopN_Outlier_Pruning_Block/TopN_Outlier_Pruning_Block_MATLAB_UNSORTED_INLINE.m
 "
 OUTPUT_FILE="$1"
 
