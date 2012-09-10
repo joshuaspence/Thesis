@@ -30,7 +30,7 @@
 #
 fileinfo	:= LaTeX Makefile
 author		:= Chris Monson
-version		:= 2.2.1-alpha9
+version		:= 2.2.1-alpha10-josh
 #
 .DEFAULT_GOAL	:= all
 # Note that the user-global version is imported *after* the source directory,
@@ -118,7 +118,17 @@ export LC_ALL		?= C
 #   graceful solution to this issue.
 #
 #
+# TODO:
+# * Generate .gitignore file
+# * Clean %.tex and %.tex.*.cookie files.
+#
 # CHANGES:
+# Joshua Spence (2012-09-10):
+# * Bumped version to 2.2.1-alpha10-josh
+# * Added %.tex.bash -> %.tex targets.
+# * Add a phony "_all" target.
+# * Fixed makefile to use a recursive wildcard to look for source files in 
+#   subdirectories.
 # Chris Monson (2012-06-25):
 # * Bumped version to 2.2.1-alpha9
 # * Built with Holger Dell's changes to fix multiple unnecessary compilations.
@@ -758,7 +768,7 @@ CYGPATH		?= cygpath
 # == Makefile Color Output ==
 TPUT		?= tput
 # == TeX Generation ==
-BASH        ?= bash
+BASH		?= bash
 PERL		?= perl
 PYTHON		?= python
 RST2LATEX	?= rst2latex.py
@@ -1177,24 +1187,30 @@ hyperref_driver_error		?= Using pdflatex: specify pdftex in the hyperref options
 endif
 
 # Files of interest
-all_files.tex		?= $(wildcard *.tex)
-all_files.tex.bash	?= $(wildcard *.tex.bash)
-all_files.tex.sh	?= $(wildcard *.tex.sh)
-all_files.tex.pl	?= $(wildcard *.tex.pl)
-all_files.tex.py	?= $(wildcard *.tex.py)
-all_files.rst		?= $(wildcard *.rst)
-all_files.lhs		?= $(wildcard *.lhs)
-all_files.mp		?= $(wildcard *.mp)
-all_files.fig		?= $(wildcard *.fig)
-all_files.gpi		?= $(wildcard *.gpi)
-all_files.dot		?= $(wildcard *.dot)
-all_files.xvg		?= $(wildcard *.xvg)
-all_files.svg		?= $(wildcard *.svg)
-all_files.png		?= $(wildcard *.png)
-all_files.jpg		?= $(wildcard *.jpg)
-all_files.jpeg		?= $(wildcard *.jpeg)
-all_files.eps.gz	?= $(wildcard *.eps.gz)
-all_files.eps		?= $(wildcard *.eps)
+all_files.tex		?= $(call rwildcard,,*.tex)
+all_files.tex.bash	?= $(call rwildcard,,*.tex.bash)
+all_files.tex.sh	?= $(call rwildcard,,*.tex.sh)
+all_files.tex.pl	?= $(call rwildcard,,*.tex.pl)
+all_files.tex.py	?= $(call rwildcard,,*.tex.py)
+all_files.rst		?= $(call rwildcard,,*.rst)
+all_files.lhs		?= $(call rwildcard,,*.lhs)
+all_files.mp		?= $(call rwildcard,,*.mp)
+all_files.fig		?= $(call rwildcard,,*.fig)
+all_files.gpi		?= $(call rwildcard,,*.gpi)
+all_files.dot		?= $(call rwildcard,,*.dot)
+all_files.xvg		?= $(call rwildcard,,*.xvg)
+all_files.svg		?= $(call rwildcard,,*.svg)
+all_files.png		?= $(call rwildcard,,*.png)
+all_files.jpg		?= $(call rwildcard,,*.jpg)
+all_files.jpeg		?= $(call rwildcard,,*.jpeg)
+all_files.eps.gz	?= $(call rwildcard,,*.eps.gz)
+all_files.eps		?= $(call rwildcard,,*.eps)
+
+# Utility function to act as a recursive implementation of the makefile 
+# "wildcard" macro.
+# $(call rwildcard,BASE_DIRECTORY,ARG1 ARG2 ...)
+rwildcard = $(foreach d,$(wildcard $1*),$(call rwildcard,$d/,$2)\
+	$(filter $(subst *,%,$2),$d))
 
 # Utility function for obtaining all files not specified in $(neverclean)
 # $(call cleanable-files,file1 file2 file3 ...)
@@ -1322,6 +1338,7 @@ all_stems.eps		:= $(call get-stems,eps,all)
 
 # List of all default stems (all default PDF targets):
 default_stems.tex		:= $(call get-stems,tex,default)
+default_stems.tex.bash		:= $(call get-stems,tex.bash,default)
 default_stems.tex.sh		:= $(call get-stems,tex.sh,default)
 default_stems.tex.pl		:= $(call get-stems,tex.pl,default)
 default_stems.tex.py		:= $(call get-stems,tex.py,default)
@@ -1658,7 +1675,7 @@ $(SED) \
 -e '/^::0::\(.*\)/{' \
 -e '  s//\1/' \
 -e '  /Default extension: /!d' \
--e '  s/.*File `\([^'"'"']*\)'"'"' not found.*/\1/' \
+-e '  {:begin;$$!N;s/\n//;tbegin;s/.*File `\([^'"'"']*\)'"'"' not \n\?f\n\?o\n\?u\n\?n\n\?d.*/\1/}' \
 -e '  s/[[:cntrl:]]//' \
 -e '  /\.tex/!s/$$/.tex/' \
 -e '  s/[[:space:]]/\\ /g' \
@@ -3292,6 +3309,17 @@ endif
 # HELPFUL PHONY TARGETS
 #
 
+.PHONY: _all
+_all: _all_programs \
+      _all_stems \
+      _includes \
+      _all_sources \
+      _dependency_graph \
+      _sources \
+      _source_gens \
+      _scripts \
+      _graphic_outputs
+
 .PHONY: _all_programs
 _all_programs:
 	$(QUIET)$(ECHO) "== All External Programs Used =="
@@ -3856,6 +3884,7 @@ define help_text
 #
 #        Currently supported script or predecessor languages are:
 #
+#        bash:   %.tex.bash
 #        sh:     %.tex.sh
 #        perl:   %.tex.pl
 #        python: %.tex.py
@@ -4065,6 +4094,7 @@ endef
 #     glo [label="%.glo"]
 #     ind [label="%.ind"]
 #     log [label="%.log"]
+#     tex_bash [label="%.tex.bash"]
 #     tex_sh [label="%.tex.sh"]
 #     rst [label="%.rst"]
 #     tex [
@@ -4085,6 +4115,7 @@ endef
 #     gpi_files [shape=point]
 #
 #     rst -> tex:tex [label="reST"]
+#     tex_bash -> tex:tex [label="bash"]
 #     tex_sh -> tex:tex [label="sh"]
 #     tex_pl -> tex:tex [label="perl"]
 #     tex_py -> tex:tex [label="python"]
