@@ -9,6 +9,8 @@ use Date::Parse;
 use File::Basename;
 use XML::Simple;
 
+use POSIX;
+
 sub days_in_month($) {
     $_[0] = $_[0] % 12;
     
@@ -51,7 +53,7 @@ sub date_position($) {
     my $width = ($month - $start_month) * $divisions;
     $width = $width + (($day - 1) / days_in_month($month));
     $width = START_INDEX + $width;
-    return $width;
+    return ceil($width);
 }
 
 sub to_tabs($) {
@@ -70,7 +72,7 @@ my $output_file = $ARGV[0];
 open(FILE, ">$output_file") || die("Failed to open file: $output_file");
 
 my $xml = new XML::Simple (KeyAttr=>[]);
-my $data = $xml->XMLin("schedule.xml");
+my $data = $xml->XMLin(dirname($0)."/schedule.xml");
 my @tasks = $data->{tasks};
 my @milestones = $data->{milestones};
 
@@ -90,7 +92,7 @@ A Gantt chart showing the anticipated schedule for the project is shown in
 % Gantt chart
 \\begin{figure}[h]
     \\centering
-    \\begin{ganttchart}
+    \\begin{ganttchart}{$cols}
         \\gantttitle{2012}{$cols}
         \\gantttitlelist[title list options={%
             var=\\y, evaluate=\\y as \\x%
@@ -106,7 +108,7 @@ for my $task (@{$data->{task}}) {
     my $start       = date_position($task->{start});
     my $end         = date_position($task->{end});
     my $length      = $end - $start;
-    print FILE to_tabs($tabs)."\\ganttbar[name=task$task->{id}]{$task->{name}}{$start}{$length}\n";
+    print FILE to_tabs($tabs)."\\ganttbar[name=$task->{id}]{$task->{name}}{$start}{$length}\n";
     
     for my $dep (%{$task->{dependency}}) {
         print FILE to_tabs($tabs)."\\ganttlink{$dep}{$task->{id}}\n";
@@ -126,11 +128,11 @@ print FILE "\n";
 ################################################################################
 for my $milestone (@{$data->{milestone}}) {    
     my $position = date_position($milestone->{date});
-    print FILE to_tabs($tabs)."\\ganttmilestone[name=milestone$milestone->{id}]$milestone->{name}}{$position}\n";
+    print FILE to_tabs($tabs)."\\ganttmilestone[name=$milestone->{id}]{$milestone->{name}}{$position}\n";
     
     if (ref($milestone->{dependency}) eq 'ARRAY') {
         for my $dep (@{$milestone->{dependency}}) {
-            print FILE to_tabs($tabs)."\\ganttlink{$dep->{id}}{milestone$milestone->{id}}\n";
+            print FILE to_tabs($tabs)."\\ganttlink{$dep->{id}}{$milestone->{id}}\n";
         }
     } elsif (ref($milestone->{dependency}) eq 'HASH' && $milestone->{dependency}->{id}) {
         print FILE to_tabs($tabs)."\\ganttlink{$milestone->{dependency}->{id}}{$milestone->{id}}\n";
@@ -141,7 +143,7 @@ for my $milestone (@{$data->{milestone}}) {
 # FOOTER
 ################################################################################
 print FILE <<END;
-    \\end{gantt}
+    \\end{ganttchart}
     \\caption{Schedule for thesis work}
     \\label{fig:ganttChart}
 \\end{figure}

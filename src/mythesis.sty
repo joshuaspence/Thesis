@@ -1,4 +1,3 @@
-
 \ProvidesPackage{mythesis}
 
 % Provides page numbers and headings at the top of each page
@@ -7,28 +6,27 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Packages
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\RequirePackage[noline,ruled]{algorithm2e}      % for algorithms
-\RequirePackage{amsfonts}                       % for formatting mathematical symbols
-\RequirePackage{amsmath,amssymb,amsthm}         % for math support
-\RequirePackage[language=australian]{biblatex}  % use biblatex instead of bibtex
-\RequirePackage[inline]{enumitem}               % for inline lists
-\RequirePackage{float}                          % for setting float specifiers
-\RequirePackage{gantt}                          % for gantt charts
-\RequirePackage{gnuplot-lua-tikz}               % for plots produced by GNUplot
-\RequirePackage{graphicx}                       % for graphics
-\RequirePackage[hidelinks]{hyperref}            % for PDF hyperlinks
-\RequirePackage{pdfpages}                       % for inserting compliance sheet as a PDF
-\RequirePackage{tabularx}                       % for simple column stretching
-\RequirePackage{url}                            % for web URLs
-\RequirePackage{verbatim}                       % for comment environment
+\usepackage[noline,ruled]{algorithm2e}          % for algorithms
+\usepackage{amsfonts}                           % for formatting mathematical symbols
+\usepackage{amsmath,amssymb,amsthm}             % for math support
+\usepackage[language=australian]{biblatex}      % use biblatex instead of bibtex
+\usepackage[inline]{enumitem}                   % for inline lists
+\usepackage{float}                              % for setting float specifiers
+\usepackage{gnuplot-lua-tikz}                   % for plots produced by GNUplot
+\usepackage{graphicx}                           % for graphics
+\usepackage[hidelinks]{hyperref}                % for PDF hyperlinks
+\usepackage{pdfpages}                           % for inserting compliance sheet as a PDF
+\usepackage{tabularx}                           % for simple column stretching
+\usepackage{url}                                % for web URLs
+\usepackage{verbatim}                           % for comment environment
 
 % My custom packages
-\RequirePackage{citationneeded}                 % for \citeNeeded
+\usepackage{citationneeded}                     % for \citeNeeded
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Glossary
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\RequirePackage[toc,xindy]{glossaries}
+\usepackage[toc,xindy]{glossaries}
 \makeglossaries
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -49,8 +47,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Source code formatting
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\RequirePackage{color}				% for colouring listings source code
-\RequirePackage{listings}			% for source code formatting
+\usepackage{color}				    % for colouring listings source code
+\usepackage{listings}			    % for source code formatting
 
 % Custom colours
 \definecolor{dkgreen}{rgb}{0,0.6,0}
@@ -78,6 +76,13 @@
     escapeinside={\%*}{*)},         % if you want to add a comment within your code
     morekeywords={*,...}            % if you want to add more keywords to the set
 }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Gantt charts
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{tikz}
+\usetikzlibrary{calendar}
+\usepackage{pgfgantt}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Variables (to save retyping and reformatting these throughout the document)
