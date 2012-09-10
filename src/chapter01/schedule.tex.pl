@@ -3,44 +3,11 @@
 use strict;
 use warnings;
 
-use constant START_MONTH    => 2;
-use constant END_MONTH      => 10;
-use constant DIVS_PER_MONTH => 4;
-use constant START_INDEX    => 1;
+use constant START_INDEX => 1;
 
 use Date::Parse;
 use File::Basename;
-use Text::CSV;
-
-sub get_month($) {
-    $_[0] = $_[0] % 12;
-    
-    if ($_[0] == 0) {
-        return 'Jan';
-    } elsif ($_[0] == 1) {
-        return 'Feb';
-    } elsif ($_[0] == 2) {
-        return 'Mar';
-    } elsif ($_[0] == 3) {
-        return 'Apr';
-    } elsif ($_[0] == 4) {
-        return 'May';
-    } elsif ($_[0] == 5) {
-        return 'Jun';
-    } elsif ($_[0] == 6) {
-        return 'Jul';
-    } elsif ($_[0] == 7) {
-        return 'Aug';
-    } elsif ($_[0] == 8) {
-        return 'Sep';
-    } elsif ($_[0] == 9) {
-        return 'Oct';
-    } elsif ($_[0] == 10) {
-        return 'Nov';
-    } elsif ($_[0] == 11) {
-        return 'Dec';
-    }
-}
+use XML::Simple;
 
 sub days_in_month($) {
     $_[0] = $_[0] % 12;
@@ -72,11 +39,16 @@ sub days_in_month($) {
     }
 }
 
-sub date_position($$) {
-    my $month = ($_[0]);
-    my $day = ($_[1]);
+my $start_month;
+my $end_month;
+my $divisions;
+sub date_position($) {
+    my $dummy;
+    my $month;
+    my $day;
+    ($dummy,$dummy,$dummy,$day,$month,$dummy,$dummy) = strptime($_[0]);
     
-    my $width = ($month - START_MONTH) * DIVS_PER_MONTH;
+    my $width = ($month - $start_month) * $divisions;
     $width = $width + (($day - 1) / days_in_month($month));
     $width = START_INDEX + $width;
     return $width;
@@ -97,134 +69,79 @@ scalar(@ARGV) >= 1 || die("No output file specified!\n");
 my $output_file = $ARGV[0];
 open(FILE, ">$output_file") || die("Failed to open file: $output_file");
 
-my $csv = Text::CSV->new();
-my $in_header;
-my $is_first;
+my $xml = new XML::Simple (KeyAttr=>[]);
+my $data = $xml->XMLin("schedule.xml");
+my @tasks = $data->{tasks};
+my @milestones = $data->{milestones};
+
 
 ################################################################################
 # HEADER
 ################################################################################
 my $tabs = 0;
-my $rows = 18;
-my $cols = (END_MONTH - START_MONTH + 1) * DIVS_PER_MONTH;
+$start_month = $data->{start} - 1;
+$end_month = $data->{end} - 1;
+$divisions = $data->{divisions};
+my $cols = ($end_month - $start_month + 1) * $divisions;
 print FILE <<END;
 A Gantt chart showing the anticipated schedule for the project is shown in 
 \\autoref{fig:ganttChart}. This will be updated as the project progresses.
 
 % Gantt chart
-% See http://www.martin-kumm.de/tex_gantt_package.php
 \\begin{figure}[h]
     \\centering
-    \\scalebox{0.5}{
-        \\begin{gantt}[
-            xunitlength=0.5cm,
-	        fontsize=\\small,
-	        titlefontsize=\\small,
-	        drawledgerline=true
-	        ]{$rows}{$cols}
+    \\begin{ganttchart}
+        \\gantttitle{2012}{$cols}
+        \\gantttitlelist[title list options={%
+            var=\\y, evaluate=\\y as \\x%
+            using "\\pgfcalendarmonthshortname{\\y}"%
+            }]{$start_month,...,$end_month}{$divisions} \\\\
 END
-$tabs = 3;
-
-# Months
-print FILE to_tabs($tabs++)."\\begin{ganttitle}\n";
-for (my $month = START_MONTH; $month <= END_MONTH; $month++) {
-	print FILE to_tabs($tabs)."\\titleelement{", get_month($month), "}{", DIVS_PER_MONTH, "}\n";
-}
-print FILE to_tabs(--$tabs)."\\end{ganttitle}\n";
-
-# Split months into divisons
-print FILE to_tabs($tabs++)."\\begin{ganttitle}\n";
-for (my $month = START_MONTH; $month <= END_MONTH; $month++) {
-	print FILE to_tabs($tabs)."\\numtitle{1}{1}{", DIVS_PER_MONTH, "}{1}\n";
-}
-print FILE to_tabs(--$tabs)."\\end{ganttitle}\n\n";
+$tabs = 2;
 
 ################################################################################
 # TASKS
 ################################################################################
-open(TASKS, dirname($0)."/schedule_tasks.csv") || die("Could not open file");
-$in_header = 1;
-$is_first = 1;
-while (<TASKS>) {
-    if ($in_header) {
-        $in_header = 0;
-        next;
-    }
+for my $task (@{$data->{task}}) {   
+    my $start       = date_position($task->{start});
+    my $end         = date_position($task->{end});
+    my $length      = $end - $start;
+    print FILE to_tabs($tabs)."\\ganttbar[name=task$task->{id}]{$task->{name}}{$start}{$length}\n";
     
-    # Parse CSV
-    if ($csv->parse($_)) {
-        my @columns = $csv->fields();
-        my $task       = $columns[0];
-        my $start_date = $columns[1];
-        my $end_date   = $columns[2];
-        my $connected  = $columns[3];
-        
-        my $dummy;
-        ($dummy,$dummy,$dummy,my $start_day,my $start_month,$dummy,$dummy) = strptime($start_date);
-        ($dummy,$dummy,$dummy,my $end_day,my $end_month,$dummy,$dummy) = strptime($end_date);
-        
-        my $start       = date_position($start_month, $start_day);
-        my $end         = date_position($end_month,   $end_day);
-        my $length      = $end - $start;
-        
-        if (!$is_first && $connected) {
-            print FILE to_tabs($tabs)."\\ganttbarcon";
-        } else {
-            print FILE to_tabs($tabs)."\\ganttbar";
-        }
-        print FILE "{$task}{$start}{$length}\n";
-    } else {
-        my $err = $csv->error_input;
-        die("Failed to parse line: $err");
+    for my $dep (%{$task->{dependency}}) {
+        print FILE to_tabs($tabs)."\\ganttlink{$dep}{$task->{id}}\n";
     }
-    $is_first = 0;
+    if (ref($task->{dependency}) eq 'ARRAY') {
+        for my $dep (@{$task->{dependency}}) {
+            print FILE to_tabs($tabs)."\\ganttlink{$dep->{id}}{$task->{id}}\n";
+        }
+    } elsif (ref($task->{dependency}) eq 'HASH' && $task->{dependency}->{id}) {
+        print FILE to_tabs($tabs)."\\ganttlink{$task->{dependency}->{id}}{$task->{id}}\n";
+    }
 }
-close(TASKS);
 print FILE "\n";
 
 ################################################################################
 # MILESTONES
 ################################################################################
-open(MILESTONES, dirname($0)."/schedule_milestones.csv") || die("Could not open file");
-$in_header = 1;
-$is_first = 1;
-while (<MILESTONES>) {
-    if ($in_header) {
-        $in_header = 0;
-        next;
-    }
+for my $milestone (@{$data->{milestone}}) {    
+    my $position = date_position($milestone->{date});
+    print FILE to_tabs($tabs)."\\ganttmilestone[name=milestone$milestone->{id}]$milestone->{name}}{$position}\n";
     
-    # Parse CSV
-    if ($csv->parse($_)) {
-        my @columns = $csv->fields();
-        my $milestone  = $columns[0];
-        my $date       = $columns[1];
-        my $connected  = $columns[2];
-        
-        my $dummy;
-        ($dummy,$dummy,$dummy,my $day,my $month,$dummy,$dummy) = strptime($date);
-        
-        my $pos = date_position($month, $day);
-        if (!$is_first && $connected) {
-            print FILE to_tabs($tabs)."\\ganttmilestonecon";
-        } else {
-            print FILE to_tabs($tabs)."\\ganttmilestone";
+    if (ref($milestone->{dependency}) eq 'ARRAY') {
+        for my $dep (@{$milestone->{dependency}}) {
+            print FILE to_tabs($tabs)."\\ganttlink{$dep->{id}}{milestone$milestone->{id}}\n";
         }
-        print FILE "{$milestone}{$pos}\n";
-    } else {
-        my $err = $csv->error_input;
-        die("Failed to parse line: $err");
+    } elsif (ref($milestone->{dependency}) eq 'HASH' && $milestone->{dependency}->{id}) {
+        print FILE to_tabs($tabs)."\\ganttlink{$milestone->{dependency}->{id}}{$milestone->{id}}\n";
     }
-    $is_first = 0;
 }
-close(MILESTONES);
 
 ################################################################################
 # FOOTER
 ################################################################################
 print FILE <<END;
-        \\end{gantt}
-    }
+    \\end{gantt}
     \\caption{Schedule for thesis work}
     \\label{fig:ganttChart}
 \\end{figure}

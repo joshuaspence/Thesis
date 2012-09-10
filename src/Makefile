@@ -1263,6 +1263,10 @@ files.jpeg	:= $(call filter-buildable,jpeg)
 files.eps.gz	:= $(call filter-buildable,eps.gz)
 files.eps	:= $(call filter-buildable,eps)
 
+_test:
+	echo $(files.tex)
+	echo $(files.tex.bash)
+
 # Make all pstex targets secondary.  The pstex_t target requires the pstex
 # target, and nothing else really depends on it, so it often gets deleted.
 # This avoids that by allowing *all* fig files to be pstex targets, which is
