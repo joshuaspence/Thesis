@@ -35,7 +35,7 @@
 *.log
 
 # Outputs
-/*.pdf
+thesis.pdf
 
 # Table of contents
 *.toc
@@ -45,3 +45,21 @@
 *.make
 *.run.xml
 *.temp
+
+# Project specific
+appendix/c.tex
+appendix/c.tex.bash.cookie
+chapter01/schedule.tex
+chapter01/schedule.tex.pl.cookie
+chapter04/plots/distance_calls.tex
+chapter04/plots/distance_calls.tex.bash.cookie
+chapter04/plots/function_execution_time.tex
+chapter04/plots/function_execution_time.tex.bash.cookie
+chapter04/plots/function_run_time_complexity.tex
+chapter04/plots/function_run_time_complexity.tex.bash.cookie
+chapter04/plots/total_execution_time.tex
+chapter04/plots/total_execution_time.tex.bash.cookie
+chapter04/plots/total_run_time_complexity.tex
+chapter04/plots/total_run_time_complexity.tex.bash.cookie
+chapter04/plots/vectors_pruned.tex
+chapter04/plots/vectors_pruned.tex.bash.cookie

@@ -2,8 +2,8 @@
 
 # Make sure an output file was specified
 if [[ $# -ne 1 ]]; then
-	echo "No output file specified";
-	exit 1;
+	echo "No output file specified" >&2
+	exit 1
 fi
 
 source $(dirname $0)/common.sh
@@ -24,8 +24,8 @@ set key below
 set output "$1"
 plot \
     $(for i in ${ALL_DATASETS[*]}; do
-        DATASET=${DATASET_NAMES[$i]};
-        COLOUR=${DATASET_COLOURS[$i]};
+        DATASET=${DATASET_NAMES[$i]}
+        COLOUR=${DATASET_COLOURS[$i]}
         NO_BLOCKING_VALUE=$(perl <<END_OF_PERL
 use strict;
 use warnings;
@@ -53,10 +53,10 @@ while (<FILE>) {
 }
 close FILE;
 END_OF_PERL
-);
+)
         
-        echo "'$DATA_FILE' using (\$$COL_BLOCKSIZE != 0 ? \$$COL_BLOCKSIZE : 1/0):(stringcolumn($COL_DATASET) eq '$DATASET' ? \$$COL_DISTCALLS_NORM : 1/0) smooth unique title '$(echo $DATASET | sed -e 's/_/\\_/g')' with linespoints lt 1 lc $COLOUR, \\";
-        echo "$NO_BLOCKING_VALUE title '$(echo $DATASET | sed -e 's/_/\\_/g')*' with line lt 0 lc $COLOUR, \\";
+        echo "'$DATA_FILE' using (\$$COL_BLOCKSIZE != 0 ? \$$COL_BLOCKSIZE : 1/0):(stringcolumn($COL_DATASET) eq '$DATASET' ? \$$COL_DISTCALLS_NORM : 1/0) smooth unique title '$(echo $DATASET | sed -e 's/_/\\_/g')' with linespoints lt 1 lc $COLOUR, \\"
+        echo "$NO_BLOCKING_VALUE title '$(echo $DATASET | sed -e 's/_/\\_/g')*' with line lt 0 lc $COLOUR, \\"
     done)
     1/0 notitle
 

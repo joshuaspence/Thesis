@@ -109,9 +109,6 @@ for my $task (@{$data->{task}}) {
     my $length      = $end - $start;
     print FILE to_tabs($tabs)."\\ganttbar[name=$task->{id}]{$task->{name}}{$start}{$length} \\ganttnewline\n";
     
-    for my $dep (%{$task->{dependency}}) {
-        print FILE to_tabs($tabs)."\\ganttlink{$dep}{$task->{id}}\n";
-    }
     if (ref($task->{dependency}) eq 'ARRAY') {
         for my $dep (@{$task->{dependency}}) {
             print FILE to_tabs($tabs)."\\ganttlink{$dep->{id}}{$task->{id}}\n";

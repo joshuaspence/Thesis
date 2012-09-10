@@ -1,7 +1,3 @@
-
-\lstloadlanguages{C}
-\lstset{language=C}
-\begin{lstlisting}
 /*============================================================================*/
 /* Includes                                                                   */
 /*============================================================================*/
@@ -700,4 +696,3 @@ uint_out_t top_n_outlier_pruning_block(const double_in_t data[MAX_NUM_VECTORS(nu
     
     return num_pruned;
 }
-\end{lstlisting}
