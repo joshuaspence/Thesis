@@ -129,6 +129,7 @@ export LC_ALL		?= C
 # * Add a phony "_all" target.
 # * Fixed makefile to use a recursive wildcard to look for source files in 
 #   subdirectories.
+# * Fixed makefile to properly clean files from subdirectories.
 # Chris Monson (2012-06-25):
 # * Bumped version to 2.2.1-alpha9
 # * Built with Holger Dell's changes to fix multiple unnecessary compilations.
@@ -955,7 +956,7 @@ remove-files		= $(call remove-files-helper,$(wildcard $1))
 # $(call clean-files,file1 file2 file3 ...)
 # Works exactly like remove-files, but filters out files in $(neverclean)
 clean-files		= \
-	$(call remove-files-helper,$(call cleanable-files,$(wildcard $1)))
+	$(call remove-files-helper,$(call cleanable-files,$(call rwildcard,,$1)))
 
 # Outputs all generated files to STDOUT, along with some others that are
 # created by these (e.g., .idx files end up producing .ilg and .ind files).
@@ -3478,7 +3479,7 @@ clean: clean-generated clean-tex clean-graphics clean-deps clean-backups clean-a
 # Forceful clean
 .PHONY: distclean
 distclean: clean
-	$(call clean-files,$(foreach e,$(rm_ext),$(wildcard *.$e)))
+	$(call clean-files,$(foreach e,$(rm_ext),$(call rwildcard,,*.$e)))
 
 #
 # HELP TARGETS
