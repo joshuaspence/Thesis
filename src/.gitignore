@@ -1,50 +1,8 @@
-# Auxillary files
-*.aux
-
-# Bibliographies
-*-blx.bib
-*.bbl
-*.blg
-
-# Bookmarks
-*.out
-
 # Dependencies
-*.d
-
-# Glossaries, acronyms and indexes
-*.acn
-*.glg
-*.glo
-*.gls*
-*.idx
-*.ilg
-*.ind
-*.ist
-*.xdy
-
-# List of algorithms, figures, tables
-*.loa
-*.lof
-*.lot
-
-# List of used files
-*.fls
-
-# Log files
-*.log
+						*.d
 
 # Outputs
-thesis.pdf
-
-# Table of contents
-*.toc
-
-# Other
-*.cookie
-*.make
-*.run.xml
-*.temp
+						thesis.pdf
 
 # Project specific
 appendix/c.tex
