@@ -1,5 +1,20 @@
 #!/usr/bin/perl
 
+################################################################################
+#
+# Script to remove comments from C/C++ source code, as well as make various 
+# other modifications to improve the readability of the code.
+#
+# Usage:
+#     ./stripcmt.pl SOURCE_FILE
+#
+# Output: Processed source code is output to STDOUT.
+#
+################################################################################
+
+use strict;
+use warnings;
+
 undef $/;
 $text = <>;
 
