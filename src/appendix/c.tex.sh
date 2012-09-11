@@ -10,6 +10,7 @@ SOURCE_FILES="
     $(dirname $0)/../../data/TopN_Outlier_Pruning_Block/top_n_outlier_pruning_block.c
 "
 OUTPUT_FILE="$1"
+STRIPCMT_SCRIPT="$(dirname $0)/../../scripts/stripcmt.pl"
 
 rm --force $OUTPUT_FILE
 for SOURCE_FILE in $SOURCE_FILES; do
@@ -22,7 +23,7 @@ for SOURCE_FILE in $SOURCE_FILES; do
 \\lstloadlanguages{C}
 \\lstset{language=C}
 \\begin{lstlisting}
-$(cat $SOURCE_FILE)
+$($STRIPCMT_SCRIPT $SOURCE_FILE)
 \\end{lstlisting}
 
 EOF

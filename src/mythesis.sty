@@ -51,31 +51,38 @@
 \usepackage{listings}			    % for source code formatting
 
 % Custom colours
-\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{darkGreen}{rgb}{0,0.6,0}
 \definecolor{gray}{rgb}{0.5,0.5,0.5}
 \definecolor{mauve}{rgb}{0.58,0,0.82}
 
 % Default settings
 \lstset{
+    basicstyle=\footnotesize\ttfamily,
+                                    %
+    title=\lstname,                 % show the filename of files included with \lstinputlisting
+    captionpos=b,                   % sets the caption-position to bottom
+    backgroundcolor=\color{white},  % choose the background color
+                                    %
     numbers=left,                   % where to put the line-numbers
     numberstyle=\tiny\color{gray},  % the style that is used for the line-numbers
     stepnumber=1,                   % the step between two line-numbers
     numbersep=5pt,                  % how far the line-numbers are from the code
-    backgroundcolor=\color{white},  % choose the background color
+                                    %
     showspaces=false,               % show spaces adding particular underscores
     showstringspaces=false,         % underline spaces within strings
     showtabs=false,                 % show tabs within strings adding particular underscores
     tabsize=2,                      % sets default tabsize
-    captionpos=b,                   % sets the caption-position to bottom
     breaklines=true,                % sets automatic line breaking
-    breakatwhitespace=false,        % sets if automatic breaks should only happen at whitespace
-    title=\lstname,                 % show the filename of files included with \lstinputlisting
+    breakatwhitespace=false,        % sets if automatic breaks should only happen at whitespace   
+    extendedchars=true,
+                                    %
     keywordstyle=\color{blue},      % keyword style
-    commentstyle=\color{dkgreen},   % comment style
+    commentstyle=\color{darkGreen}, % comment style
     stringstyle=\color{mauve},      % string literal style
     escapeinside={\%*}{*)},         % if you want to add a comment within your code
     morekeywords={*,...}            % if you want to add more keywords to the set
 }
+\lstloadlanguages{C,Matlab}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Gantt charts
