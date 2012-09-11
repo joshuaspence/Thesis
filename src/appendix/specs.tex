@@ -1,49 +1,231 @@
-All test results contained in this thesis were performed on a server with the 
-following specifications. The following specifications were obtained using the
-\doubleQuote{Hardware Lister} (\verb+lshw+) tool.
+All test results contained in this thesis were performed on one of two servers 
+with the following specifications. The following specifications were obtained 
+using the \doubleQuote{Hardware Lister} (\verb+lshw+) tool.
 
-\begin{table}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% HOSTNAME: tuna
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Hostname: tuna}
+\begin{table}[H]
     \centering
     \begin{tabular}{|+>{\bfseries}l|^l|}
         \tableHeader{Item & Specification}
         CPU &\\
-        Product & Intel(R) Core(TM) i5 CPU M 540 @ 2.53GHz\\
-        Capacity & 1199MHz\\
+        Product & Intel(R) Xeon(R) CPU E5506 @ 2.13GHz\\
+        Size & 2133MHz\\
+        Capacity & 3600MHz\\
         Width & 64 bits\\
-        Clock & 133MHz\\
-        Cores & 2\\
-        L1 cache & 32KiB (asynchronous internal write-through data)\\
-        L2 cache & 256KiB (burst internal write-through unified)\\
-        L3 cache & 8MiB (burst internal write-back)\\[1em]
+        Clock & 505MHz\\
+        Cores & 4\\
+        L1 cache & 128KiB (internal write-back data)\\
+        L2 cache & 1MiB (internal write-back unified)\\
+        L3 cache & 4MiB (internal write-back unified)\\
+        CPU capabilities &
+            x86-64,
+            fpu,
+            fpu\_exception,
+            wp,
+            vme,
+            de,
+            pse,
+            tsc,
+            msr,
+            pae,
+            mce,
+            cx8,
+            apic,
+            sep,
+            mtrr,
+            pge,
+            mca,
+            cmov,
+            pat,
+            pse36,
+            clflush,
+            dts,
+            acpi,
+            mmx,
+            fxsr,
+            sse,
+            sse2,
+            ss,
+            ht,
+            tm,
+            pbe,
+            syscall,
+            nx,
+            rdtscp,
+            constant\_tsc,
+            arch\_perfmon,
+            pebs,
+            bts,
+            rep\_good,
+            nopl,
+            xtopology,
+            nonstop\_tsc,
+            aperfmperf,
+            pni,
+            dtes64,
+            monitor,
+            ds\_cpl,
+            vmx,
+            est,
+            tm2,
+            ssse3,
+            cx16,
+            xtpr,
+            pdcm,
+            dca,
+            sse4\_1,
+            sse4\_2,
+            popcnt,
+            lahf\_lm,
+            tpr\_shadow,
+            vnmi,
+            flexpriority,
+            ept,
+            vpid.
+            \\[1em]
         
         Memory &\\
-        Description & SODIMM DDR3 Synchronous 1066 MHz\\
-        Size & 4GiB\\
+        Description & DIMM DDR3 Synchronous 1333 MHz\\
+        Size & 8GiB\\
         Width & 64 bits\\
-        Clock & 1066MHz\\\hline
+        Clock & 1333MHz\\\hline
     \end{tabular}
-    \caption{Hardware specifications}
+    \caption{Hardware specifications for tuna}
 \end{table}
 
-\begin{table}
+\begin{table}[H]
     \centering
     \begin{tabular}{|+>{\bfseries}l|^l|}
         \tableHeader{Item & Specification}
         gcc & gcc (Ubuntu/Linaro 4.6.1-9ubuntu3) 4.6.1\\
         ld & GNU ld (GNU Binutils for Ubuntu) 2.21.53.20110810\\
-        MATLAB & \\
-        mex & \\\hline
+        MATLAB & ???\\
+        \hline
     \end{tabular}
-    \caption{Software specifications}
+    \caption{Software specifications for tuna}
 \end{table}
 
-\begin{table}
+\begin{table}[H]
     \centering
     \begin{tabular}{|+>{\bfseries}l|^l|}
         \tableHeader{Item & Specification}
         Operating System & Ubuntu 11.10\\
         Platform & x86\_64\\
-        Kernel version & 3.0.0-17-generic\\\hline
+        Kernel version & 3.0.0-17-generic\\
+        \hline
     \end{tabular}
-    \caption{Operating System specifications}
+    \caption{Operating System specifications for tuna}
 \end{table}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% HOSTNAME: ubuntu-vm
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Hostname: ubuntu-vm}
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|+>{\bfseries}l|^l|}
+        \tableHeader{Item & Specification}
+        CPU &\\
+        Product & Intel(R) Core(TM) i7 CPU 950 @ 3.07GHz\\
+        Size & 3067MHz\\
+        Capacity & 4230MHz\\
+        Width & 64 bits\\
+        Cores & 8\\
+        L1 cache & 16KiB (asynchronous internal write-back)\\
+        L2 cache & 256KiB (burst external write-back)\\
+        CPU Capabilities &
+            {
+                fpu,
+                fpu\_exception,
+                wp,
+                vme,
+                de,
+                pse,
+                tsc,
+                msr,
+                pae,
+                mce,
+                cx,
+                apic,
+                sep,
+                mtrr,
+                pge,
+                mca,
+                cmov,
+                pat,
+                pse36,
+                clflush,
+                dts,
+                acpi,
+                mmx,
+                fxsr,
+                sse,
+                sse2,
+                ss,
+                ht,
+                syscall,
+                nx,
+                rdtscp,
+                x86-64,
+                constant\_tsc,
+                arch\_perfmon,
+                pebs,
+                bts,
+                nopl,
+                xtopology,
+                tsc\_reliable,
+                nonstop\_tsc,
+                aperfmperf,
+                pni,
+                ssse3,
+                cx16,
+                sse4\_1,
+                sse4\_2,
+                popcnt,
+                hypervisor,
+                lahf\_lm,
+                ida,
+                dtherm.
+            }\\[1em]
+        
+        Memory &\\
+        Description & DIMM DRAM EDO\\
+        Size & 16GiB\\
+        Width & 32 bits\\
+        \hline
+    \end{tabular}
+    \caption{Hardware specifications for ubuntu-vm}
+\end{table}
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|+>{\bfseries}l|^l|}
+        \tableHeader{Item & Specification}
+        gcc & gcc (Ubuntu/Linaro 4.6.1-9ubuntu3) 4.6.1\\
+        ld & GNU ld (GNU Binutils for Ubuntu) 2.22\\
+        MATLAB & 7.14.0.739 (R2012a)\\
+        \hline
+    \end{tabular}
+    \caption{Software specifications for ubuntu-vm}
+\end{table}
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|+>{\bfseries}l|^l|}
+        \tableHeader{Item & Specification}
+        Operating System & Ubuntu 12.04\\
+        Platform & x86\_64\\
+        Kernel version & 3.2.0-29-generic\\
+        \hline
+    \end{tabular}
+    \caption{Operating System specifications for ubuntu-vm}
+\end{table}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% FPGA
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{FPGA}
+% TODO

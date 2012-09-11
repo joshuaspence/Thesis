@@ -23,7 +23,7 @@ for SOURCE_FILE in $SOURCE_FILES; do
 \\lstloadlanguages{C}
 \\lstset{language=C}
 \\begin{lstlisting}
-$($STRIPCMT_SCRIPT $SOURCE_FILE)
+$(cat $SOURCE_FILE)
 \\end{lstlisting}
 
 EOF
