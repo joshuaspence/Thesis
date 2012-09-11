@@ -1,7 +1,7 @@
 \documentclass[a4paper]{report}
 
 % Warn about commands, classes and packages that are outdated and superseded.
-%     * Orthodox checks for pitfalls that are not technically incorrect.
+%     - Orthodox checks for pitfalls that are not technically incorrect.
 \usepackage[l2tabu,orthodox,abort]{nag}
 
 % All styling is contained in "mythesis.sty"
@@ -26,49 +26,7 @@
 % Title Page
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{titlepage}
-\centering
-
-% Upper part of the page
-\includegraphics[width=0.25\textwidth]{sydney_uni_coat_of_arms}\\[1cm]
-\textsc{\LARGE \universityName*{}}\\[1.5cm]
-\textsc{\Large Final year thesis}\\[0.5cm]
-
-% Title
-\HRule \\[0.4cm]
-{\huge \bfseries \thesisTitle*{}}\\[0.4cm]
-\HRule \\[1.5cm]
-
-% Author and supervisor
-\begin{minipage}{0.4\textwidth}
-    \begin{flushleft}
-    	\large
-        \emph{Author:}\\
-        \studentName*{}
-    \end{flushleft}
-\end{minipage}
-\begin{minipage}{0.4\textwidth}
-    \begin{flushright} 
-    	\large
-        \emph{Supervisor:} \\
-        \supervisorName*{}
-    \end{flushright}
-\end{minipage}
-
-% Strech vertical space so that it fills all empty space
-\vfill
-
-% Thesis description
-{\large A thesis submitted in fulfilment of the requirements for the\\
-degree of Bachelor of Engineering (Computer) in the\\
-School of Electrical Engineering at\\
-The University of Sydney}
-
-% Strech vertical space so that it fills all empty space
-\vfill
-
-% Bottom of the page
-{\large \thesisDate*{}}
-
+\input{title-page}
 \end{titlepage}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
