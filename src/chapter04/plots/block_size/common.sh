@@ -2,8 +2,8 @@
 # Configuration
 #===============================================================================
 NO_BLOCKING_BLOCKSIZE=0
-DATA_FILE="$(dirname $0)/../../../data/block_size.csv"
-UNIQUE_FROM_CSV="$(dirname $0)/../../../scripts/unique_from_csv.pl"
+DATA_FILE="$(dirname $0)/../../../../data/block_size.csv"
+UNIQUE_FROM_CSV="$(dirname $0)/../../../../scripts/unique_from_csv.pl"
 
 COL_DATASET=1
 COL_BLOCKSIZE=2

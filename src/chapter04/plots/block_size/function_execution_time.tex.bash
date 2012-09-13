@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Make sure an output file was specified
-if [[ $# -ne 1 ]]; then
+if [ $# -ne 1 ]; then
 	echo "No output file specified" >&2
 	exit 1
 fi
@@ -12,12 +12,12 @@ gnuplot -persist <<END_OF_GNUPLOT
 $GNUPLOT_HEADER
 
 ################################################################################
-# TOTAL EXECUTION TIME
+# FUNCTION EXECUTION TIME
 ################################################################################
 set log x
 set xlabel "Block size"
 set format x "\$10^{%L}\$"
-set ylabel "Total execution time (normalised)"
+set ylabel "Function execution time (normalised)"
 set autoscale
 set key below
 
@@ -43,7 +43,7 @@ while (<FILE>) {
     if (\$csv->parse(\$_)) {
         my @columns = \$csv->fields();
         if (\$columns[$(expr $COL_DATASET - 1)] eq "$DATASET" && \$columns[$(expr $COL_BLOCKSIZE - 1)] eq $NO_BLOCKING_BLOCKSIZE) {
-            print \$columns[$(expr $COL_TOTALTIME_NORM - 1)];
+            print \$columns[$(expr $COL_FUNCTIME_NORM - 1)];
             exit;
         }
     } else {
@@ -55,7 +55,7 @@ close FILE;
 END_OF_PERL
 )
         
-        echo "'$DATA_FILE' using (\$$COL_BLOCKSIZE != 0 ? \$$COL_BLOCKSIZE : 1/0):(stringcolumn($COL_DATASET) eq '$DATASET' ? \$$COL_TOTALTIME_NORM : 1/0) smooth unique title '$(echo $DATASET | sed -e 's/_/\\_/g')' with linespoints lt 1 lc $COLOUR, \\"
+        echo "'$DATA_FILE' using (\$$COL_BLOCKSIZE != 0 ? \$$COL_BLOCKSIZE : 1/0):(stringcolumn($COL_DATASET) eq '$DATASET' ? \$$COL_FUNCTIME_NORM : 1/0) smooth unique title '$(echo $DATASET | sed -e 's/_/\\_/g')' with linespoints lt 1 lc $COLOUR, \\"
         echo "$NO_BLOCKING_VALUE title '$(echo $DATASET | sed -e 's/_/\\_/g')*' with line lt 0 lc $COLOUR, \\"
     done)
     1/0 notitle

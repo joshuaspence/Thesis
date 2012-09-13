@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Make sure an output file was specified
-if [[ $# -ne 1 ]]; then
+if [ $# -ne 1 ]; then
 	echo "No output file specified" >&2
 	exit 1
 fi
