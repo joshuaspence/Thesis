@@ -6,7 +6,7 @@
 # other modifications to improve the readability of the code.
 #
 # Usage:
-#     ./stripcmt.pl SOURCE_FILE
+#     ./strip_comments.pl SOURCE_FILE
 #
 # Output: Processed source code is output to STDOUT.
 #
