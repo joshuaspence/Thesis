@@ -117,6 +117,8 @@ export LC_ALL		?= C
 #   rebuilds on common edits.  There does not appear to be a
 #   graceful solution to this issue.
 #
+# TODO:
+# * Fix issue with bash tab-completion.
 #
 # CHANGES:
 # Joshua Spence (2012-09-10):
