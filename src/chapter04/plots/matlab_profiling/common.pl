@@ -106,7 +106,7 @@ for (<FILE>) {
     my $selftime_rel  = $columns[COL_SELFTIMEREL];
     
     # If this function is fairly small, bundle it with other small functions
-    if ($totaltime_rel < THRESHOLD) {
+    if ($selftime_rel < THRESHOLD) {
         $function = OTHER_FUNCTION;
     }
     
@@ -121,7 +121,7 @@ for (<FILE>) {
             $data{$dataset}{$profile}{$function} = 0;
         }
         
-        $data{$dataset}{$profile}{$function} += $totaltime_rel;
+        $data{$dataset}{$profile}{$function} += $selftime_rel;
     }
 }
 close(FILE);
