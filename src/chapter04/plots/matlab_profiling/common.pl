@@ -16,7 +16,7 @@ my $THIS_DIR = "chapter04/plots/matlab_profiling";
 
 use constant OTHER_FUNCTION => "__other__";
 use constant OTHER_NAME     => "Other";
-use constant THRESHOLD      => "0.01";
+use constant THRESHOLD      => "0.025";
 use constant PROFILE        => "matlab_unsorted_inline";
 
 use constant COL_PROFILE      => 0;
