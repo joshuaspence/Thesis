@@ -135,6 +135,7 @@ if (basename($0) =~ m/all_datasets.tex.pl/) {
     }
 } else { # we assume that the output file relates to a data set
     my $the_dataset = basename($0, ".tex.pl");
+    my $the_dataset_clean = clean($the_dataset);
     my $the_profile = PROFILE;
     my @output = (); # buffered output
     
@@ -159,7 +160,7 @@ END_OF_TEX
         
 	    }
     \\end{tikzpicture}
-	\\caption{}
+	\\caption{Comparison of function self time for $the_dataset_clean data set}
 	\\label{fig:matlabProfiling:$the_dataset}
 \\end{figure}
 END_OF_TEX
