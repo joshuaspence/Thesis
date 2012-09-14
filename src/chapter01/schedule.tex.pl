@@ -9,6 +9,8 @@ use Date::Parse;
 use File::Basename;
 use XML::Simple;
 
+# Return the number of days in a given month.
+# 0=January, 1=February, ..., 10=November, 11=December
 sub days_in_month($) {
     $_[0] = $_[0] % 12;
     

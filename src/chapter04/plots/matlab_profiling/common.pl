@@ -5,7 +5,6 @@ use warnings;
 
 use Cwd 'abs_path';
 use File::Basename;
-use Math::Trig ':pi';
 use Text::CSV;
 my $csv = Text::CSV->new();
 
@@ -13,8 +12,10 @@ my $csv = Text::CSV->new();
 # Configuration
 #===============================================================================
 my $DATA_FILE = abs_path(dirname($0))."/../../../../data/matlab_profile.csv";
+my $THIS_DIR = "chapter04/plots/matlab_profiling";
 
 use constant OTHER_FUNCTION => "__other__";
+use constant OTHER_NAME     => "Other";
 use constant THRESHOLD      => "0.01";
 use constant PROFILE        => "matlab_unsorted_inline";
 
@@ -30,16 +31,17 @@ use constant COL_SELFTIME     => 8;
 use constant COL_SELFTIMEREL  => 9;
 #-------------------------------------------------------------------------------
 
-# Make sure an output file was specified
-scalar(@ARGV) >= 1 || die("No output file specified!\n");
-my $output_file = $ARGV[0];
-
+# Clean a function name so as to properly escape special characters for LaTeX
 sub clean($) {
     my $cleaned = $_[0];
     $cleaned =~ s/_/\\_/g;
     $cleaned =~ s/\.\.\./\\ldots{}/g;
     return $cleaned;
 }
+
+# Make sure an output file was specified
+scalar(@ARGV) >= 1 || die("No output file specified!\n");
+my $output_file = $ARGV[0];
 
 # Parse the data
 my %data = ();
@@ -67,7 +69,8 @@ for (<FILE>) {
     my $totaltime_rel = $columns[COL_TOTALTIMEREL];
     my $selftime_rel  = $columns[COL_SELFTIMEREL];
     
-    if ($totaltime_rel < THRESHOLD || $selftime_rel < THRESHOLD) {
+    # If this function is fairly small, bundle it with other small functions
+    if ($totaltime_rel < THRESHOLD) {
         $function = OTHER_FUNCTION;
     }
     
@@ -87,31 +90,42 @@ for (<FILE>) {
 }
 close(FILE);
 
+# Write to output file
 open(TEX, ">$output_file") or die("Cannot open file: $output_file");
 
-for my $dataset (keys %data) {
+if (basename($0) =~ m/all_datasets.tex.pl/) {
+    for my $dataset (keys %data) {
+        print TEX "\\input{$THIS_DIR/$dataset}\n"
+    }
+} else { # we assume that the output file relates to a data set
+    my $the_dataset = basename($0, ".tex.pl");
+    my $the_profile = PROFILE;
+    my @output = (); # buffered output
+    
     print TEX <<END_OF_TEX;
-\\begin{tikzpicture}
-	\\centering
-	\\pie[text=legend]{
+\\begin{figure}[H]
+    \\centering
+    \\begin{tikzpicture}
+	    \\pie[text=legend]{
 END_OF_TEX
     
-    my $the_profile = PROFILE;
-    my @output = ();
-    for my $function (keys %{$data{$dataset}{$the_profile}}) {
+    for my $function (keys %{$data{$the_dataset}{$the_profile}}) {
+        if ($function =~ m/OTHER_FUNCTION/) {
+            $function = OTHER_NAME;
+        }
         my $function_clean = clean($function);
-        my $proportion = 100 * $data{$dataset}{$the_profile}{$function};
+        my $proportion = 100 * $data{$the_dataset}{$the_profile}{$function};
         push(@output, "$proportion/{$function_clean}");
     }
+    
     print TEX join(",\n", @output);
-    
     print TEX <<END_OF_TEX;
-    
-	}
-	%\\caption{}
-	\\label{fig:matlabProfiling:$dataset}
-\\end{tikzpicture}
-
+        
+	    }
+    \\end{tikzpicture}
+	\\caption{}
+	\\label{fig:matlabProfiling:$the_dataset}
+\\end{figure}
 END_OF_TEX
 }
 
