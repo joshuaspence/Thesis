@@ -31,13 +31,49 @@ use constant COL_SELFTIME     => 8;
 use constant COL_SELFTIMEREL  => 9;
 #-------------------------------------------------------------------------------
 
+#===============================================================================
+# Function name mapping
+#===============================================================================
+my %function_map = (
+    '...er_Pruning_Block_MATLAB_SORTED_INLINE' => 'TopN_Outlier_Pruning_Block',
+    '..._Pruning_Block_MATLAB_UNSORTED_INLINE' => 'TopN_Outlier_Pruning_Block',
+    'TopN_Outlier_Pruning_Block_C_NO_BLOCKING' => 'TopN_Outlier_Pruning_Block',
+    'TopN_Outlier_Pruning_Block_C_SORTED'      => 'TopN_Outlier_Pruning_Block',
+    'TopN_Outlier_Pruning_Block_C_UNSORTED'    => 'TopN_Outlier_Pruning_Block',
+    'commute_distance_anomaly_profiling'       => 'commute_distance_anomaly'
+);
+
+sub format_name($) {
+    my $function = $_[0];
+    $function =~ s/.*\///;
+    $function =~ s/.*>//;
+    $function =~ s/\s*(MEX-file)//;
+    $function =~ s/\s*(Java method)//;
+    
+    my $OTHER_FUNCTION = OTHER_FUNCTION;
+    if ($function =~ m/$OTHER_FUNCTION/) {
+        $function = OTHER_NAME;
+    }
+    
+    if (exists $function_map{$function}) {
+        $function = $function_map{$function};
+    }
+    
+    return $function;
+}
+
+sub format_number($) {
+    return sprintf("%0.2f", $_[0]);
+}
+
 # Clean a function name so as to properly escape special characters for LaTeX
 sub clean($) {
-    my $cleaned = $_[0];
-    $cleaned =~ s/_/\\_/g;
-    $cleaned =~ s/\.\.\./\\ldots{}/g;
-    return $cleaned;
+    my $function = $_[0];
+    $function =~ s/_/\\_/g;
+    $function =~ s/\.\.\./\\ldots{}/g;
+    return $function;
 }
+#-------------------------------------------------------------------------------
 
 # Make sure an output file was specified
 scalar(@ARGV) >= 1 || die("No output file specified!\n");
@@ -110,12 +146,12 @@ if (basename($0) =~ m/all_datasets.tex.pl/) {
 END_OF_TEX
     
     for my $function (keys %{$data{$the_dataset}{$the_profile}}) {
-        if ($function =~ m/OTHER_FUNCTION/) {
-            $function = OTHER_NAME;
-        }
-        my $function_clean = clean($function);
         my $proportion = 100 * $data{$the_dataset}{$the_profile}{$function};
-        push(@output, "$proportion/{$function_clean}");
+        $proportion = format_number($proportion);
+        my $function = format_name($function);
+        $function = clean($function);
+        
+        push(@output, "$proportion/{$function}");
     }
     
     print TEX join(",\n", @output);
