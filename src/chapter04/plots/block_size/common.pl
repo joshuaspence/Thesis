@@ -12,7 +12,7 @@ my $csv = Text::CSV->new();
 # Configuration
 #===============================================================================
 my $NO_BLOCKING_BLOCKSIZE = 0;
-my $DATA_FILE = abs_path(dirname($0))."/../../../../data/block_size.csv";
+my $DATA_FILE = abs_path(dirname($0))."/../../../../data/profiling/block_size.csv";
 
 use constant COL_DATASET         => 0;
 use constant COL_BLOCKSIZE       => 1;
@@ -42,7 +42,7 @@ my $gnuplot_col_pruned_norm    = COL_PRUNED_NORM + 1;
 #-------------------------------------------------------------------------------
 
 # Make sure an output file was specified
-scalar(@ARGV) >= 1 || die("No output file specified!\n");
+scalar(@ARGV) >= 1 || die("No output file specified");
 my $output_file = $ARGV[0];
 
 # Parse the data

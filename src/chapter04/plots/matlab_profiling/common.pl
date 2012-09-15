@@ -11,7 +11,7 @@ my $csv = Text::CSV->new();
 #===============================================================================
 # Configuration
 #===============================================================================
-my $DATA_FILE = abs_path(dirname($0))."/../../../../data/matlab_profile.csv";
+my $DATA_FILE = abs_path(dirname($0))."/../../../../data/profiling/matlab.csv";
 my $THIS_DIR = "chapter04/plots/matlab_profiling";
 
 use constant OTHER_FUNCTION => "__other__";

@@ -57,7 +57,7 @@ foreach my $data_set (@data_sets) {
     \\centering
     \\includegraphics[width=\\textwidth]{$data_set_dir/$data_set}
     \\caption{A PCA plot for the `$data_set_cleaned' data set.}
-    \\label{fig:dataSets:$data_set_cleaned}
+    \\label{fig:dataSets:$data_set}
 \\end{figure}
 
 EOF
