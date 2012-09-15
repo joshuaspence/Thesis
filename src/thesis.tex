@@ -46,21 +46,29 @@
 % Acknowledgements
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter*{Acknowledgements}
-This project could not have been completed without the guidance of my project 
-supervisor, \supervisorName{}. He always made himself available to assist me 
-with the understanding of many new and unknown concepts. His expertise in the 
-field was a great asset and greatly contributed to my own understanding of the 
-ideas explored in this thesis. His support and guidance was invaluable, and were
-instrumental to the success of my project.
+This project could not have been completed without the guidance of my project
+supervisor, \supervisorName{}. He always made himself available to assist me
+with the understanding of many concepts, which were both new and unknown. His
+expertise in the field was a great asset and greatly contributed to my own
+understanding of the ideas explored in this thesis. His support and guidance was
+invaluable, and were instrumental to the success of my project.
 
-Much of the works completed during this project could not have been performed 
+Much of the works completed during this project could not have been performed
 without the prior research of \getPerson{Chawla} and \getPerson{Khoa}. Both were
-generous enough to lend their own support and expertise in order to gain an 
+generous enough to lend their own support and expertise in order to provide an
 understanding of the implemented random projection algorithms.
 
-Additionally, I must thank \getPerson{Frechtling} for his assistance and advice 
-throughout the project. He assisted me with Xilnix tools such as ``AutoESL'', 
-and also offered me valuable advice regarding my future professional career.
+Additionally, I must thank \getPerson{Frechtling} for his assistance and advice
+throughout the project. He assisted me with software packages including ``Xilinx
+AutoESL'' and ``Altera ModelSim'', as well as offering valuable advice regarding
+my future professional career.
+
+Last but not least, none of this would have been possible without the support
+and care of my family. My immediate family, to whom I deeply appreciate, always
+has been a continuous source of support and encouragement throughout my
+university degree. And I would like to express my gratitude to my girlfriend,
+Amelia Heinrichs, for her love, patience and support throughout the final year
+of my university studies.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Publications
@@ -79,39 +87,39 @@ This thesis is based on the following publications:
 \begin{abstract}
 The prediction of the stock market has become an issue of great interest in the
 areas of finance, mathematics and engineering; due mainly to the great potential
-financial gain. Researchers have devised various algorithms and differing 
-approaches to the problem of stock market analysis, with varying degrees of 
+financial gain. Researchers have devised various algorithms and differing
+approaches to the problem of stock market analysis, with varying degrees of
 success.
 
-A major outstanding issue for stock market analysis is the effective and 
-efficient detection of local anomalies in the input data sets, which are 
-inherently highly multidimensional. Many na\"{\i}ve algorithms are highly 
+A major outstanding issue for stock market analysis is the effective and
+efficient detection of local anomalies in the input data sets, which are
+inherently highly multidimensional. Many na\"{\i}ve algorithms are highly
 inefficient and others fail to adequately detect local anomalies altogether. It
 had become a time-vs-correctness trade-off in which no acceptable compromise
 could be reached.
 
-However, researchers are starting to explore the relatively new concept of 
-applying \doubleQuote{random projections} to the highly multidimensional data 
+However, researchers are starting to explore the relatively new concept of
+applying \doubleQuote{random projections} to the highly multidimensional data
 sets. Research has suggested that by applying these random projections, they are
 able to significantly reduce the dimensionality (and consequently the
-computational complexity) of the data sets, whilst sufficiently retaining the 
+computational complexity) of the data sets, whilst sufficiently retaining the
 inherent properties of that data set --- at least so much so as anomaly
 detection is concerned.
 
-Anomaly detection is important because it allows otherwise-accurate machine 
+Anomaly detection is important because it allows otherwise-accurate machine
 learning algorithms such as neural networks to more accurately model and predict
-the stock exchange data by ignoring anomalous data, which likely doesn't effect 
+the stock exchange data by ignoring anomalous data, which likely doesn't effect
 the state of the model to any significant degree.
 
-\getPerson{Chawla} from the \universityName{} has in recent years conducted and 
-supervised new and exciting research oriented around random projections. In 
-particular, \getPerson{Khoa}, under the supervision of \getPerson{Chawla} 
-evaluated the use of traditional distance metrics, such as Euclidean distance 
-and Mahalanobis distance, in the application of local anomaly detection. 
-\getPerson{Khoa} proposed the use of the \singleQuote{commute time} metric, 
+\getPerson{Chawla} from the \universityName{} has in recent years conducted and
+supervised new and exciting research oriented around random projections. In
+particular, \getPerson{Khoa}, under the supervision of \getPerson{Chawla}
+evaluated the use of traditional distance metrics, such as Euclidean distance
+and Mahalanobis distance, in the application of local anomaly detection.
+\getPerson{Khoa} proposed the use of the \singleQuote{commute time} metric,
 derived from random walks on graphs, in anomaly detection.
 
-The source code that was used throughout this project can be freely downloaded 
+The source code that was used throughout this project can be freely downloaded
 from \gitRepoHTTP{} (over HTTP) or \gitRepoSSH{} (over SSH).
 \end{abstract}
 
