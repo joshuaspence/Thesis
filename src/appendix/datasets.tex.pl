@@ -39,7 +39,7 @@ my @data_sets = (
 # Make sure an output file was specified
 scalar(@ARGV) >= 1 || die('No output file specified');
 my $output_file = $ARGV[0];
-open(OUTPUT, "> $output_file") || die("Cannot open file: $output_file");
+open(OUTPUT, ">$output_file") || die("Cannot open file: $output_file");
 
 my $counter = 1;
 

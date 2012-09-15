@@ -1,0 +1,38 @@
+<schedule start="3" end="11" divisions="4" options="vgrid,hgrid">
+	<task id="task1" name="Background reading" start="2012-03-05" end="2012-04-20"/>
+	<task id="task2" name="Literature review" start="2012-03-05" end="2012-09-07"/>
+	<task id="task3" name="Performance benchmarking" start="2012-04-23" end="2012-04-27">
+	    <dependency id="task1"/>
+	</task>
+	<task id="task4" name="Algorithm analysis" start="2012-04-30" end="2012-05-04">
+	    <dependency id="task3"/>
+	</task>
+	<task id="task5" name="MATLAB-to-C transformation" start="2012-05-07" end="2012-05-18">
+	    <dependency id="task4"/>
+	</task>
+	<task id="task6" name="Code improvements" start="2012-05-21" end="2012-06-22">
+	    <dependency id="task5"/>
+	</task>
+	<task id="task7" name="Block size analysis" start="2012-06-25" end="2012-08-24"/>
+	<task id="task8" name="Design of FPGA hardware" start="2012-06-25" end="2012-08-24">
+	    <dependency id="task6"/>
+	</task>
+	<task id="task9" name="Implementation of FPGA hardware" start="2012-08-20" end="2012-09-14"/>
+	<task id="task10" name="Testing and debugging" start="2012-09-10" end="2012-09-21"/>
+	<task id="task11" name="Performance benchmarking" start="2012-09-17" end="2012-09-28"/>
+	<task id="task12" name="Review" start="2012-08-24" end="2012-10-19"/>
+	
+	<milestone id="milestone1" name="Topic Proposal Due" date="2012-04-20"/>
+	<milestone id="milestone2" name="Progress Report" date="2012-06-01">
+		<dependency id="milestone1"/>
+	</milestone>
+	<milestone id="milestone3" name="Draft Treatise Due" date="2012-10-12">
+		<dependency id="milestone2"/>
+	</milestone>
+	<milestone id="milestone4" name="Final Treatise Due" date="2012-10-24">
+		<dependency id="milestone3"/>
+	</milestone>
+	<milestone id="milestone5" name="Project Presentations" date="2012-11-09">
+		<dependency id="milestone4"/>
+	</milestone>
+</schedule>

@@ -30,7 +30,7 @@ if (basename($0) =~ m/code-c.tex.pl/) {
 # Make sure an output file was specified
 scalar(@ARGV) >= 1 || die('No output file specified');
 my $output_file = $ARGV[0];
-open(OUTPUT, "> $output_file") || die("Cannot open file: $output_file");
+open(OUTPUT, ">$output_file") || die("Cannot open file: $output_file");
 
 foreach my $source_file (@source_files) {
     my $source_file = "$source_dir/$source_file";
@@ -47,7 +47,7 @@ foreach my $source_file (@source_files) {
     print OUTPUT "\\begin{lstlisting}\n";
     
     # Concatenate file contents
-    open(FILE, "< $source_file");
+    open(FILE, "<$source_file");
     {
         local $/;
         undef $/;
