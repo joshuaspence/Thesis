@@ -8,6 +8,10 @@ use File::Basename;
 use Text::CSV;
 my $csv = Text::CSV->new();
 
+use FindBin;
+use lib $FindBin::Bin . "/../../../../scripts";
+require "util.pl";
+
 #===============================================================================
 # Configuration
 #===============================================================================
@@ -62,16 +66,39 @@ sub format_name($) {
     return $function;
 }
 
-sub format_number($) {
-    return sprintf("%0.2f", $_[0]);
+my @colours = (
+    'blue!60',
+    'cyan!60',
+    'yellow!60',
+    'orange!60',
+    'red!60',
+    'blue!60!cyan!60',
+    'cyan!60!yellow!60',
+    'red!60!cyan!60',
+    'red!60!blue!60',
+    'orange!60!cyan!60',
+    'green!60',
+    'magenta!60',
+    'black!60',
+    'gray!60',
+    'brown!60',
+    'lime!60',
+    'olive!60',
+    'pink!60',
+    'purple!60',
+    'teal!60',
+    'violet!60'
+);
+sub get_colour() {
+    if (scalar(@colours) <= 0) {
+        #die('No more available colours');
+        return 'white!60';
+    }
+    return shift(@colours);
 }
 
-# Clean a function name so as to properly escape special characters for LaTeX
-sub clean($) {
-    my $function = $_[0];
-    $function =~ s/_/\\_/g;
-    $function =~ s/\.\.\./\\ldots{}/g;
-    return $function;
+sub format_number($) {
+    return sprintf("%0.2f", $_[0]);
 }
 #-------------------------------------------------------------------------------
 
@@ -81,6 +108,7 @@ my $output_file = $ARGV[0];
 
 # Parse the data
 my %data = ();
+my %function_colours = ();
 open(FILE, "< $DATA_FILE") || die("Cannot open file: $DATA_FILE");
 my $in_header = 1;
 for (<FILE>) {
@@ -120,6 +148,9 @@ for (<FILE>) {
         if (!exists $data{$dataset}{$profile}{$function}) {
             $data{$dataset}{$profile}{$function} = 0;
         }
+        if (!exists $function_colours{$function}) {
+            $function_colours{$function} = get_colour();
+        }
         
         $data{$dataset}{$profile}{$function} += $selftime_rel;
     }
@@ -135,22 +166,30 @@ if (basename($0) =~ m/all_datasets.tex.pl/) {
     }
 } else { # we assume that the output file relates to a data set
     my $the_dataset = basename($0, ".tex.pl");
-    my $the_dataset_clean = clean($the_dataset);
+    my $the_dataset_clean = latex_escape($the_dataset);
     my $the_profile = PROFILE;
     my @output = (); # buffered output
     
+    # Colours
+    my @the_colours = ();
+    for my $function (keys %{$data{$the_dataset}{$the_profile}}) {
+        push(@the_colours, $function_colours{$function});
+    }
+    
+    my $colour_string = join(',', @the_colours);
     print TEX <<END_OF_TEX;
 \\begin{figure}[H]
     \\centering
     \\begin{tikzpicture}
-	    \\pie[text=legend]{
+	    \\pie[text=legend, color={$colour_string}]{
 END_OF_TEX
     
+    # Data
     for my $function (keys %{$data{$the_dataset}{$the_profile}}) {
         my $proportion = 100 * $data{$the_dataset}{$the_profile}{$function};
         $proportion = format_number($proportion);
         my $function = format_name($function);
-        $function = clean($function);
+        $function = latex_escape($function);
         
         push(@output, "$proportion/{$function}");
     }

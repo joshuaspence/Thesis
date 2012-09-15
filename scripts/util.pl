@@ -52,6 +52,7 @@ sub days_in_month($) {
 sub latex_escape($) {
     my $string = $_[0];
     $string =~ s/_/\\_/g;
+    $string =~ s/\.\.\./\\ldots{}/g;
     return $string;
 }
 
