@@ -3,6 +3,10 @@
 use strict;
 use warnings;
 
+use FindBin;
+use lib $FindBin::Bin;
+require "../../scripts/util.pl";
+
 #===============================================================================
 # Configuration
 #===============================================================================
@@ -31,13 +35,6 @@ my @data_sets = (
     'connect4'
 );
 #-------------------------------------------------------------------------------
-
-# Escapes special characters for LaTeX
-sub latex_escape($) {
-    my $string = $_[0];
-    $string =~ s/_/\\_/g;
-    return $string;
-}
 
 # Make sure an output file was specified
 scalar(@ARGV) >= 1 || die('No output file specified');
