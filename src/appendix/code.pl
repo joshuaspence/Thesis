@@ -3,7 +3,6 @@
 use strict;
 use warnings;
 
-use Cwd 'abs_path';
 use File::Basename;
 
 #===============================================================================
