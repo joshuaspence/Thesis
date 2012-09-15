@@ -4,8 +4,8 @@ use strict;
 use warnings;
 
 use FindBin;
-use lib $FindBin::Bin;
-require "../../scripts/util.pl";
+use lib $FindBin::Bin . "/../../scripts";
+require "util.pl";
 
 #===============================================================================
 # Configuration

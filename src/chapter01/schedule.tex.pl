@@ -9,37 +9,15 @@ use Date::Parse;
 use File::Basename;
 use XML::Simple;
 
-# Return the number of days in a given month.
-# 0=January, 1=February, ..., 10=November, 11=December
-sub days_in_month($) {
-    $_[0] = $_[0] % 12;
-    
-    if ($_[0] == 0) {
-        return 31;
-    } elsif ($_[0] == 1) {
-        return 29;
-    } elsif ($_[0] == 2) {
-        return 31;
-    } elsif ($_[0] == 3) {
-        return 30;
-    } elsif ($_[0] == 4) {
-        return 31;
-    } elsif ($_[0] == 5) {
-        return 30;
-    } elsif ($_[0] == 6) {
-        return 31;
-    } elsif ($_[0] == 7) {
-        return 31;
-    } elsif ($_[0] == 8) {
-        return 30;
-    } elsif ($_[0] == 9) {
-        return 31;
-    } elsif ($_[0] == 10) {
-        return 30;
-    } elsif ($_[0] == 11) {
-        return 31;
-    }
-}
+use FindBin;
+use lib $FindBin::Bin . "/../../scripts";
+require "util.pl";
+
+#===============================================================================
+# Configuration
+#===============================================================================
+my $schedule_file = dirname($0) . "/../../data/schedule.xml";
+#-------------------------------------------------------------------------------
 
 my $start_month;
 my $end_month;
@@ -56,36 +34,22 @@ sub date_position($) {
     return $width;
 }
 
-sub to_tabs($) {
-    my $str = "";
-    for (my $i = 0; $i < 4 * $_[0]; $i++) {
-        $str = "$str ";
-    }
-    return $str;
-}
-
-################################################################################
-
 # The argument should be the base directory for the profiling data
-scalar(@ARGV) >= 1 || die("No output file specified!\n");
+scalar(@ARGV) >= 1 || die('No output file specified');
 my $output_file = $ARGV[0];
-open(FILE, ">$output_file") || die("Failed to open file: $output_file");
+open(OUTPUT, ">$output_file") || die("Failed to open file: $output_file");
 
-my $xml = new XML::Simple (KeyAttr=>[]);
-my $data = $xml->XMLin(dirname($0)."/schedule.xml");
-my @tasks = $data->{tasks};
+my $xml        = new XML::Simple (KeyAttr=>[]);
+my $data       = $xml->XMLin($schedule_file);
+my @tasks      = $data->{tasks};
 my @milestones = $data->{milestones};
 
-
-################################################################################
 # HEADER
-################################################################################
-my $tabs = 0;
 $start_month = $data->{start} - 1;
-$end_month = $data->{end} - 1;
-$divisions = $data->{divisions};
-my $cols = ($end_month - $start_month + 1) * $divisions;
-print FILE <<END;
+$end_month   = $data->{end} - 1;
+$divisions   = $data->{divisions};
+my $cols     = ($end_month - $start_month + 1) * $divisions;
+print OUTPUT <<END;
 A Gantt chart showing the anticipated schedule for the project is shown in 
 \\autoref{fig:ganttChart}. This will be updated as the project progresses.
 
@@ -100,47 +64,39 @@ A Gantt chart showing the anticipated schedule for the project is shown in
                 using "\\pgfcalendarmonthshortname{\\y}"%
                 }]{$start_month,...,$end_month}{$divisions} \\ganttnewline
 END
-$tabs = 3;
 
-################################################################################
 # TASKS
-################################################################################
 for my $task (@{$data->{task}}) {   
     my $start       = date_position($task->{start});
     my $end         = date_position($task->{end});
     my $length      = $end - $start;
-    print FILE to_tabs($tabs)."\\ganttbar[name=$task->{id}]{$task->{name}}{$start}{$length} \\ganttnewline\n";
+    print OUTPUT "\\ganttbar[name=$task->{id}]{$task->{name}}{$start}{$length} \\ganttnewline\n";
     
     if (ref($task->{dependency}) eq 'ARRAY') {
         for my $dep (@{$task->{dependency}}) {
-            print FILE to_tabs($tabs)."\\ganttlink{$dep->{id}}{$task->{id}}\n";
+            print OUTPUT "\\ganttlink{$dep->{id}}{$task->{id}}\n";
         }
     } elsif (ref($task->{dependency}) eq 'HASH' && $task->{dependency}->{id}) {
-        print FILE to_tabs($tabs)."\\ganttlink{$task->{dependency}->{id}}{$task->{id}}\n";
+        print OUTPUT "\\ganttlink{$task->{dependency}->{id}}{$task->{id}}\n";
     }
 }
-print FILE "\n";
 
-################################################################################
 # MILESTONES
-################################################################################
 for my $milestone (@{$data->{milestone}}) {    
     my $position = date_position($milestone->{date});
-    print FILE to_tabs($tabs)."\\ganttmilestone[name=$milestone->{id}]{$milestone->{name}}{$position} \\ganttnewline\n";
+    print OUTPUT "\\ganttmilestone[name=$milestone->{id}]{$milestone->{name}}{$position} \\ganttnewline\n";
     
     if (ref($milestone->{dependency}) eq 'ARRAY') {
         for my $dep (@{$milestone->{dependency}}) {
-            print FILE to_tabs($tabs)."\\ganttlink{$dep->{id}}{$milestone->{id}}\n";
+            print OUTPUT "\\ganttlink{$dep->{id}}{$milestone->{id}}\n";
         }
     } elsif (ref($milestone->{dependency}) eq 'HASH' && $milestone->{dependency}->{id}) {
-        print FILE to_tabs($tabs)."\\ganttlink{$milestone->{dependency}->{id}}{$milestone->{id}}\n";
+        print OUTPUT "\\ganttlink{$milestone->{dependency}->{id}}{$milestone->{id}}\n";
     }
 }
 
-################################################################################
 # FOOTER
-################################################################################
-print FILE <<END;
+print OUTPUT <<END;
         \\end{ganttchart}
     }
     \\caption{Schedule for thesis work}
@@ -148,4 +104,4 @@ print FILE <<END;
 \\end{figure}
 END
 
-close(FILE);
+close(OUTPUT);
