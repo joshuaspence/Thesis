@@ -12,7 +12,7 @@ my $csv = Text::CSV->new();
 # Configuration
 #===============================================================================
 my $NO_BLOCKING_BLOCKSIZE = 0;
-my $DATA_FILE = abs_path(dirname($0))."/../../../../data/profiling/block_size.csv";
+my $DATA_FILE = abs_path(dirname($0)).'/../../../../data/profiling/block_size.csv';
 
 use constant COL_DATASET         => 0;
 use constant COL_BLOCKSIZE       => 1;
@@ -42,13 +42,13 @@ my $gnuplot_col_pruned_norm    = COL_PRUNED_NORM + 1;
 #-------------------------------------------------------------------------------
 
 # Make sure an output file was specified
-scalar(@ARGV) >= 1 || die("No output file specified");
+scalar(@ARGV) >= 1 || die('No output file specified');
 my $output_file = $ARGV[0];
 
 # Parse the data
 my %data = ();
 my @block_sizes = ();
-open(FILE, "< $DATA_FILE") || die("Cannot open file: $DATA_FILE");
+open(FILE, "<$DATA_FILE") || die("Cannot open file: $DATA_FILE");
 my $in_header = 1;
 for (<FILE>) {
     # Skip the header
@@ -91,7 +91,7 @@ for (<FILE>) {
 close(FILE);
 
 # Create the graphs
-open(GNUPLOT, "|gnuplot");
+open(GNUPLOT, '|gnuplot');
 print GNUPLOT <<END_OF_GNUPLOT;
 reset
 set terminal tikz solid color size 10cm, 20.88cm
@@ -110,7 +110,7 @@ END_OF_GNUPLOT
 
 my $loop_over;
 if (basename($0) =~ m/distance_calls.tex.pl/) {
-    $loop_over = "dataset";
+    $loop_over = 'dataset';
     print GNUPLOT <<END_OF_GNUPLOT;
 ################################################################################
 # DISTANCE CALLS
@@ -121,7 +121,7 @@ set format x "\$10^{%L}\$"
 set ylabel "Calls to the distance function (normalised)"
 END_OF_GNUPLOT
 } elsif (basename($0) =~ m/function_execution_time.tex.pl/) {
-    $loop_over = "dataset";
+    $loop_over = 'dataset';
     print GNUPLOT <<END_OF_GNUPLOT;
 ################################################################################
 # FUNCTION EXECUTION TIME
@@ -132,7 +132,7 @@ set format x "\$10^{%L}\$"
 set ylabel "Function execution time (normalised)"
 END_OF_GNUPLOT
 } elsif (basename($0) =~ m/total_execution_time/) {
-    $loop_over = "dataset";
+    $loop_over = 'dataset';
     print GNUPLOT <<END_OF_GNUPLOT;
 ################################################################################
 # TOTAL EXECUTION TIME
@@ -143,7 +143,7 @@ set format x "\$10^{%L}\$"
 set ylabel "Total execution time (normalised)"
 END_OF_GNUPLOT
 } elsif (basename($0) =~ m/vectors_pruned.tex.pl/) {
-    $loop_over = "dataset";
+    $loop_over = 'dataset';
     print GNUPLOT <<END_OF_GNUPLOT;
 ################################################################################
 # NUMBER OF VECTORS PRUNED
@@ -165,7 +165,7 @@ set format x "\$10^{%L}\$"
 set ylabel "Execution time"
 END_OF_GNUPLOT
 } elsif (basename($0) =~ m/total_run_time_complexity.tex.pl/) {
-    $loop_over = "blocksize";
+    $loop_over = 'blocksize';
     print GNUPLOT <<END_OF_GNUPLOT;
 ################################################################################
 # TOTAL RUN TIME COMPLEXITY
@@ -178,7 +178,7 @@ END_OF_GNUPLOT
 } else {
     close(GNUPLOT);
     unlink($output_file);
-    die("No action to take");
+    die('No action to take');
 }
 
 print GNUPLOT <<END_OF_GNUPLOT;
@@ -208,7 +208,7 @@ if ($loop_over =~ m/dataset/) {
         } else {
             close(GNUPLOT);
             unlink($output_file);
-            die("No action to take");
+            die('No action to take');
         }
         print GNUPLOT <<END_OF_GNUPLOT;
     '$DATA_FILE' using (\$$gnuplot_col_blocksize != 0 ? \$$gnuplot_col_blocksize : 1/0):(stringcolumn($gnuplot_col_dataset) eq '$dataset' ? \$$gnuplot_col_functime : 1/0) smooth unique title '$dataset_clean' with linespoints lt 1 lc $colour_counter, \\
@@ -230,7 +230,7 @@ END_OF_GNUPLOT
         } else {
             close(GNUPLOT);
             unlink($output_file);
-            die("No action to take");
+            die('No action to take');
         }
         
         print GNUPLOT <<END_OF_GNUPLOT;
@@ -242,7 +242,7 @@ END_OF_GNUPLOT
 } else {
     close(GNUPLOT);
     unlink($output_file);
-    die("No action to take");
+    die('No action to take');
 }
 
 print GNUPLOT <<END_OF_GNUPLOT;

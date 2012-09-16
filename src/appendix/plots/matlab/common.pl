@@ -9,19 +9,19 @@ use Text::CSV;
 my $csv = Text::CSV->new();
 
 use FindBin;
-use lib $FindBin::Bin . "/../../../../scripts";
+use lib $FindBin::Bin . '/../../../../scripts';
 require "util.pl";
 
 #===============================================================================
 # Configuration
 #===============================================================================
-my $DATA_FILE = abs_path(dirname($0))."/../../../../data/profiling/matlab.csv";
-my $THIS_DIR = "chapter04/plots/matlab_profiling";
+my $DATA_FILE = abs_path(dirname($0)).'/../../../../data/profiling/matlab.csv';
+my $THIS_DIR = 'appendix/plots/matlab';
 
-use constant OTHER_FUNCTION => "__other__";
-use constant OTHER_NAME     => "Other";
-use constant THRESHOLD      => "0.03";
-use constant PROFILE        => "matlab_unsorted_inline";
+use constant OTHER_FUNCTION => '__other__';
+use constant OTHER_NAME     => 'Other';
+use constant THRESHOLD      => '0.03';
+use constant PROFILE        => 'matlab_unsorted_inline';
 
 use constant COL_PROFILE      => 0;
 use constant COL_DATASET      => 1;
@@ -103,7 +103,7 @@ sub format_number($) {
 #-------------------------------------------------------------------------------
 
 # Make sure an output file was specified
-scalar(@ARGV) >= 1 || die("No output file specified!\n");
+scalar(@ARGV) >= 1 || die('No output file specified!');
 my $output_file = $ARGV[0];
 
 # Parse the data
@@ -138,7 +138,7 @@ for (<FILE>) {
         $function = OTHER_FUNCTION;
     }
     
-    if ($iteration eq "average") {
+    if ($iteration eq 'average') {
         if (!exists $data{$dataset}) {
             $data{$dataset} = ();
         }
