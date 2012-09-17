@@ -20,19 +20,19 @@ my $THIS_DIR = 'appendix/plots/matlab';
 
 use constant OTHER_FUNCTION => '__other__';
 use constant OTHER_NAME     => 'Other';
-use constant THRESHOLD      => '0.03';
+use constant THRESHOLD      => '0.01';
 use constant PROFILE        => 'TopN_Outlier_Pruning_Block_UNSORTED';
 
-use constant COL_PROFILE      => 0;
-use constant COL_DATASET      => 1;
-use constant COL_ITERATION    => 2;
-use constant COL_FUNCTION     => 3;
-use constant COL_CALLS        => 4;
-use constant COL_CALLSREL     => 5;
-use constant COL_TOTALTIME    => 6;
-use constant COL_TOTALTIMEREL => 7;
-use constant COL_SELFTIME     => 8;
-use constant COL_SELFTIMEREL  => 9;
+use constant COL_PROFILE       => 0;
+use constant COL_DATASET       => 1;
+use constant COL_ITERATION     => 2;
+use constant COL_FUNCTION      => 3;
+use constant COL_CALLS         => 4;
+use constant COL_CALLSREL      => 5;
+use constant COL_SELFTIME      => 6;
+use constant COL_SELFTIMEREL   => 7;
+use constant COL_PROPORTION    => 8;
+use constant COL_PROPORTIONREL => 9;
 #-------------------------------------------------------------------------------
 
 #===============================================================================
@@ -126,12 +126,12 @@ for (<FILE>) {
         die("Failed to parse line: $err");
     }
     
-    my $profile       = $columns[COL_PROFILE];
-    my $dataset       = $columns[COL_DATASET];
-    my $iteration     = $columns[COL_ITERATION];
-    my $function      = $columns[COL_FUNCTION];
-    my $totaltime_rel = $columns[COL_TOTALTIMEREL];
-    my $selftime_rel  = $columns[COL_SELFTIMEREL];
+    my $profile        = $columns[COL_PROFILE];
+    my $dataset        = $columns[COL_DATASET];
+    my $iteration      = $columns[COL_ITERATION];
+    my $function       = $columns[COL_FUNCTION];
+    my $selftime_rel   = $columns[COL_SELFTIMEREL];
+    my $proportion_rel = $columns[COL_PROPORTIONREL];
     
     # If this function is fairly small, bundle it with other small functions
     if ($selftime_rel < THRESHOLD) {
@@ -152,7 +152,7 @@ for (<FILE>) {
             $function_colours{$function} = get_colour();
         }
         
-        $data{$dataset}{$profile}{$function} += $selftime_rel;
+        $data{$dataset}{$profile}{$function} += $proportion_rel;
     }
 }
 close(FILE);
@@ -200,7 +200,7 @@ END_OF_TEX
 	    }
     \\end{tikzpicture}
 	\\caption{Comparison of function self time for $the_dataset_clean data set}
-	\\label{fig:matlabProfiling:$the_dataset}
+	\\label{fig:cProfiling:$the_dataset}
 \\end{figure}
 END_OF_TEX
 }
