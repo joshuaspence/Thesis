@@ -5,12 +5,10 @@ use warnings;
 
 use Cwd 'abs_path';
 use File::Basename;
-use Text::CSV;
-my $csv = Text::CSV->new();
 
 use FindBin;
 use lib $FindBin::Bin . '/../../../../scripts';
-require "util.pl";
+require 'util.pl';
 
 #===============================================================================
 # Configuration
@@ -22,6 +20,7 @@ use constant OTHER_FUNCTION => '__other__';
 use constant OTHER_NAME     => 'Other';
 use constant THRESHOLD      => '0.03';
 use constant PROFILE        => 'matlab_unsorted_inline';
+my $OTHER_NAME = OTHER_NAME;
 
 use constant COL_PROFILE      => 0;
 use constant COL_DATASET      => 1;
@@ -46,13 +45,13 @@ my %function_map = (
     'TopN_Outlier_Pruning_Block_C_UNSORTED'    => 'TopN_Outlier_Pruning_Block',
     'commute_distance_anomaly_profiling'       => 'commute_distance_anomaly'
 );
-
 sub format_name($) {
     my $function = $_[0];
     $function =~ s/.*\///;
     $function =~ s/.*>//;
     $function =~ s/\s*(MEX-file)//;
     $function =~ s/\s*(Java method)//;
+    $function =~ s/()//;
     
     my $OTHER_FUNCTION = OTHER_FUNCTION;
     if ($function =~ m/$OTHER_FUNCTION/) {
@@ -65,6 +64,23 @@ sub format_name($) {
     
     return $function;
 }
+
+my %default_colours = (
+    'TopN_Outlier_Pruning_Block'    => 'blue!60',
+    'pcg'                           => 'cyan!60',
+    'hggetbehavior'                 => 'yellow!60',
+    'isprop'                        => 'orange!60',
+    'localPeek'                     => 'red!60',
+    'drawGraph'                     => 'blue!60!cyan!60',
+    'knn_components_sparse'         => 'cyan!60!yellow!60',
+    'prepare'                       => 'red!60!cyan!60',
+    'kdtree_k_nearest_neighbors'    => 'red!60!blue!60',
+    '@(b)mx_d_preconditioner(sH,b)' => 'orange!60!cyan!60',
+    'iterapp'                       => 'green!60',
+    'mx_d_preconditioner'           => 'magenta!60',
+    'princomp'                      => 'purple!60',
+    $OTHER_NAME                     => 'white!60'
+);
 
 my @colours = (
     'blue!60',
@@ -81,6 +97,7 @@ my @colours = (
     'magenta!60',
     'black!60',
     'gray!60',
+    'white!60',
     'brown!60',
     'lime!60',
     'olive!60',
@@ -89,12 +106,30 @@ my @colours = (
     'teal!60',
     'violet!60'
 );
-sub get_colour() {
+sub get_colour($) {
     if (scalar(@colours) <= 0) {
-        #die('No more available colours');
-        return 'white!60';
+        die('No more available colours');
     }
-    return shift(@colours);
+    
+    my $colour;
+    if (exists $default_colours{format_name($_[0])}) {
+        my $requested_colour = $default_colours{format_name($_[0])};
+        
+        for (my $i = 0; $i < scalar(@colours); $i++) {
+            $colour = shift(@colours);
+            if ($colour ne $requested_colour) {
+                push(@colours, $colour);
+            } else {
+                $i++;
+            }
+        }
+        
+        return $requested_colour;
+    } else {
+        $colour = shift(@colours);
+        push(@colours, $colour);
+        return $colour;
+    }
 }
 
 sub format_number($) {
@@ -109,7 +144,7 @@ my $output_file = $ARGV[0];
 # Parse the data
 my %data = ();
 my %function_colours = ();
-open(FILE, "< $DATA_FILE") || die("Cannot open file: $DATA_FILE");
+open(FILE, "<$DATA_FILE") || die("Cannot open file: $DATA_FILE");
 my $in_header = 1;
 for (<FILE>) {
     # Skip the header
@@ -118,14 +153,7 @@ for (<FILE>) {
         next;
     }
     
-    my @columns;
-    if ($csv->parse($_)) {
-        @columns = $csv->fields();
-    } else {
-        my $err = $csv->error_input;
-        die("Failed to parse line: $err");
-    }
-    
+    my @columns       = csv_get_fields($_);
     my $profile       = $columns[COL_PROFILE];
     my $dataset       = $columns[COL_DATASET];
     my $iteration     = $columns[COL_ITERATION];
@@ -149,7 +177,7 @@ for (<FILE>) {
             $data{$dataset}{$profile}{$function} = 0;
         }
         if (!exists $function_colours{$function}) {
-            $function_colours{$function} = get_colour();
+            $function_colours{$function} = get_colour($function);
         }
         
         $data{$dataset}{$profile}{$function} += $selftime_rel;

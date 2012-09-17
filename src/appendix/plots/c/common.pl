@@ -5,8 +5,6 @@ use warnings;
 
 use Cwd 'abs_path';
 use File::Basename;
-use Text::CSV;
-my $csv = Text::CSV->new();
 
 use FindBin;
 use lib $FindBin::Bin . '/../../../../scripts';
@@ -16,12 +14,13 @@ require "util.pl";
 # Configuration
 #===============================================================================
 my $DATA_FILE = abs_path(dirname($0)).'/../../../../data/profiling/c.csv';
-my $THIS_DIR = 'appendix/plots/matlab';
+my $THIS_DIR = 'appendix/plots/c';
 
 use constant OTHER_FUNCTION => '__other__';
 use constant OTHER_NAME     => 'Other';
 use constant THRESHOLD      => '0.01';
 use constant PROFILE        => 'TopN_Outlier_Pruning_Block_UNSORTED';
+my $OTHER_NAME = OTHER_NAME;
 
 use constant COL_PROFILE       => 0;
 use constant COL_DATASET       => 1;
@@ -35,36 +34,23 @@ use constant COL_PROPORTION    => 8;
 use constant COL_PROPORTIONREL => 9;
 #-------------------------------------------------------------------------------
 
-#===============================================================================
-# Function name mapping
-#===============================================================================
-my %function_map = (
-    '...er_Pruning_Block_MATLAB_SORTED_INLINE' => 'TopN_Outlier_Pruning_Block',
-    '..._Pruning_Block_MATLAB_UNSORTED_INLINE' => 'TopN_Outlier_Pruning_Block',
-    'TopN_Outlier_Pruning_Block_C_NO_BLOCKING' => 'TopN_Outlier_Pruning_Block',
-    'TopN_Outlier_Pruning_Block_C_SORTED'      => 'TopN_Outlier_Pruning_Block',
-    'TopN_Outlier_Pruning_Block_C_UNSORTED'    => 'TopN_Outlier_Pruning_Block',
-    'commute_distance_anomaly_profiling'       => 'commute_distance_anomaly'
-);
-
 sub format_name($) {
     my $function = $_[0];
-    $function =~ s/.*\///;
-    $function =~ s/.*>//;
-    $function =~ s/\s*(MEX-file)//;
-    $function =~ s/\s*(Java method)//;
     
     my $OTHER_FUNCTION = OTHER_FUNCTION;
     if ($function =~ m/$OTHER_FUNCTION/) {
         $function = OTHER_NAME;
     }
     
-    if (exists $function_map{$function}) {
-        $function = $function_map{$function};
-    }
-    
     return $function;
 }
+
+my %default_colours = (
+    'top_n_outlier_pruning_block' => 'yellow!60',
+    'distance_squared'            => 'blue!60',
+    'add_neighbour'               => 'orange!60',
+    $OTHER_NAME                   => 'white!60'
+);
 
 my @colours = (
     'blue!60',
@@ -81,6 +67,7 @@ my @colours = (
     'magenta!60',
     'black!60',
     'gray!60',
+    'white!60',
     'brown!60',
     'lime!60',
     'olive!60',
@@ -89,12 +76,30 @@ my @colours = (
     'teal!60',
     'violet!60'
 );
-sub get_colour() {
+sub get_colour($) {
     if (scalar(@colours) <= 0) {
-        #die('No more available colours');
-        return 'white!60';
+        die('No more available colours');
     }
-    return shift(@colours);
+    
+    my $colour;
+    if (exists $default_colours{format_name($_[0])}) {
+        my $requested_colour = $default_colours{format_name($_[0])};
+        
+        for (my $i = 0; $i < scalar(@colours); $i++) {
+            $colour = shift(@colours);
+            if ($colour ne $requested_colour) {
+                push(@colours, $colour);
+            } else {
+                $i++;
+            }
+        }
+        
+        return $requested_colour;
+    } else {
+        $colour = shift(@colours);
+        push(@colours, $colour);
+        return $colour;
+    }
 }
 
 sub format_number($) {
@@ -109,7 +114,7 @@ my $output_file = $ARGV[0];
 # Parse the data
 my %data = ();
 my %function_colours = ();
-open(FILE, "< $DATA_FILE") || die("Cannot open file: $DATA_FILE");
+open(FILE, "<$DATA_FILE") || die("Cannot open file: $DATA_FILE");
 my $in_header = 1;
 for (<FILE>) {
     # Skip the header
@@ -118,14 +123,7 @@ for (<FILE>) {
         next;
     }
     
-    my @columns;
-    if ($csv->parse($_)) {
-        @columns = $csv->fields();
-    } else {
-        my $err = $csv->error_input;
-        die("Failed to parse line: $err");
-    }
-    
+    my @columns        = csv_get_fields($_);
     my $profile        = $columns[COL_PROFILE];
     my $dataset        = $columns[COL_DATASET];
     my $iteration      = $columns[COL_ITERATION];
@@ -134,7 +132,7 @@ for (<FILE>) {
     my $proportion_rel = $columns[COL_PROPORTIONREL];
     
     # If this function is fairly small, bundle it with other small functions
-    if ($selftime_rel < THRESHOLD) {
+    if ($proportion_rel < THRESHOLD) {
         $function = OTHER_FUNCTION;
     }
     
@@ -149,7 +147,7 @@ for (<FILE>) {
             $data{$dataset}{$profile}{$function} = 0;
         }
         if (!exists $function_colours{$function}) {
-            $function_colours{$function} = get_colour();
+            $function_colours{$function} = get_colour($function);
         }
         
         $data{$dataset}{$profile}{$function} += $proportion_rel;
@@ -181,23 +179,20 @@ if (basename($0) =~ m/all_datasets.tex.pl/) {
 \\begin{figure}[H]
     \\centering
     \\begin{tikzpicture}
-	    \\pie[text=legend, color={$colour_string}]{
+        \\pie[text=legend, color={$colour_string}]{
 END_OF_TEX
     
     # Data
     for my $function (keys %{$data{$the_dataset}{$the_profile}}) {
-        my $proportion = 100 * $data{$the_dataset}{$the_profile}{$function};
-        $proportion = format_number($proportion);
-        my $function = format_name($function);
-        $function = latex_escape($function);
-        
+        my $proportion = format_number(100 * $data{$the_dataset}{$the_profile}{$function});
+        $function      = latex_escape(format_name($function));
         push(@output, "$proportion/{$function}");
     }
     
     print TEX join(",\n", @output);
     print TEX <<END_OF_TEX;
         
-	    }
+        }
     \\end{tikzpicture}
 	\\caption{Comparison of function self time for $the_dataset_clean data set}
 	\\label{fig:cProfiling:$the_dataset}

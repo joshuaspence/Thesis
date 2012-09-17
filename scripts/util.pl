@@ -6,6 +6,27 @@
 #
 ################################################################################
 
+use Text::CSV;
+
+my $csv = Text::CSV->new();
+
+#===============================================================================
+# Convert a CSV line into an array of fields.
+#
+# Usage:
+#     csv_get_fields($csv_line)
+#===============================================================================
+sub csv_get_fields($) {
+    my @fields;
+    if ($csv->parse($_[0])) {
+        @fields = $csv->fields();
+    } else {
+        my $err = $csv->error_input;
+        die("Failed to parse line: $err");
+    }
+    return @fields;
+}
+
 #===============================================================================
 # Returns the number of days in a given month.
 # 0=January, 1=February, ..., 10=November, 11=December

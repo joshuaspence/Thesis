@@ -5,8 +5,10 @@ use warnings;
 
 use Cwd 'abs_path';
 use File::Basename;
-use Text::CSV;
-my $csv = Text::CSV->new();
+
+use FindBin;
+use lib $FindBin::Bin . '/../../../../scripts';
+require 'util.pl';
 
 #===============================================================================
 # Configuration
@@ -42,7 +44,7 @@ my $gnuplot_col_pruned_norm    = COL_PRUNED_NORM + 1;
 #-------------------------------------------------------------------------------
 
 # Make sure an output file was specified
-scalar(@ARGV) >= 1 || die('No output file specified');
+scalar(@ARGV) >= 1 || die('No output file specified!');
 my $output_file = $ARGV[0];
 
 # Parse the data
@@ -57,36 +59,29 @@ for (<FILE>) {
         next;
     }
     
-    my @columns;
-    if ($csv->parse($_)) {
-        @columns = $csv->fields();
-        
-        my $dataset    = $columns[COL_DATASET];
-        my $block_size = $columns[COL_BLOCKSIZE];
-        my $distcalls  = $columns[COL_DISTCALLS_NORM];
-        my $functime   = $columns[COL_FUNCTIME_NORM];
-        my $totaltime  = $columns[COL_TOTALTIME_NORM];
-        my $pruned     = $columns[COL_PRUNED_NORM];
-        
-        if (!exists $data{$dataset}) {
-            $data{$dataset} = ();
-        }
-        if (!exists $data{$dataset}{$block_size}) {
-            $data{$dataset}{$block_size} = ();
-        }
-        
-        if (!($block_size ~~ @block_sizes)) {
-            push(@block_sizes, $block_size);
-        }
-        
-        $data{$dataset}{$block_size}{'distcalls'} = $distcalls;
-        $data{$dataset}{$block_size}{'functime'}  = $functime;
-        $data{$dataset}{$block_size}{'totaltime'} = $totaltime;
-        $data{$dataset}{$block_size}{'pruned'}    = $pruned;
-    } else {
-        my $err = $csv->error_input;
-        die("Failed to parse line: $err");
+    my @columns    = csv_get_fields($_);
+    my $dataset    = $columns[COL_DATASET];
+    my $block_size = $columns[COL_BLOCKSIZE];
+    my $distcalls  = $columns[COL_DISTCALLS_NORM];
+    my $functime   = $columns[COL_FUNCTIME_NORM];
+    my $totaltime  = $columns[COL_TOTALTIME_NORM];
+    my $pruned     = $columns[COL_PRUNED_NORM];
+    
+    if (!exists $data{$dataset}) {
+        $data{$dataset} = ();
     }
+    if (!exists $data{$dataset}{$block_size}) {
+        $data{$dataset}{$block_size} = ();
+    }
+    
+    if (!($block_size ~~ @block_sizes)) {
+        push(@block_sizes, $block_size);
+    }
+    
+    $data{$dataset}{$block_size}{'distcalls'} = $distcalls;
+    $data{$dataset}{$block_size}{'functime'}  = $functime;
+    $data{$dataset}{$block_size}{'totaltime'} = $totaltime;
+    $data{$dataset}{$block_size}{'pruned'}    = $pruned;
 }
 close(FILE);
 
@@ -188,8 +183,7 @@ END_OF_GNUPLOT
 if ($loop_over =~ m/dataset/) {
     my $colour_counter = 0;
     for my $dataset (sort keys %data) {
-        my $dataset_clean = $dataset;
-        $dataset_clean =~ s/_/\\_/g;
+        my $dataset_clean = latex_escape($dataset);
         
         my $the_column;
         my $no_blocking_value;
@@ -220,7 +214,7 @@ END_OF_GNUPLOT
 } elsif ($loop_over =~ m/blocksize/) {
     my $colour_counter = 0;
     for my $blocksize (@block_sizes) {
-        my $blocksize_text = "block\\_size=$blocksize";
+        my $blocksize_text = latex_escape("block_size=$blocksize");
         
         my $the_column;
         if (basename($0) =~ m/total_run_time_complexity.tex.pl/) {
