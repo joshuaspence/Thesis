@@ -36,7 +36,28 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Compliance Sheet
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\includepdf[scale=0.8]{../forms/compliance_sheet}
+\includepdf[
+        scale=0.8,
+        pagecommand={
+            \begin{tikzpicture}[
+                    remember picture,
+                    overlay,
+                    shift=(current page.center)
+                    ]
+                \tikzstyle{every node}=[font=\large]
+                \coordinate (name-pos)       at (-5.4, -1.6);
+                \coordinate (sid-pos)        at (-5.4, -3.0);
+                \coordinate (date-pos)       at (-5.4, -5.8);
+                \coordinate (uos-pos)        at (-7.4, -7.7);
+                \coordinate (assessment-pos) at (-7.4, -9.8);
+                \node[anchor=west] (name)       at (name-pos)       {\studentName*{}};
+                \node[anchor=west] (sid)        at (sid-pos)        {\studentID*{}};
+                \node[anchor=west] (date)       at (date-pos)       {\today{}};
+                \node[anchor=west] (uos)        at (uos-pos)        {\uosCode*{}};
+                \node[anchor=west] (assessment) at (assessment-pos) {\uosAssessment*{}};
+            \end{tikzpicture}
+        }
+    ]{../forms/compliance_sheet}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Statement of Achievement
