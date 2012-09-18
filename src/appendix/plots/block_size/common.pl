@@ -15,7 +15,7 @@ require 'util.pl';
 #===============================================================================
 my $NO_BLOCKING_BLOCKSIZE = 0;
 my $DATA_FILE = abs_path(dirname($0)).'/../../../../data/profiling/block_size.csv';
-
+my $dir = dirname($0);
 use constant COL_DATASET         => 0;
 use constant COL_BLOCKSIZE       => 1;
 use constant COL_DIMENSIONS      => 3;
@@ -73,7 +73,6 @@ for (<FILE>) {
     if (!exists $data{$dataset}{$block_size}) {
         $data{$dataset}{$block_size} = ();
     }
-    
     if (!($block_size ~~ @block_sizes)) {
         push(@block_sizes, $block_size);
     }
@@ -87,9 +86,10 @@ close(FILE);
 
 # Create the graphs
 open(GNUPLOT, '|gnuplot');
+#open(GNUPLOT, '|cat');
 print GNUPLOT <<END_OF_GNUPLOT;
 reset
-set terminal tikz solid color size 10cm, 20.88cm
+set terminal tikz solid color size 10cm, 10cm
 set datafile separator ','
 
 # Define axis
@@ -99,7 +99,8 @@ set border 3 back ls 11
 
 # Global options
 set autoscale
-set key below
+#set key below
+set nokey
 
 END_OF_GNUPLOT
 
@@ -205,7 +206,30 @@ if ($loop_over =~ m/dataset/) {
             die('No action to take');
         }
         print GNUPLOT <<END_OF_GNUPLOT;
-    '$DATA_FILE' using (\$$gnuplot_col_blocksize != 0 ? \$$gnuplot_col_blocksize : 1/0):(stringcolumn($gnuplot_col_dataset) eq '$dataset' ? \$$gnuplot_col_functime : 1/0) smooth unique title '$dataset_clean' with linespoints lt 1 lc $colour_counter, \\
+    "<perl -e \\\" \\
+use strict; \\
+use warnings; \\
+\\
+use lib '$dir/../../../../scripts'; \\
+require 'util.pl'; \\
+\\
+open(FILE, '<' . '$DATA_FILE'); \\
+my \\\\\$in_header = 1; \\
+for my \\\\\$line (<FILE>) { \\
+    if (\\\\\$in_header) { \\
+        \\\\\$in_header = 0; \\
+        next; \\
+    } \\
+    \\
+    my \@columns = csv_get_fields(\\\\\$line); \\
+    if (\\\\\$columns[$gnuplot_col_blocksize -1] != 0 && \\\\\$columns[$gnuplot_col_dataset -1] eq '$dataset') { \\
+        print \\\\\$line; \\
+    } \\
+} \\
+close(FILE);\\\" \\
+" \\
+        using $gnuplot_col_blocksize:$the_column smooth unique \\
+        title '$dataset_clean' with linespoints lt 1 lc $colour_counter, \\
     $no_blocking_value title '$dataset_clean*' with line lt 0 lc $colour_counter, \\
 END_OF_GNUPLOT
         
@@ -226,9 +250,31 @@ END_OF_GNUPLOT
             unlink($output_file);
             die('No action to take');
         }
-        
         print GNUPLOT <<END_OF_GNUPLOT;
-    '$DATA_FILE' using $gnuplot_col_vectors:(\$$gnuplot_col_blocksize == $blocksize ? \$$the_column : 1/0) smooth unique title '$blocksize_text' with linespoints lt 1 lc $colour_counter, \\
+    "<perl -e \\\" \\
+use strict; \\
+use warnings; \\
+\\
+use lib '$dir/../../../../scripts'; \\
+require 'util.pl'; \\
+\\
+open(FILE, '<' . '$DATA_FILE'); \\
+my \\\\\$in_header = 1; \\
+for my \\\\\$line (<FILE>) { \\
+    if (\\\\\$in_header) { \\
+        \\\\\$in_header = 0; \\
+        next; \\
+    } \\
+    \\
+    my \@columns = csv_get_fields(\\\\\$line); \\
+    if (\\\\\$columns[$gnuplot_col_blocksize -1] == $blocksize) { \\
+        print \\\\\$line; \\
+    } \\
+} \\
+close(FILE);\\\" \\
+" \\
+        using $gnuplot_col_vectors:$the_column smooth unique \\
+        title '$blocksize_text' with linespoints lt 1 lc $colour_counter, \\
 END_OF_GNUPLOT
         
         $colour_counter++;

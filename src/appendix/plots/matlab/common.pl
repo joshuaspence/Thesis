@@ -209,7 +209,7 @@ if (basename($0) =~ m/all_datasets.tex.pl/) {
 \\begin{figure}[H]
     \\centering
     \\begin{tikzpicture}
-	    \\pie[text=nolegend, radius=2, color={$colour_string}]{
+	    \\pie[text=legend, radius=2, color={$colour_string}]{
 END_OF_TEX
     
     # Data
