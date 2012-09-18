@@ -7,20 +7,19 @@ use Cwd 'abs_path';
 use File::Basename;
 
 use FindBin;
-use lib $FindBin::Bin . '/../../../../scripts';
+use lib "$FindBin::Bin/../../../../scripts";
 require 'util.pl';
 
 #===============================================================================
 # Configuration
 #===============================================================================
-my $DATA_FILE = abs_path(dirname($0)).'/../../../../data/profiling/matlab.csv';
-my $THIS_DIR = 'appendix/plots/matlab';
+use constant DATA_FILE         => './../../../../data/profiling/matlab.csv';
+use constant THIS_DIR         => 'appendix/plots/matlab';
 
-use constant OTHER_FUNCTION => '__other__';
-use constant OTHER_NAME     => 'Other';
-use constant THRESHOLD      => '0.03';
-use constant PROFILE        => 'matlab_unsorted_inline';
-my $OTHER_NAME = OTHER_NAME;
+use constant OTHER_FUNCTION   => '__other__';
+use constant OTHER_NAME       => 'Other';
+use constant THRESHOLD        => '0.03';
+use constant PROFILE          => 'matlab_unsorted_inline';
 
 use constant COL_PROFILE      => 0;
 use constant COL_DATASET      => 1;
@@ -79,7 +78,7 @@ my %default_colours = (
     'iterapp'                       => 'green!60',
     'mx_d_preconditioner'           => 'magenta!60',
     'princomp'                      => 'purple!60',
-    $OTHER_NAME                     => 'white!60'
+    ${\OTHER_NAME}                  => 'white!60'
 );
 
 my @colours = (
@@ -144,7 +143,7 @@ my $output_file = $ARGV[0];
 # Parse the data
 my %data = ();
 my %function_colours = ();
-open(FILE, "<$DATA_FILE") || die("Cannot open file: $DATA_FILE");
+open(FILE, "<${\(dirname $0)}/${\DATA_FILE}") || die("Cannot open file: ${\(dirname $0)}/${\DATA_FILE}");
 my $in_header = 1;
 for (<FILE>) {
     # Skip the header
@@ -190,7 +189,7 @@ open(TEX, ">$output_file") or die("Cannot open file: $output_file");
 
 if (basename($0) =~ m/all_datasets.tex.pl/) {
     for my $dataset (keys %data) {
-        print TEX "\\input{$THIS_DIR/$dataset}\n"
+        print TEX "\\input{${\THIS_DIR}/$dataset}\n"
     }
 } else { # we assume that the output file relates to a data set
     my $the_dataset = basename($0, ".tex.pl");
@@ -218,7 +217,6 @@ END_OF_TEX
         $proportion = format_number($proportion);
         my $function = format_name($function);
         $function = latex_escape($function);
-        
         push(@output, "$proportion/{$function}");
     }
     

@@ -7,20 +7,19 @@ use Cwd 'abs_path';
 use File::Basename;
 
 use FindBin;
-use lib $FindBin::Bin . '/../../../../scripts';
-require "util.pl";
+use lib "$FindBin::Bin/../../../../scripts";
+require 'util.pl';
 
 #===============================================================================
 # Configuration
 #===============================================================================
-my $DATA_FILE = abs_path(dirname($0)).'/../../../../data/profiling/c.csv';
-my $THIS_DIR = 'appendix/plots/c';
+use constant DATAFILE => './../../../../data/profiling/c.csv';
+use constant THIS_DIR => 'appendix/plots/c';
 
 use constant OTHER_FUNCTION => '__other__';
 use constant OTHER_NAME     => 'Other';
 use constant THRESHOLD      => '0.01';
 use constant PROFILE        => 'TopN_Outlier_Pruning_Block_UNSORTED';
-my $OTHER_NAME = OTHER_NAME;
 
 use constant COL_PROFILE       => 0;
 use constant COL_DATASET       => 1;
@@ -37,8 +36,7 @@ use constant COL_PROPORTIONREL => 9;
 sub format_name($) {
     my $function = $_[0];
     
-    my $OTHER_FUNCTION = OTHER_FUNCTION;
-    if ($function =~ m/$OTHER_FUNCTION/) {
+    if ($function =~ m/${\OTHER_FUNCTION}/) {
         $function = OTHER_NAME;
     }
     
@@ -49,7 +47,7 @@ my %default_colours = (
     'top_n_outlier_pruning_block' => 'yellow!60',
     'distance_squared'            => 'blue!60',
     'add_neighbour'               => 'orange!60',
-    $OTHER_NAME                   => 'white!60'
+    ${\OTHER_NAME}                => 'white!60'
 );
 
 my @colours = (
@@ -114,7 +112,7 @@ my $output_file = $ARGV[0];
 # Parse the data
 my %data = ();
 my %function_colours = ();
-open(FILE, "<$DATA_FILE") || die("Cannot open file: $DATA_FILE");
+open(FILE, "<${\(dirname($0))}/${\DATAFILE}") || die("Cannot open file: ${\(dirname($0))}/${\DATAFILE}");
 my $in_header = 1;
 for (<FILE>) {
     # Skip the header
@@ -160,7 +158,7 @@ open(TEX, ">$output_file") or die("Cannot open file: $output_file");
 
 if (basename($0) =~ m/all_datasets.tex.pl/) {
     for my $dataset (keys %data) {
-        print TEX "\\input{$THIS_DIR/$dataset}\n"
+        print TEX "\\input{${\THIS_DIR}/$dataset}\n"
     }
 } else { # we assume that the output file relates to a data set
     my $the_dataset = basename($0, ".tex.pl");

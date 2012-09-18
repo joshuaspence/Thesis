@@ -7,15 +7,15 @@ use Cwd 'abs_path';
 use File::Basename;
 
 use FindBin;
-use lib $FindBin::Bin . '/../../../../scripts';
+use lib "$FindBin::Bin/../../../../scripts";
 require 'util.pl';
 
 #===============================================================================
 # Configuration
 #===============================================================================
-my $NO_BLOCKING_BLOCKSIZE = 0;
-my $DATA_FILE = abs_path(dirname($0)).'/../../../../data/profiling/block_size.csv';
-my $dir = dirname($0);
+use constant NO_BLOCKING_BLOCKSIZE => 0;
+use constant DATA_FILE => './../../../../data/profiling/block_size.csv';
+
 use constant COL_DATASET         => 0;
 use constant COL_BLOCKSIZE       => 1;
 use constant COL_DIMENSIONS      => 3;
@@ -28,19 +28,6 @@ use constant COL_DISTCALLS       => 11;
 use constant COL_DISTCALLS_NORM  => 12;
 use constant COL_PRUNED          => 13;
 use constant COL_PRUNED_NORM     => 14;
-
-my $gnuplot_col_dataset        = COL_DATASET + 1;
-my $gnuplot_col_blocksize      = COL_BLOCKSIZE + 1;
-my $gnuplot_col_dimensions     = COL_DIMENSIONS + 1;
-my $gnuplot_col_vectors        = COL_VECTORS + 1;
-my $gnuplot_col_totaltime      = COL_TOTALTIME + 1;
-my $gnuplot_col_totaltime_norm = COL_TOTALTIME_NORM + 1;
-my $gnuplot_col_functime       = COL_FUNCTIME + 1;
-my $gnuplot_col_functime_norm  = COL_FUNCTIME_NORM + 1;
-my $gnuplot_col_distcalls      = COL_DISTCALLS_NORM + 1;
-my $gnuplot_col_distcalls_norm = COL_DISTCALLS_NORM + 1;
-my $gnuplot_col_pruned         = COL_PRUNED + 1;
-my $gnuplot_col_pruned_norm    = COL_PRUNED_NORM + 1;
 #-------------------------------------------------------------------------------
 
 # Make sure an output file was specified
@@ -50,7 +37,7 @@ my $output_file = $ARGV[0];
 # Parse the data
 my %data = ();
 my @block_sizes = ();
-open(FILE, "<$DATA_FILE") || die("Cannot open file: $DATA_FILE");
+open(FILE, "<${\(dirname($0))}/${\DATA_FILE}") || die("Cannot open file: ${\(dirname($0))}/${\DATA_FILE}");
 my $in_header = 1;
 for (<FILE>) {
     # Skip the header
@@ -86,7 +73,6 @@ close(FILE);
 
 # Create the graphs
 open(GNUPLOT, '|gnuplot');
-#open(GNUPLOT, '|cat');
 print GNUPLOT <<END_OF_GNUPLOT;
 reset
 set terminal tikz solid color size 10cm, 10cm
@@ -104,6 +90,7 @@ set nokey
 
 END_OF_GNUPLOT
 
+# HEADER
 my $loop_over;
 if (basename($0) =~ m/distance_calls.tex.pl/) {
     $loop_over = 'dataset';
@@ -176,11 +163,13 @@ END_OF_GNUPLOT
     unlink($output_file);
     die('No action to take');
 }
-
 print GNUPLOT <<END_OF_GNUPLOT;
 set output "$output_file"
 plot \\
 END_OF_GNUPLOT
+
+# DATA
+my @all_data = ();
 if ($loop_over =~ m/dataset/) {
     my $colour_counter = 0;
     for my $dataset (sort keys %data) {
@@ -189,31 +178,31 @@ if ($loop_over =~ m/dataset/) {
         my $the_column;
         my $no_blocking_value;
         if (basename($0) =~ m/distance_calls.tex.pl/) {
-            $the_column = $gnuplot_col_distcalls_norm;
-            $no_blocking_value = $data{$dataset}{$NO_BLOCKING_BLOCKSIZE}{'distcalls'};
+            $the_column = ${\(COL_DISTCALLS_NORM + 1)};
+            $no_blocking_value = $data{$dataset}{${\NO_BLOCKING_BLOCKSIZE}}{'distcalls'};
         } elsif (basename($0) =~ m/function_execution_time.tex.pl/) {
-            $the_column = $gnuplot_col_functime_norm;
-            $no_blocking_value = $data{$dataset}{$NO_BLOCKING_BLOCKSIZE}{'functime'};
+            $the_column = ${\(COL_FUNCTIME_NORM + 1)};
+            $no_blocking_value = $data{$dataset}{${\NO_BLOCKING_BLOCKSIZE}}{'functime'};
         } elsif (basename($0) =~ m/total_execution_time.tex.pl/) {
-            $the_column = $gnuplot_col_totaltime_norm;
-            $no_blocking_value = $data{$dataset}{$NO_BLOCKING_BLOCKSIZE}{'totaltime'};
+            $the_column = ${\(COL_TOTALTIME_NORM + 1)};
+            $no_blocking_value = $data{$dataset}{${\NO_BLOCKING_BLOCKSIZE}}{'totaltime'};
         } elsif (basename($0) =~ m/vectors_pruned.tex.pl/) {
-            $the_column = $gnuplot_col_pruned_norm;
-            $no_blocking_value = $data{$dataset}{$NO_BLOCKING_BLOCKSIZE}{'pruned'};
+            $the_column = ${\(COL_PRUNED_NORM + 1)};
+            $no_blocking_value = $data{$dataset}{${\NO_BLOCKING_BLOCKSIZE}}{'pruned'};
         } else {
             close(GNUPLOT);
             unlink($output_file);
             die('No action to take');
         }
-        print GNUPLOT <<END_OF_GNUPLOT;
-    "<perl -e \\\" \\
+        my $data =<<END_OF_GNUPLOT;
+    "<perl -e \\" \\
 use strict; \\
 use warnings; \\
 \\
-use lib '$dir/../../../../scripts'; \\
+use lib '${\(dirname($0))}/../../../../scripts'; \\
 require 'util.pl'; \\
 \\
-open(FILE, '<' . '$DATA_FILE'); \\
+open(FILE, '<${\(dirname($0))}/${\DATA_FILE}'); \\
 my \\\\\$in_header = 1; \\
 for my \\\\\$line (<FILE>) { \\
     if (\\\\\$in_header) { \\
@@ -222,17 +211,16 @@ for my \\\\\$line (<FILE>) { \\
     } \\
     \\
     my \@columns = csv_get_fields(\\\\\$line); \\
-    if (\\\\\$columns[$gnuplot_col_blocksize -1] != 0 && \\\\\$columns[$gnuplot_col_dataset -1] eq '$dataset') { \\
+    if (\\\\\$columns[${\COL_BLOCKSIZE}] != 0 && \\\\\$columns[${\COL_DATASET}] eq '$dataset') { \\
         print \\\\\$line; \\
     } \\
 } \\
-close(FILE);\\\" \\
-" \\
-        using $gnuplot_col_blocksize:$the_column smooth unique \\
+close(FILE);\\"" \\
+        using ${\(COL_BLOCKSIZE + 1)}:$the_column smooth unique \\
         title '$dataset_clean' with linespoints lt 1 lc $colour_counter, \\
-    $no_blocking_value title '$dataset_clean*' with line lt 0 lc $colour_counter, \\
+    $no_blocking_value title '$dataset_clean*' with line lt 0 lc $colour_counter \\
 END_OF_GNUPLOT
-        
+        push(@all_data, $data);
         $colour_counter++;
     }
 } elsif ($loop_over =~ m/blocksize/) {
@@ -242,23 +230,23 @@ END_OF_GNUPLOT
         
         my $the_column;
         if (basename($0) =~ m/total_run_time_complexity.tex.pl/) {
-            $the_column = $gnuplot_col_totaltime;
+            $the_column = ${\(COL_TOTALTIME + 1)};
         } elsif (basename($0) =~ m/function_run_time_complexity.tex.pl/) {
-            $the_column = $gnuplot_col_functime;
+            $the_column = ${\(COL_FUNCTIME + 1)};
         } else {
             close(GNUPLOT);
             unlink($output_file);
             die('No action to take');
         }
-        print GNUPLOT <<END_OF_GNUPLOT;
-    "<perl -e \\\" \\
+        my $data = <<END_OF_GNUPLOT;
+    "<perl -e \\" \\
 use strict; \\
 use warnings; \\
 \\
-use lib '$dir/../../../../scripts'; \\
+use lib '${\(dirname($0))}/../../../../scripts'; \\
 require 'util.pl'; \\
 \\
-open(FILE, '<' . '$DATA_FILE'); \\
+open(FILE, '<${\(dirname($0))}/${\DATA_FILE}'); \\
 my \\\\\$in_header = 1; \\
 for my \\\\\$line (<FILE>) { \\
     if (\\\\\$in_header) { \\
@@ -267,16 +255,15 @@ for my \\\\\$line (<FILE>) { \\
     } \\
     \\
     my \@columns = csv_get_fields(\\\\\$line); \\
-    if (\\\\\$columns[$gnuplot_col_blocksize -1] == $blocksize) { \\
+    if (\\\\\$columns[${\COL_BLOCKSIZE}] == $blocksize) { \\
         print \\\\\$line; \\
     } \\
 } \\
-close(FILE);\\\" \\
-" \\
-        using $gnuplot_col_vectors:$the_column smooth unique \\
-        title '$blocksize_text' with linespoints lt 1 lc $colour_counter, \\
+close(FILE);\\\"" \\
+        using ${\(COL_VECTORS + 1)}:$the_column smooth unique \\
+        title '$blocksize_text' with linespoints lt 1 lc $colour_counter \\
 END_OF_GNUPLOT
-        
+        push(@all_data, $data);
         $colour_counter++;
     }
 } else {
@@ -285,7 +272,5 @@ END_OF_GNUPLOT
     die('No action to take');
 }
 
-print GNUPLOT <<END_OF_GNUPLOT;
-    1/0 notitle
-END_OF_GNUPLOT
+print GNUPLOT join(',', @all_data);
 close(GNUPLOT);
