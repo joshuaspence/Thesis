@@ -75,7 +75,7 @@ close(FILE);
 open(GNUPLOT, '|gnuplot');
 print GNUPLOT <<END_OF_GNUPLOT;
 reset
-set terminal tikz solid color size 10cm, 10cm
+set terminal tikz color size 10cm, 10cm
 set datafile separator ','
 
 # Define axis
@@ -85,14 +85,22 @@ set border 3 back ls 11
 
 # Global options
 set autoscale
-#set key below
 set nokey
 
 END_OF_GNUPLOT
 
 # HEADER
 my $loop_over;
-if (basename($0) =~ m/distance_calls.tex.pl/) {
+if (basename($0) =~ m/legend.tex.pl/) {
+    $loop_over = 'dataset';
+    print GNUPLOT <<END_OF_GNUPLOT;
+################################################################################
+# LEGEND
+################################################################################
+set key above
+set terminal tikz color size 10cm, 20cm
+END_OF_GNUPLOT
+} elsif (basename($0) =~ m/distance_calls.tex.pl/) {
     $loop_over = 'dataset';
     print GNUPLOT <<END_OF_GNUPLOT;
 ################################################################################
@@ -177,7 +185,10 @@ if ($loop_over =~ m/dataset/) {
         
         my $the_column;
         my $no_blocking_value;
-        if (basename($0) =~ m/distance_calls.tex.pl/) {
+        if (basename($0) =~ m/legend.tex.pl/) {
+            $the_column = ${\(COL_DISTCALLS_NORM + 1)};
+            $no_blocking_value = $data{$dataset}{${\NO_BLOCKING_BLOCKSIZE}}{'distcalls'};
+        } elsif (basename($0) =~ m/distance_calls.tex.pl/) {
             $the_column = ${\(COL_DISTCALLS_NORM + 1)};
             $no_blocking_value = $data{$dataset}{${\NO_BLOCKING_BLOCKSIZE}}{'distcalls'};
         } elsif (basename($0) =~ m/function_execution_time.tex.pl/) {
@@ -274,3 +285,47 @@ END_OF_GNUPLOT
 
 print GNUPLOT join(',', @all_data);
 close(GNUPLOT);
+
+# Remove data point from legend output file.
+# This is used so that we can show one (common) legend for all data sets instead
+# of showing one legend per plot.
+if (basename($0) =~ m/legend.tex.pl/) {
+    open(LEGEND, "<$output_file") || die("Cannot open file: $output_file");
+    my @output = ();
+    my $in_legend = 0;
+    for my $line (<LEGEND>) {
+        use constant FLOAT_REGEX => '\d+(\.\d+)?';
+        use constant POS_REGEX => '(left|center|right)';
+        use constant ROT_REGEX => 'rotate=(\+|-)?\d{1-3}';
+        use constant SIZE_REGEX => '(cm|mm)';
+        use constant COMMENT_REGEX => '%%.*';
+        chomp($line);
+        if ($in_legend) {
+            if ($line =~ m/^${\COMMENT_REGEX}/) {
+                next;
+            } elsif ($line =~ m/^\\draw\[gp path\] \(${\FLOAT_REGEX},${\FLOAT_REGEX}\)--\(${\FLOAT_REGEX},${\FLOAT_REGEX}\);$/) {
+                $in_legend = 0;
+            }
+            push(@output, $line);
+        } else {
+            if ($line =~ m/^\\gpcolor\{gp lt color border\}$/) {
+                $in_legend = 1;
+            } elsif ($line =~ m/^\\(begin|end)\{tikzpicture\}(\[gnuplot\])?$/) {
+                push(@output, $line);
+            } elsif ($line =~ m/^\\gpcolor\{\\gprgb(\{\d+\}){3}\}$/) {
+                push(@output, $line);
+            } elsif ($line =~ m/\\gpsetlinetype\{gp lt plot \d+\}$/) {
+                push(@output, $line);
+            } elsif ($line =~ m/\\gpsetlinewidth\{${\FLOAT_REGEX}\}$/) {
+                push(@output, $line);
+            }
+            
+            next;
+        }
+    }
+    close(LEGEND);
+    
+    open(LEGEND, ">$output_file") || die("Cannot open file: $output_file");
+    print LEGEND join("\n", @output);
+    close(LEGEND);
+}

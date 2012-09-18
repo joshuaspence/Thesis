@@ -13,13 +13,13 @@ require 'util.pl';
 #===============================================================================
 # Configuration
 #===============================================================================
-use constant DATAFILE => './../../../../data/profiling/c.csv';
-use constant THIS_DIR => 'appendix/plots/c';
+use constant DATAFILE          => './../../../../data/profiling/c.csv';
+use constant THIS_DIR          => 'appendix/plots/c';
 
-use constant OTHER_FUNCTION => '__other__';
-use constant OTHER_NAME     => 'Other';
-use constant THRESHOLD      => '0.01';
-use constant PROFILE        => 'TopN_Outlier_Pruning_Block_UNSORTED';
+use constant OTHER_FUNCTION    => '__other__';
+use constant OTHER_NAME        => 'Other';
+use constant THRESHOLD         => '0.01';
+use constant PROFILE           => 'TopN_Outlier_Pruning_Block_UNSORTED';
 
 use constant COL_PROFILE       => 0;
 use constant COL_DATASET       => 1;
