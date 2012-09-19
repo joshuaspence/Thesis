@@ -1,101 +1,39 @@
 All test results contained in this thesis were performed on one of two servers 
 with the following specifications. The following specifications were obtained 
-using the \software{Hardware Lister} (\verb+lshw+) tool.
+using the \software{Hardware Lister} (\verb|lshw|) tool.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % HOSTNAME: tuna
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Hostname: tuna}
-\begin{table}[H]
-    \centering
-    \begin{tabular}{|+>{\bfseries}l|^p{8cm}|}
-        \tableHeader{Item & Specification}
-        CPU &\\
-        Product & Intel(R) Xeon(R) CPU E5506 @ 2.13GHz\\
-        Size & 2133MHz\\
-        Capacity & 3600MHz\\
-        Width & 64 bits\\
-        Clock & 505MHz\\
-        Cores & 4\\
-        L1 cache & 128KiB (internal write-back data)\\
-        L2 cache & 1MiB (internal write-back unified)\\
-        L3 cache & 4MiB (internal write-back unified)\\
-        CPU capabilities &
-            {
-                x86-64,
-                fpu,
-                fpu\_exception,
-                wp,
-                vme,
-                de,
-                pse,
-                tsc,
-                msr,
-                pae,
-                mce,
-                cx8,
-                apic,
-                sep,
-                mtrr,
-                pge,
-                mca,
-                cmov,
-                pat,
-                pse36,
-                clflush,
-                dts,
-                acpi,
-                mmx,
-                fxsr,
-                sse,
-                sse2,
-                ss,
-                ht,
-                tm,
-                pbe,
-                syscall,
-                nx,
-                rdtscp,
-                constant\_tsc,
-                arch\_perfmon,
-                pebs,
-                bts,
-                rep\_good,
-                nopl,
-                xtopology,
-                nonstop\_tsc,
-                aperfmperf,
-                pni,
-                dtes64,
-                monitor,
-                ds\_cpl,
-                vmx,
-                est,
-                tm2,
-                ssse3,
-                cx16,
-                xtpr,
-                pdcm,
-                dca,
-                sse4\_1,
-                sse4\_2,
-                popcnt,
-                lahf\_lm,
-                tpr\_shadow,
-                vnmi,
-                flexpriority,
-                ept,
-                vpid.
-            }\\[1em]
-        
-        Memory &\\
-        Description & DIMM DDR3 Synchronous 1333 MHz\\
-        Size & 8GiB\\
-        Width & 64 bits\\
-        Clock & 1333MHz\\\hline
-    \end{tabular}
-    \caption{Hardware specifications for tuna}
-\end{table}
+\begin{specifications}{tuna}
+    \specificationGroup{CPU}
+        \specification{Product}{Intel\textregistered Xeon\textregistered CPU E5506 @ 2.13GHz}
+        \specification{Size}{2133 MHz}
+        \specification{Capacity}{3600 MHz}
+        \specification{Width}{64 bits}
+        \specification{Clock}{505 MHz}
+        \specification{Cores}{4}
+        \specification{L1 cache}{128 KiB (internal write-back data)}
+        \specification{L2 cache}{1 MiB (internal write-back unified)}
+        \specification{L3 cache}{4 MiB (internal write-back unified)}
+        \specification{CPU capabilities}{
+            x86-64, fpu, fpu\_exception, wp, vme, de, pse, tsc, msr, pae, mce,
+            cx8, apic, sep, mtrr, pge, mca, cmov, pat, pse36, clflush, dts,
+            acpi, mmx, fxsr, sse, sse2, ss, ht, tm, pbe, syscall, nx, rdtscp,
+            constant\_tsc, arch\_perfmon, pebs, bts, rep\_good, nopl, xtopology,
+            nonstop\_tsc, aperfmperf, pni, dtes64, monitor, ds\_cpl, vmx, est,
+            tm2, ssse3, cx16, xtpr, pdcm, dca, sse4\_1, sse4\_2, popcnt,
+            lahf\_lm, tpr\_shadow, vnmi, flexpriority, ept, vpid.}
+    \endspecificationGroup
+    
+    \specificationGroup{Memory}
+        \specification{Description}{DIMM DDR3 Synchronous 1333 MHz}
+        \specification{Size}{8 GiB}
+        \specification{Width}{64 bits}
+        \specification{Clock}{1333 MHz}
+    \endspecificationGroup
+\end{specifications}
 
 \begin{table}[H]
     \centering
@@ -125,15 +63,16 @@ using the \software{Hardware Lister} (\verb+lshw+) tool.
 % HOSTNAME: ubuntu-vm
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Hostname: ubuntu-vm}
-\begin{table}[H]
+\begin{specifications}{tuna}
     \centering
     \begin{tabular}{|+>{\bfseries}l|^p{8cm}|}
         \tableHeader{Item & Specification}
         CPU &\\
-        Product & Intel(R) Core(TM) i7 CPU 950 @ 3.07GHz\\
+        Product & 
+            Intel\textregistered Core\texttrademark i7 CPU 950 @ 3.07GHz\\
         Size & 3067MHz\\
         Capacity & 4230MHz\\
-        Width & 64 bits\\
+        Width & 64 bits\\x
         Cores & 8\\
         L1 cache & 16KiB (asynchronous internal write-back)\\
         L2 cache & 256KiB (burst external write-back)\\
