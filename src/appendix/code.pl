@@ -5,6 +5,10 @@ use warnings;
 
 use File::Basename;
 
+use FindBin;
+use lib "$FindBin::Bin/../../scripts";
+require 'util.pl';
+
 #===============================================================================
 # Configuration
 #===============================================================================
@@ -44,6 +48,7 @@ foreach my $source_file (@source_files) {
     } else {
         die('No action to take');
     }
+    print OUTPUT "\\lstset{basicstyle=\\tiny\\ttfamily}\n";
     print OUTPUT "\\begin{lstlisting}\n";
     
     # Concatenate file contents

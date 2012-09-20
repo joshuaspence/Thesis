@@ -10,6 +10,7 @@
 \usepackage{amsfonts}                           % for formatting mathematical symbols
 \usepackage{amsmath,amssymb,amsthm}             % for math support
 \usepackage[language=australian]{biblatex}      % use biblatex instead of bibtex
+\usepackage{color}				                % for colours
 \usepackage{float}                              % for setting float specifiers
 \usepackage{gnuplot-lua-tikz}                   % for plots produced by GNUplot
 \usepackage{graphicx}                           % for graphics
@@ -17,9 +18,10 @@
 \usepackage{pdfpages}                           % for inserting compliance sheet as a PDF
 \usepackage{pgf-pie}                            % for pie charts
 \usepackage{tabularx}                           % for simple column stretching
+\usepackage{tikz}                               % for graphics
 \usepackage{url}                                % for web URLs
 \usepackage{verbatim}                           % for comment environment
-\usepackage{xparse}
+\usepackage{xparse}                             % for \NewDocumentEnvironment
 
 % My custom packages
 \usepackage{citationneeded}                     % for \citeNeeded
@@ -48,7 +50,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Source code formatting
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\usepackage{color}				    % for colouring listings source code
 \usepackage{listings}			    % for source code formatting
 
 % Custom colours
@@ -58,7 +59,7 @@
 
 % Default settings
 \lstset{
-    basicstyle=\tiny\ttfamily,
+    basicstyle=\ttfamily,           % font
                                     %
     title=\lstname,                 % show the filename of files included with \lstinputlisting
     captionpos=b,                   % sets the caption-position to bottom
@@ -87,7 +88,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Gantt charts
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\usepackage{tikz}
 \usetikzlibrary{calendar}
 \usepackage{pgfgantt}
 
@@ -101,35 +101,68 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand\HRule{\rule{\linewidth}{0.5mm}}
 \newcommand\degree{\ensuremath{^\circ}}
-
-\newcommand\command[1]{\verb|#1|}
+\newcommand\command[1]{\lstinline|#1|}
 \newcommand\software[1]{``#1''}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% \begin{specifications}
-%
+% Escape underscores
+% \escapeus{TEXT}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\makeatletter
+\DeclareRobustCommand*{\escapeus}[1]{%
+  \begingroup\@activeus\scantokens{#1\endinput}\endgroup}
+\begingroup\lccode`\~=`\_\relax
+   \lowercase{\endgroup\def\@activeus{\catcode`\_=\active \let~\_}}
+\makeatother
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \begin{specifications}{DESCRIPTION}
+% \specificationGroup{LABEL}{GROUP_NAME}
+% \specification
+% \endspecificationGroup
 % \end{specifications}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\NewDocumentEnvironment{specifications}{m}{%
-\newenvironment{specificationGroup}[1]{%
-\@hline \underline{##1} &%
-\gdef\@hline{\\}%
+\NewDocumentEnvironment{specifications}{mm}{%
+    \def\@hline{}%
+    %
+    \newenvironment{specificationGroup}[1]{%
+        \@hline \underline{##1} &%
+        \def\@hline{\\}%
+    }{%
+        \def\@hline{\\[1em]}%
+    }%
+    \newcommand\specification[2]{%
+        \@hline ##1 & ##2 %
+        \def\@hline{\\}%
+    }%
+    %
+    \begin{table}[H]%
+        \centering
+        \begin{tabular}{|+>{\bfseries}l|^p{8cm}|}%
+            \tableHeader{Item & Specification}%
 }{%
-\@hline \vspace{1em}%
-\gdef\@hline{\\}%
-}%
-\newcommand\specification[2]{%
-\@hline ##1 & ##2 %
-\gdef\@hline{\\}%
-}%
-%
-\begin{table}[H]%
-\centering
-\begin{tabular}{|+>{\bfseries}l|^p{8cm}|}%
-\tableHeader{Item & Specification}%
-}{%
-\\\hline
+            \\\hline
+        \end{tabular}%
+        \caption{#2}%
+        \label{#1}%
+    \end{table}%
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \dataSetDescription{NAME}{SIZE}{DIMENSIONALITY}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand\dataSetDescription[3]{%
+\begin{tabular}{|l|l|}%
+    \tableHeader{Property & Value}%
+    Name & \escapeus{#1} \\
+    Size ($M$) & #2 \\
+    Dimensionality ($N$) & #3 \\\hline
 \end{tabular}%
-\caption{Hardware specifications for #1}%
-\end{table}%
+%
+\begin{figure}[H]%
+    \centering
+    \includegraphics[width=\textwidth]{datasets/#1}%
+    \caption{A PCA plot for the `\escapeus{#1}' data set.}%
+    \label{dataSets:#1:pca}%
+\end{figure}%
 }

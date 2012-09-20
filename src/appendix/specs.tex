@@ -1,12 +1,16 @@
 All test results contained in this thesis were performed on one of two servers 
 with the following specifications. The following specifications were obtained 
-using the \software{Hardware Lister} (\verb|lshw|) tool.
+using the \software{Hardware Lister} (\command{lshw}) tool.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % HOSTNAME: tuna
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Hostname: tuna}
-\begin{specifications}{tuna}
+The specifications for the \emph{tuna} are detailed in 
+\autoref{specs:tuna:hardware}, \autoref{specs:tuna:software} and
+\autoref{specs:tuna:os}.
+
+\begin{specifications}{specs:tuna:hardware}{Hardware specifications for tuna}
     \specificationGroup{CPU}
         \specification{Product}{Intel\textregistered Xeon\textregistered CPU E5506 @ 2.13GHz}
         \specification{Size}{2133 MHz}
@@ -35,134 +39,62 @@ using the \software{Hardware Lister} (\verb|lshw|) tool.
     \endspecificationGroup
 \end{specifications}
 
-\begin{table}[H]
-    \centering
-    \begin{tabular}{|+>{\bfseries}l|^l|}
-        \tableHeader{Item & Specification}
-        gcc & gcc (Ubuntu/Linaro 4.6.1-9ubuntu3) 4.6.1\\
-        ld & GNU ld (GNU Binutils for Ubuntu) 2.21.53.20110810\\
-        MATLAB & 7.13.0.564 (R2011b)\\
-        \hline
-    \end{tabular}
-    \caption{Software specifications for tuna}
-\end{table}
+\begin{specifications}{specs:tuna:software}{Software specifications for tuna}
+    \specification{gcc}{gcc (Ubuntu/Linaro 4.6.1-9ubuntu3) 4.6.1}
+    \specification{ld}{GNU ld (GNU Binutils for Ubuntu) 2.21.53.20110810}
+    \specification{MATLAB}{MATLAB 7.13.0.564 (R2011b)}
+\end{specifications}
 
-\begin{table}[H]
-    \centering
-    \begin{tabular}{|+>{\bfseries}l|^l|}
-        \tableHeader{Item & Specification}
-        Operating System & Ubuntu 11.10\\
-        Platform & x86\_64\\
-        Kernel version & 3.0.0-17-generic\\
-        \hline
-    \end{tabular}
-    \caption{Operating System specifications for tuna}
-\end{table}
+\begin{specifications}{specs:tuna:os}{Operating System specifications for tuna}
+    \specification{Operating System}{Ubuntu 11.10}
+    \specification{Platform}{x86\_64}
+    \specification{Kernel version}{3.0.0-17-generic}
+\end{specifications}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % HOSTNAME: ubuntu-vm
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Hostname: ubuntu-vm}
-\begin{specifications}{tuna}
-    \centering
-    \begin{tabular}{|+>{\bfseries}l|^p{8cm}|}
-        \tableHeader{Item & Specification}
-        CPU &\\
-        Product & 
-            Intel\textregistered Core\texttrademark i7 CPU 950 @ 3.07GHz\\
-        Size & 3067MHz\\
-        Capacity & 4230MHz\\
-        Width & 64 bits\\x
-        Cores & 8\\
-        L1 cache & 16KiB (asynchronous internal write-back)\\
-        L2 cache & 256KiB (burst external write-back)\\
-        CPU Capabilities &
-            {
-                fpu,
-                fpu\_exception,
-                wp,
-                vme,
-                de,
-                pse,
-                tsc,
-                msr,
-                pae,
-                mce,
-                cx,
-                apic,
-                sep,
-                mtrr,
-                pge,
-                mca,
-                cmov,
-                pat,
-                pse36,
-                clflush,
-                dts,
-                acpi,
-                mmx,
-                fxsr,
-                sse,
-                sse2,
-                ss,
-                ht,
-                syscall,
-                nx,
-                rdtscp,
-                x86-64,
-                constant\_tsc,
-                arch\_perfmon,
-                pebs,
-                bts,
-                nopl,
-                xtopology,
-                tsc\_reliable,
-                nonstop\_tsc,
-                aperfmperf,
-                pni,
-                ssse3,
-                cx16,
-                sse4\_1,
-                sse4\_2,
-                popcnt,
-                hypervisor,
-                lahf\_lm,
-                ida,
-                dtherm.
-            }\\[1em]
+The specifications for the \emph{ubuntu-vm} are detailed in 
+\autoref{specs:ubuntu-vm:hardware}, \autoref{specs:ubuntu-vm:software}
+and \autoref{specs:ubuntu-vm:os}.
+
+\begin{specifications}{specs:ubuntu-vm:hardware}{Hardware specifications for ubuntu-vm}
+    \specificationGroup{CPU}
+        \specification{Product}{Intel\textregistered Core\texttrademark i7 CPU 950 @ 3.07GHz}
+        \specification{Size}{3067 MHz}
+        \specification{Capacity}{4230 MHz}
+        \specification{Width}{64 bits}
+        \specification{Cores}{8}
+        \specification{L1 cache}{16 KiB (asynchronous internal write-back)}
+        \specification{L2 cache}{256 KiB (burst external write-back)}
+        \specification{CPU Capabilities}{
+            fpu, fpu\_exception, wp, vme, de, pse, tsc, msr, pae, mce, cx, apic,
+            sep, mtrr, pge, mca, cmov, pat, pse36, clflush, dts, acpi, mmx,
+            fxsr, sse, sse2, ss, ht, syscall, nx, rdtscp, x86-64, constant\_tsc,
+            arch\_perfmon, pebs, bts, nopl, xtopology, tsc\_reliable,
+            nonstop\_tsc, aperfmperf, pni, ssse3, cx16, sse4\_1, sse4\_2,
+            popcnt, hypervisor, lahf\_lm, ida, dtherm.}
+    \endspecificationGroup
         
-        Memory &\\
-        Description & DIMM DRAM EDO\\
-        Size & 16GiB\\
-        Width & 32 bits\\
-        \hline
-    \end{tabular}
-    \caption{Hardware specifications for ubuntu-vm}
-\end{table}
+    \specificationGroup{Memory}
+        \specification{Description}{DIMM DRAM EDO}
+        \specification{Size}{16 GiB}
+        \specification{Width}{32 bits}
+    \endspecificationGroup
+\end{specifications}
 
-\begin{table}[H]
-    \centering
-    \begin{tabular}{|+>{\bfseries}l|^l|}
-        \tableHeader{Item & Specification}
-        gcc & gcc (Ubuntu/Linaro 4.6.1-9ubuntu3) 4.6.1\\
-        ld & GNU ld (GNU Binutils for Ubuntu) 2.22\\
-        MATLAB & 7.14.0.739 (R2012a)\\
-        \hline
-    \end{tabular}
-    \caption{Software specifications for ubuntu-vm}
-\end{table}
+\begin{specifications}{specs:ubuntu-vm:software}{Software specifications for ubuntu-vm}
+    \specification{gcc}{gcc (Ubuntu/Linaro 4.6.1-9ubuntu3) 4.6.1}
+    \specification{ld}{GNU ld (GNU Binutils for Ubuntu) 2.22}
+    \specification{MATLAB}{MATLAB 7.14.0.739 (R2012a)}
+\end{specifications}
 
-\begin{table}[H]
-    \centering
-    \begin{tabular}{|+>{\bfseries}l|^l|}
-        \tableHeader{Item & Specification}
-        Operating System & Ubuntu 12.04\\
-        Platform & x86\_64\\
-        Kernel version & 3.2.0-29-generic\\
-        \hline
-    \end{tabular}
-    \caption{Operating System specifications for ubuntu-vm}
-\end{table}
+\begin{specifications}{specs:ubuntu-vm:os}{Operating System specifications for ubuntu-vm}
+    \specification{Operating System}{Ubuntu 12.04}
+    \specification{Platform}{x86\_64}
+    \specification{Kernel version}{3.2.0-29-generic}
+\end{specifications}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % FPGA
