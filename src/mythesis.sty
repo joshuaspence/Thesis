@@ -16,7 +16,6 @@
 \usepackage{graphicx}                           % for graphics
 \usepackage[hidelinks]{hyperref}                % for PDF hyperlinks
 \usepackage{pdfpages}                           % for inserting compliance sheet as a PDF
-\usepackage{pgf-pie}                            % for pie charts
 \usepackage{tabularx}                           % for simple column stretching
 \usepackage{tikz}                               % for graphics
 \usepackage{url}                                % for web URLs
@@ -122,6 +121,7 @@
 % \endspecificationGroup
 % \end{specifications}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\makeatletter
 \NewDocumentEnvironment{specifications}{mm}{%
     \def\@hline{}%
     %
@@ -147,6 +147,7 @@
         \label{#1}%
     \end{table}%
 }
+\makeatother
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % \dataSetDescription{NAME}{SIZE}{DIMENSIONALITY}
@@ -166,3 +167,55 @@
     \label{dataSets:#1:pca}%
 \end{figure}%
 }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \begin{pieplots}
+% \pieplot{NAME}{CONTENT}
+% \end{pieplots}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{pgf-pie}
+\usepackage{subfig}
+%\usepackage{alphalph}
+\makeatletter
+\newcounter{@sfcol}%
+\newcounter{@sfrow}%
+\NewDocumentEnvironment{pieplots}{mm}{%
+    \setcounter{@sfcol}{0}%
+    \setcounter{@sfrow}{0}%
+    \def\@sfprefix{}%
+    \def\@sfsuffix{\qquad}%
+    %
+    \setcounter{subfigure}{0}%
+    %
+    \newcommand\pieplot[2]{%
+        \@sfprefix%
+        \subfloat[##1]{##2}%
+        \@sfsuffix%
+        %
+        \def\@sfprefix{}%
+        \def\@sfsuffix{\qquad}%
+        \stepcounter{@sfcol}%
+        \ifnum\value{@sfcol}=2%
+            \def\@sfsuffix{}%
+        \fi%
+        \ifnum\value{@sfcol}=3%
+            \setcounter{@sfcol}{0}%
+            \stepcounter{@sfrow}%
+        \fi%
+        \ifnum\value{@sfrow}=3%
+            \setcounter{@sfrow}{0}%
+            \def\@sfprefix{%
+                \endfigure%
+                \figure[H]%
+                    \ContinuedFloat%
+            }%
+        \fi%
+    }%
+    %
+    \figure[H]%
+}{%
+        \caption{#2}%
+        \label{#1}%
+    \endfigure%
+}
+\makeatother

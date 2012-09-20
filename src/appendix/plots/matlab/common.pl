@@ -188,9 +188,11 @@ close(FILE);
 open(TEX, ">$output_file") or die("Cannot open file: $output_file");
 
 if (basename($0) =~ m/all_datasets.tex.pl/) {
+    print TEX "\\begin{pieplots}{profiling:matlab}{Matlab profiling plots}\n";
     for my $dataset (keys %data) {
-        print TEX "\\input{${\THIS_DIR}/$dataset}\n"
+        print TEX "\t\\pieplot{\\escapeus{$dataset}}{\\input{${\THIS_DIR}/$dataset}}\n"
     }
+    print TEX "\\end{pieplots}\n";
 } else { # we assume that the output file relates to a data set
     my $the_dataset = basename($0, ".tex.pl");
     my $the_dataset_clean = latex_escape($the_dataset);
@@ -205,10 +207,8 @@ if (basename($0) =~ m/all_datasets.tex.pl/) {
     
     my $colour_string = join(',', @the_colours);
     print TEX <<END_OF_TEX;
-\\begin{figure}[H]
-    \\centering
-    \\begin{tikzpicture}
-	    \\pie[text=legend, radius=2, color={$colour_string}]{
+\\begin{tikzpicture}
+    \\pie[text=nolegend, radius=1.5, color={$colour_string}]{
 END_OF_TEX
     
     # Data
@@ -224,10 +224,7 @@ END_OF_TEX
     print TEX <<END_OF_TEX;
         
 	    }
-    \\end{tikzpicture}
-	\\caption{Comparison of function self time for $the_dataset_clean data set}
-	\\label{fig:matlabProfiling:$the_dataset}
-\\end{figure}
+\\end{tikzpicture}
 END_OF_TEX
 }
 
