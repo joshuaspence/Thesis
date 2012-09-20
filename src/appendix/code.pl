@@ -48,8 +48,7 @@ foreach my $source_file (@source_files) {
     } else {
         die('No action to take');
     }
-    print OUTPUT "\\lstset{basicstyle=\\tiny\\ttfamily}\n";
-    print OUTPUT "\\begin{lstlisting}\n";
+    print OUTPUT "\\begin{lstlisting}[basicstyle=\\tiny\\ttfamily]\n";
     
     # Concatenate file contents
     open(FILE, "<$source_file");
