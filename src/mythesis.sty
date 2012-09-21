@@ -109,9 +109,9 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \makeatletter
 \DeclareRobustCommand*{\escapeus}[1]{%
-  \begingroup\@activeus\scantokens{#1\endinput}\endgroup}
-\begingroup\lccode`\~=`\_\relax
-   \lowercase{\endgroup\def\@activeus{\catcode`\_=\active \let~\_}}
+    \begingroup\@activeus\scantokens{#1\endinput}\endgroup}
+\begingroup\lccode`\~=`\_\relax%
+    \lowercase{\endgroup\def\@activeus{\catcode`\_=\active \let~\_}}
 \makeatother
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -137,11 +137,11 @@
     }%
     %
     \begin{table}[H]%
-        \centering
+        \centering%
         \begin{tabular}{|+>{\bfseries}l|^p{8cm}|}%
             \tableHeader{Item & Specification}%
 }{%
-            \\\hline
+            \\\hline%
         \end{tabular}%
         \caption{#2}%
         \label{#1}%
@@ -155,13 +155,13 @@
 \newcommand\dataSetDescription[3]{%
 \begin{tabular}{|l|l|}%
     \tableHeader{Property & Value}%
-    Name & \escapeus{#1} \\
-    Size ($M$) & #2 \\
-    Dimensionality ($N$) & #3 \\\hline
+    Name & \escapeus{#1} \\%
+    Size ($M$) & #2 \\%
+    Dimensionality ($N$) & #3 \\\hline%
 \end{tabular}%
 %
 \begin{figure}[H]%
-    \centering
+    \centering%
     \includegraphics[width=\textwidth]{datasets/#1}%
     \caption{A PCA plot for the `\escapeus{#1}' data set.}%
     \label{dataSets:#1:pca}%
@@ -173,47 +173,41 @@
 % \pieplot{NAME}{CONTENT}
 % \end{pieplots}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\usepackage{pgf-pie}
-\usepackage{subfig}
+\usepackage{caption} % for \captionof{figure}
+\usepackage{pgf-pie} % for \pie
+\usepackage{subcaption} % for \captionof{subfigure}
+\usepackage{tikz} % for \tikzpicture
+\usepackage{xparse} % for \NewDocumentEnvironment
+
 \makeatletter
 \newcounter{@sfcol}%
-\newcounter{@sffig}%
 \NewDocumentEnvironment{pieplots}{mm}{%
     \setcounter{@sfcol}{0}%
-    \setcounter{@sffig}{0}%
     \setcounter{subfigure}{0}%
-    %
-    \def\@sfprefix{\hspace{\fill}}%
     \def\@sfsuffix{}%
     %
     \newcommand\pieplot[2]{%
-        \@sfprefix%
-        \subfloat[##1]{##2}%
-        \@sfsuffix%
+        \minipage{.3\textwidth}%
+            \captionsetup{type=subfigure}%
+            \centering%
+            ##2%
+            \@sfsuffix%
+            \captionof{subfigure}{##1}%
+        \endminipage%
         %
         \def\@sfsuffix{}%
         \stepcounter{@sfcol}%
         \ifnum\value{@sfcol}=2%
-            \def\@sfsuffix{\hspace*{\fill}}%
-        \fi%
-        \ifnum\value{@sfcol}=3%
+            \def\@sfsuffix{\\}%
             \setcounter{@sfcol}{0}%
-            \stepcounter{@sffig}%
-            \def\@sfprefix{%
-                \caption[]{}%
-                \label{#1:subfig\arabic{@sffig}}%
-                \endfigure%
-                \figure[H]%
-                    \ContinuedFloat%
-                    \hspace{\fill}%
-            }%
         \fi%
     }%
     %
-    \figure[H]%
+    \noindent\minipage{\textwidth}%
+        \captionsetup{type=figure}%
 }{%
-        \caption{#2}%
+        \captionof{figure}{#2}%
         \label{#1}%
-    \endfigure%
+    \endminipage%
 }
 \makeatother
