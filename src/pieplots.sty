@@ -19,7 +19,7 @@
 \minipage[t]{.3\textwidth}%
     \centering
     #2%
-    \captionsetup{labelformat=parens,labelsep=space,skip=3pt,list=false}%
+    \captionsetup{type=subfigure,labelformat=parens,labelsep=space,skip=3pt,list=false}%
     \captionof{subfigure}{#1}%
     \vspace{1em}%
 \endminipage
@@ -45,16 +45,11 @@
     \vbadness10000
     \setbox\pieplots@partialbox=\vsplit\pieplots@box to .9\textheight
     \begin{figure}%
-    \ifpieplots@start
-    \else
-        \ContinuedFloat
-    \fi
+    \ifpieplots@start\else\ContinuedFloat\fi
     \unvbox\pieplots@partialbox
     \bigskip
     \caption{\pieplots@caption \ifpieplots@start\else\space(continued)\fi}%
-    \ifpieplots@start
-        \label{\pieplots@label}%
-    \fi
+    \ifpieplots@start\label{\pieplots@label}\fi
     \vfill
     \end{figure}%
     \global\pieplots@startfalse

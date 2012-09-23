@@ -242,3 +242,42 @@
         \path[use as bounding box] ($(\pos)-(\theradius,\theradius)$) rectangle ($(\pos)+(\theradius,\theradius)$);%
     \fi
 }
+
+\newcommand\pielegend[2][]{%
+    % load default parameters
+    \pgfkeys{%
+        color={blue!60, cyan!60, yellow!60, orange!60, red!60,%
+               blue!60!cyan!60, cyan!60!yellow!60, red!60!cyan!60,%
+               red!60!blue!60, orange!60!cyan!60},%
+        pos={0,0},%
+        style={thick},%
+        bound=false,%
+    }%
+    %
+    % load user's parameters
+    \pgfkeys{#1}%
+    %
+    %
+    % init counters
+    \setcounter{pgfpie@colorLength}{0}%
+    \foreach \c in \color { \addtocounter{pgfpie@colorLength}{1} }%
+    %
+    \setcounter{pgfpie@sliceLength}{0}%
+    \foreach \p/\e in {#2} { \addtocounter{pgfpie@sliceLength}{1} }%
+    %
+    % legend
+    \coordinate[xshift=0.8cm,yshift=(\value{pgfpie@sliceLength}*0.5+1)*0.5cm] (legendpos) at (current bounding box.east);%
+    %
+    \begin{scope}[node distance=0.5cm]%
+        \foreach \p/\t  [count=\i from 0] in {#2}{%
+            \pgfpie@findColor{\i}%
+            \node[draw, fill=\thecolor, \style, below of=legendpos, label=0:\t] (legendpos) {};%
+        }%
+    \end{scope}%
+    %
+    % bounding box
+    \ifbound
+        %\pgfresetboundingbox
+        %\path[use as bounding box] ($(\pos)-(\theradius,\theradius)$) rectangle ($(\pos)+(\theradius,\theradius)$);%
+    \fi
+}

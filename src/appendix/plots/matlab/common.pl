@@ -188,14 +188,35 @@ close(FILE);
 open(TEX, ">$output_file") or die("Cannot open file: $output_file");
 
 if (basename($0) =~ m/all_datasets.tex.pl/) {
-    print TEX "\\begin{pieplots}{profiling:matlab}{Matlab profiling plots}\n";
+    print TEX "\\begin{pieplots}{fig:profiling:matlab}{MATLAB profiling plots}\n";
+    
     for my $dataset (keys %data) {
-        print TEX "\t\\pieplot{\\escape{$dataset}}{\\input{${\THIS_DIR}/$dataset}}\n"
+        print TEX "\t\\pieplot{\\escape{$dataset}}{\\input{${\THIS_DIR}/$dataset}}\n";
     }
     print TEX "\\end{pieplots}\n";
+} elsif (basename($0) =~ m/legend.tex.pl/) {    
+    # Colours
+    my @the_colours = ();
+    my @the_functions = ();
+    for my $function (keys %function_colours) {
+        push(@the_colours, $function_colours{$function});
+        
+        $function = format_name($function);
+        push(@the_functions, "1/\\escape{$function}");
+    }
+    
+    my $colour_string = join(',', @the_colours);
+    my $function_string = join(",\n", @the_functions);
+    
+    print TEX <<END_OF_TEX;
+\\begin{tikzpicture}
+    \\pielegend[bound, text=none, radius=1.5, color={$colour_string}]{
+$function_string
+    }
+\\end{tikzpicture}
+END_OF_TEX
 } else { # we assume that the output file relates to a data set
     my $the_dataset = basename($0, ".tex.pl");
-    my $the_dataset_clean = latex_escape($the_dataset);
     my $the_profile = PROFILE;
     my @output = (); # buffered output
     
@@ -215,9 +236,8 @@ END_OF_TEX
     for my $function (keys %{$data{$the_dataset}{$the_profile}}) {
         my $proportion = 100 * $data{$the_dataset}{$the_profile}{$function};
         $proportion = format_number($proportion);
-        my $function = format_name($function);
-        $function = latex_escape($function);
-        push(@output, "$proportion/{$function}");
+        $function = format_name($function);
+        push(@output, "$proportion/\\escape{$function}");
     }
     
     print TEX join(",\n", @output);
