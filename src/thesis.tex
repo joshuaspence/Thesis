@@ -1,27 +1,198 @@
 \documentclass[a4paper]{report}
 
-% Warn about commands, classes and packages that are outdated and superseded.
-%     - Orthodox checks for pitfalls that are not technically incorrect.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Warn about commands, classes and packages that 
+% are outdated and superseded.
+%     - Orthodox checks for pitfalls that are not
+%       technically incorrect.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage[l2tabu,orthodox,abort]{nag}
 
-% All styling is contained in "mythesis.sty"
-\usepackage{mythesis}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Provides page numbers and headings at the top of each page.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\pagestyle{headings}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Packages
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[noline,ruled]{algorithm2e}          % for algorithms
+\usepackage{amsfonts}                           % for formatting mathematical symbols
+\usepackage{amsmath,amssymb,amsthm}             % for math support
+\usepackage[language=australian]{biblatex}      % use biblatex instead of bibtex
+\usepackage{color}				                % for colours
+\usepackage{float}                              % for setting float specifiers
+\usepackage{gnuplot-lua-tikz}                   % for plots produced by GNUplot
+\usepackage{graphicx}                           % for graphics
+\usepackage[hidelinks]{hyperref}                % for PDF hyperlinks
+\usepackage{pdfpages}                           % for inserting compliance sheet as a PDF
+\usepackage{tabularx}                           % for simple column stretching
+\usepackage{tikz}                               % for graphics
+\usepackage{url}                                % for web URLs
+\usepackage{verbatim}                           % for comment environment
+\usepackage{xparse}                             % for \NewDocumentEnvironment
+
+% My custom packages
+\usepackage{escape}                             % for \escape
+\usepackage{citationneeded}                     % for \citeNeeded
+\usepackage{pieplots}                           % for \pieplots, \pieplot
+\usepackage{pgf-pie}                            % for \pie
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Glossary
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[toc,xindy]{glossaries}
+\makeglossaries
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% To allow us to easily format a table row
+% See http://www.latex-community.org/forum/viewtopic.php?f=5&t=3293
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcolumntype{+}{>{\global\let\currentrowstyle\relax}}
+\newcolumntype{^}{>{\currentrowstyle}}
+\newcommand\rowstyle[1]{\gdef\currentrowstyle{#1}%
+	#1\ignorespaces
+}
+
+% \tableHeader{...}
+\newcommand\tableHeader[1]{%
+	\hline \rowstyle{\bfseries} #1 \\\hline
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Source code formatting
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{listings}			    % for source code formatting
+
+% Custom colours
+\definecolor{darkGreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+% Default settings
+\lstset{
+    basicstyle=\ttfamily,           % font
+                                    %
+    title=\lstname,                 % show the filename of files included with \lstinputlisting
+    captionpos=b,                   % sets the caption-position to bottom
+    backgroundcolor=\color{white},  % choose the background color
+                                    %
+    numbers=left,                   % where to put the line-numbers
+    numberstyle=\tiny\color{gray},  % the style that is used for the line-numbers
+    stepnumber=1,                   % the step between two line-numbers
+    numbersep=5pt,                  % how far the line-numbers are from the code
+                                    %
+    showspaces=false,               % show spaces adding particular underscores
+    showstringspaces=false,         % underline spaces within strings
+    showtabs=false,                 % show tabs within strings adding particular underscores
+    tabsize=4,                      % sets default tabsize
+    breaklines=true,                % sets automatic line breaking
+    breakatwhitespace=false,        % sets if automatic breaks should only happen at whitespace
+                                    %
+    keywordstyle=\color{blue},      % keyword style
+    commentstyle=\color{darkGreen}, % comment style
+    stringstyle=\color{mauve},      % string literal style
+    escapeinside={\%*}{*)},         % if you want to add a comment within your code
+    morekeywords={*,...}            % if you want to add more keywords to the set
+}
+\lstloadlanguages{C,Matlab}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Gantt charts
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usetikzlibrary{calendar}
+\usepackage{pgfgantt}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Variables (to save retyping and reformatting 
+% these throughout the document)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\input{variables}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Custom commands
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand\HRule{\rule{\linewidth}{0.5mm}}
+\newcommand\degree{\ensuremath{^\circ}}
+\newcommand\command[1]{\lstinline|#1|}
+\newcommand\software[1]{``#1''}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \begin{specifications}{DESCRIPTION}
+% \specificationGroup{LABEL}{GROUP_NAME}
+% \specification
+% \endspecificationGroup
+% \end{specifications}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\makeatletter
+\NewDocumentEnvironment{specifications}{mm}{%
+    \def\@hline{}%
+    %
+    \newenvironment{specificationGroup}[1]{%
+        \@hline \underline{##1} &%
+        \def\@hline{\\}%
+    }{%
+        \def\@hline{\\[1em]}%
+    }%
+    \newcommand\specification[2]{%
+        \@hline ##1 & ##2 %
+        \def\@hline{\\}%
+    }%
+    %
+    \begin{table}[H]%
+        \centering%
+        \begin{tabular}{|+>{\bfseries}l|^p{8cm}|}%
+            \tableHeader{Item & Specification}%
+}{%
+            \\\hline%
+        \end{tabular}%
+        \caption{#2}%
+        \label{#1}%
+    \end{table}%
+}
+\makeatother
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \dataSetDescription{NAME}{SIZE}{DIMENSIONALITY}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand\dataSetDescription[3]{%
+\begin{tabular}{|l|l|}%
+    \tableHeader{Property & Value}%
+    Name & \escape{#1} \\%
+    Size ($M$) & #2 \\%
+    Dimensionality ($N$) & #3 \\\hline%
+\end{tabular}%
+%
+\begin{figure}[H]%
+    \centering%
+    \includegraphics[width=\textwidth]{datasets/#1}%
+    \caption{A PCA plot for the `\escape{#1}' data set.}%
+    \label{dataSets:#1:pca}%
+\end{figure}%
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Graphics directory
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \graphicspath{{../img/}}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Title page options
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \title{\thesisTitle*{}}
 \author{\studentName*{}}
 \date{\thesisDate*{}}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Bibliography
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \bibliography{thesis}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Glossary
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \input{acronym}
 \input{glossary}
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{document}

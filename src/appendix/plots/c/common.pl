@@ -159,7 +159,7 @@ open(TEX, ">$output_file") or die("Cannot open file: $output_file");
 if (basename($0) =~ m/all_datasets.tex.pl/) {
     print TEX "\\begin{pieplots}{profiling:c}{C profiling plots}\n";
     for my $dataset (keys %data) {
-        print TEX "\t\\pieplot{\\escapeus{$dataset}}{\\input{${\THIS_DIR}/$dataset}}\n"
+        print TEX "\t\\pieplot{\\escape{$dataset}}{\\input{${\THIS_DIR}/$dataset}}\n"
     }
     print TEX "\\end{pieplots}\n";
 } else { # we assume that the output file relates to a data set
