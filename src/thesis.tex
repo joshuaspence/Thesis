@@ -103,6 +103,29 @@
 \usetikzlibrary{calendar}
 \usepackage{pgfgantt}
 
+\usepackage{etoolbox}
+\makeatletter
+\pretocmd{\tableofcontents}{%
+    \if@openright\cleardoublepage\else\clearpage\fi
+    \pdfbookmark[0]{\contentsname}{toc}%
+}{}{}%
+
+\pretocmd{\listoffigures}{%
+    \if@openright\cleardoublepage\else\clearpage\fi
+    \pdfbookmark[0]{\listfigurename}{lof}%
+}{}{}%
+
+\pretocmd{\listofalgorithms}{%
+    \if@openright\cleardoublepage\else\clearpage\fi
+    \pdfbookmark[0]{\listalgorithmcfname}{loa}%
+}{}{}%
+
+\pretocmd{\listoftables}{%
+    \if@openright\cleardoublepage\else\clearpage\fi
+    \pdfbookmark[0]{\listtablename}{lot}%
+}{}{}%
+\makeatother
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Variables (to save retyping and reformatting 
 % these throughout the document)
@@ -201,12 +224,18 @@
 % Title Page
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{titlepage}
+\clearpage
+\phantomsection
+\pdfbookmark[0]{Title page}{title}
 \input{title-page}
 \end{titlepage}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Compliance Sheet
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\clearpage
+\phantomsection
+\pdfbookmark[0]{Compliance sheet}{compliance}
 \includepdf[
         scale=0.8,
         pagecommand={
@@ -241,6 +270,9 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Acknowledgements
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\clearpage
+\phantomsection
+\pdfbookmark[0]{Acknowledgements}{acknowledgements}
 \chapter*{Acknowledgements}
 This project could not have been completed without the guidance of my project
 supervisor, \supervisorName{}. He always made himself available to assist me
@@ -280,6 +312,9 @@ This thesis is based on the following publications:
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Abstract
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\clearpage
+\phantomsection
+\pdfbookmark[0]{Abstract}{abstract}
 \begin{abstract}
 The prediction of the stock market has become an issue of great interest in the
 areas of finance, mathematics and engineering; due mainly to the great potential
