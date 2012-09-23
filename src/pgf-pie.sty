@@ -25,46 +25,48 @@
 % #7: radius
 % #8: center
 \newcommand\pgfpie@slice[8]{%
-    \pgfmathparse{0.5*(#1)+0.5*(#2)}%
-    \let\midangle\pgfmathresult
-    %
-    \path (#8) -- ++(\midangle:#5) coordinate(O);%
-    %
-    \pgfmathparse{#7+#5}%
-    \let\radius\pgfmathresult
-    %
-    % slice
-    \draw[line join=round, fill=#6, \style] (O) -- ++(#1:#7) arc (#1:#2:#7) -- cycle;%
-    %
-    \pgfmathparse{min(((#2)-(#1)-10)/110*(-0.3),0)}%
-    \let\temp\pgfmathresult%
-    \pgfmathparse{(max(\temp,-0.5) + 0.8)*#7}%
-    \let\innerpos\pgfmathresult
-    %
-    \ifthenelse{\equal{\pgfpie@text}{inside}}{%
-        \ifthenelse{\equal{\pgfpie@number}{inside}}{%
-            % label and number together
-            \path (O) -- ++(\midangle:\innerpos) node%
-            {\scalefont{#3}\shortstack{#4\\\beforenumber#3\afternumber}};%
-        }{%
-            % label only
-            \path (O) -- ++(\midangle:\innerpos) node%
-            {\scalefont{#3}\shortstack{#4}};%
-        }%
-    }{%
-        % label
-        \ifthenelse{\equal{\pgfpie@text}{inside}}{%
-            \path (O) -- ++ (\midangle:\radius)%
-            node[inner sep=0, \pgfpie@text=\midangle:#4]{};%
-        }%
-        {}%
+    \ifthenelse{\equal{#1}{#2}}{}{%
+        \pgfmathparse{0.5*(#1)+0.5*(#2)}%
+        \let\midangle\pgfmathresult
         %
-        % number
-        \ifthenelse{\equal{\pgfpie@number}{inside}}{%
-            \path (O) -- ++(\midangle:\innerpos) node%
-            {\scalefont{#3}\beforenumber#3\afternumber};%
+        \path (#8) -- ++(\midangle:#5) coordinate(O);%
+        %
+        \pgfmathparse{#7+#5}%
+        \let\radius\pgfmathresult
+        %
+        % slice
+        \draw[line join=round, fill=#6, \style] (O) -- ++(#1:#7) arc (#1:#2:#7) -- cycle;%
+        %
+        \pgfmathparse{min(((#2)-(#1)-10)/110*(-0.3),0)}%
+        \let\temp\pgfmathresult%
+        \pgfmathparse{(max(\temp,-0.5) + 0.8)*#7}%
+        \let\innerpos\pgfmathresult
+        %
+        \ifthenelse{\equal{\pgfpie@text}{inside}}{%
+            \ifthenelse{\equal{\pgfpie@number}{inside}}{%
+                % label and number together
+                \path (O) -- ++(\midangle:\innerpos) node%
+                {\scalefont{#3}\shortstack{#4\\\beforenumber#3\afternumber}};%
+            }{%
+                % label only
+                \path (O) -- ++(\midangle:\innerpos) node%
+                {\scalefont{#3}\shortstack{#4}};%
+            }%
+        }{%
+            % label
+            \ifthenelse{\equal{\pgfpie@text}{inside}}{%
+                \path (O) -- ++ (\midangle:\radius)%
+                node[inner sep=0, \pgfpie@text=\midangle:#4]{};%
+            }%
+            {}%
+            %
+            % number
+            \ifthenelse{\equal{\pgfpie@number}{inside}}{%
+                \path (O) -- ++(\midangle:\innerpos) node%
+                {\scalefont{#3}\beforenumber#3\afternumber};%
+            }%
+            {}%
         }%
-        {}%
     }%
 }
 

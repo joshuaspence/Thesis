@@ -48,9 +48,9 @@ sub format_name($) {
     my $function = $_[0];
     $function =~ s/.*\///;
     $function =~ s/.*>//;
-    $function =~ s/\s*(MEX-file)//;
-    $function =~ s/\s*(Java method)//;
-    $function =~ s/()//;
+    $function =~ s/\s*\(MEX-file\)//;
+    $function =~ s/\s*\(Java method\)//;
+    $function =~ s/\(\)//;
     
     my $OTHER_FUNCTION = OTHER_FUNCTION;
     if ($function =~ m/$OTHER_FUNCTION/) {
