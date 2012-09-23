@@ -239,6 +239,6 @@
     % bounding box
     \ifbound
         \pgfresetboundingbox
-        \path[use as bounding box, draw] ($(\pos)-(\theradius,\theradius)$) rectangle ($(\pos)+(\theradius,\theradius)$);%
+        \path[use as bounding box] ($(\pos)-(\theradius,\theradius)$) rectangle ($(\pos)+(\theradius,\theradius)$);%
     \fi
 }
