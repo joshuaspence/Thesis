@@ -174,40 +174,56 @@
 % \end{pieplots}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage{caption} % for \captionof{figure}
-\usepackage{pgf-pie} % for \pie
 \usepackage{subcaption} % for \captionof{subfigure}
+\usepackage{pgf-pie} % for \pie
 \usepackage{tikz} % for \tikzpicture
-\usepackage{xparse} % for \NewDocumentEnvironment
+\usetikzlibrary{calc}
 
 \makeatletter
-\newcounter{@sfcol}%
-\NewDocumentEnvironment{pieplots}{mm}{%
-    \setcounter{@sfcol}{0}%
-    \setcounter{subfigure}{0}%
-    \def\@sfsuffix{}%
-    %
-    \newcommand\pieplot[2]{%
-        \minipage{.3\textwidth}%
-            \captionsetup{type=subfigure}%
-            \centering%
-            ##2%
-            \@sfsuffix%
-            \captionof{subfigure}{##1}%
-        \endminipage%
-        %
-        \def\@sfsuffix{}%
-        \stepcounter{@sfcol}%
-        \ifnum\value{@sfcol}=2%
-            \def\@sfsuffix{\\}%
-            \setcounter{@sfcol}{0}%
-        \fi%
-    }%
-    %
-    \noindent\minipage{\textwidth}%
-        \captionsetup{type=figure}%
-}{%
-        \captionof{figure}{#2}%
-        \label{#1}%
-    \endminipage%
+\newenvironment{pieplots}[2]{%
+\newcommand\pieplot[2]{%
+\minipage[t]{.3\textwidth}%
+    \centering
+    {##2}%
+    \captionsetup{labelformat=parens,labelsep=space,skip=3pt}%
+    \captionof{subfigure}{##1}%
+    \vspace{1em}%
+\endminipage
+\hfil\ignorespaces
+}%
+%
+\setcounter{subfigure}{0}%
+\global\pieplots@starttrue
+\def\pieplots@label{#1}%
+\def\pieplots@caption{#2}%
+\setbox\pieplots@box=\vbox\bgroup\parindent=0pt \offinterlineskip \parfillskip=0pt%
 }
+{\par\egroup\pieplots@split}
+
+\newcommand\pieplots@split{%
+\ifvoid\pieplots@box
+\else
+    \vbadness10000
+    \setbox\pieplots@partialbox=\vsplit\pieplots@box to .9\textheight
+    \begin{figure}%
+    \ifpieplots@start
+    \else
+        \ContinuedFloat
+    \fi
+    \unvbox\pieplots@partialbox
+    \bigskip
+    \caption{\pieplots@caption \ifpieplots@start\else\space(continued)\fi}%
+    \ifpieplots@start
+        \label{\pieplots@label}%
+    \fi
+    \vfill
+    \end{figure}%
+    \global\pieplots@startfalse
+    \expandafter\pieplots@split
+\fi
+}%
+
+\newif\ifpieplots@start
+\newbox\pieplots@partialbox
+\newbox\pieplots@box
 \makeatother

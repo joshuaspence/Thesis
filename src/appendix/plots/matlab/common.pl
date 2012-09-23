@@ -208,7 +208,7 @@ if (basename($0) =~ m/all_datasets.tex.pl/) {
     my $colour_string = join(',', @the_colours);
     print TEX <<END_OF_TEX;
 \\begin{tikzpicture}
-    \\pie[text=nolegend, radius=1.5, color={$colour_string}]{
+    \\pie[bound, text=none, radius=1.5, color={$colour_string}]{
 END_OF_TEX
     
     # Data
