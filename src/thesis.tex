@@ -1,26 +1,22 @@
 \documentclass[a4paper]{report}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Warn about commands, classes and packages that 
-% are outdated and superseded.
-%     - Orthodox checks for pitfalls that are not
-%       technically incorrect.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Warn about commands, classes and packages that are outdated and superseded.
+%     - Orthodox checks for pitfalls that are not technically incorrect.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage[l2tabu,orthodox,abort]{nag}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Provides page numbers and headings at the top of each page.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \pagestyle{headings}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Packages
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage[noline,ruled]{algorithm2e}          % for algorithms
 \usepackage{amsfonts}                           % for formatting mathematical symbols
 \usepackage{amsmath,amssymb,amsthm}             % for math support
-\usepackage[language=australian]{biblatex}      % use biblatex instead of bibtex
-\usepackage{color}				                % for colours
 \usepackage{float}                              % for setting float specifiers
 \usepackage{gnuplot-lua-tikz}                   % for plots produced by GNUplot
 \usepackage{graphicx}                           % for graphics
@@ -30,7 +26,6 @@
 \usepackage{tikz}                               % for graphics
 \usepackage{url}                                % for web URLs
 \usepackage{verbatim}                           % for comment environment
-\usepackage{xparse}                             % for \NewDocumentEnvironment
 
 % My custom packages
 \usepackage{escape}                             % for \escape
@@ -38,16 +33,47 @@
 \usepackage{pieplots}                           % for \pieplots, \pieplot
 \usepackage{pgf-pie}                            % for \pie
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Glossary
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage[toc,xindy]{glossaries}
 \makeglossaries
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Additional PDF bookmarks
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{etoolbox} % for \pretocommand
+
+\makeatletter
+% Table of contents
+\pretocmd{\tableofcontents}{%
+    \if@openright\cleardoublepage\else\clearpage\fi
+    \pdfbookmark[0]{\contentsname}{toc}%
+}{}{}%
+
+% List of figures
+\pretocmd{\listoffigures}{%
+    \if@openright\cleardoublepage\else\clearpage\fi
+    \pdfbookmark[0]{\listfigurename}{lof}%
+}{}{}%
+
+% List of algorithms
+\pretocmd{\listofalgorithms}{%
+    \if@openright\cleardoublepage\else\clearpage\fi
+    \pdfbookmark[0]{\listalgorithmcfname}{loa}%
+}{}{}%
+
+% List of tables
+\pretocmd{\listoftables}{%
+    \if@openright\cleardoublepage\else\clearpage\fi
+    \pdfbookmark[0]{\listtablename}{lot}%
+}{}{}%
+\makeatother
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % To allow us to easily format a table row
 % See http://www.latex-community.org/forum/viewtopic.php?f=5&t=3293
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcolumntype{+}{>{\global\let\currentrowstyle\relax}}
 \newcolumntype{^}{>{\currentrowstyle}}
 \newcommand\rowstyle[1]{\gdef\currentrowstyle{#1}%
@@ -59,10 +85,11 @@
 	\hline \rowstyle{\bfseries} #1 \\\hline
 }
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Source code formatting
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\usepackage{listings}			    % for source code formatting
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{color}
+\usepackage{listings}
 
 % Custom colours
 \definecolor{darkGreen}{rgb}{0,0.6,0}
@@ -97,56 +124,37 @@
 }
 \lstloadlanguages{C,Matlab}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Gantt charts
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{tikz}
 \usetikzlibrary{calendar}
 \usepackage{pgfgantt}
 
-\usepackage{etoolbox}
-\makeatletter
-\pretocmd{\tableofcontents}{%
-    \if@openright\cleardoublepage\else\clearpage\fi
-    \pdfbookmark[0]{\contentsname}{toc}%
-}{}{}%
-
-\pretocmd{\listoffigures}{%
-    \if@openright\cleardoublepage\else\clearpage\fi
-    \pdfbookmark[0]{\listfigurename}{lof}%
-}{}{}%
-
-\pretocmd{\listofalgorithms}{%
-    \if@openright\cleardoublepage\else\clearpage\fi
-    \pdfbookmark[0]{\listalgorithmcfname}{loa}%
-}{}{}%
-
-\pretocmd{\listoftables}{%
-    \if@openright\cleardoublepage\else\clearpage\fi
-    \pdfbookmark[0]{\listtablename}{lot}%
-}{}{}%
-\makeatother
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Variables (to save retyping and reformatting 
-% these throughout the document)
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Variables (to save retyping and reformatting these throughout the document)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \input{variables}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Custom commands
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{listings} % for \lstinline
+
 \newcommand\HRule{\rule{\linewidth}{0.5mm}}
 \newcommand\degree{\ensuremath{^\circ}}
 \newcommand\command[1]{\lstinline|#1|}
 \newcommand\software[1]{``#1''}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % \begin{specifications}{DESCRIPTION}
 % \specificationGroup{LABEL}{GROUP_NAME}
 % \specification
 % \endspecificationGroup
 % \end{specifications}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{xparse} % for \NewDocumentEnvironment
+
 \makeatletter
 \NewDocumentEnvironment{specifications}{mm}{%
     \def\@hline{}%
@@ -178,6 +186,9 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % \dataSetDescription{NAME}{SIZE}{DIMENSIONALITY}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{escape} % for \escape
+\usepackage{graphicx} % for \includegraphics
+
 \newcommand\dataSetDescription[3]{%
 \begin{tabular}{|l|l|}%
     \tableHeader{Property & Value}%
@@ -189,7 +200,7 @@
 \begin{figure}[H]%
     \centering%
     \includegraphics[width=\textwidth]{datasets/#1}%
-    \caption{A PCA plot for the `\escape{#1}' data set.}%
+    \caption{A PCA plot for the `\escape{#1}' data set}%
     \label{dataSets:#1:pca}%
 \end{figure}%
 }
@@ -199,23 +210,25 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \graphicspath{{../img/}}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Title page options
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \title{\thesisTitle*{}}
 \author{\studentName*{}}
 \date{\thesisDate*{}}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Bibliography
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[language=australian]{biblatex} % use biblatex instead of bibtex
 \bibliography{thesis}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Glossary
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \input{acronym}
 \input{glossary}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{document}
@@ -245,11 +258,11 @@
                     shift=(current page.center)
                     ]
                 \tikzstyle{every node}=[font=\large]
-                \coordinate (name-pos)       at (-5.4, -1.6);
-                \coordinate (sid-pos)        at (-5.4, -3.0);
-                \coordinate (date-pos)       at (-5.4, -5.8);
-                \coordinate (uos-pos)        at (-7.4, -7.7);
-                \coordinate (assessment-pos) at (-7.4, -9.8);
+                \coordinate (name-pos)          at (-5.4, -1.6);
+                \coordinate (sid-pos)           at (-5.4, -3.0);
+                \coordinate (date-pos)          at (-5.4, -5.8);
+                \coordinate (uos-pos)           at (-7.4, -7.7);
+                \coordinate (assessment-pos)    at (-7.4, -9.8);
                 \node[anchor=west] (name)       at (name-pos)       {\studentName*{}};
                 \node[anchor=west] (sid)        at (sid-pos)        {\studentID*{}};
                 \node[anchor=west] (date)       at (date-pos)       {\today{}};
