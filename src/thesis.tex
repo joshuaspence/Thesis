@@ -17,6 +17,7 @@
 \usepackage[noline,ruled]{algorithm2e}          % for algorithms
 \usepackage{amsfonts}                           % for formatting mathematical symbols
 \usepackage{amsmath,amssymb,amsthm}             % for math support
+\usepackage{datetime}                           % for \formatdate
 \usepackage{float}                              % for setting float specifiers
 \usepackage{gnuplot-lua-tikz}                   % for plots produced by GNUplot
 \usepackage{graphicx}                           % for graphics
@@ -49,25 +50,25 @@
 \pretocmd{\tableofcontents}{%
     \if@openright\cleardoublepage\else\clearpage\fi
     \pdfbookmark[0]{\contentsname}{toc}%
-}{}{}%
+}{}{}
 
 % List of figures
 \pretocmd{\listoffigures}{%
     \if@openright\cleardoublepage\else\clearpage\fi
     \pdfbookmark[0]{\listfigurename}{lof}%
-}{}{}%
+}{}{}
 
 % List of algorithms
 \pretocmd{\listofalgorithms}{%
     \if@openright\cleardoublepage\else\clearpage\fi
     \pdfbookmark[0]{\listalgorithmcfname}{loa}%
-}{}{}%
+}{}{}
 
 % List of tables
 \pretocmd{\listoftables}{%
     \if@openright\cleardoublepage\else\clearpage\fi
     \pdfbookmark[0]{\listtablename}{lot}%
-}{}{}%
+}{}{}
 \makeatother
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -166,7 +167,7 @@
         \def\@hline{\\[1em]}%
     }%
     \newcommand\specification[2]{%
-        \@hline ##1 & ##2 %
+        \@hline ##1 & ##2%
         \def\@hline{\\}%
     }%
     %
@@ -188,22 +189,33 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage{escape} % for \escape
 \usepackage{graphicx} % for \includegraphics
+\usepackage{xparse} % for \NewDocumentEnvironment
 
-\newcommand\dataSetDescription[3]{%
-\begin{tabular}{|l|l|}%
-    \tableHeader{Property & Value}%
-    Name & \escape{#1} \\%
-    Size ($M$) & #2 \\%
-    Dimensionality ($N$) & #3 \\\hline%
-\end{tabular}%
-%
-\begin{figure}[H]%
-    \centering%
-    \includegraphics[width=\textwidth]{datasets/#1}%
-    \caption{A PCA plot for the `\escape{#1}' data set}%
-    \label{dataSets:#1:pca}%
-\end{figure}%
+\makeatletter
+\NewDocumentEnvironment{dataSetDescription}{m}{%
+    \def\@hline{}%
+    %
+    \newcommand\dataSetProperty[2]{%
+        \@hline ##1 & ##2%
+        \def\@hline{\\}%
+    }%
+    %
+    \def\tablewidth{8cm}%
+    \begin{tabular}{|+>{\bfseries}l|^p{\tablewidth}|}%
+        \tableHeader{Property & Value}%
+        \dataSetProperty{Identifier}{\escape{#1}}%
+}{%
+        \\\hline%
+    \end{tabular}%
+    %
+    \begin{figure}[H]%
+        \centering%
+        \includegraphics[width=\textwidth]{datasets/#1}%
+        \caption{A PCA plot for the `\escape{#1}' data set}%
+        \label{dataSets:#1:pca}%
+    \end{figure}%
 }
+\makeatother
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Graphics directory
