@@ -1,9 +1,10 @@
 In the computer and electronics world, computations are performed either in
-hardware or in software. Computer hardware provides highly optimized resources
-for quickly performing critical tasks, but is permanently configured to a single
-task or application. Computer software offers a flexible approach, but is orders
-of magnitude worse than a hardware implementation in terms of performance,
-silicon area efficiency and power consumption.
+hardware or in software (or in some combination of both!). Computer hardware
+provides highly optimized resources for quickly performing critical tasks, but
+is permanently configured to a single task or application. Computer software
+offers a flexible approach, but is orders of magnitude worse than a hardware
+implementation in terms of performance, silicon area efficiency and power
+consumption \cite{Hauck:2007}.
 
 \glspl{FPGA} are devices that combine the advantages of hardware implementations
 with the flexibility of software implementations. The computations are
@@ -20,3 +21,24 @@ and performance \cite{Hauck:2007}. However, while an integrated circuit design
 may take months to years to develop and have a multimillion-dollar price tag, an
 \gls{FPGA} design might only take days to create and cost tens to hundreds of
 dollars.
+
+The combination of the high perform of \glspl{ASIC} and the flexibility of
+microprocessors has made possible entirely new types of applications
+\cite{Hauck:2007}. In order to most effectively utilise the benefits from a
+hardware-software co-design, designers need to be aware of both hardware and
+software limitations and issues. Essentially, a designer must be aware of the
+hardware architecture that best supports a design, as well as the software flow
+that supports the design process.
+
+In many real-life situations, the performance of a software implementation is
+adequate, for one of several reason:
+\begin{itemize}
+    \item Efficient algorithms exist for solving the problem.
+    \item The complexity (size) of the majority of real-life data sets is
+        relatively small.
+    \item The system has sufficient resources that can be allocated to the
+        problem.
+\end{itemize}
+
+However in many other situations, the deficiencies in a software approach are
+not adequate ...
