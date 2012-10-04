@@ -50,8 +50,8 @@ $end_month   = $data->{end} - 1;
 $divisions   = $data->{divisions};
 my $cols     = ($end_month - $start_month + 1) * $divisions;
 print OUTPUT <<END;
-A Gantt chart showing the anticipated schedule for the project is shown in 
-\\autoref{fig:ganttChart}. This will be updated as the project progresses.
+A Gantt chart showing the anticipated schedule for the project is shown in
+\\autoref{ganttChart}. This will be updated as the project progresses.
 
 % Gantt chart
 \\begin{figure}[h]
@@ -100,7 +100,7 @@ print OUTPUT <<END;
         \\end{ganttchart}
     }
     \\caption{Schedule for thesis work}
-    \\label{fig:ganttChart}
+    \\label{ganttChart}
 \\end{figure}
 END
 

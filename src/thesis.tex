@@ -41,37 +41,6 @@
 \makeglossaries
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Additional PDF bookmarks
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\usepackage{etoolbox} % for \pretocommand
-
-\makeatletter
-% Table of contents
-\pretocmd{\tableofcontents}{%
-    \if@openright\cleardoublepage\else\clearpage\fi
-    \pdfbookmark[0]{\contentsname}{toc}%
-}{}{}
-
-% List of figures
-\pretocmd{\listoffigures}{%
-    \if@openright\cleardoublepage\else\clearpage\fi
-    \pdfbookmark[0]{\listfigurename}{lof}%
-}{}{}
-
-% List of algorithms
-\pretocmd{\listofalgorithms}{%
-    \if@openright\cleardoublepage\else\clearpage\fi
-    \pdfbookmark[0]{\listalgorithmcfname}{loa}%
-}{}{}
-
-% List of tables
-\pretocmd{\listoftables}{%
-    \if@openright\cleardoublepage\else\clearpage\fi
-    \pdfbookmark[0]{\listtablename}{lot}%
-}{}{}
-\makeatother
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % To allow us to easily format a table row
 % See http://www.latex-community.org/forum/viewtopic.php?f=5&t=3293
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -201,12 +170,12 @@
     }%
     %
     \def\tablewidth{8cm}%
-    \begin{tabular}{|+>{\bfseries}l|^p{\tablewidth}|}%
+    \begin{longtable}{|+>{\bfseries}l|^p{\tablewidth}|}%
         \tableHeader{Property & Value}%
         \dataSetProperty{Identifier}{\escape{#1}}%
 }{%
         \\\hline%
-    \end{tabular}%
+    \end{longtable}%
     %
     \begin{figure}[H]%
         \centering%
@@ -248,10 +217,11 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Title Page
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\pdfbookmark[0]{Preamble}{title}
+\pdfbookmark[1]{Title page}{title}
 \begin{titlepage}
 \clearpage
-\phantomsection
-\pdfbookmark[0]{Title page}{title}
+\label{title}
 \input{title-page}
 \end{titlepage}
 
@@ -259,8 +229,8 @@
 % Compliance Sheet
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \clearpage
-\phantomsection
-\pdfbookmark[0]{Compliance sheet}{compliance}
+\pdfbookmark[1]{Compliance sheet}{compliance}
+\label{compliance}
 \includepdf[
         scale=0.8,
         pagecommand={
@@ -287,7 +257,10 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Statement of Achievement
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\clearpage
+%\pdfbookmark[1]{Statement of Achievement}{statement-of-achievement}
 %\chapter*{Statement of Achievement}
+%\label{statement-of-achievement}
 % This is located in {chapter01/contributions}
 
 \pagenumbering{roman}
@@ -296,9 +269,9 @@
 % Acknowledgements
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \clearpage
-\phantomsection
-\pdfbookmark[0]{Acknowledgements}{acknowledgements}
+\pdfbookmark[1]{Acknowledgements}{acknowledgements}
 \chapter*{Acknowledgements}
+\label{acknowledgements}
 This project could not have been completed without the guidance of my project
 supervisor, \supervisorName{}. He always made himself available to assist me
 with the understanding of many concepts, which were both new and unknown. His
@@ -326,7 +299,10 @@ of my university studies.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Publications
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\clearpage
+\pdfbookmark[1]{Publications}{publications}
 \chapter*{Publications}
+\label{publications}
 This thesis is based on the following publications:
 \begin{enumerate}
 \item \fullcite{Vries:2010}
@@ -338,9 +314,9 @@ This thesis is based on the following publications:
 % Abstract
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \clearpage
-\phantomsection
-\pdfbookmark[0]{Abstract}{abstract}
+\pdfbookmark[1]{Abstract}{abstract}
 \begin{abstract}
+\label{abstract}
 The prediction of the stock market has become an issue of great interest in the
 areas of finance, mathematics and engineering; due mainly to the great potential
 financial gain. Researchers have devised various algorithms and differing
@@ -382,26 +358,37 @@ from \gitRepoHTTP{} (over HTTP) or \gitRepoSSH{} (over SSH).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Table of Contents
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\clearpage
+\pdfbookmark[0]{Contents}{toc}
+\renewcommand\contentsname{Table of Contents}
+\pdfbookmark[1]{\contentsname}{toc}
 \tableofcontents
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % List of Figures
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\clearpage
+\pdfbookmark[1]{\listfigurename}{lof}
 \listoffigures
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % List of Algorithms
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\clearpage
+\pdfbookmark[1]{\listalgorithmcfname}{loa}
 \listofalgorithms
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % List of Tables
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\clearpage
+\pdfbookmark[1]{\listtablename}{lot}
 \listoftables
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Glossary
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\clearpage
 \glsaddall
 \printglossary
 
