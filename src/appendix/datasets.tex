@@ -259,27 +259,65 @@ used throughout the project for testing and profiling.
 \section{segmentation}
 \label{sec:dataSets:segmentation}
 \begin{dataSetDescription}{segmentation}
-    %\dataSetProperty{Name}{}
-    %\dataSetProperty{Abstract}{}
-    %\dataSetProperty{Creators}{}
-    %\dataSetProperty{Donor}{}
-    %\dataSetProperty{Repository}{}
-    %\dataSetProperty{URL}{\url{}}
-    %\dataSetProperty{Date}{\formatdate{}{}{}}
+    \dataSetProperty{Name}{Image Segmentation Data}
+    \dataSetProperty{Creators}{Vision Group, University of Massachusetts}
+    \dataSetProperty{Donor}{Carla Brodley [Vision Group]}
+    \dataSetProperty{Repository}{School of Science and Technology, University of
+        New England}
+    \dataSetProperty{URL}{\url{http://turing.une.edu.au/~comp513/Data/segment-test.arff}}
+    \dataSetProperty{Date}{\formatdate{1}{11}{1990}}
     %
     \dataSetProperty{Number of instances ($M$)}{2100}
-    \dataSetProperty{Number of attributes ($N$)}{20}
-    %\dataSetProperty{Data set characteristics}{}
-    %\dataSetProperty{Attribute characteristics}{}
-    %\dataSetProperty{Attribute information}{
-    %    \begin{itemize}
-    %        \item 
-    %    \end{itemize}
-    %}
+    \dataSetProperty{Number of attributes ($N$)}{19 + 1 class attribute}
+    \dataSetProperty{Attribute information}{
+        \begin{itemize}
+            \item[region-centroid-col] The column of the center pixel of the
+                region.
+            \item[region-centroid-row] The row of the center pixel of the
+                region.
+            \item[region-pixel-count] The number of pixels in a region
+                (\ensuremath{=9}).
+            \item[short-line-density-5] The results of a line extraction
+                algorithm that counts how many lines of length 5 (any
+                orientation) with low contrast, less than or equal to 5, go
+                through the region.
+            \item[short-line-density-2] Same as \lstinline+short-line-density-5+
+                but counts lines of high contrast, greater than 5.
+            \item[vedge-mean] Measure the contrast of horizontally adjacent
+                pixels in the region. There are 6, the mean and standard
+                deviation are given.  This attribute is used as a vertical edge
+                detector.
+            \item[vegde-sd] See \lstinline+verge-mean+.
+            \item[hedge-mean] Measures the contrast of vertically adjacent
+                pixels. Used for horizontal line detection..
+            \item[hedge-sd] See \lstinline+hedge-mean+.
+            \item[intensity-mean] The average over the region of
+                \ensuremath{\left(R+G+B\right)/3}
+            \item[rawred-mean] The average over the region of the
+                \ensuremath{R} value.
+            \item[rawblue-mean] The average over the region of the
+                \ensuremath{B} value.
+            \item[rawgreen-mean] The average over the region of the
+                \ensuremath{G} value.
+            \item[exred-mean] Measure the excess red:
+                \ensuremath{\left(2R-\left(G+B\right)\right)}.
+            \item[exblue-mean] Measure the excess blue:
+                \ensuremath{\left(2B-\left(G+R\right)\right)}.
+            \item[exgreen-mean] Measure the excess green:
+                \ensuremath{\left(2G-\left(R+B\right)\right)}.
+            \item[value-mean] 3-d nonlinear transformation of RGB.
+            \item[saturation-mean] See \lstinline+value_mean+.
+            \item[hue-mean] See \lstinline+value_mean+.
+        \end{itemize}
+    }
     %
-    %\dataSetProperty{Data set information}{
-    %}
+    \dataSetProperty{Data set information}{
+    The instances were drawn randomly from a database of 7 outdoor images. The
+    images were handsegmented to create a classification for every pixel. Each
+    instance is a $3 \times 3$ region.
+    }
 \end{dataSetDescription}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % DATASET 11: spam_train
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -343,7 +381,7 @@ used throughout the project for testing and profiling.
 \label{sec:dataSets:pendigits}
 \begin{dataSetDescription}{pendigits}
     \dataSetProperty{Name}{Pen-Based Recognition of Handwritten Digits Data Set}
-    \dataSetProperty{Abstract}{Digit database of 250 samples from 44 writers}
+    \dataSetProperty{Abstract}{Digit database of 250 samples from 44 writers.}
     \dataSetProperty{Creators}{
         E. Alpaydin, Fevzi. Alimoglu
         [Department of Computer Engineering, Bogazici University]
@@ -359,9 +397,8 @@ used throughout the project for testing and profiling.
     \dataSetProperty{Attribute information}{
         \begin{itemize}
             \item All input attributes are integers in the range
-                $\left[0,\ldots,100\right]$.
-            \item The last attribute is the class code
-                $\left[0,\ldots,9\right]$.
+                $\left[0,100\right]$.
+            \item The last attribute is the class code $\left[0,9\right]$.
         \end{itemize}
     }
     %
@@ -481,37 +518,40 @@ used throughout the project for testing and profiling.
     \dataSetProperty{Attribute information}{
         Most of the attributes indicate whether a particular word or character
         was frequently occuring in the email. The run-length attributes
-        \ensuremath{\left[55,57\right]} measure the length of sequences of consecutive
+        $\left[55,57\right]$ measure the length of sequences of consecutive
         capital letters.
         \newline
         \begin{itemize}
-            \item 48 continuous real \ensuremath{\left[0,100\right]} attributes of type
-                ``word\_freq\_WORD'', equal to the percentage of words in the
-                email that match ``WORD''. A ``word'' in this case is any
-                string of alphanumeric characters bounded by non-alphanumeric
-                characters or end-of-string.
-            \item 6 continuous real \ensuremath{\left[0,100\right]} attributes of type
-                ``char\_freq\_CHAR'', equal to the percentage of characters in
-                the email that match ``CHAR''.
-            \item 1 continuous real \ensuremath{\left[1,\ldots\right]} attribute of type
-                ``capital\_run\_length\_average'', equal to the average length
-                of uninterrupted sequences of capital letters.
-            \item 1 continuous integer \ensuremath{\left[1,\ldots\right]} attribute of
-                type ``capital\_run\_length\_longest'', equal to the length of
-                longest uninterrupted sequence of capital letters.
-            \item 1 continuous integer \ensuremath{\left[1,\ldots\right]} attribute of
-                type ``capital\_run\_length\_total'', equal to the sum of length
-                of uninterrupted sequences of capital letters.
-            \item 1 nominal \ensuremath{\left\{0,1\right\}} class attribute of type
-                ``spam'', which denotes whether the email was considered spam
-                (\ensuremath{1}) or not (\ensuremath{0}), i.e. unsolicited commercial e-mail).
+            \item 48 continuous real \ensuremath{\left[0,100\right]} attributes
+                of type \lstinline+word_freq_WORD+, equal to the percentage of
+                words in the email that match \lstinline+WORD+. A
+                \lstinline+word+ in this case is any string of alphanumeric
+                characters bounded by non-alphanumeric characters or
+                end-of-string.
+            \item 6 continuous real \ensuremath{\left[0,100\right]} attributes
+                of type \lstinline+char_freq_CHAR+, equal to the percentage of
+                characters in the email that match \lstinline+CHAR+.
+            \item 1 continuous real \ensuremath{\left[1,\ldots\right]} attribute
+                of type \lstinline+capital_run_length_average+, equal to the
+                average length of uninterrupted sequences of capital letters.
+            \item 1 continuous integer \ensuremath{\left[1,\ldots\right]}
+                attribute of type \lstinline+capital_run_length_longest+, equal
+                to the length of longest uninterrupted sequence of capital
+                letters.
+            \item 1 continuous integer \ensuremath{\left[1,\ldots\right]}
+                attribute of type \lstinline+capital_run_length_total+, equal to
+                the sum of length of uninterrupted sequences of capital letters.
+            \item 1 nominal \ensuremath{\left\{0,1\right\}} class attribute of
+                type \lstinline+spam+, which denotes whether the email was
+                considered spam (\ensuremath{1}) or not (\ensuremath{0}), i.e.\ 
+                unsolicited commercial e-mail).
         \end{itemize}
     }
     %
     \dataSetProperty{Data set information \cite{Frank:2010}}{
-        The collection of ``spam'' emails came from a postmaster, as well as
-        from individuals who had filed spam. The collection of ``non-spam''
-        emails came from filed work and personal emails.
+        The collection of \lstinline+spam+ emails came from a postmaster, as
+        well as from individuals who had filed spam. The collection of
+        \lstinline+non-spam+ emails came from filed work and personal emails.
     }
 \end{dataSetDescription}
 
@@ -565,7 +605,7 @@ used throughout the project for testing and profiling.
         a file of 20000 unique stimuli. Each stimulus was converted into 16
         primitive numerical attributes (statistical moments and edge counts)
         which were then scaled to fit into a range of integer values
-        \ensuremath{\left[0,15\right]}.
+        $\left[0,15\right]$.
     }
 \end{dataSetDescription}
 
@@ -575,7 +615,7 @@ used throughout the project for testing and profiling.
 \section{mesh\_network}
 \label{sec:dataSets:mesh_network}
 \begin{dataSetDescription}{mesh_network}
-    %\dataSetProperty{Name}{}
+    \dataSetProperty{Name}{NICTA Wireless Mesh Network}
     %\dataSetProperty{Abstract}{}
     %\dataSetProperty{Creators}{}
     %\dataSetProperty{Donor}{}
@@ -593,8 +633,14 @@ used throughout the project for testing and profiling.
     %    \end{itemize}
     %}
     %
-    %\dataSetProperty{Data set information}{
-    %}
+    \dataSetProperty{Data set information}{
+        The NICTA wireless mesh network has seven nodes deployed at the
+        University of Sydney. It used a traffic generator to simulate the
+        traffic on the network. Packets were aggregated into oneminute time bins
+        and the data were collected in 24 hours. There were 391 OD flows and
+        1270 time bins. Four anomalies were introduced to the network where
+        three of them were DOS attacks and one was a ping flood.
+    }
 \end{dataSetDescription}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -628,8 +674,9 @@ used throughout the project for testing and profiling.
             \item [fLength] Major axis of ellipse (in millimetres).
             \item [fWidth] Minor axis of ellipse (in millimetres).
             \item [fSize] Common logarithm of sum of content of all pixels.
-            \item [fConc] Ratio of sum of two highest pixels over ``fSize''.
-            \item [fConc1] Ratio of highest pixel over ``fSize''.
+            \item [fConc] Ratio of sum of two highest pixels over
+                \lstinline+fSize+.
+            \item [fConc1] Ratio of highest pixel over \lstinline+fSize+.
             \item [fAsym] Distance from highest pixel to center, projected onto
                 major axis (in millimetres).
             \item [fM3Long] Third root of third moment along major axis (in
@@ -691,29 +738,31 @@ used throughout the project for testing and profiling.
     \dataSetProperty{Attribute information}{
         \begin{description}
             \item[molecule\_name] Symbolic name of each molecule. Musks have
-                names such as ``MUSK-188''. Non-musks have names such as
-                ``NON-MUSK-jp13''.
+                names such as \lstinline+MUSK-188+. Non-musks have names such as
+                \lstinline+NON-MUSK-jp13+.
             \item[conformation\_name] Symbolic name of each conformation. These
-                have the format ``MOL\_ISO+CONF'', where ``MOL'' is the
-                molecule number, ``ISO'' is the stereoisomer number
-                (usually 1), and ``CONF'' is the conformation number.
-            \item[\ensuremath{\left\{f_{1},\ldots,f_{162}\right\}}] These are ``distance
-                features'' along rays. The distances are measured in hundredths
-                of Angstroms. The distances may be negative or positive, since
-                they are actually measured relative to an origin placed along
-                each ray. The origin was defined by a ``consensus musk'' surface
-                that is no longer used. Hence, any experiments with the data
-                should treat these feature values as lying on an arbitrary
-                continuous scale. In particular, the algorithm should not make
-                any use of the zero point or the sign of each feature value.
-            \item[\ensuremath{f_{163}} (``OXY-DIS'')] This is the distance of the
+                have the format \lstinline|MOL_ISO+CONF|, where \lstinline+MOL+
+                is the molecule number, \lstinline+ISO+ is the stereoisomer
+                number (usually 1), and \lstinline+CONF+ is the conformation
+                number.
+            \item[\ensuremath{\left\{f_{1},\ldots,f_{162}\right\}}] These are
+                ``distance features'' along rays. The distances are measured in
+                hundredths of Angstroms. The distances may be negative or
+                positive, since they are actually measured relative to an origin
+                placed along each ray. The origin was defined by a ``consensus
+                musk'' surface that is no longer used. Hence, any experiments
+                with the data should treat these feature values as lying on an
+                arbitrary continuous scale. In particular, the algorithm should
+                not make any use of the zero point or the sign of each feature
+                value.
+            \item[\ensuremath{f_{163}} (OXY-DIS)] This is the distance of the
                 oxygen atom in the molecule to a designated point in 3-space.
-            \item[\ensuremath{f_{164}} (``OXY-X'')] \ensuremath{X}-displacement from the
-                designated point.
-            \item[\ensuremath{f_{165}} (``OXY-Y'')] \ensuremath{Y}-displacement from the
-                designated point.
-            \item[\ensuremath{f_{166}} (``OXY-Z'')] \ensuremath{Z}-displacement from the
-                designated point.
+            \item[\ensuremath{f_{164}} (OXY-X)] \ensuremath{X}-displacement from
+                the designated point.
+            \item[\ensuremath{f_{165}} (OXY-Y)] \ensuremath{Y}-displacement from
+                the designated point.
+            \item[\ensuremath{f_{166}} (OXY-Z)] \ensuremath{Z}-displacement from
+                the designated point.
             \item[class] \ensuremath{0} if non-musk; \ensuremath{1} if musk.
         \end{description}
     }
@@ -751,59 +800,13 @@ used throughout the project for testing and profiling.
     \dataSetProperty{Data set characteristics}{Multivariate, Spatial}
     \dataSetProperty{Attribute characteristics}{Categorical}
     \dataSetProperty{Attribute information}{
-        The columns of the board are labelled \ensuremath{\left\{a,b,c,d,e,f,g\right\}}
+        The columns of the board are labelled $\left\{a,b,c,d,e,f,g\right\}$
         (from left to right). The rows of the board are labelled
-        \ensuremath{\left\{1,2,3,4,5,6\right\}} (from bottom to top).
-        \newline
-        \ensuremath{x} is the first player and \ensuremath{o} is the second. \ensuremath{b} repesents a blank
-        square. The outcome class is thegame theoretical value for the first
-        player.
-        \newline
-        \begin{description}
-            \item[a1] \ensuremath{\left\{x,o,b\right\}}
-            \item[a2] \ensuremath{\left\{x,o,b\right\}}
-            \item[a3] \ensuremath{\left\{x,o,b\right\}}
-            \item[a4] \ensuremath{\left\{x,o,b\right\}}
-            \item[a5] \ensuremath{\left\{x,o,b\right\}}
-            \item[a6] \ensuremath{\left\{x,o,b\right\}}
-            \item[b1] \ensuremath{\left\{x,o,b\right\}}
-            \item[b2] \ensuremath{\left\{x,o,b\right\}}
-            \item[b3] \ensuremath{\left\{x,o,b\right\}}
-            \item[b4] \ensuremath{\left\{x,o,b\right\}}
-            \item[b5] \ensuremath{\left\{x,o,b\right\}}
-            \item[b6] \ensuremath{\left\{x,o,b\right\}]
-            \item[c1] \ensuremath{\left\{x,o,b\right\}}
-            \item[c2] \ensuremath{\left\{x,o,b\right\}}
-            \item[c3] \ensuremath{\left\{x,o,b\right\}}
-            \item[c4] \ensuremath{\left\{x,o,b\right\}}
-            \item[c5] \ensuremath{\left\{x,o,b\right\}}
-            \item[c6] \ensuremath{\left\{x,o,b\right\}}
-            \item[d1] \ensuremath{\left\{x,o,b\right\}}
-            \item[d2] \ensuremath{\left\{x,o,b\right\}}
-            \item[d3] \ensuremath{\left\{x,o,b\right\}}
-            \item[d4] \ensuremath{\left\{x,o,b\right\}}
-            \item[d5] \ensuremath{\left\{x,o,b\right\}}
-            \item[d6] \ensuremath{\left\{x,o,b\right\}}
-            \item[e1] \ensuremath{\left\{x,o,b\right\}}
-            \item[e2] \ensuremath{\left\{x,o,b\right\}}
-            \item[e3] \ensuremath{\left\{x,o,b\right\}}
-            \item[e4] \ensuremath{\left\{x,o,b\right\}}
-            \item[e5] \ensuremath{\left\{x,o,b\right\}}
-            \item[e6] \ensuremath{\left\{x,o,b\right\}}
-            \item[f1] \ensuremath{\left\{x,o,b\right\}}
-            \item[f2] \ensuremath{\left\{x,o,b\right\}}
-            \item[f3] \ensuremath{\left\{x,o,b\right\}}
-            \item[f4] \ensuremath{\left\{x,o,b\right\}}
-            \item[f5] \ensuremath{\left\{x,o,b\right\}}
-            \item[f6] \ensuremath{\left\{x,o,b\right\}}
-            \item[g1] \ensuremath{\left\{x,o,b\right\}}
-            \item[g2] \ensuremath{\left\{x,o,b\right\}}
-            \item[g3] \ensuremath{\left\{x,o,b\right\}}
-            \item[g4] \ensuremath{\left\{x,o,b\right\}}
-            \item[g5] \ensuremath{\left\{x,o,b\right\}}
-            \item[g6] \ensuremath{\left\{x,o,b\right\}}
-            \item[Class] \ensuremath{\left\{win,loss,draw\right\}}
-        \end{description}
+        $\left\{1,2,3,4,5,6\right\}$ (from bottom to top). There are 42 fields
+        representing the board positions $\left(row,column\right)$. $x$ is the
+        first player and $o$ is the second. $b$ repesents a blank square. The
+        \lstinline+outcome+ class is the game theoretical value for the first
+        player, $\left\{win,draw,loss\right\}$.
     }
     %
     \dataSetProperty{Data set information \cite{Frank:2010}}{
