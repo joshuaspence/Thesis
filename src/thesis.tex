@@ -2,7 +2,7 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Warn about commands, classes and packages that are outdated and superseded.
-%     - Orthodox checks for pitfalls that are not technically incorrect.
+% Orthodox checks for pitfalls that are not technically incorrect.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage[l2tabu,orthodox,abort]{nag}
 
@@ -47,12 +47,12 @@
 \newcolumntype{+}{>{\global\let\currentrowstyle\relax}}
 \newcolumntype{^}{>{\currentrowstyle}}
 \newcommand\rowstyle[1]{\gdef\currentrowstyle{#1}%
-	#1\ignorespaces
+	#1\ignorespaces%
 }
 
 % \tableHeader{...}
 \newcommand\tableHeader[1]{%
-	\hline \rowstyle{\bfseries} #1 \\\hline
+	\hline \rowstyle{\bfseries} #1 \\\hline%
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -110,23 +110,31 @@
 % Custom commands
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage{listings} % for \lstinline
+\usepackage{xparse} % for \NewDocumentCommand
 
-\newcommand\HRule{\rule{\linewidth}{0.5mm}}
-\newcommand\degree{\ensuremath{^\circ}}
-\newcommand\command[1]{\lstinline|#1|}
-\newcommand\software[1]{``#1''}
+% \command{CMD}
+\newcommand\command[1]{\lstinline`#1`}
+
+% \dataset{DATASET}
+\newcommand\dataset[1]{`\escape{#1}'}
+
+% \hostname{HOSTNAME}
+\newcommand\hostname[1]{\emph{#1}}
+
+% \software{NAME}[CMD]
+\NewDocumentCommand\software{mo}{``#1'' \IfNoValueTF{#2}{}{(\command{#2})}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% \begin{specifications}{DESCRIPTION}
-% \specificationGroup{LABEL}{GROUP_NAME}
-% \specification
+% \begin{specifications}
+% \specificationGroup{GROUP_NAME}
+% \specification{NAME}{VALUE}
 % \endspecificationGroup
 % \end{specifications}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage{xparse} % for \NewDocumentEnvironment
 
 \makeatletter
-\NewDocumentEnvironment{specifications}{mm}{%
+\NewDocumentEnvironment{specifications}{}{%
     \def\@hline{}%
     %
     \newenvironment{specificationGroup}[1]{%
@@ -140,31 +148,28 @@
         \def\@hline{\\}%
     }%
     %
-    \begin{table}[H]%
-        \centering%
-        \begin{tabular}{|+>{\bfseries}l|^p{8cm}|}%
-            \tableHeader{Item & Specification}%
+    \begin{tabular}{|+>{\bfseries}l|^p{8cm}|}%
+        \tableHeader{Item & Specification}%
 }{%
-            \\\hline%
-        \end{tabular}%
-        \caption{#2}%
-        \label{#1}%
-    \end{table}%
+        \\\hline%
+    \end{tabular}%
 }
 \makeatother
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% \dataSetDescription{NAME}{SIZE}{DIMENSIONALITY}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \begin{datasetDescription}{DATASET}
+% \datasetProperty{NAME}{VALUE}
+% \end{datasetDescription}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage{escape} % for \escape
 \usepackage{graphicx} % for \includegraphics
 \usepackage{xparse} % for \NewDocumentEnvironment
 
 \makeatletter
-\NewDocumentEnvironment{dataSetDescription}{m}{%
+\NewDocumentEnvironment{datasetDescription}{m}{%
     \def\@hline{}%
     %
-    \newcommand\dataSetProperty[2]{%
+    \newcommand\datasetProperty[2]{%
         \@hline ##1 & ##2%
         \def\@hline{\\}%
     }%
@@ -172,7 +177,7 @@
     \def\tablewidth{8cm}%
     \begin{longtable}{|+>{\bfseries}l|^p{\tablewidth}|}%
         \tableHeader{Property & Value}%
-        \dataSetProperty{Identifier}{\escape{#1}}%
+        \datasetProperty{Identifier}{\escape{#1}}%
 }{%
         \\\hline%
     \end{longtable}%

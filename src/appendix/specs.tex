@@ -1,16 +1,15 @@
 All test results contained in this thesis were performed on one of two servers 
 with the following specifications. The following specifications were obtained 
-using the \software{Hardware Lister} (\command{lshw}) tool.
+using the \software{Hardware Lister}[lshw] tool.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % HOSTNAME: tuna
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Hostname: tuna}
-The specifications for the \emph{tuna} are detailed in 
-\autoref{specs:tuna:hardware}, \autoref{specs:tuna:software} and
-\autoref{specs:tuna:os}.
+The specifications for the \hostname{tuna} are detailed below.
 
-\begin{specifications}{specs:tuna:hardware}{Hardware specifications for tuna}
+\subsection{Hardware specifications}
+\begin{specifications}
     \specificationGroup{CPU}
         \specification{Product}{Intel\textregistered Xeon\textregistered CPU E5506 @ 2.13GHz}
         \specification{Size}{2133 MHz}
@@ -39,13 +38,15 @@ The specifications for the \emph{tuna} are detailed in
     \endspecificationGroup
 \end{specifications}
 
-\begin{specifications}{specs:tuna:software}{Software specifications for tuna}
+\subsection{Software specifications}
+\begin{specifications}
     \specification{gcc}{gcc (Ubuntu/Linaro 4.6.1-9ubuntu3) 4.6.1}
     \specification{ld}{GNU ld (GNU Binutils for Ubuntu) 2.21.53.20110810}
     \specification{MATLAB}{MATLAB 7.13.0.564 (R2011b)}
 \end{specifications}
 
-\begin{specifications}{specs:tuna:os}{Operating System specifications for tuna}
+\subsection{Operating System specifications}
+\begin{specifications}
     \specification{Operating System}{Ubuntu 11.10}
     \specification{Platform}{x86\_64}
     \specification{Kernel version}{3.0.0-17-generic}
@@ -55,11 +56,10 @@ The specifications for the \emph{tuna} are detailed in
 % HOSTNAME: ubuntu-vm
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Hostname: ubuntu-vm}
-The specifications for the \emph{ubuntu-vm} are detailed in 
-\autoref{specs:ubuntu-vm:hardware}, \autoref{specs:ubuntu-vm:software}
-and \autoref{specs:ubuntu-vm:os}.
+The specifications for the \hostname{ubuntu-vm} are detailed below.
 
-\begin{specifications}{specs:ubuntu-vm:hardware}{Hardware specifications for ubuntu-vm}
+\subsection{Hardware specifications}
+\begin{specifications}
     \specificationGroup{CPU}
         \specification{Product}{Intel\textregistered Core\texttrademark i7 CPU 950 @ 3.07GHz}
         \specification{Size}{3067 MHz}
@@ -84,13 +84,15 @@ and \autoref{specs:ubuntu-vm:os}.
     \endspecificationGroup
 \end{specifications}
 
-\begin{specifications}{specs:ubuntu-vm:software}{Software specifications for ubuntu-vm}
+\subsection{Software specifications}
+\begin{specifications}
     \specification{gcc}{gcc (Ubuntu/Linaro 4.6.1-9ubuntu3) 4.6.1}
     \specification{ld}{GNU ld (GNU Binutils for Ubuntu) 2.22}
     \specification{MATLAB}{MATLAB 7.14.0.739 (R2012a)}
 \end{specifications}
 
-\begin{specifications}{specs:ubuntu-vm:os}{Operating System specifications for ubuntu-vm}
+\subsection{Operating System specifications}
+\begin{specifications}
     \specification{Operating System}{Ubuntu 12.04}
     \specification{Platform}{x86\_64}
     \specification{Kernel version}{3.2.0-29-generic}
