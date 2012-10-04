@@ -1,6 +1,6 @@
 % INTRODUCTION
 \subsection{Introduction}
-\label{sec:commuteTimeIntroduction}
+\label{commuteTime:introduction}
 Commute time is a robust distance metric derived from a random walk on graphs
 \cite{Khoa:2012}. In \citetitle{Khoa:2012}, \citeauthor{Khoa:2012} demonstrated
 how commute time can be used as a distance measure for data mining tasks such as
@@ -10,9 +10,9 @@ graph Laplacian, making it impractical for large graphs.
 
 A major advantage of using commute time as a distance metric for outlier
 detection is that it effectively captures not only the distances between data
-points but also the density of the data \citeNeeded{}. This property results in
-a distance metric that can be effectively used to capture global, local and
-group anomalies.
+points but also the density of the data \citeNeeded. This property results in a
+distance metric that can be effectively used to capture global, local and group
+anomalies.
 
 The commute time between two nodes $i$ and $j$ in a graph is the number of steps
 that a random walk, starting from $i$ will take to visit $j$ and then come back
@@ -25,15 +25,15 @@ distances are used and thus the limitations of these metrics can be avoided.
 
 % LIMITATIONS
 \subsection{Limitations}
-\label{sec:commuteTime:limitations}
+\label{commuteTime:limitations}
 The computation of commute time requires the eigen decomposition (see
 \autoref{sec:eigenDecomposition}) of the graph Laplacian matrix (see
 \autoref{sec:laplacianMatrices}), a computation which takes $O(n^{3})$ time and
-thus is not practical for large graphs \citeNeeded{}. Methods to approximate the
+thus is not practical for large graphs \citeNeeded. Methods to approximate the
 commute time to reduce the computational time are required in order to
 efficiently use commute time in large datasets.
 
 % ANOMALY DETECTION USING COMMUTE TIME
 \subsection{Anomaly Detection Using Commute Time}
-\label{sec:anomalyDetectionUsingCommuteTime}
+\label{commuteTime:anomalyDetection}
 % TODO

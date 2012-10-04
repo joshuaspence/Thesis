@@ -122,7 +122,7 @@
 \newcommand\hostname[1]{\emph{#1}}
 
 % \software{NAME}[CMD]
-\NewDocumentCommand\software{mo}{``#1'' \IfNoValueTF{#2}{}{(\command{#2})}}
+\NewDocumentCommand\software{om}{``#2''\IfNoValueTF{#1}{}{ (\command{#1})}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % \begin{specifications}
@@ -191,9 +191,9 @@
 }
 \makeatother
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Graphics directory
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \graphicspath{{../img/}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -259,14 +259,16 @@
         }
     ]{../forms/compliance_sheet}
 
+\begin{comment}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Statement of Achievement
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%\clearpage
-%\pdfbookmark[1]{Statement of Achievement}{statement-of-achievement}
-%\chapter*{Statement of Achievement}
-%\label{statement-of-achievement}
+\clearpage
+\pdfbookmark[1]{Statement of Achievement}{statement-of-achievement}
+\chapter*{Statement of Achievement}
+\label{statement-of-achievement}
 % This is located in {chapter01/contributions}
+\end{comment}
 
 \pagenumbering{roman}
 
@@ -278,8 +280,8 @@
 \chapter*{Acknowledgements}
 \label{acknowledgements}
 This project could not have been completed without the guidance of my project
-supervisor, \supervisorName{}. He always made himself available to assist me
-with the understanding of many concepts, which were both new and unknown. His
+supervisor, \supervisorName. He always made himself available to assist me with
+the understanding of many concepts, which were both new and unknown. His
 expertise in the field was a great asset and greatly contributed to my own
 understanding of the ideas explored in this thesis. His support and guidance was
 invaluable, and were instrumental to the success of my project.
@@ -290,16 +292,16 @@ generous enough to lend their own support and expertise in order to provide an
 understanding of the implemented random projection algorithms.
 
 Additionally, I must thank \getPerson{Frechtling} for his assistance and advice
-throughout the project. He assisted me with software packages including ``Xilinx
-AutoESL'' and ``Altera ModelSim'', as well as offering valuable advice regarding
-my future professional career.
+throughout the project. He assisted me with software packages including
+\software{Xilinx AutoESL} and \software{Altera ModelSim}, as well as offering
+valuable advice regarding my future professional career.
 
 Last but not least, none of this would have been possible without the support
 and care of my family. My immediate family, to whom I deeply appreciate, always
 has been a continuous source of support and encouragement throughout my
 university degree. And I would like to express my gratitude to my girlfriend,
-Amelia Heinrichs, for her love, patience and support throughout the final year
-of my university studies.
+\getPerson{Heinrichs}, for her love, patience and support throughout the final
+year of my university studies.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Publications
@@ -348,7 +350,7 @@ learning algorithms such as neural networks to more accurately model and predict
 the stock exchange data by ignoring anomalous data, which likely doesn't effect
 the state of the model to any significant degree.
 
-\getPerson{Chawla} from the \universityName{} has in recent years conducted and
+\getPerson{Chawla} from the \universityName has in recent years conducted and
 supervised new and exciting research oriented around random projections. In
 particular, \getPerson{Khoa}, under the supervision of \getPerson{Chawla}
 evaluated the use of traditional distance metrics, such as Euclidean distance
@@ -357,7 +359,7 @@ and Mahalanobis distance, in the application of local anomaly detection.
 random walks on graphs, in anomaly detection.
 
 The source code that was used throughout this project can be freely downloaded
-from \gitRepoHTTP{} (over HTTP) or \gitRepoSSH{} (over SSH).
+from \gitRepoHTTP (over HTTP) or \gitRepoSSH (over SSH).
 \end{abstract}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

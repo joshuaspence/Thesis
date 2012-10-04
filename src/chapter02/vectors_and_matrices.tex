@@ -1,6 +1,6 @@
 % EIGENVECTORS AND EIGENVALUES
 \subsection{Eigenvectors and Eigenvalues}
-\label{sec:eigenvectorsAndEigenvalues}
+\label{vectorsAndMatrices:eigen}
 This section will briefly recall some basic definitions of eigenvectors and
 eigenvalues, as well as some of their basic properties.
 
@@ -39,12 +39,12 @@ M = MVV^{T} = V{\Lambda}V^{T} = \sum_{i} \lambda_{i}\mathbf{v_{i}}\mathbf{v_{i}^
 
 % EIGEN DECOMPOSITION
 \subsection{Eigen decomposition}
-\label{sec:eigenDecomposition}
+\label{vectorsAndMatrices:eigenDecomposition}
 % TODO
 
 % LAPLACIAN MATRICES
 \subsection{Laplacian Matrices}
-\label{sec:laplacianMatrices}
+\label{vectorsAndMatrices:laplacian}
 \nocite{Berkeley:1999,Pati:2011,Spielman:2006}
 Recall that a weighted, undirected graph $G = (V,E,w)$ is essentially an
 undirected graph $G = (V,E)$ along with a function $w : E \rightarrow
@@ -53,7 +53,7 @@ undirected graph $G = (V,E)$ along with a function $w : E \rightarrow
 The adjacency matrix of a weighted graph $G$ is be denoted $A_{G}$, and is
 given by:
 \begin{equation}
-A_{G}(i,j) := 
+A_{G}(i,j) :=
     \left\{
         \begin{array}{ll}
             \mathit{w}(i,j) &   \quad \text{if $(i,j) \in E$}\\
@@ -76,7 +76,7 @@ L_{G} = D_{G} - A_{G}
 
 For a vector $\textbf{x} \in \Re^{V}$, the Laplacian quadratic form of $G$ is:
 \begin{equation}
-\label{eqn:laplacianQuadraticForm}
+\label{laplacianQuadraticForm}
 \textbf{x}^{T} L \textbf{x} = \sum_{(u,v) \in E} w_{u,v}(\textbf{x}(u) - \textbf{x}(v))^2
 \end{equation}
 
@@ -117,6 +117,7 @@ L_{G} := \sum_{(u,v) \in E} w(u,v)L_{G_{u,v}}
 \end{equation}
 
 \subsubsection{Properties}
+\label{vectorsAndMatrices:laplacian:properties}
 Laplacian matrices of graphs are symmetric, have zero row-sums, and have
 nonpositive off-diagonal entries. We call any matrix that satisfies these
 properties a Laplacian matrix, as there always exists some graph for which it is
@@ -159,6 +160,7 @@ connectivity of $G$. $\lambda_{2} > 0$ if and only if $G$ is connected.
 \end{itemize}
 
 \subsubsection{Applications}
+\label{vectorsAndMatrices:laplacian:applications}
 An interesting application of Laplacian matrices is that of modelling electrical
 flow in a network resistors. In this model, the vertices of the graph correspond
 to points at which current can be added to or removed from the circuit. Edges in

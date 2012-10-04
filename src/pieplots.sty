@@ -1,29 +1,27 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Some LaTeX commands for showing multiple pie charts.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 \NeedsTeXFormat{LaTeX2e}[1999/12/01]
 \ProvidesPackage{pieplots}
 
-\RequirePackage{caption} % for \captionof{figure}
-\RequirePackage{color}
+\RequirePackage{caption}    % for \captionof{figure}
+\RequirePackage{color}      % for coloured pie plots
 \RequirePackage{subcaption} % for \captionof{subfigure}
-\RequirePackage{pgf-pie} % for \pie
-\RequirePackage{tikz} % for \tikzpicture
-\usetikzlibrary{calc}
+\RequirePackage{pgf-pie}    % for \pie
+\RequirePackage{tikz}       % for \tikzpicture
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % \pieplot{CAPTION}{CONTENT}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand\pieplot[2]{%
-\minipage[t]{.3\textwidth}%
-    \centering
-    #2%
-    \captionsetup{type=subfigure,labelformat=parens,labelsep=space,skip=3pt,list=false}%
-    \captionof{subfigure}{#1}%
-    \vspace{1em}%
-\endminipage
-\hfil\ignorespaces
+    \minipage[t]{.3\textwidth}%
+        \centering%
+        #2%
+        \captionsetup{type=subfigure,labelformat=parens,labelsep=space,skip=3pt,list=false}%
+        \captionof{subfigure}{#1}%
+        \vspace{1em}%
+    \endminipage
+    \hfil\ignorespaces
 }%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -31,30 +29,34 @@
 % \end{pieplots}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newenvironment{pieplots}[2]{%
-\setcounter{subfigure}{0}%
-\global\pieplots@starttrue
-\def\pieplots@label{#1}%
-\def\pieplots@caption{#2}%
-\setbox\pieplots@box=\vbox\bgroup\parindent=0pt \offinterlineskip \parfillskip=0pt%
+    \setcounter{subfigure}{0}%
+    \global\pieplots@starttrue
+    \def\pieplots@label{#1}%
+    \def\pieplots@caption{#2}%
+    \setbox\pieplots@box=\vbox\bgroup\parindent=0pt \offinterlineskip \parfillskip=0pt%
+}{%
+    \par\egroup\pieplots@split%
 }
-{\par\egroup\pieplots@split}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Command to split pie plots onto a new page when the current page is full.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand\pieplots@split{%
-\ifvoid\pieplots@box
-\else
-    \vbadness10000
-    \setbox\pieplots@partialbox=\vsplit\pieplots@box to .9\textheight
-    \begin{figure}%
-    \ifpieplots@start\else\ContinuedFloat\fi
-    \unvbox\pieplots@partialbox
-    \bigskip
-    \caption{\pieplots@caption \ifpieplots@start\else\space(continued)\fi}%
-    \ifpieplots@start\label{\pieplots@label}\fi
-    \vfill
-    \end{figure}%
-    \global\pieplots@startfalse
-    \expandafter\pieplots@split
-\fi
+    \ifvoid\pieplots@box%
+    \else%
+        \vbadness10000%
+        \setbox\pieplots@partialbox=\vsplit\pieplots@box to .9\textheight%
+        \begin{figure}%
+        \ifpieplots@start\else\ContinuedFloat\fi%
+        \unvbox\pieplots@partialbox%
+        \bigskip%
+        \caption{\pieplots@caption \ifpieplots@start\else\space(continued)\fi}%
+        \ifpieplots@start\label{\pieplots@label}\fi%
+        \vfill%
+        \end{figure}%
+        \global\pieplots@startfalse%
+        \expandafter\pieplots@split%
+    \fi%
 }%
 
 \newif\ifpieplots@start

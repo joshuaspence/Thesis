@@ -11,88 +11,14 @@
 \NeedsTeXFormat{LaTeX2e}[1999/12/01]
 \ProvidesPackage{pgf-pie}
 
-\RequirePackage{tikz}
-\RequirePackage{ifthen}
-\RequirePackage{scalefnt}
+\RequirePackage{tikz}       % for drawing commands
+\usetikzlibrary{calc}       % for coordinate addition and subtraction
+\RequirePackage{ifthen}     % for \ifthenelse
+\RequirePackage{scalefnt}   % for \scalefont
 
-% args:
-% #1: begin angle
-% #2: end angle
-% #3: number
-% #4: label
-% #5: explode
-% #6: fill color
-% #7: radius
-% #8: center
-\newcommand\pgfpie@slice[8]{%
-    \ifthenelse{\equal{#1}{#2}}{}{%
-        \pgfmathparse{0.5*(#1)+0.5*(#2)}%
-        \let\midangle\pgfmathresult
-        %
-        \path (#8) -- ++(\midangle:#5) coordinate(O);%
-        %
-        \pgfmathparse{#7+#5}%
-        \let\radius\pgfmathresult
-        %
-        % slice
-        \draw[line join=round, fill=#6, \style] (O) -- ++(#1:#7) arc (#1:#2:#7) -- cycle;%
-        %
-        \pgfmathparse{min(((#2)-(#1)-10)/110*(-0.3),0)}%
-        \let\temp\pgfmathresult%
-        \pgfmathparse{(max(\temp,-0.5) + 0.8)*#7}%
-        \let\innerpos\pgfmathresult
-        %
-        \ifthenelse{\equal{\pgfpie@text}{inside}}{%
-            \ifthenelse{\equal{\pgfpie@number}{inside}}{%
-                % label and number together
-                \path (O) -- ++(\midangle:\innerpos) node%
-                {\scalefont{#3}\shortstack{#4\\\beforenumber#3\afternumber}};%
-            }{%
-                % label only
-                \path (O) -- ++(\midangle:\innerpos) node%
-                {\scalefont{#3}\shortstack{#4}};%
-            }%
-        }{%
-            % label
-            \ifthenelse{\equal{\pgfpie@text}{inside}}{%
-                \path (O) -- ++ (\midangle:\radius)%
-                node[inner sep=0, \pgfpie@text=\midangle:#4]{};%
-            }%
-            {}%
-            %
-            % number
-            \ifthenelse{\equal{\pgfpie@number}{inside}}{%
-                \path (O) -- ++(\midangle:\innerpos) node%
-                {\scalefont{#3}\beforenumber#3\afternumber};%
-            }%
-            {}%
-        }%
-    }%
-}
-
-\newcommand\pgfpie@findColor[1]{%
-    \pgfmathparse{int(mod(#1,\value{pgfpie@colorLength}))}%
-    \let\ci\pgfmathresult
-    \foreach \c [count=\j from 0] in \color {%
-        \ifnum \j=\ci
-            \xdef\thecolor{\c}%
-            \thecolor
-            \breakforeach
-        \fi
-    }%
-}
-
-\newcommand\pgfpie@findExplode[1]{%
-    \pgfmathparse{int(mod(#1,\value{pgfpie@explodeLength}))}%
-    \let\ei\pgfmathresult
-    \foreach \e [count=\j from 0] in \explode {%
-        \ifnum \j=\ei
-            \xdef\theexplode{\e}%
-            \breakforeach
-        \fi
-    }%
-}
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Definitions
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newlength{\pgfpie@angleEnd}
 \newcounter{pgfpie@explodeLength}
 \newcounter{pgfpie@colorLength}
@@ -116,17 +42,14 @@
 \def\setbeforenumber#1\pgfeov{\def\beforenumber{#1}}
 \pgfkeyslet{/before number/.@cmd}{\setbeforenumber}
 
-\def\settext#1\pgfeov{\xdef\pgfpie@number{#1}}
-\pgfkeyslet{/number/.@cmd}{\settext}
-
 \def\setafternumber#1\pgfeov{\def\afternumber{#1}}
 \pgfkeyslet{/after number/.@cmd}{\setafternumber}
 
 \def\settext#1\pgfeov{\xdef\pgfpie@text{#1}}
 \pgfkeyslet{/text/.@cmd}{\settext}
 
-\def\setnumber#1\pgfeov{\xdef\pgfpie@number{#1}}
-\pgfkeyslet{/number/.@cmd}{\setnumber}
+\def\setvalue#1\pgfeov{\xdef\pgfpie@value{#1}}
+\pgfkeyslet{/value/.@cmd}{\setvalue}
 
 \def\setsum#1\pgfeov{\xdef\pgfpie@sum{#1}}
 \pgfkeyslet{/sum/.@cmd}{\setsum}
@@ -141,145 +64,267 @@
 \pgfkeys{/scale font/.is if=scalefont}
 \let\scalefontorg\scalefont
 \renewcommand{\scalefont}[1]{%
-    \ifscalefont
-        \pgfmathparse{#1 / \pgfpie@sum * 3 + 0.9}%
+    \ifscalefont%
+        \pgfmathparse{#1/\pgfpie@sum*3+0.9}%
         \scalefontorg{\pgfmathresult}%
-    \fi
+    \fi%
 }
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Default values
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\def\pgfpie@default@explode{0}
+\def\pgfpie@default@color{{%
+    blue!60,%
+    cyan!60,%
+    yellow!60,%
+    orange!60,%
+    red!60,%
+    blue!60!cyan!60,%
+    cyan!60!yellow!60,%
+    red!60!cyan!60,%
+    red!60!blue!60,%
+    orange!60!cyan!60%
+}}
+\def\pgfpie@default@radius{3}
+\def\pgfpie@default@pos{{0,0}}
+\def\pgfpie@default@style{{thick}}
+\def\pgfpie@default@beforenumber{}
+\def\pgfpie@default@afternumber{}
+\def\pgfpie@default@text{label}
+\def\pgfpie@default@value{inside}
+\def\pgfpie@default@sum{100}
+\def\pgfpie@default@rotate{0}
+\def\pgfpie@default@scalefont{false}
+\def\pgfpie@default@bound{false}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Draw a sector of a pie plot.
+%------------------------------------------------
+% Arguments:
+%     #1: begin angle
+%     #2: end angle
+%     #3: number
+%     #4: label
+%     #5: explode
+%     #6: fill color
+%     #7: radius
+%     #8: center
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand\pgfpie@slice[8]{%
+    % If the start angle is equal to the end angle, then we don't have to draw
+    % anything
+    \ifthenelse{\equal{#1}{#2}}{}{%
+        % Calculate the angle of the middle of the sector
+        \pgfmathparse{0.5*(#1)+0.5*(#2)}%
+        \let\midangle\pgfmathresult%
+        \path (#8) -- ++(\midangle:#5) coordinate(O);%
+        %
+        % Calculate the radius of the slice
+        \pgfmathparse{#7+#5}%
+        \let\radius\pgfmathresult%
+        %
+        % Draw the slice
+        \draw[line join=round,fill=#6,\style] (O) -- ++(#1:#7) arc (#1:#2:#7) -- cycle;%
+        %
+        % Calculate the position for the label and number
+        \pgfmathparse{min(((#2)-(#1)-10)/110*(-0.3),0)}%
+        \let\temp\pgfmathresult%
+        \pgfmathparse{(max(\temp,-0.5)+0.8)*#7}%
+        \let\innerpos\pgfmathresult%
+        %
+        % Draw the label and number
+        \ifthenelse{\equal{\pgfpie@text}{inside}}{%
+            \ifthenelse{\equal{\pgfpie@value}{inside}}{%
+                % label and number together
+                \path (O) -- ++(\midangle:\innerpos) node%
+                {\scalefont{#3}\shortstack{#4\\\beforenumber#3\afternumber}};%
+            }{%
+                % label only
+                \path (O) -- ++(\midangle:\innerpos) node%
+                {\scalefont{#3}\shortstack{#4}};%
+            }%
+        }{%
+            \ifthenelse{\equal{\pgfpie@text}{inside}}{%
+                % label
+                \path (O) -- ++ (\midangle:\radius)%
+                node[inner sep=0,\pgfpie@text=\midangle:#4]{};%
+            }{}%
+            %
+            % number
+            \ifthenelse{\equal{\pgfpie@value}{inside}}{%
+                \path (O) -- ++(\midangle:\innerpos) node%
+                {\scalefont{#3}\beforenumber#3\afternumber};%
+            }{}%
+        }%
+    }%
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Calculate the colour that a slice should be.
+%------------------------------------------------
+% Arguments:
+%     #1: an integer representing the index of
+%         the current slice
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand\pgfpie@findColor[1]{%
+    \pgfmathparse{int(mod(#1,\value{pgfpie@colorLength}))}%
+    \let\ci\pgfmathresult%
+    \foreach \c [count=\j from 0] in \color{%
+        \ifnum \j=\ci%
+            \xdef\thecolor{\c}%
+            \thecolor%
+            \breakforeach%
+        \fi%
+    }%
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Calculate the radius by which a slice should be
+% exploded by.
+%------------------------------------------------
+% Arguments:
+%     #1: an integer representing the index of
+%         the current slice
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand\pgfpie@findExplode[1]{%
+    \pgfmathparse{int(mod(#1,\value{pgfpie@explodeLength}))}%
+    \let\ei\pgfmathresult%
+    \foreach \e [count=\j from 0] in \explode{%
+        \ifnum \j=\ei%
+            \xdef\theexplode{\e}%
+            \breakforeach%
+        \fi%
+    }%
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Draw a pie plot.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand\pie[2][]{%
-    % load default parameters
+    % Load default parameters
     \pgfkeys{%
-        explode=0,%
-        color={blue!60, cyan!60, yellow!60, orange!60, red!60,%
-               blue!60!cyan!60, cyan!60!yellow!60, red!60!cyan!60,%
-               red!60!blue!60, orange!60!cyan!60},%
-        radius=3,%
-        pos={0,0},%
-        style={thick},%
-        before number=,%
-        after number=,%
-        text=label,%
-        number=inside,%
-        sum=100,%
-        rotate=0,%
-        scale font=false,%
-        bound=false,%
+        explode=\pgfpie@default@explode,%
+        color=\pgfpie@default@color,%
+        radius=\pgfpie@default@radius,%
+        pos=\pgfpie@default@pos,%
+        style=\pgfpie@default@style,%
+        before number=\pgfpie@default@beforenumber,%
+        after number=\pgfpie@default@afternumber,%
+        text=\pgfpie@default@text,%
+        value=\pgfpie@default@value,%
+        sum=\pgfpie@default@sum,%
+        rotate=\pgfpie@default@rotate,%
+        scale font=\pgfpie@default@scalefont,%
+        bound=\pgfpie@default@bound,%
     }%
     %
-    % load user's parameters
+    % Load user's parameters
     \pgfkeys{#1}%
     %
-    % add percentage automatically
+    % Add the percentage symbol automatically
     \ifthenelse{\equal{\pgfpie@sum}{100}}{%
         \pgfkeys{after number=\%}%
         \pgfkeys{#1}%
     }{}%
     %
-    % handle sum
+    % Handle the sum
     \ifthenelse{\equal{\pgfpie@sum}{auto}}{%
-        % sum all input
+        % Sum all input
         \xdef\pgfpie@sum{0}%
         \foreach \p/\t in {#2}{%
-            \pgfmathparse{\pgfpie@sum + \p}%
+            \pgfmathparse{\pgfpie@sum+\p}%
             \xdef\pgfpie@sum{\pgfmathresult}%
         }%
-    }%
-    {}%
+    }{}%
     %
-    % init counters
+    % Initialise counters
     \setcounter{pgfpie@explodeLength}{0}%
-    \foreach \e in \explode { \addtocounter{pgfpie@explodeLength}{1} }%
+    \foreach \e in \explode{\addtocounter{pgfpie@explodeLength}{1}}%
     %
     \setcounter{pgfpie@colorLength}{0}%
-    \foreach \c in \color { \addtocounter{pgfpie@colorLength}{1} }%
+    \foreach \c in \color{\addtocounter{pgfpie@colorLength}{1}}%
     %
     \pgfmathsetlength{\pgfpie@angleEnd}{0}%
     %
     \setcounter{pgfpie@sliceLength}{0}%
-    \foreach \p/\e in {#2} { \addtocounter{pgfpie@sliceLength}{1} }%
+    \foreach \p/\e in {#2}{\addtocounter{pgfpie@sliceLength}{1}}%
     %
-    %%%%%%%%%% CIRCLE PIE BEGIN %%%%%%%%%%%
     \xdef\theradius{\radius}%
     %
     \xdef\pgfpie@angleBegin{\the\pgfpie@angleEnd}%
     % drawing loop
-    \foreach \p/\t [count=\i from 0] in {#2}{%
+    \foreach \p/\t [count=\i from 0] in{#2}{%
         \pgfmathsetlength{\pgfpie@angleEnd}{\pgfpie@angleBegin}%
         \pgfmathaddtolength{\pgfpie@angleEnd}{\p}%
         %
-        % find explode
         \pgfpie@findExplode{\i}%
-        %
-        % find color
         \pgfpie@findColor{\i}%
-        \pgfpie@slice{\pgfpie@angleBegin/\pgfpie@sum*360+\rotate}%
-        {\the\pgfpie@angleEnd/\pgfpie@sum*360+\rotate}%
-        {\p}%
-        {\t}%
-        {\theexplode}%
-        {\thecolor}%
-        {\theradius}%
-        {\pos}%
+        \pgfpie@slice%
+            {\pgfpie@angleBegin/\pgfpie@sum*360+\rotate}%
+            {\the\pgfpie@angleEnd/\pgfpie@sum*360+\rotate}%
+            {\p}%
+            {\t}%
+            {\theexplode}%
+            {\thecolor}%
+            {\theradius}%
+            {\pos}%
         \xdef\pgfpie@angleBegin{\the\pgfpie@angleEnd}%
     }%
-    %%%%%%%%%% CIRCLE PIE END %%%%%%%%%%%
     %
-    % legend
+    % Draw the legend
     \ifthenelse{\equal{\pgfpie@text}{legend}}{%
         \coordinate[xshift=0.8cm,yshift=(\value{pgfpie@sliceLength}*0.5+1)*0.5cm] (legendpos) at (current bounding box.east);%
         %
         \begin{scope}[node distance=0.5cm]%
             \foreach \p/\t  [count=\i from 0] in {#2}{%
                 \pgfpie@findColor{\i}%
-                \node[draw, fill=\thecolor, \style, below of=legendpos, label=0:\t] (legendpos) {};%
+                \node[draw,fill=\thecolor,\style,below of=legendpos,label=0:\t] (legendpos) {};%
             }%
         \end{scope}%
-    }%
-    {}%
+    }{}%
     %
-    % bounding box
-    \ifbound
-        \pgfresetboundingbox
+    % Set the bounding box
+    \ifbound%
+        \pgfresetboundingbox%
         \path[use as bounding box] ($(\pos)-(\theradius,\theradius)$) rectangle ($(\pos)+(\theradius,\theradius)$);%
-    \fi
+    \fi%
 }
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Draw the legend (only) pie plot.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand\pielegend[2][]{%
-    % load default parameters
+    % Load default parameters
     \pgfkeys{%
-        color={blue!60, cyan!60, yellow!60, orange!60, red!60,%
-               blue!60!cyan!60, cyan!60!yellow!60, red!60!cyan!60,%
-               red!60!blue!60, orange!60!cyan!60},%
-        pos={0,0},%
-        style={thick},%
-        bound=false,%
+        color=\pgfpie@default@color,%
+        pos=\pgfpie@default@pos,%
+        style=\pgfpie@default@style,%
+        bound=\pgfpie@default@bound,%
     }%
     %
-    % load user's parameters
+    % Load user's parameters
     \pgfkeys{#1}%
     %
-    %
-    % init counters
+    % Initialise counters
     \setcounter{pgfpie@colorLength}{0}%
-    \foreach \c in \color { \addtocounter{pgfpie@colorLength}{1} }%
+    \foreach \c in \color{\addtocounter{pgfpie@colorLength}{1}}%
     %
     \setcounter{pgfpie@sliceLength}{0}%
-    \foreach \p/\e in {#2} { \addtocounter{pgfpie@sliceLength}{1} }%
+    \foreach \p/\e in {#2}{\addtocounter{pgfpie@sliceLength}{1}}%
     %
-    % legend
+    % Draw the legend
     \coordinate[xshift=0.8cm,yshift=(\value{pgfpie@sliceLength}*0.5+1)*0.5cm] (legendpos) at (current bounding box.east);%
     %
     \begin{scope}[node distance=0.5cm]%
-        \foreach \p/\t  [count=\i from 0] in {#2}{%
+        \foreach \p/\t [count=\i from 0] in {#2}{%
             \pgfpie@findColor{\i}%
-            \node[draw, fill=\thecolor, \style, below of=legendpos, label=0:\t] (legendpos) {};%
+            \node[draw, fill=\thecolor,\style, below of=legendpos,label=0:\t] (legendpos) {};%
         }%
     \end{scope}%
     %
-    % bounding box
-    \ifbound
-        %\pgfresetboundingbox
-        %\path[use as bounding box] ($(\pos)-(\theradius,\theradius)$) rectangle ($(\pos)+(\theradius,\theradius)$);%
-    \fi
+    % Set the bounding box
+    \ifbound%
+        % Do nothing
+    \fi%
 }

@@ -210,7 +210,7 @@ if (basename($0) =~ m/all_datasets.tex.pl/) {
     
     print TEX <<END_OF_TEX;
 \\begin{tikzpicture}
-    \\pielegend[bound, text=none, radius=1.5, color={$colour_string}]{
+    \\pielegend[bound,radius=1.5,color={$colour_string}]{
 $function_string
     }
 \\end{tikzpicture}
@@ -229,7 +229,7 @@ END_OF_TEX
     my $colour_string = join(',', @the_colours);
     print TEX <<END_OF_TEX;
 \\begin{tikzpicture}
-    \\pie[bound, text=none, radius=1.5, color={$colour_string}]{
+    \\pie[bound,text=none,radius=1.5,color={$colour_string}]{
 END_OF_TEX
     
     # Data
