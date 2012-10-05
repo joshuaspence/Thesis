@@ -35,3 +35,31 @@ days to create and cost tens to hundreds of dollars \cite{Hauck:2007}.
         {An abstract view of an \gls{FPGA} \cite{Hauck:2007}.}
     \label{fig:fpga:abstract}
 \end{figure}
+
+\autoref{fig:fpga:abstract} shows an abstract view of an \gls{FPGA}, which
+consists of an \emph{array} of logic blocks (\emph{gates}) connected in a
+general routing structure. THe logic blocks contains processing elements for
+impleenting combinatorial logic, as well as flip-flops for implementing
+sequential logic. The logic and routing elments of an \gls{FPGA} are controlled
+by programming points, which may be based on anitfuse, Flash  or \gls{SRAM}
+technology. With the corresponding memory bits programmed, by way of a
+configuration file or a bitstream, an \gls{FPGA} can be made to implement the
+user's desired function. For this reason, glspl{FPGAs} are referred to as
+\emph{field progammable} devices, as opposed to \emph{mask programmable}
+devices, which have their  functionality fixed by masks during fabrication.
+
+The design of an \gls{FPGA} program typically begins with an algorithm expressed
+in a \gls{HDL} such as Verilog or \gls{VHDL}. An \gls{FPGA} design goes through
+several development phases \cite{Hauck:2007}:
+\begin{description}
+    \item[Logic synthesis] Converts high level logic constructs and behavioural
+        code into gates.
+    \item[Technology mapping] Separate the gates into groupings that best match
+        the \gls{FPGA}'s logic resources.
+    \item[Placement] Assigns the logic groupings to specific logic blocks.
+    \item[Routing] Determines the interconnect resources that will carry the
+        user's signals.
+    \item[Bitstream generation] Creates a binary file that sets all of the
+        \gls{FPGA}'s programming points to configure the logic blocks and
+        routing resources appropriately.
+\end{description}
