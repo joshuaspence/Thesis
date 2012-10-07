@@ -37,9 +37,9 @@ my $output_file = $ARGV[0];
 # Parse the data
 my %data = ();
 my @block_sizes = ();
-open(FILE, "<${\(dirname($0))}/${\DATA_FILE}") || die("Cannot open file: ${\(dirname($0))}/${\DATA_FILE}");
+open(DATA, "<${\(dirname($0))}/${\DATA_FILE}") || die("Cannot open data file: ${\(dirname($0))}/${\DATA_FILE}");
 my $in_header = 1;
-for (<FILE>) {
+for (<DATA>) {
     # Skip the header
     if ($in_header) {
         $in_header = 0;
@@ -69,7 +69,7 @@ for (<FILE>) {
     $data{$dataset}{$block_size}{'totaltime'} = $totaltime;
     $data{$dataset}{$block_size}{'pruned'}    = $pruned;
 }
-close(FILE);
+close(DATA);
 
 # Create the graphs
 open(GNUPLOT, '|gnuplot');
@@ -89,7 +89,7 @@ set nokey
 
 END_OF_GNUPLOT
 
-# HEADER
+# Output the header
 my $loop_over;
 if (basename($0) =~ m/legend.tex.pl/) {
     $loop_over = 'dataset';
@@ -169,14 +169,14 @@ END_OF_GNUPLOT
 } else {
     close(GNUPLOT);
     unlink($output_file);
-    die('No action to take');
+    die("No action to take for script: ${\(basename($0))}");
 }
 print GNUPLOT <<END_OF_GNUPLOT;
 set output "$output_file"
 plot \\
 END_OF_GNUPLOT
 
-# DATA
+# Output the data
 my @all_data = ();
 if ($loop_over =~ m/dataset/) {
     my $colour_counter = 0;
@@ -203,7 +203,7 @@ if ($loop_over =~ m/dataset/) {
         } else {
             close(GNUPLOT);
             unlink($output_file);
-            die('No action to take');
+            die("No action to take for script: ${\(basename($0))}");
         }
         my $data =<<END_OF_GNUPLOT;
     "<perl -e \\" \\

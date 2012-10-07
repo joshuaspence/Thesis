@@ -37,10 +37,10 @@ sub date_position($) {
 # The argument should be the base directory for the profiling data
 scalar(@ARGV) >= 1 || die('No output file specified');
 my $output_file = $ARGV[0];
-open(OUTPUT, ">$output_file") || die("Failed to open file: $output_file");
+open(OUTPUT, ">$output_file") || die("Failed to open output file: $output_file");
 
 my $xml        = new XML::Simple (KeyAttr=>[]);
-my $data       = $xml->XMLin($schedule_file);
+my $data       = $xml->XMLin($schedule_file) || die("Failed to open input file: $schedule_file");;
 my @tasks      = $data->{tasks};
 my @milestones = $data->{milestones};
 
@@ -99,7 +99,7 @@ for my $milestone (@{$data->{milestone}}) {
 print OUTPUT <<END;
         \\end{ganttchart}
     }
-    \\caption{Schedule for thesis work}
+    \\caption{Schedule for Thesis work}
     \\label{ganttChart}
 \\end{figure}
 END

@@ -18,8 +18,8 @@ domains \cite{Chandola:2007}. Over time, many techniques for anomaly detection
 have been developed for specific application domains, as well as more generic
 techniques \cite{Chandola:2007}.
 
-% WHAT ARE ANOMALIES?
-\subsection{What are anomalies?}
+% What are Anomalies?
+\subsection{What are Anomalies?}
 \label{anomalyDetection:whatAreAnomalies}
 Anomalies are patterns in data that do not conform to a well defined notion of
 normal behavior. \autoref{fig:2d-anomalies} illustrates anomalies in a simple
@@ -37,7 +37,7 @@ region $O_{3}$, are considered to be anomalies.
     \label{fig:2d-anomalies}
 \end{figure}
 
-% CHALLENGES
+% Challenges
 \subsection{Challenges}
 \label{anomalyDetection:Challenges}
 A straightforward anomaly detection approach, is to define a region representing
@@ -85,8 +85,8 @@ Researchers have adopted concepts from diverse disciplines such as statistics,
 data mining, statistics, information theory and spectral theory in order to gain
 an increased understanding of anomalies \cite{Chandola:2007}.
 
-% SIMILAR PROBLEMS
-\subsection{Similar problems}
+% Similar Problems
+\subsection{Similar Problems}
 \label{anomalyDetection:similarProblems}
 Anomaly detection is an intentionally broad specifier for a class of
 more-specific statisctical challenges. For example, whilst being distinct from,
@@ -105,7 +105,7 @@ an indication of the future state of a system. The distinction between novel
 pattern and anomalies is that novel patterns are incorporated into the data
 model after detection \cite{Chandola:2007}.
 
-% CLASSIFICATION
+% Classification
 \subsection{Classification}
 \label{anomalyDetection:anomalyClassification}
 In general, two different kinds of outliers exist: global outliers and local
@@ -120,7 +120,8 @@ technique that exploits extended nearest-neighbour sets in a reduced-dimensional
 space --- to create an accurate approximation for k-nearest-neighbour distances,
 which is used as the core density measurement within LOF \cite{Vries:2011}.
 
-\subsection{Types of anomalies}
+% Types of Anomalies
+\subsection{Types of Anomalies}
 \label{anomalyDetection:typesOfAnomalies}
 Anomalies can be classified into three categories \cite{Chandola:2007}:
 
@@ -178,7 +179,7 @@ low value by itself is not an anomaly.
 
 \end{description}
 
-% APPROACHES
+% Approaches
 \subsection{Approaches}
 \label{anomalyDetection:approaches}
 \begin{description}
@@ -209,7 +210,7 @@ difficult to mine outliers as we tackle increasingly larger data sets. This is a
 major problem for many real databases where there are often millions of records
 \cite{Bay:2003}.
 
-\subsubsection{Distance based}
+\subsubsection{Distance Based}
 \label{anomalyDetection:approaches:distance}
 In this approach, one looks at the local neighborhood of points for an example
 typically defined by the $k$ nearest examples (also known as neighbours). If the
@@ -236,14 +237,14 @@ extremely well and potentially scales as $O(N \log N)$ if the index tree can
 find an example's nearest neighbors in $\log N$ time. However, index structures
 break down as the dimensionality increases \cite{Bay:2003}.
 
-\subsubsection{Statistical based}
+\subsubsection{Statistical Based}
 \label{anomalyDetection:approaches:statistical}
 A common distribution considered when modelling data is the `Normal' 
 distribution. Using this model, the probability that a data instance lies within
 $k$ standard deviations $\sigma$ from the mean $\mu$ is the area between
 $\mu - k\sigma$ and $\mu + k\sigma$.
 
-% LOCAL OUTLIER FACTOR
+% Local Outlier Factor
 \subsection{Local Outlier Factor}
 \label{anomalyDetection:localOutlierFactor}
 `Local Outlier Factor' is a formula that captures the degree to which a data
