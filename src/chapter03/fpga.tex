@@ -71,17 +71,121 @@ several development phases \cite{Hauck:2007}:
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Device Architecture}
 \label{fpga:deviceArchitecture}
-% TODO
+Fundamentally, an \gls{FPGA} device consists of a large array of logic elements
+(logic blocks) together with an interconnection network to pass data between
+different logic blocks. A simplified representation illustrating the placement
+of logic blocks and interconnections is shown in
+\autoref{fig:fpga:architecture}.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\textwidth]{fpga/architecture}
+    \caption[A simplified representation of an \gls{FPGA} architecture.]
+        {A simplified representation of an \gls{FPGA} architecture
+        \cite{Hauck:2007}.}
+    \label{fig:fpga:architecture}
+\end{figure}
 
 % Logic Elements
-\paragraph{Logic Elements}
-\label{fpga:deviceArchitecture:logicElements}
-% TODO
+\subsubsection{Logic Blocks}
+\label{fpga:deviceArchitecture:logicBlocks}
+Logic blocks are the fundamental component of any \gls{FPGA} architecture and
+are made to realize a single logic function using a \gls{LUT} and a flip-flop.
+The \glspl{LUT} provide the functional mapping between the logic block's input
+and output bits. The flip-flop is a necessary sequential logic device for the
+logic block to maintain a state. Almost all commercial \glspl{FPGA} have settled
+on a \gls{LUT} as their basic building block \cite{Hauck:2007}.
+
+From a circuit implementation perspective, a \gls{LUT} can be formed using a
+$N:1$ multiplexer and an $N$-bit memory. In this implementation, the multiplier
+simply maps some input combination of bits to some output combination of bits.
+An important design consideration for an \gls{FPGA} is both the size of each
+\gls{LUT} as well as the number of \glspl{LUT} that comprise a logic block.
+These design considerations form the \emph{computational granularity} of the
+\gls{FPGA}. Smaller (\emph{fine-grained}) \glspl{LUT} can effectively be used to
+compute arithmetic and bit-level functions, but must be combined together in
+order to realize more complicated functions. Larger (\emph{coarse-grained})
+\glspl{LUT}, on the other hand, are capable of handling complicated logic
+functions, at the cost of wasting logic resources when used to implement simple
+logic functions.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\textwidth]{fpga/logic-block}
+    \caption[A simple \gls{LUT}-based logic block.]
+        {A simple \gls{LUT}-based logic block. \cite{Hauck:2007}.}
+    \label{fig:fpga:logicBlock}
+\end{figure}
 
 % The Array and Interconnect
-\paragraph{The Array and Interconnect}
+\subsubsection{The Array and Interconnect}
 \label{fpga:deviceArchitecture:arrayAndInterconnect}
+Whilst the logic block is the fundamental component of an \gls{FPGA}, there is a
+requirement for an interconnection network to allow data to flow between
+adjacent (and possibly non-adjacent) logic blocks. This interconnection network
+is known as the interconnect, and is a routing network that is configured to
+route signals between logic blocks appropriately. Using this general design,
+with enough logic blocks it is possible to perform any desired computation
+\cite{Hauck:2007}.
+
+Note that the interconnect structure shown in \autoref{fig:fpga:architecture} is
+not representative of any actual interconnect structure that is currently in
+use, but rather acts as a placeholder for visual demonstration. In reality,
+there are a wide range of metholdologies relating to \gls{FPGA} interconnect
+structure. Some of the more common configurations are described below.
+\begin{description}
+    \item[Nearest neighbour] Arguably the simplest interconnect structure, in
+        which a logic block can communicate only with its immediate neighbours.
+    \item[Segmented] A more generic and mesh-like interconnect structure. A
+        logic block accesses nearby communication resources through a connection
+        block, which itself allows logic block inputs and outputs to be assigned
+        to arbitrary horizontal and vertical tracks. In addition, switch blocks
+        connect converging routing tracks, allowing a signal on one track to
+        communicate with a singal on another track.
+    \item[Hierarchical] At the lowest level of the hierarchy, $2 \times 2$
+        arrays of logic blocks are grouped together to form a single cluster.
+        Within each cluster, only nearest-neighbour routing available. At each
+        increasing levfel of the hierarchical interconnect structure, larger
+        logic block clusters are formed. This interconnect structure exploits
+        the property that a well-designed and well-placed circuit has mostly
+        local connections and only a limited number fo connections that need to
+        travel long distances \cite{Hauck:2007}.
+\end{description}
+
 % TODO
+\begin{comment}
+\begin{figure}
+    \centering
+    \begin{subfigure}[b]{0.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{fpga/nearest-neighbour}
+        \captionsetup{type=subfigure,labelformat=parens,labelsep=space,skip=3pt,list=false}
+        \captionof{subfigure}[Nearest neighbour interconnect structure.]
+            {Nearest neighbour interconnect structure \cite{Hauck:2007}.}
+        \label{fig:fpga:interconnect:nearestNeighbour}
+    \end{subfigure}
+    \quad
+    \begin{subfigure}[b]{0.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{fpga/segmented}
+        \captionsetup{type=subfigure,labelformat=parens,labelsep=space,skip=3pt,list=false}
+        \captionof{subfigure}[Segmented interconnect structure.]
+            {Segmented interconnect structure \cite{Hauck:2007}.}
+        \label{fig:fpga:interconnect:segmented}
+    \end{subfigure}
+    \quad
+    \begin{subfigure}[b]{0.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{fpga/hierarchical}
+        \captionsetup{type=subfigure,labelformat=parens,labelsep=space,skip=3pt,list=false}
+        \captionof{subfigure}[Hierarchical neighbour interconnect structure.]
+            {Hierarchical neighbour interconnect structure \cite{Hauck:2007}.}
+        \label{fig:fpga:interconnect:hierarchical}
+    \end{subfigure}
+    \caption{\gls{FPGA} interconnect structures.}
+    \label{fig:fpga:interconnect}
+\end{figure}
+\end{comment}
 
 % Configuration
 \subsubsection{Configuration}
@@ -98,8 +202,4 @@ several development phases \cite{Hauck:2007}:
 
 \paragraph{Antifuse}
 \label{fpga:deviceArchitecture:antifuse}
-% TODO
-
-\paragraph{Configuration}
-\label{fpga:deviceArchitecture:conf}
 % TODO
