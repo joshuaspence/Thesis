@@ -2,7 +2,7 @@
 % Introduction
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Introduction}
-\label{fpga:Introduction}
+\label{fpga:introduction}
 In the two decades since \glspl{FPGA} were introduced, they have radically
 changed the way digital logic is designed and deployed \cite{Hauck:2007}.
 \glspl{FPGA} are revolutionary devices that offer a compromise between the
@@ -70,7 +70,7 @@ several development phases \cite{Hauck:2007}:
 % Device Architecture
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Device Architecture}
-\label{fpga:deviceArchitecture}
+\label{fpga:architecture}
 Fundamentally, an \gls{FPGA} device consists of a large array of logic elements
 (logic blocks) together with an interconnection network to pass data between
 different logic blocks. A simplified representation illustrating the placement
@@ -88,7 +88,7 @@ of logic blocks and interconnections is shown in
 
 % Logic Elements
 \subsubsection{Logic Blocks}
-\label{fpga:deviceArchitecture:logicBlocks}
+\label{fpga:architecture:logicBlocks}
 Logic blocks are the fundamental component of any \gls{FPGA} architecture and
 are made to realize a single logic function using a \gls{LUT} and a flip-flop.
 The \glspl{LUT} provide the functional mapping between the logic block's input
@@ -119,7 +119,7 @@ logic functions.
 
 % The Array and Interconnect
 \subsubsection{The Array and Interconnect}
-\label{fpga:deviceArchitecture:arrayAndInterconnect}
+\label{fpga:architecture:arrayAndInterconnect}
 Whilst the logic block is the fundamental component of an \gls{FPGA}, there is a
 requirement for an interconnection network to allow data to flow between
 adjacent (and possibly non-adjacent) logic blocks. This interconnection network
@@ -182,19 +182,76 @@ structure. Some of the more common configurations are described below.
     \end{subfigure}
 \end{figure}
 
+% Extended Logic Elements
+\subsubsection{Extended Logic Elements}
+\label{fpga:architecture:extendedLogic}
+The aforementioned logic blocks of an \gls{FPGA} provide a useful foundation for
+larger, more complicated, computational units including full adders and
+multipliers. This augmentation is a methodology employed by \gls{FPGA}
+architects, driven by application demands, to increase the versatility and
+performance of \gls{FPGA} devices.
+
+\paragraph{Adders}
+\label{fpga:architecture:adders}
+One fundamental operation that an \gls{FPGA} can be expected to perform is
+addition. The simplest approach to implement a full-adder structure involves a
+single logic block configured to compute the sum, together with a logic block
+configured to compute the carry signal. Through this method, the cascading of
+$N$ logic blocks can be used to implement an $N$-bit full adder
+\cite{Hauck:2007}. The \gls{criticalPath} of this design comes from the rippling
+of the carry signal from lower-order bits to higher-order bits. This limitation
+can be alleviated through placement considerations of the logic blocks, in such
+a way as to minimise signal delay through the carry chain.
+
+\paragraph{Multipliers}
+\label{fpga:architecture:multipliers}
+Another important operation that an \gls{FPGA} is expected to be able to compute
+is that of multiplication. There are various implementations of a multiplier
+that can be adopted, however in doing so the designer much choose between
+lesser signal propagation delay and lesser logic block resources. For this
+reason, it is not uncommon for \gls{FPGA} devices to provide dedicated
+multiplier units implemented in silicon. In many cases, the performance and
+power improvements offered by a dedicated multiplier warrant the silicon area
+that would be required for such units.
+
+\paragraph{Random Access Memory}
+\label{fpga:architecture:ram}
+Whilst it is possible to implement programmable memory using logic blocks,
+it is a far more efficient use of FPGA resources to provide dedicated on-chip
+\gls{RAM} for this purpose. The grouping of banks of memory cells allows for
+extremely fast lookup table operations, as well as providing memory resources
+for queueing, buffering and general usage.
+
+\paragaph{Processing Blocks}
+\label{fpga:architecture:processor}
+As the market for \gls{FPGA} devices extends to a wider range of applications,
+it has become common for these devices to include general purpose processing
+blocks embedded in their architecture. Whilst the parallel utilisation of
+hardware resources provides performance improvements for pipelined and
+vector-based operations, algorithms flows which are procedural and exhibit a
+large amount of branching do not lend themselves readily to acceleration using
+\glspl{FPGA}, and as such are much better performed on dedicated \glspl{CPU}
+\cite{Hauck:2007}. The inclusion of processing blocks into \gls{FPGA} device
+represents a significant movement supporting the use of \glspl{FPGA} as general
+purpose, platform-orientated devices.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Configuration
-\subsubsection{Configuration}
-\label{fpga:deviceArchitecture:conf}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Device Configuration}
+\label{fpga:configuration}
+
+% Static Random Access Memory
+\subsubsection{Static Random Access Memory}
+\label{fpga:configuration:sram}
 % TODO
 
-\paragraph{Static Random Access Memory}
-\label{fpga:deviceArchitecture:sram}
+% Flash Memory
+\subsubsection{Flash Memory}
+\label{fpga:configuration:flash}
 % TODO
 
-\paragraph{Flash Memory}
-\label{fpga:deviceArchitecture:flash}
-% TODO
-
-\paragraph{Antifuse}
-\label{fpga:deviceArchitecture:antifuse}
+% Antifuse
+\subsubsection{Antifuse}
+\label{fpga:configuration:antifuse}
 % TODO
