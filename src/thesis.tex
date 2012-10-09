@@ -20,7 +20,7 @@
 \usepackage{amsfonts}                           % for formatting mathematical symbols
 \usepackage{amsmath,amssymb,amsthm}             % for math support
 \usepackage{caption}                            % for subfloats
-\usepackage{datetime}                           % for \formatdate
+\usepackage[nodayofweek]{datetime}              % for \formatdate
 \usepackage{float}                              % for setting float specifiers
 \usepackage{gnuplot-lua-tikz}                   % for plots produced by GNUplot
 \usepackage{graphicx}                           % for graphics
@@ -29,6 +29,7 @@
 \usepackage{subcaption}                         % for subfloats
 \usepackage{tabularx}                           % for simple column stretching
 \usepackage{tikz}                               % for graphics
+\usetikzlibrary{positioning,shapes,shadows,arrows}
 \usepackage{url}                                % for web URLs
 \usepackage{verbatim}                           % for comment environment
 
@@ -285,8 +286,8 @@
 \chapter*{Acknowledgements}
 \label{acknowledgements}
 This project could not have been completed without the guidance of my project
-supervisor, \supervisorName. He always made himself available to assist me with
-the understanding of many concepts, which were both new and unknown. His
+supervisor, \supervisorName{}. He always made himself available to assist me
+with the understanding of many concepts, which were both new and unknown. His
 expertise in the field was a great asset and greatly contributed to my own
 understanding of the ideas explored in this thesis. His support and guidance was
 invaluable, and were instrumental to the success of my project.
@@ -355,7 +356,7 @@ learning algorithms such as neural networks to more accurately model and predict
 the stock exchange data by ignoring anomalous data, which likely doesn't effect
 the state of the model to any significant degree.
 
-\getPerson{Chawla} from \universityName has in recent years conducted and
+\getPerson{Chawla} from \universityName{} has in recent years conducted and
 supervised new and exciting research oriented around random projections. In
 particular, \getPerson{Khoa}, under the supervision of \getPerson{Chawla}
 evaluated the use of traditional distance metrics, such as Euclidean distance
@@ -364,7 +365,7 @@ and Mahalanobis distance, in the application of local anomaly detection.
 random walks on graphs, in anomaly detection.
 
 The source code that was used throughout this project can be freely downloaded
-from \gitRepoHTTP (over HTTP) or \gitRepoSSH (over SSH).
+from \gitRepoHTTP{} (over HTTP) or \gitRepoSSH{} (over SSH).
 \end{abstract}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

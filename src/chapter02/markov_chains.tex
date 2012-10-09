@@ -1,9 +1,9 @@
 A `Markov chain' is a chance process in which the outcome of a given experiment
 can affect the outcome of the next experiment \cite{Grinstead:1997}. For a
-Markov chain, we have a set of states $S = \left\{ s_{1}, s_{2}, \ldots, s_{r}
+Markov chain, we have a set of states $S = \left\{ s_1, s_2, \ldots, s_r
 \right\}$ with a process starting in one of the states and moving from state
-$s_{i}$ to $s_{j}$ with a probability $p_{ij}$ not dependent upon which states
-the chain was in before the current state. The probabilities $p_{ij}$ are called
+$s_i$ to $s_j$ with a probability $p_{ij}$ not dependent upon which states the
+chain was in before the current state. The probabilities $p_{ij}$ are called
 \emph{transition probabilities}, and the complete matrix $\mathbf{P}$ of
 probabilities is known as the \emph{transition matrix}.
 
@@ -12,5 +12,5 @@ $j$ in two steps is denoted by $p_{ij}^{(2)}$. In general, if a Markov chain has
 $r$ states, then:
 
 \begin{equation}
-p_{ij}^{(2)} = \sum_{k=1}^{r} p_{ik}p{kj}
+p_{ij}^{(2)} = \sum_{k=1}^r p_{ik} p_{kj}
 \end{equation}

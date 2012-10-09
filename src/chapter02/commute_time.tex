@@ -1,4 +1,6 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Introduction
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Introduction}
 \label{commuteTime:introduction}
 Commute time is a robust distance metric derived from a random walk on graphs
@@ -10,9 +12,9 @@ graph Laplacian, making it impractical for large graphs.
 
 A major advantage of using commute time as a distance metric for outlier
 detection is that it effectively captures not only the distances between data
-points but also the density of the data \citeNeeded. This property results in a
-distance metric that can be effectively used to capture global, local and group
-anomalies.
+points but also the density of the data \citeNeeded{}. This property results in
+a distance metric that can be effectively used to capture global, local and
+group anomalies.
 
 The commute time between two nodes $i$ and $j$ in a graph is the number of steps
 that a random walk, starting from $i$ will take to visit $j$ and then come back
@@ -23,17 +25,21 @@ is a measure which can capture the geometrical structure of the data and is
 robust to noise, commute time can be applied in methods where Euclidean or other
 distances are used and thus the limitations of these metrics can be avoided.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Limitations
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Limitations}
 \label{commuteTime:limitations}
 The computation of commute time requires the eigen decomposition (see
-\autoref{vectorsAndMatrices:eigenDecomposition}) of the graph Laplacian matrix 
-(see \autoref{vectorsAndMatrices:laplacian}), a computation which takes
-$O(n^{3})$ time and thus is not practical for large graphs \citeNeeded. Methods
-to approximate the commute time to reduce the computational time are required in
-order to efficiently use commute time in large datasets.
+\autoref{eigenDecomposition}) of the graph Laplacian matrix (see
+\autoref{laplacianMatrices}), a computation which takes $O(n^3)$ time and thus
+is not practical for large graphs \citeNeeded{}. Methods to approximate the
+commute time to reduce the computational time are required in order to
+efficiently use commute time in large datasets.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Anomaly Detection Using Commute Time
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Anomaly Detection Using Commute Time}
 \label{commuteTime:anomalyDetection}
 % TODO

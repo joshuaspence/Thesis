@@ -428,8 +428,8 @@ used throughout the project for testing and profiling.
         In order to represent digits as constant length feature vectors, the
         data was resampled using simple linear interpolation between pairs of
         points. The resampled digits are represented as a sequence of $T$ points
-        $\left(x_{t},y_{t}\right)_{t=1}^{T}$, regularly spaced in arc length,
-        as opposed to the input sequence, which is regularly spaced in time.
+        $\left(x_t,y_t\right)_{t=1}^T$, regularly spaced in arc length, as
+        opposed to the input sequence, which is regularly spaced in time.
         \newline
         So, the input vector size is $2 \times T$, twice the number of points
         resampled. The value $T=8$ gave the best trade-off between accuracy and
@@ -745,7 +745,7 @@ used throughout the project for testing and profiling.
                 is the molecule number, \lstinline+ISO+ is the stereoisomer
                 number (usually 1), and \lstinline+CONF+ is the conformation
                 number.
-            \item[\ensuremath{\left\{f_{1},\ldots,f_{162}\right\}}] These are
+            \item[\ensuremath{\left\{f_1,\ldots,f_162\right\}}] These are
                 ``distance features'' along rays. The distances are measured in
                 hundredths of Angstroms. The distances may be negative or
                 positive, since they are actually measured relative to an origin
@@ -755,13 +755,13 @@ used throughout the project for testing and profiling.
                 arbitrary continuous scale. In particular, the algorithm should
                 not make any use of the zero point or the sign of each feature
                 value.
-            \item[\ensuremath{f_{163}} (OXY-DIS)] This is the distance of the
+            \item[\ensuremath{f_163} (OXY-DIS)] This is the distance of the
                 oxygen atom in the molecule to a designated point in 3-space.
-            \item[\ensuremath{f_{164}} (OXY-X)] \ensuremath{X}-displacement from
+            \item[\ensuremath{f_164} (OXY-X)] \ensuremath{X}-displacement from
                 the designated point.
-            \item[\ensuremath{f_{165}} (OXY-Y)] \ensuremath{Y}-displacement from
+            \item[\ensuremath{f_165} (OXY-Y)] \ensuremath{Y}-displacement from
                 the designated point.
-            \item[\ensuremath{f_{166}} (OXY-Z)] \ensuremath{Z}-displacement from
+            \item[\ensuremath{f_166} (OXY-Z)] \ensuremath{Z}-displacement from
                 the designated point.
             \item[class] \ensuremath{0} if non-musk; \ensuremath{1} if musk.
         \end{description}

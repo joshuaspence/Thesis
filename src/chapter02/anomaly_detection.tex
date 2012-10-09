@@ -18,15 +18,17 @@ domains \cite{Chandola:2007}. Over time, many techniques for anomaly detection
 have been developed for specific application domains, as well as more generic
 techniques \cite{Chandola:2007}.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % What are Anomalies?
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{What are Anomalies?}
-\label{anomalyDetection:whatAreAnomalies}
+\label{anomalyDetection:whatAre}
 Anomalies are patterns in data that do not conform to a well defined notion of
 normal behavior. \autoref{fig:2d-anomalies} illustrates anomalies in a simple
-2-dimensional data set. The data has two normal regions, $N_{1}$ and $N_{2}$,
-since most observations lie in these two regions. Points that are sufficiently
-far away from the regions, such as points $o_{1}$ and $o_{2}$, and points in
-region $O_{3}$, are considered to be anomalies.
+2-dimensional data set. The data has two normal regions, $N_1$ and $N_2$, since
+most observations lie in these two regions. Points that are sufficiently far
+away from the regions, such as points $o_1$ and $o_2$, and points in region
+$O_3$, are considered to be anomalies.
 
 \begin{figure}
     \centering
@@ -37,9 +39,11 @@ region $O_{3}$, are considered to be anomalies.
     \label{fig:2d-anomalies}
 \end{figure}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Challenges
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Challenges}
-\label{anomalyDetection:Challenges}
+\label{anomalyDetection:challenges}
 A straightforward anomaly detection approach, is to define a region representing
 `normal' behaviour and declare any observation in the data which does not belong
 to this normal region as an anomaly. But several factors make this apparently
@@ -85,7 +89,9 @@ Researchers have adopted concepts from diverse disciplines such as statistics,
 data mining, statistics, information theory and spectral theory in order to gain
 an increased understanding of anomalies \cite{Chandola:2007}.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Similar Problems
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Similar Problems}
 \label{anomalyDetection:similarProblems}
 Anomaly detection is an intentionally broad specifier for a class of
@@ -105,24 +111,29 @@ an indication of the future state of a system. The distinction between novel
 pattern and anomalies is that novel patterns are incorporated into the data
 model after detection \cite{Chandola:2007}.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Classification
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Classification}
-\label{anomalyDetection:anomalyClassification}
-In general, two different kinds of outliers exist: global outliers and local
-outliers. Global outliers are distinct with respect to the whole data set, while
-local outliers are distinct with respect to data points in their local
-neighbourhood \cite{Vries:2011}. The task of global outlier detection has
-undergone much research \citeNeeded{}, but this has not been the case for local
+\label{anomalyDetection:classification}
+In general, two different kinds of outliers exist: \emph{global outliers} and 
+\emph{local outliers}. Global outliers are distinct with respect to the whole
+data set, while local outliers are distinct with respect to data points in their
+local neighbourhood \cite{Vries:2011}. The task of global outlier detection has
+undergone much research \citeNeeded, but this has not been the case for local
 outlier detection. In the paper \citetitle{Vries:2011}, \citeauthor{Vries:2011}
-optimise the use of local outlier factor (LOF) for large and high-dimensional
-data and propose projection-indexed nearest-neighbours (PINN) --- a novel
-technique that exploits extended nearest-neighbour sets in a reduced-dimensional
-space --- to create an accurate approximation for k-nearest-neighbour distances,
-which is used as the core density measurement within LOF \cite{Vries:2011}.
+optimises the use of \gls{LOF} (see \autoref{localOutlierFactor}) for large and
+high-dimensional data and proposes projection-indexed nearest-neighbours --- a
+novel technique that exploits extended nearest-neighbour sets in a
+reduced-dimensional space --- to create an accurate approximation for
+$k$-nearest-neighbour distances, which is used as the core density measurement
+within \gls{LOF} \cite{Vries:2011}.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Types of Anomalies
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Types of Anomalies}
-\label{anomalyDetection:typesOfAnomalies}
+\label{anomalyDetection:types}
 Anomalies can be classified into three categories \cite{Chandola:2007}:
 
 \begin{description}
@@ -130,9 +141,9 @@ Anomalies can be classified into three categories \cite{Chandola:2007}:
 \item[Point anomaly] If an individual data instance can be considered as
 anomalous with respect to the rest of data, then the instance is termed as a
 point anomaly. This is the simplest type of anomaly. Referring to
-\autoref{fig:2d-anomalies}, points $o_{1}$ and $o_{2}$, as well as all points in
-region $O_{3}$ lie outside the boundary of the normal regions, and are hence
-point anomalies.
+\autoref{fig:2d-anomalies}, points $o_1$ and $o_2$, as well as all points in
+region $O_3$ lie outside the boundary of the normal regions, and are hence point
+anomalies.
 
 \item[Contextual anomalies] If a data instance is anomalous in a certain
 context, but not otherwise, then it is termed a contextual anomaly. The notion
@@ -142,10 +153,10 @@ as part of the problem formulation.
 \begin{figure}
     \centering
     \includegraphics[width=0.5\textwidth]{anomalies/contextual}
-    \caption[Contextual anomaly $t_{2}$ in a temperature time series.]
-        {Contextual anomaly $t_{2}$ in a temperature time series. Note that the
-        temperature at time $t_{1}$ is same as that at time $t_{2}$ but occurs
-        in a different context and hence is not considered as an anomaly
+    \caption[Contextual anomaly $t_2$ in a temperature time series.]
+        {Contextual anomaly $t_2$ in a temperature time series. Note that the
+        temperature at time $t_1$ is same as that at time $t_2$ but occurs in a
+        different context and hence is not considered as an anomaly
         \cite{Chandola:2007}.}
     \label{fig:contextual-anomalies}
 \end{figure}
@@ -153,9 +164,9 @@ as part of the problem formulation.
 Contextual anomalies have been most commonly explored in time-series data and
 spatial data. \autoref{fig:contextual-anomalies} shows one such example for a
 temperature time series which shows the monthly temperature of an area over last
-few years. A temperature of $35^\circ F$ might be normal during the winter
-(at time $t_{1}$) at that place, but the same value during summer (at time
-$t_{2}$) would be an anomaly.
+few years. A temperature of $35^\circ F$ might be normal during the winter (at
+time $t_1$) at that place, but the same value during summer (at time $t_2$)
+would be an anomaly.
 
 \item[Collective anomalies] If a collection of related data instances is
 anomalous with respect to the entire data set, it is termed as a collective
@@ -169,17 +180,19 @@ low value by itself is not an anomaly.
 \begin{figure}
     \centering
     \includegraphics[width=0.5\textwidth]{anomalies/collective}
-    \caption[Collective anomaly corresponding to an \emph{Atrial Premature
-        Contraction} in an human electrocardiogram output.]
-        {Collective anomaly corresponding to an \emph{Atrial Premature
-        Contraction} in an human electrocardiogram output 
+    \caption[Collective anomaly corresponding to an \emph{atrial premature
+        contraction} in an human electrocardiogram output.]
+        {Collective anomaly corresponding to an \emph{atrial premature
+        contraction} in an human electrocardiogram output
         \cite{Goldberger:2000}.}
     \label{fig:collective-anomalies}
 \end{figure}
 
 \end{description}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Approaches
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Approaches}
 \label{anomalyDetection:approaches}
 \begin{description}
@@ -203,13 +216,14 @@ threshold, then that data point is considered an anomaly.
 \end{description}
 
 Although distance is an effective non-parametric approach to detecting outliers,
-the drawback is the amount of computation time required. Straightforward 
-algorithms, such as those based on nested loops, typically require $O(N^{2})$
+the drawback is the amount of computation time required. Straightforward
+algorithms, such as those based on nested loops, typically require $O(N^2)$
 distance computations. This quadratic scaling means that it will be very
 difficult to mine outliers as we tackle increasingly larger data sets. This is a
 major problem for many real databases where there are often millions of records
 \cite{Bay:2003}.
 
+% Distance Based
 \subsubsection{Distance Based}
 \label{anomalyDetection:approaches:distance}
 In this approach, one looks at the local neighborhood of points for an example
@@ -237,16 +251,19 @@ extremely well and potentially scales as $O(N \log N)$ if the index tree can
 find an example's nearest neighbors in $\log N$ time. However, index structures
 break down as the dimensionality increases \cite{Bay:2003}.
 
+% Statistical Based
 \subsubsection{Statistical Based}
 \label{anomalyDetection:approaches:statistical}
-A common distribution considered when modelling data is the `Normal' 
+A common distribution considered when modelling data is the `Normal'
 distribution. Using this model, the probability that a data instance lies within
 $k$ standard deviations $\sigma$ from the mean $\mu$ is the area between
 $\mu - k\sigma$ and $\mu + k\sigma$.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Local Outlier Factor
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Local Outlier Factor}
-\label{anomalyDetection:localOutlierFactor}
+\label{localOutlierFactor}
 `Local Outlier Factor' is a formula that captures the degree to which a data
 point is an outlier with respect to its local neighbourhood. In this context,
 `local' means that the determination of the data points does not depend on
