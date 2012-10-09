@@ -40,7 +40,7 @@ days to create and cost tens to hundreds of dollars \cite{Hauck:2007}.
 
 \autoref{fig:fpga:abstract} shows an abstract view of an \gls{FPGA}, which
 consists of an \emph{array} of logic blocks (\emph{gates}) connected in a
-general routing structure. THe logic blocks contains processing elements for
+general routing structure. The logic blocks contains processing elements for
 impleenting combinatorial logic, as well as flip-flops for implementing
 sequential logic. The logic and routing elments of an \gls{FPGA} are controlled
 by programming points, which may be based on anitfuse, Flash  or \gls{SRAM}
@@ -198,7 +198,7 @@ addition. The simplest approach to implement a full-adder structure involves a
 single logic block configured to compute the sum, together with a logic block
 configured to compute the carry signal. Through this method, the cascading of
 $N$ logic blocks can be used to implement an $N$-bit full adder
-\cite{Hauck:2007}. The \gls{criticalPath} of this design comes from the rippling
+\cite{Hauck:2007}. The critical path of this design comes from the rippling
 of the carry signal from lower-order bits to higher-order bits. This limitation
 can be alleviated through placement considerations of the logic blocks, in such
 a way as to minimise signal delay through the carry chain.
@@ -222,7 +222,7 @@ it is a far more efficient use of FPGA resources to provide dedicated on-chip
 extremely fast lookup table operations, as well as providing memory resources
 for queueing, buffering and general usage.
 
-\paragaph{Processing Blocks}
+\paragraph{Processing Blocks}
 \label{fpga:architecture:processor}
 As the market for \gls{FPGA} devices extends to a wider range of applications,
 it has become common for these devices to include general purpose processing
@@ -240,18 +240,51 @@ purpose, platform-orientated devices.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Device Configuration}
 \label{fpga:configuration}
+In order to be configurable, and consequently reconfigurable, \glspl{FPGA} must
+be programmed from some initial (blank) configuration to the final design
+configuration for the project. The configuration process can essentially be
+thought of as the construction of a flat binary file (known as a
+\emph{bitstream}) which maps, bit-for-bit, to the programmable bits of the
+\gls{FPGA} device. The configurable elements of an \gls{FPGA}, which are
+configured through the bitstream, include the contents of a logic block (such as
+the values resulting from a truth table), as well as the routing
+interconnections.
+
+There are various means by which an \gls{FPGA} can be configured, the most
+common of which are outlined below.
 
 % Static Random Access Memory
-\subsubsection{Static Random Access Memory}
+\paragraph{Static Random Access Memory}
 \label{fpga:configuration:sram}
-% TODO
+\gls{SRAM} is volatile, static \gls{RAM} and is the most common method chosen
+for device implementation, due to the potential it provides for fast and
+infinite reconfiguration.
+
+The main disadvantage of \gls{SRAM} is the power consumption necessary for such
+hardware elements. This follows on from the volatile characteristic of the
+memory, such that in the absence of a power source, the data on the storage
+medium is not persistent.
 
 % Flash Memory
 \subsubsection{Flash Memory}
-\label{fpga:configuration:flash}
-% TODO
+\paragraph{fpga:configuration:flash}
+Flash memory holds some improvements over \gls{SRAM} for the configuration of
+\glspl{FPGA}, namely that the memory is non-volatile. This simplifies the
+boot-up process by removing the necessity to redownload the bitstream at power
+on. Flash memory, however, has a limited write cycle lifetime and often has
+slower write speeds than \gls{SRAM}.
 
 % Antifuse
 \subsubsection{Antifuse}
-\label{fpga:configuration:antifuse}
-% TODO
+\paragraph{fpga:configuration:antifuse}
+Antifuse is a metal-based link that behaves the opposite of a fuse
+\cite{Hauck:2007}. Antifuse is initially in a `normally open' state, but through
+a high-current programming process these links can be melted to form a circuit
+connection. The clear disadvantage of antifuse is that it is non-reprogrammable.
+It does, however, have some distinct benefits over \gls{SRAM} and Flash memory:
+\begin{itemize}
+    \item Antifuse links can be made very small compared to \gls{SRAM} cells.
+    \item It does not require any transistors.
+    \item Low propagation delay across links.
+    \item Zero static power consumption.
+\end{itemize}
