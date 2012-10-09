@@ -126,6 +126,9 @@
 % \hostname{HOSTNAME}
 \newcommand\hostname[1]{\emph{#1}}
 
+% \programmingLanguage{LANG}
+\newcommand\programmingLanguage[1]{\lstinline`#1`}
+
 % \software{NAME}[CMD]
 \NewDocumentCommand\software{om}{``#2''\IfNoValueTF{#1}{}{ (\command{#1})}}
 
@@ -211,7 +214,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Bibliography
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\usepackage[language=australian]{biblatex} % use biblatex instead of bibtex
+\usepackage[backend=biber,language=australian]{biblatex} % use biblatex instead of bibtex
 \bibliography{thesis}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
