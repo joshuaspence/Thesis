@@ -41,7 +41,11 @@ originally devised by \citeauthor{Bay:2003} and published in the paper
 \citetitle{Bay:2003}. The general steps of the algorithm are described in
 \autoref{algm:TopNOutlierPruningBlock}.
 
-\input{chapter04/top-n-outlier-pruning-block-algorithm}
+\begin{algorithm}
+    \input{chapter04/top-n-outlier-pruning-block.algm}
+    \caption{TopN\_Outlier\_Pruning\_Block}
+    \label{algm:TopNOutlierPruningBlock}
+\end{algorithm}
 
 In this algorithm, the \command{score} function can be any monotonically
 decreasing function of the nearest neighbor distances such as the distance to

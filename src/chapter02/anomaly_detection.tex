@@ -191,40 +191,9 @@ low value by itself is not an anomaly.
 \end{description}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Approaches
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Approaches}
-\label{anomalyDetection:approaches}
-\begin{description}
-
-\item[Classical] A point is declared to be an outlier if its distance from the
-mean is sufficiently large.
-
-\item[\gls{PCA}] An outlier is usually declared if the point is sufficiently far
-away from the subspace spanned by the eigenvectors corresponding to the highest
-eigenvalues.
-
-\item[Distance based] A point can be declared to be an outlier if its distance
-to its kth nearest-neighbour is sufficiently large.
-
-\item[Statistical based] Statistical methods are often model-based and assume
-that the data should follow some distribution. With knowledge of the
-distribution, data point are evaluated by their fitness to the assumed
-distribution. If the probability of a data instance is less than a certain
-threshold, then that data point is considered an anomaly.
-
-\end{description}
-
-Although distance is an effective non-parametric approach to detecting outliers,
-the drawback is the amount of computation time required. Straightforward
-algorithms, such as those based on nested loops, typically require $O(N^2)$
-distance computations. This quadratic scaling means that it will be very
-difficult to mine outliers as we tackle increasingly larger data sets. This is a
-major problem for many real databases where there are often millions of records
-\cite{Bay:2003}.
-
 % Distance Based
-\subsubsection{Distance Based}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Distance Based}
 \label{anomalyDetection:approaches:distance}
 In this approach, one looks at the local neighborhood of points for an example
 typically defined by the $k$ nearest examples (also known as neighbours). If the
@@ -233,6 +202,14 @@ if the neighbouring points are far away, then the example is considered unusual.
 The advantages of distance-based outliers are that no explicit distribution
 needs to be defined to determine unusualness, and that it can be applied to any
 feature space for which we can define a distance measure \cite{Bay:2003}.
+
+Although distance is an effective non-parametric approach to detecting outliers,
+the drawback is the amount of computation time required. Straightforward
+algorithms, such as those based on nested loops, typically require $O(N^2)$
+distance computations. This quadratic scaling means that it will be very
+difficult to mine outliers as we tackle increasingly larger data sets. This is a
+major problem for many real databases where there are often millions of records
+\cite{Bay:2003}.
 
 Researchers have tried a variety of approaches to find these outliers
 efficiently. The simplest are those using nested loops \cite{Bay:2003}. In the
@@ -251,18 +228,45 @@ extremely well and potentially scales as $O(N \log N)$ if the index tree can
 find an example's nearest neighbors in $\log N$ time. However, index structures
 break down as the dimensionality increases \cite{Bay:2003}.
 
-% Statistical Based
-\subsubsection{Statistical Based}
-\label{anomalyDetection:approaches:statistical}
+% Pruning Rule
+\subsubsection{Pruning Rule}
+\label{anomalyDetection:approaches:distance:pruning}
+% TODO
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Distribution Based
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Distribution Based}
+\label{anomalyDetection:approaches:distribution}
 A common distribution considered when modelling data is the `Normal'
 distribution. Using this model, the probability that a data instance lies within
 $k$ standard deviations $\sigma$ from the mean $\mu$ is the area between
 $\mu - k\sigma$ and $\mu + k\sigma$.
+% TODO
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Local Outlier Factor
+% Principal Component Analysis Based
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Local Outlier Factor}
+\subsection{Principal Component Analysis Based}
+\label{anomalyDetection:pca}
+% TODO
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Clustering Based
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Clustering Based}
+\label{anomalyDetection:clustering}
+% TODO
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Density Based
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Density Based}
+\label{anomalyDetection:density}
+% TODO
+
+% Local Outlier Factor
+\subsubsection{Local Outlier Factor}
 \label{localOutlierFactor}
 `Local Outlier Factor' is a formula that captures the degree to which a data
 point is an outlier with respect to its local neighbourhood. In this context,

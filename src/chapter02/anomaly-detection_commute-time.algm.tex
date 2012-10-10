@@ -1,0 +1,55 @@
+% TODO
+\LinesNumbered
+
+\SetKwInput{InputK}{k}
+\SetKwInput{InputN}{N}
+\SetKwInput{InputD}{Data}
+\SetKwInOut{OutputO}{outliers}
+
+\InputK{the number of nearest neighbors}
+\InputN{the number of outliers to return}
+\InputD{a set of examples in random order}
+\OutputO{a set of outliers}
+
+\SetKwData{varB}{b}
+\SetKwData{Block}{block}
+\SetKwData{Cutoff}{cutoff}
+\SetKwData{varD}{d}
+\SetKwData{Data}{Data}
+\SetKwData{varK}{k}
+\SetKwData{varN}{N}
+\SetKwData{Neighbours}{neighbours}
+\SetKwData{varO}{o}
+\SetKwData{Outliers}{outliers}
+\SetKwData{Score}{score}
+
+\SetKwFunction{Closest}{closest}
+\SetKwFunction{Distance}{distance}
+\SetKwFunction{GetNextBlock}{getNextBlock}
+\SetKwFunction{MaxDist}{maxDist}
+\SetKwFunction{Min}{min}
+\SetKwFunction{Top}{top}
+
+\Begin{
+    $\Cutoff \longleftarrow 0$\tcp*[l]{set the cutoff for pruning to $0$}
+    $\Outliers \longleftarrow \emptyset$\tcp*[l]{initialize to the empty set}
+    \BlankLine
+    \While(\tcp*[h]{load a block of examples from \varD}){$\Block \longleftarrow \GetNextBlock{\Data}$}{
+        $\Neighbours(\varB) \longleftarrow \emptyset, \quad \forall \, \varB \in \Block$\;
+        \BlankLine
+        \ForEach{$\varD \in \Data$}{
+            \ForEach{$\varB \in \Block \: : \: \varB \neq \varD$}{
+                \If{$|\Neighbours(\varB)| < \varK \: \lor \: \Distance{\varB, \varD} < \MaxDist{\varB, \Neighbours(\varB)}$}{
+                    $\Neighbours(\varB) \longleftarrow \Closest{\varB, \Neighbours(\varB)} \cup \varD, \varK)$\;
+                    \If{$\Score(\Neighbours(\varB), \varB) < \Cutoff$}{
+                        $\Block \longleftarrow \Block \setminus \varB$\;
+                    }
+                }
+            }
+        }
+        \BlankLine
+        $\Outliers \longleftarrow $\Top{$\Block \cup \Outliers$, $\varN$}\tcp*[l]{keep only the top n outliers}
+        $\Cutoff \longleftarrow \Min_{\varO \in \Outliers}(\Score(\varO))$\tcp*[l]{the cutoff is the score of the weakest outlier}
+    }
+    \KwRet{\Outliers}\;
+}

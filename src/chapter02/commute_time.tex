@@ -1,45 +1,55 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Introduction
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Introduction}
-\label{commuteTime:introduction}
-Commute time is a robust distance metric derived from a random walk on graphs
-\cite{Khoa:2012}. In \citetitle{Khoa:2012}, \citeauthor{Khoa:2012} demonstrated
-how commute time can be used as a distance measure for data mining tasks such as
-anomaly detection and clustering. A prohibitive limitation of this technique is
-that the calculation of commute time involves the eigen decomposition of the
-graph Laplacian, making it impractical for large graphs.
+\subsection{Introductions}
+\label{anomalyDetection:commuteTime:introduction}
+This section provides an overview of a method for anomaly detection using
+commute time. This method was proposed by \citeauthor{Khoa:2012} in
+\fullcite{Khoa:2012} \cite{Khoa:2012}. An introduction to commute time was
+presented in \autoref{commuteTime}. The method described in this section forms
+the base algorithm that will be implemented in hardware during this Thesis.
 
-A major advantage of using commute time as a distance metric for outlier
-detection is that it effectively captures not only the distances between data
-points but also the density of the data \citeNeeded{}. This property results in
-a distance metric that can be effectively used to capture global, local and
-group anomalies.
+Commute time is an Euclidean distance in the space spanned by eigenvectors of
+the graph Laplacian matrix. Commute time forms an interesting basis for an
+anomaly detection algorithm because, unlike traditional Euclidean distance,
+the commute time between two nodes can capture both the distance between them
+and the data densities so that we can capture both global and local anomalies in
+the data set \cite{Khoa:2012}.
 
-The commute time between two nodes $i$ and $j$ in a graph is the number of steps
-that a random walk, starting from $i$ will take to visit $j$ and then come back
-to $i$ for the first time. The fact that the commute time is averaged over all
-paths (and not just the shortest path) makes it more robust to data
-perturbations and it can also capture graph density \cite{Khoa:2012}. Since it
-is a measure which can capture the geometrical structure of the data and is
-robust to noise, commute time can be applied in methods where Euclidean or other
-distances are used and thus the limitations of these metrics can be avoided.
+% TODO: Replace with a tikzpicture
+\begin{figure}
+    \centering
+    \includegraphics[width=0.3\textwidth]{commute-time/example}
+    \caption{A simple example illustrating the application of commute time}
+    \label{fig:commuteTime:example}
+\end{figure}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Limitations
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Limitations}
-\label{commuteTime:limitations}
-The computation of commute time requires the eigen decomposition (see
-\autoref{eigenDecomposition}) of the graph Laplacian matrix (see
-\autoref{laplacianMatrices}), a computation which takes $O(n^3)$ time and thus
-is not practical for large graphs \citeNeeded{}. Methods to approximate the
-commute time to reduce the computational time are required in order to
-efficiently use commute time in large datasets.
+A simple example illustrating the application of the commute time metric is
+shown in \autoref{fig:commuteTime:example}. In this example, edge $e_{1,2}$ has
+a larger commute time than all other edges in the cluster, whilst its Euclidean
+distance is the same or smaller than the neighbouring Euclidean distances.
+
+A key property of the commute time metric that allows for its use for anomaly
+detection is that, by adding more data points to an existing cluster (i.e.,
+making the cluster more dense), the commute time between anomalous data points
+and the cluster changes dramatically whilst the average pair-wise commute times
+of all nodes within the cluster is largely unaffected.
+
+\citeauthor{Khoa:2012} was able to devise and prove an anomaly detection
+algorithm (using the commute time metric) to detect global and local outliers.
+Extending this algorithm, \citeauthor{Khoa:2012} was able to use graph component
+sampling and Eigenspace approximation in order to avoid the $O(n^3)$ Eigen
+decomposition of the graph Laplacian. Furthermore, a pruning technique was used
+in attempt to improve the run time complexity of the algorithm to $O(n\log n)$.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Anomaly Detection Using Commute Time
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Anomaly Detection Using Commute Time}
-\label{commuteTime:anomalyDetection}
-% TODO
+\label{anomalyDetection:commuteTime:algorithm}
+
+\begin{algorithm}[t]
+    \input{chapter02/anomaly-detection_commute-time.algm}
+    \caption{Anomaly Detection using Commute Time}
+    \label{algm:anomalyDetection:commuteTime}
+\end{algorithm}

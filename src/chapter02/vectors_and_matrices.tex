@@ -3,6 +3,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Eigenvectors and Eigenvalues}
 \label{eigenvectors}
+\label{eigenvalues}
 This section will briefly recall some basic definitions of eigenvectors and
 eigenvalues, as well as some of their basic properties.
 
@@ -13,16 +14,15 @@ M\mathbf{v} = \lambda\textbf{v}
 \end{equation}
 
 If $\mathbf{v_1}$ is an eigenvector of $M$ of eigenvalue $\lambda_1$,
-$\mathbf{v_2}$ is an eigenvector of $M$ of eigenvalue $\lambda_2 \neq
-\lambda_1$, and $M$ is symmetric, then $\mathbf{v_1}$ is orthogonal to
-$\mathbf{v_2}$.
+$\mathbf{v_2}$ is an eigenvector of $M$ of eigenvalue $\lambda_2\neq\lambda_1$,
+and $M$ is symmetric, then $\mathbf{v_1}$ is orthogonal to $\mathbf{v_2}$.
 
 For a symmetric matrix $M$, the multiplicity of an eigenvalue $\lambda$ is the
 dimension of the space of eigenvectors of eigenvalue $\lambda$. Also recall that
-every $n \times n$ symmetric matrix has $n$ eigenvalues, counted with
+every $n\times n$ symmetric matrix has $n$ eigenvalues, counted with
 multiplicity. Thus, it has an orthonormal basis of eigenvectors,
 $\begin{Bmatrix} \mathbf{v_1} & \ldots & \mathbf{v_n} \end{Bmatrix}$ with
-eigenvalues $\lambda_1 \leq \lambda_2 \leq \ldots \leq \lambda_3$ so that:
+eigenvalues $\lambda_1\leq\lambda_2\leq\ldots\leq\lambda_3$ so that:
 \begin{equation}
 M\mathbf{v_i} = \lambda_i \mathbf{v_i} \quad \forall i
 \end{equation}
@@ -130,17 +130,17 @@ nonpositive off-diagonal entries. We call any matrix that satisfies these
 properties a Laplacian matrix, as there always exists some graph for which it is
 the Laplacian \cite{Spielman:2010}.
 
-For a graph $G$ and its Laplacian Matrix $L$ with eigenvalues $\lambda_0 <
-\lambda_1 < \ldots < \lambda_{n-1}$:
+For a graph $G$ and its Laplacian Matrix $L$ with eigenvalues $\lambda_0<
+\lambda_1<\ldots<\lambda_{n-1}$:
 
 \begin{itemize}
 \item $L$ is a symmetric matrix. This means the eigenvalues of $L$ are real, and
 its eigenvectors are real and orthogonal.
-\item $L$ is always positive-semidefinite ($\forall i, \lambda_i \geq 0;
-\lambda_0 = 0$).
-\item Let $G = (V,E)$ be a graph, and let $0 = \lambda_1 \leq \lambda_2 \leq
-\ldots \leq \lambda_n$ be the eigenvalues of its Laplacian Matrix. Then,
-$\lambda_2 > 0$ if and only if $G$ is connected.
+\item $L$ is always positive-semidefinite ($\forall i,\lambda_i\geq 0;
+\lambda_0=0$).
+\item Let $G=(V,E)$ be a graph, and let $0=\lambda_1\leq\lambda_2\leq\ldots\leq
+\lambda_n$ be the eigenvalues of its Laplacian Matrix. Then, $\lambda_2>0$ if
+and only if $G$ is connected.
 \item The number of times $0$ appears as an eigenvalue in the Laplacian Matrix
 is the number of connected components in the graph.
 \item $\lambda_0$ is always $0$ because every Laplacian Matrix has an
@@ -163,7 +163,7 @@ Q_{ij} :=
 Then the Laplacian Matrix $L$ satisfies $L = Q^TQ$, regardless of the
 orientation of the edges.
 \item The second smallest eigenvalue of $L$ ($\lambda_2$) is the algebraic
-connectivity of $G$. $\lambda_2 > 0$ if and only if $G$ is connected.
+connectivity of $G$. $\lambda_2>0$ if and only if $G$ is connected.
 \end{itemize}
 
 % Applications

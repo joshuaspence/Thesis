@@ -2,14 +2,14 @@
 % Spielman-Teng Solver
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Spielman-Teng Solver}
-\label{solvers:spielmanTeng}
+\label{spielmanTengSolver}
 \nocite{Spielman:2006}
 Spielman and Teng presented a randomised algorithm that, on input a symmetric,
-weakly diagonally dominant $n \times x$ matrix $A$ with $m$ non-zero entries and
+weakly diagonally dominant $n\times x$ matrix $A$ with $m$ non-zero entries and
 an $n$-vector $\mathbf{b}$, produces an $\tilde{\mathbf{x}}$ such that
 $\begin{Vmatrix} \tilde{\textbf{x}} - A^\dagger \textbf{b} \end{Vmatrix}_A
 \leq \epsilon \begin{Vmatrix} A^\dagger \mathbf{b} \end{Vmatrix}_A$ in expected
 time:
 \begin{equation}
-m \log^{O(1)} n \log (1/\epsilon)
+m\log^{O(1)} n\log(1/\epsilon)
 \end{equation}
