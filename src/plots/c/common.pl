@@ -13,7 +13,7 @@ require 'util.pl';
 #===============================================================================
 # Configuration
 #===============================================================================
-use constant DATA_FILE         => 'data';
+use constant DATA_FILE         => catfile(updir(), updir(), updir(), 'data', 'profiling', 'c.csv');
 use constant THIS_DIR          => 'plots/c'; # for LaTeX \input command
 
 use constant OTHER_FUNCTION    => '__other__';

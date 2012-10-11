@@ -13,8 +13,8 @@ require 'util.pl';
 #===============================================================================
 # Configuration
 #===============================================================================
+use constant DATA_FILE             => catfile(updir(), updir(), updir(), 'data', 'profiling', 'block_size.csv');
 use constant NO_BLOCKING_BLOCKSIZE => 0;
-use constant DATA_FILE             => 'data';
 
 use constant COL_DATASET           => 0;
 use constant COL_BLOCKSIZE         => 1;

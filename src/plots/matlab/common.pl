@@ -13,7 +13,7 @@ require 'util.pl';
 #===============================================================================
 # Configuration
 #===============================================================================
-use constant DATA_FILE        => 'data';
+use constant DATA_FILE        => catfile(updir(), updir(), updir(), 'data', 'profiling', 'matlab.csv');
 use constant THIS_DIR         => 'plots/matlab'; # for LaTeX \input command
 
 use constant OTHER_FUNCTION   => '__other__';
