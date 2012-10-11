@@ -3,18 +3,18 @@
 use strict;
 use warnings;
 
-use Cwd 'abs_path';
-use File::Basename;
+use Cwd qw(abs_path);
+use File::Basename qw(basename dirname);
+use File::Spec::Functions qw(catdir catfile devnull updir);
 
-use FindBin;
-use lib "$FindBin::Bin/../../../../scripts";
+use lib catdir(dirname($0), updir(), updir(), updir(), 'scripts');
 require 'util.pl';
 
 #===============================================================================
 # Configuration
 #===============================================================================
-use constant DATAFILE          => './../../../../data/profiling/c.csv';
-use constant THIS_DIR          => 'appendix/plots/c';
+use constant DATA_FILE         => 'data';
+use constant THIS_DIR          => 'plots/c'; # for LaTeX \input command
 
 use constant OTHER_FUNCTION    => '__other__';
 use constant OTHER_NAME        => 'Other';
@@ -112,7 +112,7 @@ my $output_file = $ARGV[0];
 # Parse the data
 my %data = ();
 my %function_colours = ();
-open(FILE, "<${\(dirname($0))}/${\DATAFILE}") || die("Cannot open file: ${\(dirname($0))}/${\DATAFILE}");
+open(FILE, "<${\(catfile(dirname($0), DATA_FILE))}") || die("Cannot open file: ${\(catfile(dirname($0), DATA_FILE))}");
 my $in_header = 1;
 for (<FILE>) {
     # Skip the header
@@ -174,7 +174,7 @@ if (basename($0) =~ m/all_datasets.tex.pl/) {
         push(@the_functions, "1/\\escape{$function}");
     }
     
-    my $colour_string = join(',', @the_colours);
+    my $colour_string   = join(',', @the_colours);
     my $function_string = join(",\n", @the_functions);
     
     print TEX <<END_OF_TEX;

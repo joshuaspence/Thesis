@@ -1,55 +1,38 @@
 % TODO
 \LinesNumbered
 
-\SetKwInput{InputK}{k}
-\SetKwInput{InputN}{N}
-\SetKwInput{InputD}{Data}
-\SetKwInOut{OutputO}{outliers}
+\SetKwInput{InputX}{$X$}
+\SetKwInput{InputKnn}{$k_1$}
+\SetKwInput{InputKscore}{$k_2$}
+\SetKwInput{InputN}{$N$}
+\SetKwInOut{Output}{outliers}
 
-\InputK{the number of nearest neighbors}
-\InputN{the number of outliers to return}
-\InputD{a set of examples in random order}
-\OutputO{a set of outliers}
+\InputX{Data matrix}
+\InputKnn{the number of nearest neighbours to consider}
+\InputKscore{for estimating the anomaly score}
+\InputN{the number of anomalies to return}
+\Output{the outliers that were discovered}
 
-\SetKwData{varB}{b}
-\SetKwData{Block}{block}
-\SetKwData{Cutoff}{cutoff}
-\SetKwData{varD}{d}
-\SetKwData{Data}{Data}
-\SetKwData{varK}{k}
-\SetKwData{varN}{N}
-\SetKwData{Neighbours}{neighbours}
-\SetKwData{varO}{o}
-\SetKwData{Outliers}{outliers}
-\SetKwData{Score}{score}
+\SetKwData{varX}{$X$}
+\SetKwData{varKnn}{$k_1$}
+\SetKwData{varKscore}{$k_2$}
+\SetKwData{varN}{$N$}
+\SetKwData{varOutliers}{outliers}
 
-\SetKwFunction{Closest}{closest}
-\SetKwFunction{Distance}{distance}
-\SetKwFunction{GetNextBlock}{getNextBlock}
-\SetKwFunction{MaxDist}{maxDist}
-\SetKwFunction{Min}{min}
-\SetKwFunction{Top}{top}
+\SetKwData{varKnnGraph}{knnGraph}
+\SetKwData{varLaplacian}{$L$}
+\SetKwData{varLaplacianInv}{$L^+$}
+
+\SetKwFunction{ConstructKnnGraph}{constructKnnGraph}
+\SetKwFunction{ConstructLaplacianMatrix}{constructLaplacianMatrix}
+\SetKwFunction{ConstructInvLaplacianMatrix}{constructPseudoinverseLaplacianMatrix}
+\SetKwFunction{FindOutliers}{TopN\_Outlier\_Pruning\_Block}
 
 \Begin{
-    $\Cutoff \longleftarrow 0$\tcp*[l]{set the cutoff for pruning to $0$}
-    $\Outliers \longleftarrow \emptyset$\tcp*[l]{initialize to the empty set}
+    $\varOutliers\longleftarrow\emptyset$\tcp*[l]{initialize to the empty set}
     \BlankLine
-    \While(\tcp*[h]{load a block of examples from \varD}){$\Block \longleftarrow \GetNextBlock{\Data}$}{
-        $\Neighbours(\varB) \longleftarrow \emptyset, \quad \forall \, \varB \in \Block$\;
-        \BlankLine
-        \ForEach{$\varD \in \Data$}{
-            \ForEach{$\varB \in \Block \: : \: \varB \neq \varD$}{
-                \If{$|\Neighbours(\varB)| < \varK \: \lor \: \Distance{\varB, \varD} < \MaxDist{\varB, \Neighbours(\varB)}$}{
-                    $\Neighbours(\varB) \longleftarrow \Closest{\varB, \Neighbours(\varB)} \cup \varD, \varK)$\;
-                    \If{$\Score(\Neighbours(\varB), \varB) < \Cutoff$}{
-                        $\Block \longleftarrow \Block \setminus \varB$\;
-                    }
-                }
-            }
-        }
-        \BlankLine
-        $\Outliers \longleftarrow $\Top{$\Block \cup \Outliers$, $\varN$}\tcp*[l]{keep only the top n outliers}
-        $\Cutoff \longleftarrow \Min_{\varO \in \Outliers}(\Score(\varO))$\tcp*[l]{the cutoff is the score of the weakest outlier}
-    }
-    \KwRet{\Outliers}\;
+    $\varKnnGraph\longleftarrow\ConstructKnnGraph(\varX,\varKnn)$\;\tcp*[l]{Construct the mutual k-nearest neighbour graph from the dataset}
+    $\varLaplacian\longleftarrow\ConstructLaplacianMatrix()$\;\tcp*[l]{Compute the graph Laplacian matrix L and its pseudoinverse L+}
+    $\varOutliers\longleftarrow\FindOutliers()$\;\tcp*[l]{Find top N anomalies using the distance-based technique on commute time with pruning rule (using k2) described in Algorithm 1. The commute time between two nodes i and j can be computed using Equation 2.4}
+    \KwRet{\varOutliers}\;
 }

@@ -3,18 +3,18 @@
 use strict;
 use warnings;
 
-use Cwd 'abs_path';
-use File::Basename;
+use Cwd qw(abs_path);
+use File::Basename qw(basename dirname);
+use File::Spec::Functions qw(catdir catfile devnull updir);
 
-use FindBin;
-use lib "$FindBin::Bin/../../../../scripts";
+use lib catdir(dirname($0), updir(), updir(), updir(), 'scripts');
 require 'util.pl';
 
 #===============================================================================
 # Configuration
 #===============================================================================
-use constant DATA_FILE         => './../../../../data/profiling/matlab.csv';
-use constant THIS_DIR         => 'appendix/plots/matlab';
+use constant DATA_FILE        => 'data';
+use constant THIS_DIR         => 'plots/matlab'; # for LaTeX \input command
 
 use constant OTHER_FUNCTION   => '__other__';
 use constant OTHER_NAME       => 'Other';
@@ -143,7 +143,7 @@ my $output_file = $ARGV[0];
 # Parse the data
 my %data = ();
 my %function_colours = ();
-open(FILE, "<${\(dirname $0)}/${\DATA_FILE}") || die("Cannot open file: ${\(dirname $0)}/${\DATA_FILE}");
+open(FILE, "<${\(catfile(dirname($0), DATA_FILE))}") || die("Cannot open file: ${\(catfile(dirname($0), DATA_FILE))}");
 my $in_header = 1;
 for (<FILE>) {
     # Skip the header

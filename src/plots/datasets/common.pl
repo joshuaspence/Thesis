@@ -3,8 +3,8 @@
 use strict;
 use warnings;
 
-use Cwd 'abs_path';
-use File::Basename;
+use Cwd qw(abs_path);
+use File::Basename qw(basename dirname);
 use File::Spec::Functions qw(catdir catfile devnull);
 
 #===============================================================================

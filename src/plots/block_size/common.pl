@@ -3,31 +3,31 @@
 use strict;
 use warnings;
 
-use Cwd 'abs_path';
-use File::Basename;
+use Cwd qw(abs_path);
+use File::Basename qw(basename dirname);
+use File::Spec::Functions qw(catdir catfile devnull updir);
 
-use FindBin;
-use lib "$FindBin::Bin/../../../../scripts";
+use lib catdir(dirname($0), updir(), updir(), updir(), 'scripts');
 require 'util.pl';
 
 #===============================================================================
 # Configuration
 #===============================================================================
 use constant NO_BLOCKING_BLOCKSIZE => 0;
-use constant DATA_FILE => './../../../../data/profiling/block_size.csv';
+use constant DATA_FILE             => 'data';
 
-use constant COL_DATASET         => 0;
-use constant COL_BLOCKSIZE       => 1;
-use constant COL_DIMENSIONS      => 3;
-use constant COL_VECTORS         => 4;
-use constant COL_TOTALTIME       => 5;
-use constant COL_TOTALTIME_NORM  => 6;
-use constant COL_FUNCTIME        => 9;
-use constant COL_FUNCTIME_NORM   => 10;
-use constant COL_DISTCALLS       => 11;
-use constant COL_DISTCALLS_NORM  => 12;
-use constant COL_PRUNED          => 13;
-use constant COL_PRUNED_NORM     => 14;
+use constant COL_DATASET           => 0;
+use constant COL_BLOCKSIZE         => 1;
+use constant COL_DIMENSIONS        => 3;
+use constant COL_VECTORS           => 4;
+use constant COL_TOTALTIME         => 5;
+use constant COL_TOTALTIME_NORM    => 6;
+use constant COL_FUNCTIME          => 9;
+use constant COL_FUNCTIME_NORM     => 10;
+use constant COL_DISTCALLS         => 11;
+use constant COL_DISTCALLS_NORM    => 12;
+use constant COL_PRUNED            => 13;
+use constant COL_PRUNED_NORM       => 14;
 #-------------------------------------------------------------------------------
 
 # Make sure an output file was specified
@@ -37,7 +37,7 @@ my $output_file = $ARGV[0];
 # Parse the data
 my %data = ();
 my @block_sizes = ();
-open(DATA, "<${\(dirname($0))}/${\DATA_FILE}") || die("Cannot open data file: ${\(dirname($0))}/${\DATA_FILE}");
+open(DATA, "<${\(catfile(dirname($0), DATA_FILE))}") || die("Cannot open data file: ${\(catfile(dirname($0), DATA_FILE))}");
 my $in_header = 1;
 for (<DATA>) {
     # Skip the header
@@ -72,7 +72,7 @@ for (<DATA>) {
 close(DATA);
 
 # Create the graphs
-open(GNUPLOT, '|gnuplot');
+open(GNUPLOT, "| gnuplot >${\(devnull())}");
 print GNUPLOT <<END_OF_GNUPLOT;
 reset
 set terminal tikz color size 10cm, 10cm
@@ -210,10 +210,10 @@ if ($loop_over =~ m/dataset/) {
 use strict; \\
 use warnings; \\
 \\
-use lib '${\(dirname($0))}/../../../../scripts'; \\
+use lib '${\(catdir(dirname($0), updir(), updir(), updir(), 'scripts'))}'; \\
 require 'util.pl'; \\
 \\
-open(FILE, '<${\(dirname($0))}/${\DATA_FILE}'); \\
+open(FILE, '<${\(catdir(dirname($0), DATA_FILE))}'); \\
 my \\\\\$in_header = 1; \\
 for my \\\\\$line (<FILE>) { \\
     if (\\\\\$in_header) { \\
@@ -254,10 +254,10 @@ END_OF_GNUPLOT
 use strict; \\
 use warnings; \\
 \\
-use lib '${\(dirname($0))}/../../../../scripts'; \\
+use lib '${\(catdir(dirname($0), updir(), updir(), updir(), 'scripts'))}'; \\
 require 'util.pl'; \\
 \\
-open(FILE, '<${\(dirname($0))}/${\DATA_FILE}'); \\
+open(FILE, '<${\(catfile(dirname($0), DATA_FILE))}'); \\
 my \\\\\$in_header = 1; \\
 for my \\\\\$line (<FILE>) { \\
     if (\\\\\$in_header) { \\
