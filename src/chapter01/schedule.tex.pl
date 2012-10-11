@@ -3,7 +3,8 @@
 use strict;
 use warnings;
 
-use constant START_INDEX => 1;
+use File::Basename qw(basename dirname);
+use File::Spec::Functions qw(catdir catfile updir);
 
 use Date::Parse;
 use File::Basename;
@@ -16,7 +17,8 @@ require "util.pl";
 #===============================================================================
 # Configuration
 #===============================================================================
-my $schedule_file = dirname($0) . "/../../data/schedule.xml";
+use constant START_INDEX => 1;
+use constant SCHEDULE_FILE => catfile(dirname($0), updir(), updir(), 'data', 'schedule.xml');
 #-------------------------------------------------------------------------------
 
 my $start_month;
@@ -40,7 +42,7 @@ my $output_file = $ARGV[0];
 open(OUTPUT, ">$output_file") || die("Failed to open output file: $output_file");
 
 my $xml        = new XML::Simple (KeyAttr=>[]);
-my $data       = $xml->XMLin($schedule_file) || die("Failed to open input file: $schedule_file");;
+my $data       = $xml->XMLin(SCHEDULE_FILE) || die("Failed to open input file: ${\SCHEDULE_FILE}");
 my @tasks      = $data->{tasks};
 my @milestones = $data->{milestones};
 
@@ -67,9 +69,9 @@ END
 
 # TASKS
 for my $task (@{$data->{task}}) {   
-    my $start       = date_position($task->{start});
-    my $end         = date_position($task->{end});
-    my $length      = $end - $start;
+    my $start  = date_position($task->{start});
+    my $end    = date_position($task->{end});
+    my $length = $end - $start;
     print OUTPUT "\\ganttbar[name=$task->{id}]{$task->{name}}{$start}{$length} \\ganttnewline\n";
     
     if (ref($task->{dependency}) eq 'ARRAY') {

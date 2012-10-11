@@ -12,7 +12,7 @@ use File::Spec::Functions qw(catdir catfile devnull updir);
 #===============================================================================
 use constant DATA_DIR => catdir(updir(), updir(), updir(), 'data', 'datasets');
 use constant DATA_EXT => '.csv';
-use constant MATLAB_TO_TIKZ_DIR => catdir(updir(), updir(), updir(), 'scripts', 'matlab2tikz', 'src');
+use constant MATLAB_TO_TIKZ_DIR => catdir(updir(), updir(), updir(), 'lib', 'matlab2tikz', 'src');
 #-------------------------------------------------------------------------------
 
 # Make sure an output file was specified

@@ -3,16 +3,13 @@
 use strict;
 use warnings;
 
-use File::Basename;
-
-use FindBin;
-use lib "$FindBin::Bin/../../scripts";
-require 'util.pl';
+use File::Basename qw(basename dirname);
+use File::Spec::Functions qw(catdir catfile updir);
 
 #===============================================================================
 # Configuration
 #===============================================================================
-my $source_dir = dirname($0).'/../../data/TopN_Outlier_Pruning_Block';
+use constant SOURCE_DIR => catdir(dirname($0), updir(), updir(), 'data', 'TopN_Outlier_Pruning_Block');
 my @source_files_c = (
     'top_n_outlier_pruning_block.c'
 );
@@ -37,8 +34,7 @@ my $output_file = $ARGV[0];
 open(OUTPUT, ">$output_file") || die("Cannot open output file: $output_file");
 
 foreach my $source_file (@source_files) {
-    my $source_file = "$source_dir/$source_file";
-    
+    my $source_file = catfile(SOURCE_DIR, $source_file);
     (-f $source_file) || die("Source file not found: $source_file");
     
     if (basename($0) =~ m/code-c.tex.pl/) {

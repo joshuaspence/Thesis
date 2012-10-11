@@ -26,6 +26,7 @@
 \usepackage{graphicx}                           % for graphics
 \usepackage[hidelinks]{hyperref}                % for PDF hyperlinks
 \usepackage{pdfpages}                           % for inserting compliance sheet as a PDF
+\usepackage{pgfplots}                           % for matlab2tikz plots
 \usepackage{subcaption}                         % for subfloats
 \usepackage{tabularx}                           % for simple column stretching
 \usepackage{tikz}                               % for graphics
@@ -124,7 +125,7 @@
 \newcommand\programmingLanguage[1]{\lstinline`#1`}
 
 % \software{NAME}[CMD]
-\NewDocumentCommand\software{om}{``#2''\IfNoValueTF{#1}{}{ (\command{#1})}}
+\NewDocumentCommand\software{om}{``#2'' \IfNoValueTF{#1}{}{(\command{#1})}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % \begin{specifications}
