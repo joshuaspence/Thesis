@@ -15,7 +15,7 @@ flexibility and ease of microprocessor-based software designs; and the
 performance and efficiency of \gls{ASIC}-based hardware design. Unlike an
 \gls{ASIC}, computations are programmed into the \gls{FPGA} device, instead of
 being permanently constructed during the manufacturing process. This means that
-an \gls{FPGA} device can be programmed and reprogrammed ny times, allowing for
+an \gls{FPGA} device can be programmed and reprogrammed many times, allowing for
 a significant level of flexibility whilst enabling a much faster and efficient
 implementation than a software equivalent.
 
@@ -29,7 +29,7 @@ available whilst ensuring that the highest level of performance is obtained.
 These considerations are seldom necessary in a pure-software approach, as tools
 such as compilers and assemblers abstract the hardware implementation details
 away from the developers in order to provide cross-system and, often,
-cross-architecture compatability.
+cross-architecture compatibility.
 
 Compared to an \gls{ASIC} design, which may take many months or years to design
 and have a multimillion-dollar price tag, an \gls{FPGA} design might only take
@@ -46,13 +46,13 @@ days to create and cost tens to hundreds of dollars \cite{Hauck:2007}.
 \autoref{fig:fpga:abstract} shows an abstract view of an \gls{FPGA}, which
 consists of an \emph{array} of logic blocks (\emph{gates}) connected in a
 general routing structure. The logic blocks contains processing elements for
-impleenting combinatorial logic, as well as flip-flops for implementing
-sequential logic. The logic and routing elments of an \gls{FPGA} are controlled
-by programming points, which may be based on anitfuse, Flash  or \gls{SRAM}
+implementing combinatorial logic, as well as flip-flops for implementing
+sequential logic. The logic and routing elements of an \gls{FPGA} are controlled
+by programming points, which may be based on antifuse, Flash  or \gls{SRAM}
 technology. With the corresponding memory bits programmed, by way of a
 configuration file or a bitstream, an \gls{FPGA} can be made to implement the
 user's desired function. For this reason, glspl{FPGAs} are referred to as
-\emph{field progammable} devices, as opposed to \emph{mask programmable}
+\emph{field programmable} devices, as opposed to \emph{mask programmable}
 devices, which have their  functionality fixed by masks during fabrication.
 
 The design of an \gls{FPGA} program typically begins with an algorithm expressed
@@ -136,7 +136,7 @@ with enough logic blocks it is possible to perform any desired computation
 Note that the interconnect structure shown in \autoref{fig:fpga:architecture} is
 not representative of any actual interconnect structure that is currently in
 use, but rather acts as a placeholder for visual demonstration. In reality,
-there are a wide range of metholdologies relating to \gls{FPGA} interconnect
+there are a wide range of methodologies relating to \gls{FPGA} interconnect
 structure. Some of the more common configurations are described below.
 \begin{description}
     \item[Nearest neighbour] Arguably the simplest interconnect structure, in
@@ -146,14 +146,14 @@ structure. Some of the more common configurations are described below.
         block, which itself allows logic block inputs and outputs to be assigned
         to arbitrary horizontal and vertical tracks. In addition, switch blocks
         connect converging routing tracks, allowing a signal on one track to
-        communicate with a singal on another track.
+        communicate with a signal on another track.
     \item[Hierarchical] At the lowest level of the hierarchy, $2 \times 2$
         arrays of logic blocks are grouped together to form a single cluster.
         Within each cluster, only nearest-neighbour routing available. At each
-        increasing levfel of the hierarchical interconnect structure, larger
+        increasing level of the hierarchical interconnect structure, larger
         logic block clusters are formed. This interconnect structure exploits
         the property that a well-designed and well-placed circuit has mostly
-        local connections and only a limited number fo connections that need to
+        local connections and only a limited number of connections that need to
         travel long distances \cite{Hauck:2007}.
 \end{description}
 
