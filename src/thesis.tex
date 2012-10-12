@@ -14,8 +14,8 @@
 \usepackage[l2tabu,orthodox,abort]{nag}
 
 % For font and input encoding.
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
+%\usepackage[utf8]{inputenc}
+%\usepackage[T1]{fontenc}
 
 % Pretty much all of the ams maths packages.
 \usepackage{amsmath,amsthm,amssymb,amsfonts}
@@ -32,36 +32,63 @@
 
 % Provides good access to colours.
 \usepackage{color}
-\usepackage{xcolor}
+%\usepackage[showerrors]{xcolor}
 
-% Count the number of used registers (counter, dimen, skip, muskip, box, token,
-% input, output, math families, languages, insertions). Also time the amount of
-% time required for LaTeX compilation.
-\usepackage[timer,left]{regstats}
+% Allows the widths of certain columns, rather than the inter column space, to
+% be modified.
+\usepackage{tabularx}
 
-\usepackage[noline,ruled]{algorithm2e}          % for algorithms
-\usepackage{caption}                            % for subfloats
-\usepackage[nodayofweek]{datetime}              % for \formatdate
-\usepackage{float}                              % for setting float specifiers
-\usepackage{gnuplot-lua-tikz}                   % for plots produced by GNUplot
-\usepackage{pdfpages}                           % for inserting compliance sheet as a PDF
-\usepackage{pgfplots}                           % for matlab2tikz plots
-\usepackage{subcaption}                         % for subfloats
-\usepackage{tabularx}                           % for simple column stretching
-\usepackage{tikz}                               % for graphics
+% Sse biblatex instead of bibtex for biliographies
+\usepackage[language=australian]{biblatex}
+
+% For graphics
+\usepackage{tikz}
 \usetikzlibrary{positioning,shapes,shadows,arrows}
-\usepackage{verbatim}                           % for comment environment
+
+% This package simplifies the insertion of external multi-page PDF or PS
+% documents.
+\usepackage{pdfpages}
+
+% This package reimplements the LATEX verbatim and verbatim* environments. In
+% addition it provides a comment environment that skips any commands or text
+% between \begin{comment} and the next \end{comment}.
+\usepackage{verbatim}
 
 % My custom packages
-\usepackage{escape}                             % for \escape
-\usepackage{citationneeded}                     % for \citeNeeded
-\usepackage{pieplots}                           % for \pieplots, \pieplot
-\usepackage{pgf-pie}                            % for \pie
+\usepackage{escape} % for \escape
+\usepackage{citationneeded} % for \citeNeeded
+\usepackage{pieplots} % for \pieplots, \pieplot
+\usepackage{pgf-pie} % for \pie
+
+\begin{comment}
+% Gantt charts
+\usetikzlibrary{calendar}
+\usepackage{pgfgantt}
+\end{comment}
+
+% For \formatdate macro.
+\usepackage[nodayofweek]{datetime}
+
+% This style option improves the interface for defining floating objects such
+% as figures and tables in LATEX. It adds the notion of a ‘float style’ that
+% governs appearance of floats.
+\usepackage{float}
+
+% To display matlab2tikz plots
+\usepackage{pgfplots}
+
+% For plots produced by GNUplot
+\usepackage{gnuplot-lua-tikz}
+
+\usepackage{listings}
+\usepackage[noline,ruled]{algorithm2e}          % for algorithms
+\usepackage{caption}                            % for subfloats
+\usepackage{subcaption}                         % for subfloats
+\usepackage{xparse} % for \NewDocumentCommand, \NewDocumentEnvironment
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Source code formatting
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\usepackage{listings}
 
 % Custom colours
 \definecolor{darkGreen}{rgb}{0,0.6,0}
@@ -97,13 +124,6 @@
 \lstloadlanguages{C,Matlab}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Gantt charts
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\usepackage{tikz}
-\usetikzlibrary{calendar}
-\usepackage{pgfgantt}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Variables (to save retyping and reformatting these throughout the document)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \input{variables}
@@ -111,9 +131,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Custom commands
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\usepackage{listings} % for \lstinline
-\usepackage{xparse} % for \NewDocumentCommand
-
 % To allow us to easily format a table row.
 % See http://www.latex-community.org/forum/viewtopic.php?f=5&t=3293
 \newcolumntype{+}{>{\global\let\currentrowstyle\relax}}
@@ -152,8 +169,6 @@
 % \endspecificationGroup
 % \end{specifications}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\usepackage{xparse} % for \NewDocumentEnvironment
-
 \makeatletter
 \NewDocumentEnvironment{specifications}{}{%
     \def\@hline{}%
@@ -182,11 +197,9 @@
 % \datasetProperty{NAME}{VALUE}
 % \end{datasetDescription}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\usepackage{escape} % for \escape
-\usepackage{graphicx} % for \includegraphics
-\usepackage{xparse} % for \NewDocumentEnvironment
-
 \makeatletter
+\newlength\figureheight
+\newlength\figurewidth
 \NewDocumentEnvironment{datasetDescription}{m}{%
     \def\@hline{}%
     %
@@ -205,7 +218,9 @@
     %
     \begin{figure}[H]%
         \centering%
-        \includegraphics[width=\textwidth]{datasets/#1}%
+	    \setlength\figureheight{6cm}%
+	    \setlength\figurewidth{6cm}%
+        \input{plots/datasets/#1}%
         \caption{A PCA plot for the `\escape{#1}' data set}%
         \label{dataSets:#1:pca}%
     \end{figure}%
@@ -215,12 +230,21 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Create a blank page
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand{\blankpage}{%
+\newcommand\blankpage{%
     \newpage%
     \thispagestyle{empty}%
     \mbox{}%
     \newpage%
 }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Some more packages
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Count the number of used registers (counter, dimen, skip, muskip, box, token,
+% input, output, math families, languages, insertions). Also time the amount of
+% time required for LaTeX compilation.
+\usepackage[timer,left]{regstats}
 
 % Makes references hyperlinks in PDF output. Also allows automatic references
 % using \autoref.
@@ -238,6 +262,7 @@
     pdflang={}
 }
 \usepackage[all]{hypcap}
+\usepackage[toc,xindy]{glossaries} % note that hyperref must be loaded first
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Graphics directory
@@ -254,14 +279,12 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Glossary
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\usepackage[toc,xindy]{glossaries} % note that hyperref must be loaded first
 \makeglossaries
 \input{acronym}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Bibliography
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\usepackage[language=australian]{biblatex} % use biblatex instead of bibtex
 \bibliography{thesis}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
