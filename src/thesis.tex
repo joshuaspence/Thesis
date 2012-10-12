@@ -1,12 +1,6 @@
 \documentclass[a4paper]{report}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Warn about commands, classes and packages that are outdated and superseded.
-% Orthodox checks for pitfalls that are not technically incorrect.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\usepackage[l2tabu,orthodox,abort]{nag}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Provides page numbers and headings at the top of each page.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \pagestyle{headings}
@@ -14,24 +8,48 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Packages
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\usepackage[T1]{fontenc}                        % for font encoding
+
+% Warn about commands, classes and packages that are outdated and superseded.
+% Orthodox checks for pitfalls that are not technically incorrect.
+\usepackage[l2tabu,orthodox,abort]{nag}
+
+% For font and input encoding.
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+% Pretty much all of the ams maths packages.
+\usepackage{amsmath,amsthm,amssymb,amsfonts}
+
+% Allows inclusion of graphics easily and configurably.
+\usepackage{graphicx}
+
+% Provides commands to make subfigures.
+\usepackage{subcaption}
+
+% Typesets URLs sensibly --- with a TrueType font, hyperlinked in PDFs, and not
+% breaking across lines.
+\usepackage{url}
+
+% Provides good access to colours.
+\usepackage{color}
+\usepackage{xcolor}
+
+% Count the number of used registers (counter, dimen, skip, muskip, box, token,
+% input, output, math families, languages, insertions). Also time the amount of
+% time required for LaTeX compilation.
+\usepackage[timer,left]{regstats}
 
 \usepackage[noline,ruled]{algorithm2e}          % for algorithms
-\usepackage{amsfonts}                           % for formatting mathematical symbols
-\usepackage{amsmath,amssymb,amsthm}             % for math support
 \usepackage{caption}                            % for subfloats
 \usepackage[nodayofweek]{datetime}              % for \formatdate
 \usepackage{float}                              % for setting float specifiers
 \usepackage{gnuplot-lua-tikz}                   % for plots produced by GNUplot
-\usepackage{graphicx}                           % for graphics
-\usepackage[hidelinks]{hyperref}                % for PDF hyperlinks
 \usepackage{pdfpages}                           % for inserting compliance sheet as a PDF
 \usepackage{pgfplots}                           % for matlab2tikz plots
 \usepackage{subcaption}                         % for subfloats
 \usepackage{tabularx}                           % for simple column stretching
 \usepackage{tikz}                               % for graphics
 \usetikzlibrary{positioning,shapes,shadows,arrows}
-\usepackage{url}                                % for web URLs
 \usepackage{verbatim}                           % for comment environment
 
 % My custom packages
@@ -41,24 +59,8 @@
 \usepackage{pgf-pie}                            % for \pie
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% To allow us to easily format a table row
-% See http://www.latex-community.org/forum/viewtopic.php?f=5&t=3293
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcolumntype{+}{>{\global\let\currentrowstyle\relax}}
-\newcolumntype{^}{>{\currentrowstyle}}
-\newcommand\rowstyle[1]{\gdef\currentrowstyle{#1}%
-	#1\ignorespaces%
-}
-
-% \tableHeader{...}
-\newcommand\tableHeader[1]{%
-	\hline \rowstyle{\bfseries} #1 \\\hline%
-}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Source code formatting
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\usepackage{color}
 \usepackage{listings}
 
 % Custom colours
@@ -112,6 +114,19 @@
 \usepackage{listings} % for \lstinline
 \usepackage{xparse} % for \NewDocumentCommand
 
+% To allow us to easily format a table row.
+% See http://www.latex-community.org/forum/viewtopic.php?f=5&t=3293
+\newcolumntype{+}{>{\global\let\currentrowstyle\relax}}
+\newcolumntype{^}{>{\currentrowstyle}}
+\newcommand\rowstyle[1]{\gdef\currentrowstyle{#1}%
+	#1\ignorespaces%
+}
+
+% \tableHeader{...}
+\newcommand\tableHeader[1]{%
+	\hline \rowstyle{\bfseries} #1 \\\hline%
+}
+
 % \command{CMD}
 \newcommand\command[1]{\lstinline`#1`}
 
@@ -126,6 +141,9 @@
 
 % \software{NAME}[CMD]
 \NewDocumentCommand\software{om}{``#2'' \IfNoValueTF{#1}{}{(\command{#1})}}
+
+% Simple command I defined to allow me to mark TODO items in red
+\newcommand{\todo}[1] {\textbf{\textcolor{red}{#1}}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % \begin{specifications}
@@ -203,6 +221,23 @@
     \mbox{}%
     \newpage%
 }
+
+% Makes references hyperlinks in PDF output. Also allows automatic references
+% using \autoref.
+%
+% Note that this package must be almost last in the preamble. In particular, it
+% must appear *after* "float" and *before* "algorithm".
+\usepackage[breaklinks=true,hidelinks]{hyperref}
+\hypersetup{
+    pdftitle={\thesisTitle*{}},
+    pdfauthor={\studentName*{}},
+    pdfsubject={},
+    pdfcreator={},
+    pdfkeywords={},
+    pdfdisplaydoctitle={true},
+    pdflang={}
+}
+\usepackage[all]{hypcap}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Graphics directory
