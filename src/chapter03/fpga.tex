@@ -259,7 +259,7 @@ There are various means by which an \gls{FPGA} can be configured, the most
 common of which are outlined below.
 
 % Static Random Access Memory
-\paragraph{Static Random Access Memory}
+\subsubsection{Static Random Access Memory}
 \label{fpga:configuration:sram}
 \gls{SRAM} is volatile, static \gls{RAM} and is the most common method chosen
 for device implementation, due to the potential it provides for fast and
@@ -272,7 +272,7 @@ medium is not persistent.
 
 % Flash Memory
 \subsubsection{Flash Memory}
-\paragraph{fpga:configuration:flash}
+\label{fpga:configuration:flash}
 Flash memory holds some improvements over \gls{SRAM} for the configuration of
 \glspl{FPGA}, namely that the memory is non-volatile. This simplifies the
 boot-up process by removing the necessity to redownload the bitstream at power
@@ -281,7 +281,7 @@ slower write speeds than \gls{SRAM}.
 
 % Antifuse
 \subsubsection{Antifuse}
-\paragraph{fpga:configuration:antifuse}
+\label{fpga:configuration:antifuse}
 Antifuse is a metal-based link that behaves the opposite of a fuse
 \cite{Hauck:2007}. Antifuse is initially in a `normally open' state, but through
 a high-current programming process these links can be melted to form a circuit

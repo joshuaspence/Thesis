@@ -58,10 +58,6 @@ export LC_ALL		?= C
 # will be treated as if they were _include_ files.
 #onlysources.tex	?= main.tex
 #onlysources.lhs	?=
-#onlysources.tex.bash	?=
-#onlysources.tex.sh	?=
-#onlysources.tex.pl	?=
-#onlysources.tex.py	?=
 #onlysources.rst	?=
 #onlysources.mp		?=
 #onlysources.fig	?=
@@ -69,16 +65,15 @@ export LC_ALL		?= C
 #onlysources.dot	?=
 #onlysources.xvg	?=
 #onlysources.svg	?=
-#onlysources.eps.gz	?=
 #onlysources.eps	?=
+#onlysources.gz	?=
+#onlysources.pl	?=
+#onlysources.py	?=
+#onlysources.sh	?=
 #
 # If you list files here, they will be treated as _include_ files
 #includes.tex		?= file1.tex file2.tex
 #includes.lhs		?=
-#includes.tex.bash	?=
-#includes.tex.sh	?=
-#includes.tex.pl	?=
-#includes.tex.py	?=
 #includes.rst		?=
 #includes.mp		?=
 #includes.fig		?=
@@ -86,8 +81,11 @@ export LC_ALL		?= C
 #includes.dot		?=
 #includes.xvg		?=
 #includes.svg		?=
-#includes.eps.gz	?=
 #includes.eps		?=
+#includes.gz	?=
+#includes.pl	?=
+#includes.py	?=
+#includes.sh	?=
 #
 # If you list files or wildcards here, they will *not* be cleaned - default is
 # to allow everything to be cleaned.
@@ -125,9 +123,10 @@ export LC_ALL		?= C
 # * Fix issue with bash tab-completion.
 #
 # CHANGES:
+# Joshua Spence (2012-10-13):
+# * Added more scripting targets targets.
 # Joshua Spence (2012-09-19):
 # * Bumped version to 2.2.1-alpha10-josh
-# * Added %.tex.bash -> %.tex targets.
 # * Add a phony "_all" target.
 # * Fixed makefile to use a recursive wildcard to look for source files in 
 #   subdirectories.
@@ -941,7 +940,7 @@ WRITE_TRANSCRIPT ?=
 # $(call set-run-reason,message)
 set-run-reason = export run_reason="$1"
 # Log command to the transcript file
-# $(call set-run-reason,command,job_name)
+# $(call transcript,command,job_name)
 define transcript
 $(if $(WRITE_TRANSCRIPT), \
 	$(ECHO) "Running $1 ($$run_reason)" >> $2.transcript.make; \
@@ -1121,6 +1120,7 @@ LATEX_COLOR_PAGES	?= bold
 LATEX_COLOR_BUILD	?= cyan
 LATEX_COLOR_GRAPHIC	?= yellow
 LATEX_COLOR_DEP		?= green
+LATEX_COLOR_SCRIPT	?= yellow bold
 LATEX_COLOR_SUCCESS	?= green bold
 LATEX_COLOR_FAILURE	?= red bold
 
@@ -1141,6 +1141,7 @@ C_PAGES		:= $(call get-color,PAGES)
 C_BUILD		:= $(call get-color,BUILD)
 C_GRAPHIC	:= $(call get-color,GRAPHIC)
 C_DEP		:= $(call get-color,DEP)
+C_SCRIPT	:= $(call get-color,SCRIPT)
 C_SUCCESS	:= $(call get-color,SUCCESS)
 C_FAILURE	:= $(call get-color,FAILURE)
 C_RESET		:= $(reset)
@@ -1193,10 +1194,6 @@ endif
 
 # Files of interest
 all_files.tex		?= $(call rwildcard,,*.tex)
-all_files.tex.bash	?= $(call rwildcard,,*.tex.bash)
-all_files.tex.sh	?= $(call rwildcard,,*.tex.sh)
-all_files.tex.pl	?= $(call rwildcard,,*.tex.pl)
-all_files.tex.py	?= $(call rwildcard,,*.tex.py)
 all_files.rst		?= $(call rwildcard,,*.rst)
 all_files.lhs		?= $(call rwildcard,,*.lhs)
 all_files.mp		?= $(call rwildcard,,*.mp)
@@ -1208,8 +1205,11 @@ all_files.svg		?= $(call rwildcard,,*.svg)
 all_files.png		?= $(call rwildcard,,*.png)
 all_files.jpg		?= $(call rwildcard,,*.jpg)
 all_files.jpeg		?= $(call rwildcard,,*.jpeg)
-all_files.eps.gz	?= $(call rwildcard,,*.eps.gz)
 all_files.eps		?= $(call rwildcard,,*.eps)
+all_files.gz	?= $(call rwildcard,,*.gz)
+all_files.pl	?= $(call rwildcard,,*.pl)
+all_files.py	?= $(call rwildcard,,*.py)
+all_files.sh	?= $(call rwildcard,,*.sh)
 
 # Utility function to act as a recursive implementation of the makefile 
 # "wildcard" macro.
@@ -1249,10 +1249,6 @@ filter-default		= \
 
 # Top level sources that can be built even when they are not by default
 files.tex	:= $(call filter-buildable,tex)
-files.tex.bash	:= $(call filter-buildable,tex.bash)
-files.tex.sh	:= $(call filter-buildable,tex.sh)
-files.tex.pl	:= $(call filter-buildable,tex.pl)
-files.tex.py	:= $(call filter-buildable,tex.py)
 files.rst	:= $(call filter-buildable,rst)
 files.lhs	:= $(call filter-buildable,lhs)
 files.gpi	:= $(call filter-buildable,gpi)
@@ -1264,12 +1260,11 @@ files.svg	:= $(call filter-buildable,svg)
 files.png	:= $(call filter-buildable,png)
 files.jpg	:= $(call filter-buildable,jpg)
 files.jpeg	:= $(call filter-buildable,jpeg)
-files.eps.gz	:= $(call filter-buildable,eps.gz)
 files.eps	:= $(call filter-buildable,eps)
-
-_test:
-	echo $(files.tex)
-	echo $(files.tex.bash)
+files.gz	:= $(call filter-buildable,gz)
+files.pl	:= $(call filter-buildable,pl)
+files.py	:= $(call filter-buildable,py)
+files.sh	:= $(call filter-buildable,sh)
 
 # Make all pstex targets secondary.  The pstex_t target requires the pstex
 # target, and nothing else really depends on it, so it often gets deleted.
@@ -1284,10 +1279,6 @@ _test:
 
 # Top level sources that are built by default targets
 default_files.tex	:= $(call filter-default,tex)
-default_files.tex.bash	:= $(call filter-default,tex.bash)
-default_files.tex.sh	:= $(call filter-default,tex.sh)
-default_files.tex.pl	:= $(call filter-default,tex.pl)
-default_files.tex.py	:= $(call filter-default,tex.py)
 default_files.rst	:= $(call filter-default,rst)
 default_files.lhs	:= $(call filter-default,lhs)
 default_files.gpi	:= $(call filter-default,gpi)
@@ -1299,8 +1290,11 @@ default_files.svg	:= $(call filter-default,svg)
 default_files.png	:= $(call filter-default,png)
 default_files.jpg	:= $(call filter-default,jpg)
 default_files.jpeg	:= $(call filter-default,jpeg)
-default_files.eps.gz	:= $(call filter-default,eps.gz)
 default_files.eps	:= $(call filter-default,eps)
+default_files.gz	:= $(call filter-default,gz)
+default_files.pl	:= $(call filter-default,pl)
+default_files.py	:= $(call filter-default,py)
+default_files.sh	:= $(call filter-default,sh)
 
 # Utility function for creating larger lists of files
 # $(call concat-files,suffixes,[prefix])
@@ -1309,17 +1303,17 @@ concat-files	= $(foreach s,$1,$($(if $2,$2_,)files.$s))
 # Useful file groupings
 all_files_source	:= $(call concat-files,tex,all)
 all_files_source_gen	:= $(call concat-files,rst rhs,all)
-all_files_scripts	:= $(call concat-files,tex.bash tex.sh tex.pl tex.py,all)
+all_files_scripts	:= $(call concat-files,gz pl py sh,all)
 
 .PHONY: $(all_files_scripts)
 
 default_files_source		:= $(call concat-files,tex,default)
 default_files_source_gen	:= $(call concat-files,rhs lhs,default)
-default_files_scripts		:= $(call concat-files,tex.bash tex.sh tex.pl tex.py,default)
+default_files_scripts		:= $(call concat-files,gz pl py sh,default)
 
 files_source		:= $(call concat-files,tex)
 files_source_gen	:= $(call concat-files,rst lhs)
-files_scripts		:= $(call concat-files,tex.bash tex.sh tex.pl tex.py)
+files_scripts		:= $(call concat-files,gz pl py sh)
 	
 # Utility function for obtaining stems
 # $(call get-stems,suffix,[prefix])
@@ -1327,10 +1321,6 @@ get-stems	= $(sort $($(if $2,$2_,)files.$1:%.$1=%))
 
 # List of all stems (including ._include_ and ._nobuild_ file stems)
 all_stems.tex		:= $(call get-stems,tex,all)
-all_stems.tex.bash	:= $(call get-stems,tex.bash,all)
-all_stems.tex.sh	:= $(call get-stems,tex.sh,all)
-all_stems.tex.pl	:= $(call get-stems,tex.pl,all)
-all_stems.tex.py	:= $(call get-stems,tex.py,all)
 all_stems.rst		:= $(call get-stems,rst,all)
 all_stems.lhs		:= $(call get-stems,lhs,all)
 all_stems.mp		:= $(call get-stems,mp,all)
@@ -1342,15 +1332,14 @@ all_stems.svg		:= $(call get-stems,svg,all)
 all_stems.png		:= $(call get-stems,png,all)
 all_stems.jpg		:= $(call get-stems,jpg,all)
 all_stems.jpeg		:= $(call get-stems,jpeg,all)
-all_stems.eps.gz	:= $(call get-stems,eps.gz,all)
 all_stems.eps		:= $(call get-stems,eps,all)
+all_stems.gz	:= $(call get-stems,gz,all)
+all_stems.pl	:= $(call get-stems,pl,all)
+all_stems.py	:= $(call get-stems,py,all)
+all_stems.sh	:= $(call get-stems,sh,all)
 
 # List of all default stems (all default PDF targets):
 default_stems.tex		:= $(call get-stems,tex,default)
-default_stems.tex.bash		:= $(call get-stems,tex.bash,default)
-default_stems.tex.sh		:= $(call get-stems,tex.sh,default)
-default_stems.tex.pl		:= $(call get-stems,tex.pl,default)
-default_stems.tex.py		:= $(call get-stems,tex.py,default)
 default_stems.rst		:= $(call get-stems,rst,default)
 default_stems.lhs		:= $(call get-stems,lhs,default)
 default_stems.mp		:= $(call get-stems,mp,default)
@@ -1362,15 +1351,14 @@ default_stems.svg		:= $(call get-stems,svg,default)
 default_stems.png		:= $(call get-stems,png,default)
 default_stems.jpg		:= $(call get-stems,jpg,default)
 default_stems.jpeg		:= $(call get-stems,jpeg,default)
-default_stems.eps.gz		:= $(call get-stems,eps.gz,default)
 default_stems.eps		:= $(call get-stems,eps,default)
+default_stems.gz		:= $(call get-stems,gz,default)
+default_stems.pl		:= $(call get-stems,pl,default)
+default_stems.py		:= $(call get-stems,py,default)
+default_stems.sh		:= $(call get-stems,sh,default)
 
 # List of all stems (all possible bare PDF targets created here):
 stems.tex		:= $(call get-stems,tex)
-stems.tex.bash		:= $(call get-stems,tex.bash)
-stems.tex.sh		:= $(call get-stems,tex.sh)
-stems.tex.pl		:= $(call get-stems,tex.pl)
-stems.tex.py		:= $(call get-stems,tex.py)
 stems.rst		:= $(call get-stems,rst)
 stems.lhs		:= $(call get-stems,lhs)
 stems.mp		:= $(call get-stems,mp)
@@ -1382,8 +1370,11 @@ stems.svg		:= $(call get-stems,svg)
 stems.png		:= $(call get-stems,png)
 stems.jpg		:= $(call get-stems,jpg)
 stems.jpeg		:= $(call get-stems,jpeg)
-stems.eps.gz		:= $(call get-stems,eps.gz)
 stems.eps		:= $(call get-stems,eps)
+stems.gz		:= $(call get-stems,gz)
+stems.pl		:= $(call get-stems,pl)
+stems.py		:= $(call get-stems,py)
+stems.sh		:= $(call get-stems,sh)
 
 # Utility function for creating larger lists of stems
 # $(call concat-stems,suffixes,[prefix])
@@ -1399,7 +1390,7 @@ graphic_source_extensions	:= mp \
 				   eps.gz
 
 ifeq "$(strip $(BUILD_STRATEGY))" "latex"
-graphic_source_extensions	+= png jpg jpeg eps
+graphic_source_extensions	+= png jpg jpeg eps 
 graphic_target_extensions	:= eps ps
 endif
 
@@ -1415,7 +1406,7 @@ endif
 
 all_stems_source	:= $(call concat-stems,tex,all)
 all_stems_source_gen	:= $(call concat-stems,rst lhs,all)
-all_stems_script	:= $(call concat-stems,tex.bash tex.sh tex.pl tex.py,all)
+all_stems_script	:= $(call concat-stems,gz pl py sh,all)
 all_stems_graphic	:= $(call concat-stems,$(graphic_source_extensions),all)
 all_stems_ss		:= $(sort $(all_stems_source) $(all_stems_source_gen) $(all_stems_script))
 all_stems_sg		:= $(sort $(all_stems_script) $(all_stems_source_gen))
@@ -1423,14 +1414,14 @@ all_stems_ssg		:= $(sort $(all_stems_ss))
 
 default_stems_source		:= $(call concat-stems,tex,default)
 default_stems_source_gen	:= $(call concat-stems,rst lhs,default)
-default_stems_script		:= $(call concat-stems,tex.bash tex.sh tex.pl tex.py,default)
+default_stems_script		:= $(call concat-stems,gz pl py sh,default)
 default_stems_ss	:= $(sort $(default_stems_source) $(default_stems_source_gen) $(default_stems_script))
 default_stems_sg	:= $(sort $(default_stems_script) $(default_stems_source_gen))
 default_stems_ssg	:= $(sort $(default_stems_ss))
 
 stems_source		:= $(call concat-stems,tex)
 stems_source_gen	:= $(call concat-stems,rst lhs)
-stems_script		:= $(call concat-stems,tex.bash tex.sh tex.pl tex.py)
+stems_script		:= $(call concat-stems,gz pl py sh)
 stems_graphic		:= $(call concat-stems,$(graphic_source_extensions))
 stems_gg		:= $(sort $(stems_graphic))
 stems_ss		:= $(sort $(stems_source) $(stems_source_gen) $(stems_script))
@@ -2532,6 +2523,10 @@ $(GS) \
 	-f '$1'
 endef
 
+%.$(1).png::	%.$(1)..pngpl
+	$$(QUIET)$$(call echo-script,$$^,$$@)
+	$$(QUIET)$$(call run-script,$$(PERL),$$<,$$@)
+
 # $(call convert-gpi,<gpi file>,<output file>,[gray])
 #
 define convert-gpi
@@ -2777,6 +2772,7 @@ make-pdf	= \
 echo-build	= $(ECHO) "$(C_BUILD)= $1 --> $2$(if $3, ($3),) =$(C_RESET)"
 echo-graphic	= $(ECHO) "$(C_GRAPHIC)= $1 --> $2 =$(C_RESET)"
 echo-dep	= $(ECHO) "$(C_DEP)= $1 --> $2 =$(C_RESET)"
+echo-graphic	= $(ECHO) "$(C_SCRIPT)= $1 --> $2 =$(C_RESET)"
 
 # Display a list of something
 # $(call echo-list,<values>)
@@ -3067,28 +3063,34 @@ endif
 
 # SCRIPTED LaTeX TARGETS
 #
-# Keep the generated .tex files around for debugging if needed.
+# Keep the generated source files around for debugging if needed.
 .SECONDARY: $(all_tex_targets)
 
-%.tex::	%.tex.bash
-	$(QUIET)$(call run-script,$(BASH),$<,$@)
+%::	%.gz
+	$(QUIET)$(call echo-script,$^,$@)
+	$(QUIET)$(call run-script,$(GUNZIP),$<,$@)
 
-%.tex::	%.tex.sh
-	$(QUIET)$(call run-script,$(SHELL),$<,$@)
-
-%.tex::	%.tex.py
+%::	%.py
+	$(QUIET)$(call echo-script,$^,$@)
 	$(QUIET)$(call run-script,$(PYTHON),$<,$@)
 
-%.tex::	%.tex.pl
+%::	%.pl
+	$(QUIET)$(call echo-script,$^,$@)
 	$(QUIET)$(call run-script,$(PERL),$<,$@)
 
+%::	%.sh
+	$(QUIET)$(call echo-script,$^,$@)
+	$(QUIET)$(call run-script,$(SHELL),$<,$@)
+
 %.tex::	%.rst $(RST_STYLE_FILE)
+	$(QUIET)$(call echo-script,$^,$@)
 	$(QUIET)\
 	$(call run-script,$(RST2LATEX)\
 		--documentoptions=letterpaper\
 		$(if $(RST_STYLE_FILE),--stylesheet=$(RST_STYLE_FILE),),$<,$@)
 
 %.tex::	%.lhs
+	$(QUIET)$(call echo-script,$^,$@)
 	$(QUIET)\
 	function run_lhs2tex() { $(LHS2TEX) -o "$$2" "$$1"; }; \
 	$(call run-script,run_lhs2tex,$<,$@)
@@ -3259,7 +3261,7 @@ endif
 #	Usually we can force this by simply removing the generated pdf file and
 #	not creating a .1st.make file..
 #
-%.$(build_target_extension).1st.make %.d %.aux %.aux.make %.fls: %.tex
+%.$(build_target_extension).1st.make %.d %.aux %.aux.make %.fls: %.tex .gitignore
 	$(QUIET)$(call echo-build,$<,$*.d $*.$(build_target_extension).1st.make,$(RESTARTS)-1)
 	$(QUIET)\
 	$(call set-run-reason,need to build .d and .$(build_target_extension).1st.make); \
@@ -3326,7 +3328,7 @@ endif
 
 # Store embedding instructions for this document using a special comment
 %.embed.make: %.specials.make
-	$(QUIET)$(EGREP) '^NOEMBED$$' $< \
+	$(QUIET)$(EGREP) '^NOEMBED$$' $< \d
 		&& $(ECHO) '' > $@ \
 		|| $(ECHO) '1' > $@;
 
@@ -3458,10 +3460,10 @@ endif
 #
 # GITIGNORE TARGET
 #
+.PHONY: .gitignore
 .gitignore:
 	$(QUIET)$(ECHO) "###############################################################################" >>$@;
 	$(QUIET)$(ECHO) "# Generated by:	$(fileinfo) $(version)" >>$@;
-	$(QUIET)$(ECHO) "# Generated at:	$(shell date)" >>$@;
 	$(QUIET)$(ECHO) "###############################################################################" >>$@;
 	$(QUIET)$(ECHO) >>$@;
 	$(QUIET)$(ECHO) "# Patterns" >>$@;
@@ -3479,7 +3481,7 @@ ifneq ($(alwaysclean),)
 endif
 ifneq ($(all_stems_script),)
 	$(QUIET)$(ECHO) "# Sources generated by scripts" >>$@;
-	$(QUIET)$(foreach s,$(sort $(all_stems_script)),$(ECHO) "$(s).tex" >>$@;)
+	$(QUIET)$(foreach s,$(sort $(all_stems_script)),$(ECHO) "$(s)" >>$@;)
 endif
 
 #
@@ -3940,10 +3942,10 @@ define help_text
 #
 #        Currently supported script or predecessor languages are:
 #
-#        bash:   %.tex.bash
-#        sh:     %.tex.sh
+#        gzip:   %.tex.gz
 #        perl:   %.tex.pl
 #        python: %.tex.py
+#        sh:     %.tex.sh
 #
 #           Calls the script using the appropriate interpreter, assuming that
 #           its output is a .tex file.
@@ -4150,8 +4152,10 @@ endef
 #     glo [label="%.glo"]
 #     ind [label="%.ind"]
 #     log [label="%.log"]
-#     tex_bash [label="%.tex.bash"]
-#     tex_sh [label="%.tex.sh"]
+#     gz [label="%.gz"]
+#     pl [label="%.pl"]
+#     py [label="%.py"]
+#     sh [label="%.sh"]
 #     rst [label="%.rst"]
 #     tex [
 #         shape=record
@@ -4166,12 +4170,10 @@ endef
 #     fig [label=".fig"]
 #     dot [label=".dot"]
 #     gpi [label=".gpi"]
-#     eps_gz [label=".eps.gz"]
 #
 #     gpi_files [shape=point]
 #
 #     rst -> tex:tex [label="reST"]
-#     tex_bash -> tex:tex [label="bash"]
 #     tex_sh -> tex:tex [label="sh"]
 #     tex_pl -> tex:tex [label="perl"]
 #     tex_py -> tex:tex [label="python"]

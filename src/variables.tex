@@ -16,8 +16,10 @@
 \defineVariable\uosAssessment{}{Thesis}
 \defineVariable\uosCode{}{ELEC4712/ELEC4713}
 
-\urldef\gitRepoHTTP{https://github.com/joshuaspence/ThesisCode.git}
-\urldef\gitRepoSSH{git@github.com:joshuaspence/ThesisCode.git}
+%\urldef\gitRepoHTTP{https://github.com/joshuaspence/ThesisCode.git}
+%\urldef\gitRepoSSH{git@github.com:joshuaspence/ThesisCode.git}
+\defineVariable\gitRepoHTTP{\url}{https://github.com/joshuaspence/ThesisCode.git}
+\defineVariable\gitRepoSSH{\url}{git@github.com:joshuaspence/ThesisCode.git}
 
 % People
 \definePerson{Chawla}{Sanjay Chawla}
@@ -26,3 +28,12 @@
 \definePerson{Khoa}{Nguyen Lu Dang Khoa}
 \definePerson{Leong}{Philip Leong}
 \definePerson{Spence}{Joshua Spence}
+
+% PDF metadata
+\newcommand*\pdfmetadata{%
+    pdfauthor={Joshua Spence},
+    pdftitle={Implementation of Random Projection Algorithms Using an FPGA},
+    pdfsubject={},
+    pdfkeywords={commute time,anomaly detection,FPGA},
+    pdfdisplaydoctitle={true}
+}
