@@ -253,7 +253,7 @@
     \xdef\theradius{\radius}%
     %
     \xdef\pgfpie@angleBegin{\the\pgfpie@angleEnd}%
-    % drawing loop
+    % Drawing loop
     \foreach \p/\t [count=\i from 0] in{#2}{%
         \pgfmathsetlength{\pgfpie@angleEnd}{\pgfpie@angleBegin}%
         \pgfmathaddtolength{\pgfpie@angleEnd}{\p}%
