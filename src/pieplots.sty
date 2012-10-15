@@ -16,12 +16,12 @@
 \newcommand\pieplot[2]{%
     \minipage[t]{.3\textwidth}%
         \centering%
-        #2%
+        {#2}%
         \captionsetup{type=subfigure,labelformat=parens,labelsep=space,skip=3pt,list=false}%
         \captionof{subfigure}{#1}%
         \vspace{1em}%
-    \endminipage
-    \hfil\ignorespaces
+    \endminipage%
+    \hfil\ignorespaces%
 }%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -30,7 +30,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newenvironment{pieplots}[2]{%
     \setcounter{subfigure}{0}%
-    \global\pieplots@starttrue
+    \global\pieplots@starttrue%
     \def\pieplots@label{#1}%
     \def\pieplots@caption{#2}%
     \setbox\pieplots@box=\vbox\bgroup\parindent=0pt \offinterlineskip \parfillskip=0pt%

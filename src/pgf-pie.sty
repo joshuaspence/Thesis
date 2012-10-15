@@ -173,7 +173,6 @@
     \foreach \c [count=\j from 0] in \color{%
         \ifnum \j=\ci%
             \xdef\thecolor{\c}%
-            \thecolor%
             \breakforeach%
         \fi%
     }%
@@ -216,7 +215,7 @@
         sum=\pgfpie@default@sum,%
         rotate=\pgfpie@default@rotate,%
         scale font=\pgfpie@default@scalefont,%
-        bound=\pgfpie@default@bound,%
+        bound=\pgfpie@default@bound%
     }%
     %
     % Load user's parameters
@@ -253,6 +252,10 @@
     \xdef\theradius{\radius}%
     %
     \xdef\pgfpie@angleBegin{\the\pgfpie@angleEnd}%
+    %
+    % Start of tikzpicture environment
+    \begin{tikzpicture}%
+    %
     % Drawing loop
     \foreach \p/\t [count=\i from 0] in{#2}{%
         \pgfmathsetlength{\pgfpie@angleEnd}{\pgfpie@angleBegin}%
@@ -277,9 +280,9 @@
         \coordinate[xshift=0.8cm,yshift=(\value{pgfpie@sliceLength}*0.5+1)*0.5cm] (legendpos) at (current bounding box.east);%
         %
         \begin{scope}[node distance=0.5cm]%
-            \foreach \p/\t  [count=\i from 0] in {#2}{%
+            \foreach \p/\t [count=\i from 0] in {#2}{%
                 \pgfpie@findColor{\i}%
-                \node[draw,fill=\thecolor,\style,below of=legendpos,label=0:\t] (legendpos) {};%
+                \node[draw,fill={\thecolor},\style,below of=legendpos,label=0:\t] (legendpos) {};%
             }%
         \end{scope}%
     }{}%
@@ -289,6 +292,9 @@
         \pgfresetboundingbox%
         \path[use as bounding box] ($(\pos)-(\theradius,\theradius)$) rectangle ($(\pos)+(\theradius,\theradius)$);%
     \fi%
+    %
+    % End of tikzpicture environment
+    \end{tikzpicture}%
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -300,7 +306,7 @@
         color=\pgfpie@default@color,%
         pos=\pgfpie@default@pos,%
         style=\pgfpie@default@style,%
-        bound=\pgfpie@default@bound,%
+        bound=\pgfpie@default@bound%
     }%
     %
     % Load user's parameters
@@ -313,13 +319,16 @@
     \setcounter{pgfpie@sliceLength}{0}%
     \foreach \p/\e in {#2}{\addtocounter{pgfpie@sliceLength}{1}}%
     %
+    % Start of tikzpicture environment
+    \begin{tikzpicture}%
+    %
     % Draw the legend
     \coordinate[xshift=0.8cm,yshift=(\value{pgfpie@sliceLength}*0.5+1)*0.5cm] (legendpos) at (current bounding box.east);%
     %
     \begin{scope}[node distance=0.5cm]%
         \foreach \p/\t [count=\i from 0] in {#2}{%
             \pgfpie@findColor{\i}%
-            \node[draw, fill=\thecolor,\style, below of=legendpos,label=0:\t] (legendpos) {};%
+            \node[draw,fill={\thecolor},\style,below of=legendpos,label=0:\t] (legendpos) {};%
         }%
     \end{scope}%
     %
@@ -327,4 +336,7 @@
     \ifbound%
         % Do nothing
     \fi%
+    %
+    % End of tikzpicture environment
+    \end{tikzpicture}%
 }

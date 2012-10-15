@@ -1,21 +1,22 @@
 \documentclass[a4paper]{report}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Provides page numbers and headings at the top of each page.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Provides page numbers and headings at the top of
+% each page.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \pagestyle{headings}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Packages
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Warn about commands, classes and packages that are outdated and superseded.
 % Orthodox checks for pitfalls that are not technically incorrect.
 \usepackage[l2tabu,orthodox,abort]{nag}
 
 % For font and input encoding.
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
+%\usepackage[utf8]{inputenc}
+%\usepackage[T1]{fontenc}
 
 % Pretty much all of the ams maths packages.
 \usepackage{amsmath,amsthm,amssymb,amsfonts}
@@ -39,6 +40,30 @@
 % time required for LaTeX compilation.
 \usepackage[timer,left]{regstats}
 
+% For greater control over customising lists.
+\usepackage{enumitem}
+
+% Lots of people seem to include this package by default. It provides a LaTeX 
+% interface to the micro-typographic extensions of pdfTeX.
+\usepackage{microtype}
+
+% The listings package is a source code printer for LATEX. You can typeset stand
+% alone files as well as listings with an environment similar to verbatim as
+% well as you can print code snippets using a command similar to \verb. Many
+% parameters control the output and if your preferred programming language
+% isn't already supported, you can make your own definition.
+\usepackage{listings}
+
+% This package implements high-level interface commands for class file writers
+% which allows the separation of formatting commands (typically instances of
+% so-called `templates') and their arguments from the signature of
+% document-level commands.
+\usepackage{xparse}
+
+% This package allows verbatim text to be typeset in bold.
+\usepackage{alltt}
+\renewcommand{\ttdefault}{txtt}
+
 \usepackage[noline,ruled]{algorithm2e}          % for algorithms
 \usepackage{caption}                            % for subfloats
 \usepackage[nodayofweek]{datetime}              % for \formatdate
@@ -52,22 +77,30 @@
 \usetikzlibrary{positioning,shapes,shadows,arrows}
 \usepackage{verbatim}                           % for comment environment
 
+\begin{comment}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Gantt charts
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{tikz}
+\usetikzlibrary{calendar}
+\usepackage{pgfgantt}
+\end{comment}
+
 % My custom packages
 \usepackage{escape}                             % for \escape
 \usepackage{citationneeded}                     % for \citeNeeded
 \usepackage{pieplots}                           % for \pieplots, \pieplot
 \usepackage{pgf-pie}                            % for \pie
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Source code formatting
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\usepackage{listings}
-
 % Custom colours
 \definecolor{darkGreen}{rgb}{0,0.6,0}
 \definecolor{gray}{rgb}{0.5,0.5,0.5}
 \definecolor{mauve}{rgb}{0.58,0,0.82}
+\definecolor{green}{rgb}{0,1,0}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Source code formatting
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Default settings
 \lstset{
     basicstyle=\ttfamily,           % font
@@ -96,39 +129,55 @@
 }
 \lstloadlanguages{C,Matlab}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Gantt charts
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\usepackage{tikz}
-\usetikzlibrary{calendar}
-\usepackage{pgfgantt}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Variables (to save retyping and reformatting these throughout the document)
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Variables (to save retyping and reformatting
+% these throughout the document)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \input{variables}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Custom commands
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\usepackage{listings} % for \lstinline
-\usepackage{xparse} % for \NewDocumentCommand
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % To allow us to easily format a table row.
 % See http://www.latex-community.org/forum/viewtopic.php?f=5&t=3293
 \newcolumntype{+}{>{\global\let\currentrowstyle\relax}}
 \newcolumntype{^}{>{\currentrowstyle}}
-\newcommand\rowstyle[1]{\gdef\currentrowstyle{#1}%
-	#1\ignorespaces%
-}
+\newcommand\rowstyle[1]{\gdef\currentrowstyle{#1}#1\ignorespaces}
+
+% A command to allow a \hline in a longtable, without affecting page breaks.
+% See: http://tex.stackexchange.com/questions/6350/how-to-disable-pagebreak-on-hline-in-longtable
+\makeatletter
+\def\nobreakhline{%
+    \noalign{\ifnum0=`}\fi
+        \penalty\@M
+        \futurelet\@let@token\LT@@nobreakhline}
+\def\LT@@nobreakhline{%
+    \ifx\@let@token\hline
+        \global\let\@gtempa\@gobble
+        \gdef\LT@sep{\penalty\@M\vskip\doublerulesep}% <-- change here
+    \else
+        \global\let\@gtempa\@empty
+        \gdef\LT@sep{\penalty\@M\vskip-\arrayrulewidth}% <-- change here
+    \fi
+    \ifnum0=`{\fi}%
+    \multispan\LT@cols
+        \unskip\leaders\hrule\@height\arrayrulewidth\hfill\cr
+    \noalign{\LT@sep}%
+    \multispan\LT@cols
+        \unskip\leaders\hrule\@height\arrayrulewidth\hfill\cr
+    \noalign{\penalty\@M}%
+    \@gtempa}
+\makeatother
 
 % \tableHeader{...}
 \newcommand\tableHeader[1]{%
-	\hline \rowstyle{\bfseries} #1 \\\hline%
+	\hline\rowstyle{\bfseries}#1\\*\nobreakhline%
 }
 
 % \command{CMD}
-\newcommand\command[1]{\lstinline`#1`}
+\lstdefinelanguage{none}{}
+\newcommand\command[1]{\lstinline[language={none}]`#1`}
 
 % \dataset{DATASET}
 \newcommand\dataset[1]{`\escape{#1}'}
@@ -143,17 +192,15 @@
 \NewDocumentCommand\software{om}{``#2'' \IfNoValueTF{#1}{}{(\command{#1})}}
 
 % Simple command I defined to allow me to mark TODO items in red
-\newcommand{\todo}[1] {\textbf{\textcolor{red}{#1}}}
+\newcommand\todo[1]{\textbf{\textcolor{red}{#1}}}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % \begin{specifications}
 % \specificationGroup{GROUP_NAME}
 % \specification{NAME}{VALUE}
 % \endspecificationGroup
 % \end{specifications}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\usepackage{xparse} % for \NewDocumentEnvironment
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \makeatletter
 \NewDocumentEnvironment{specifications}{}{%
     \def\@hline{}%
@@ -177,15 +224,11 @@
 }
 \makeatother
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % \begin{datasetDescription}{DATASET}
 % \datasetProperty{NAME}{VALUE}
 % \end{datasetDescription}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\usepackage{escape} % for \escape
-\usepackage{graphicx} % for \includegraphics
-\usepackage{xparse} % for \NewDocumentEnvironment
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \makeatletter
 \NewDocumentEnvironment{datasetDescription}{m}{%
     \def\@hline{}%
@@ -203,24 +246,20 @@
         \\\hline%
     \end{longtable}%
     %
-    % NOTE: The "plots/datasets/#1" file can be quite large. You may need to
-    % inrease the amount of memory that the LaTeX compiler has available for
-    % use. Basically just pdate the value of "main_memory" in the 
-    % /etc/texmf/texmf.cnf file.
-    %
-    % See: http://tex.stackexchange.com/questions/27529/increase-tex-capacity-as-non-root
     \begin{figure}[H]%
         \centering%
-        %\includegraphics[width=0.5\textwidth]{pca/#1}%
-        \caption{A PCA plot for the `\escape{#1}' data set}%
+        %\graphicspath
+        \IfFileExists{../img/datasets/#1.png}{\includegraphics[width=0.5\textwidth]{datasets/#1}}{}%
+        \includegraphics[width=0.5\textwidth]{pca/#1}%
+        \caption{A \gls{PCA} plot for the \escape{#1} data set.}%
         \label{dataSets:#1:pca}%
     \end{figure}%
 }
 \makeatother
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Create a blank page
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\blankpage}{%
     \newpage%
     \thispagestyle{empty}%
@@ -235,28 +274,28 @@
 % must appear *after* "float" and *before* "algorithm".
 \usepackage[breaklinks=true,hidelinks,\pdfmetadata]{hyperref}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Graphics directory
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \graphicspath{{../img/}}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Title page options
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \title{\thesisTitle*{}}
 \author{\studentName*{}}
 \date{\thesisDate*{}}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Glossary
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage[toc,xindy]{glossaries} % note that hyperref must be loaded first
 \makeglossaries
 \input{acronym}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Bibliography
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage[language=australian]{biblatex} % use biblatex instead of bibtex
 \bibliography{thesis}
 

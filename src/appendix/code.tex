@@ -1,12 +1,25 @@
-This appendix contains various source code that was used throughout the thesis.
-All source code from can be freely downloaded from \gitRepoHTTP{} (over HTTP) or
-\gitRepoSSH{} (over SSH).
+This appendix contains various source code that was used throughout the Thesis.
+The source code listed in this section is not intended to be complete, but
+rather contains some macros and functions that have not been defined in this
+section. The code, however, should be clear in purpose and intention. The full
+source code from can be freely downloaded from \gitRepoHTTP{} (over HTTP) or
+\gitRepoSSH{} (over SSH). 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % MATLAB code
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{MATLAB code}
 \label{sourceCode:matlab}
+The original \software{MATLAB} code that was used in this Thesis is listed
+below. This code was provided by \citeauthor{Khoa:2012}, but has been modified
+slightly, mostly for stylistic and functional purposes.
+
+The code below illustrates a single implementation of the
+\command{TopN_Outlier_Pruning_Block} function --- namely, the \emph{sorted}
+implementation. In this implementation, the array containing a vector's
+$k$-nearest nearest neighbours is maintained in a sorted order in order to
+facilitate future array insertions.
+
 % TODO
 \input{appendix/code-matlab}
 

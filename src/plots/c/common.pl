@@ -154,13 +154,13 @@ for (<FILE>) {
 close(FILE);
 
 # Write to output file
-open(TEX, ">$output_file") or die("Cannot open file: $output_file");
+open(TEX, ">:utf8", "$output_file") or die("Cannot open file: $output_file");
 
 if (basename($0) =~ m/all_datasets.tex.pl/) {
     print TEX "\\begin{pieplots}{fig:profiling:c}{C profiling plots}\n";
     
     for my $dataset (keys %data) {
-        print TEX "\t\\pieplot{\\escape{$dataset}}{\\input{${\THIS_DIR}/$dataset}}\n";
+        print TEX "\\pieplot{\\escape{$dataset}}{\\input{${\THIS_DIR}/$dataset}}\n";
     }
     print TEX "\\end{pieplots}\n";
 } elsif (basename($0) =~ m/legend.tex.pl/) {
@@ -178,11 +178,9 @@ if (basename($0) =~ m/all_datasets.tex.pl/) {
     my $function_string = join(",\n", @the_functions);
     
     print TEX <<END_OF_TEX;
-\\begin{tikzpicture}
-    \\pielegend[bound,color={$colour_string}]{
+\\pielegend[bound,color={$colour_string}]{
 $function_string
-    }
-\\end{tikzpicture}
+}
 END_OF_TEX
 } else { # we assume that the output file relates to a data set
     my $the_dataset = basename($0, ".tex.pl");
@@ -197,8 +195,7 @@ END_OF_TEX
     
     my $colour_string = join(',', @the_colours);
     print TEX <<END_OF_TEX;
-\\begin{tikzpicture}
-    \\pie[bound,text=none,radius=1.5,color={$colour_string}]{
+\\pie[bound,text=none,radius=1.5,color={$colour_string}]{
 END_OF_TEX
     
     # Data
@@ -210,9 +207,8 @@ END_OF_TEX
     
     print TEX join(",\n", @output);
     print TEX <<END_OF_TEX;
-        
-        }
-\\end{tikzpicture}
+
+}
 END_OF_TEX
 }
 
