@@ -1,5 +1,5 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Some LaTeX macros for pie chart by using PGF/Tikz package.
+% Some LaTeX macros for plotting pie charts using the PGF/Tikz package.
 % 
 % I made some modifications to the original project to make it more suitable for
 % my purpose. The following details pertain to the original project:
@@ -7,7 +7,6 @@
 % Home page of original project: http://pgf-pie.googlecode.com/
 % Original author: Xu Yuan <xuyuan.cn@gmail.com>
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 \NeedsTeXFormat{LaTeX2e}[1999/12/01]
 \ProvidesPackage{pgf-pie}
 
@@ -99,7 +98,7 @@
 \def\pgfpie@default@bound{false}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Draw a sector of a pie plot.
+% Draw a single sector of a pie plot.
 %------------------------------------------------
 % Arguments:
 %     #1: begin angle
@@ -170,8 +169,8 @@
 \newcommand\pgfpie@findColor[1]{%
     \pgfmathparse{int(mod(#1,\value{pgfpie@colorLength}))}%
     \let\ci\pgfmathresult%
-    \foreach \c [count=\j from 0] in \color{%
-        \ifnum \j=\ci%
+    \foreach \c [count=\j from 0] in \color {%
+        \ifnum\j=\ci%
             \xdef\thecolor{\c}%
             \breakforeach%
         \fi%
@@ -189,8 +188,8 @@
 \newcommand\pgfpie@findExplode[1]{%
     \pgfmathparse{int(mod(#1,\value{pgfpie@explodeLength}))}%
     \let\ei\pgfmathresult%
-    \foreach \e [count=\j from 0] in \explode{%
-        \ifnum \j=\ei%
+    \foreach \e [count=\j from 0] in \explode {%
+        \ifnum\j=\ei%
             \xdef\theexplode{\e}%
             \breakforeach%
         \fi%
@@ -199,6 +198,7 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Draw a pie plot.
+% \pie[OPTIONS]{DATA}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand\pie[2][]{%
     % Load default parameters
@@ -231,7 +231,7 @@
     \ifthenelse{\equal{\pgfpie@sum}{auto}}{%
         % Sum all input
         \xdef\pgfpie@sum{0}%
-        \foreach \p/\t in {#2}{%
+        \foreach \p/\t in {#2} {%
             \pgfmathparse{\pgfpie@sum+\p}%
             \xdef\pgfpie@sum{\pgfmathresult}%
         }%
@@ -239,25 +239,24 @@
     %
     % Initialise counters
     \setcounter{pgfpie@explodeLength}{0}%
-    \foreach \e in \explode{\addtocounter{pgfpie@explodeLength}{1}}%
+    \foreach \e in \explode {\addtocounter{pgfpie@explodeLength}{1}}%
     %
     \setcounter{pgfpie@colorLength}{0}%
-    \foreach \c in \color{\addtocounter{pgfpie@colorLength}{1}}%
+    \foreach \c in \color {\addtocounter{pgfpie@colorLength}{1}}%
     %
     \pgfmathsetlength{\pgfpie@angleEnd}{0}%
     %
     \setcounter{pgfpie@sliceLength}{0}%
-    \foreach \p/\e in {#2}{\addtocounter{pgfpie@sliceLength}{1}}%
+    \foreach \p/\e in {#2} {\addtocounter{pgfpie@sliceLength}{1}}%
     %
     \xdef\theradius{\radius}%
-    %
     \xdef\pgfpie@angleBegin{\the\pgfpie@angleEnd}%
     %
-    % Start of tikzpicture environment
+    % Start of drawing
     \begin{tikzpicture}%
     %
     % Drawing loop
-    \foreach \p/\t [count=\i from 0] in{#2}{%
+    \foreach \p/\t [count=\i from 0] in{#2} {%
         \pgfmathsetlength{\pgfpie@angleEnd}{\pgfpie@angleBegin}%
         \pgfmathaddtolength{\pgfpie@angleEnd}{\p}%
         %
@@ -280,9 +279,9 @@
         \coordinate[xshift=0.8cm,yshift=(\value{pgfpie@sliceLength}*0.5+1)*0.5cm] (legendpos) at (current bounding box.east);%
         %
         \begin{scope}[node distance=0.5cm]%
-            \foreach \p/\t [count=\i from 0] in {#2}{%
+            \foreach \p/\t [count=\i from 0] in {#2} {%
                 \pgfpie@findColor{\i}%
-                \node[draw,fill={\thecolor},\style,below of=legendpos,label=0:\t] (legendpos) {};%
+                \node[draw,fill=\thecolor,\style,below of=legendpos,label=0:\t] (legendpos) {};%
             }%
         \end{scope}%
     }{}%
@@ -293,12 +292,13 @@
         \path[use as bounding box] ($(\pos)-(\theradius,\theradius)$) rectangle ($(\pos)+(\theradius,\theradius)$);%
     \fi%
     %
-    % End of tikzpicture environment
+    % End of drawing
     \end{tikzpicture}%
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Draw the legend (only) pie plot.
+% \pielegend[OPTIONS]{DATA}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand\pielegend[2][]{%
     % Load default parameters
@@ -314,29 +314,27 @@
     %
     % Initialise counters
     \setcounter{pgfpie@colorLength}{0}%
-    \foreach \c in \color{\addtocounter{pgfpie@colorLength}{1}}%
+    \foreach \c in \color {\addtocounter{pgfpie@colorLength}{1}}%
     %
     \setcounter{pgfpie@sliceLength}{0}%
-    \foreach \p/\e in {#2}{\addtocounter{pgfpie@sliceLength}{1}}%
+    \foreach \p/\e in {#2} {\addtocounter{pgfpie@sliceLength}{1}}%
     %
-    % Start of tikzpicture environment
+    % Start of drawing
     \begin{tikzpicture}%
     %
     % Draw the legend
     \coordinate[xshift=0.8cm,yshift=(\value{pgfpie@sliceLength}*0.5+1)*0.5cm] (legendpos) at (current bounding box.east);%
     %
     \begin{scope}[node distance=0.5cm]%
-        \foreach \p/\t [count=\i from 0] in {#2}{%
+        \foreach \p/\t [count=\i from 0] in {#2} {%
             \pgfpie@findColor{\i}%
-            \node[draw,fill={\thecolor},\style,below of=legendpos,label=0:\t] (legendpos) {};%
+            \node[draw,fill=\thecolor,\style,below of=legendpos,label=0:\t] (legendpos) {};%
         }%
     \end{scope}%
     %
-    % Set the bounding box
-    \ifbound%
-        % Do nothing
-    \fi%
+    % Bound option does nothing for \pielegend
+    \ifbound\fi%
     %
-    % End of tikzpicture environment
+    % End of drawing
     \end{tikzpicture}%
 }

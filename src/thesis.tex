@@ -15,7 +15,7 @@
 \usepackage[l2tabu,orthodox,abort]{nag}
 
 % For font and input encoding.
-%\usepackage[utf8]{inputenc}
+\usepackage[utf8]{inputenc}
 %\usepackage[T1]{fontenc}
 
 % Pretty much all of the ams maths packages.
@@ -23,9 +23,6 @@
 
 % Allows inclusion of graphics easily and configurably.
 \usepackage{graphicx}
-
-% Provides commands to make subfigures.
-\usepackage{subcaption}
 
 % Typesets URLs sensibly --- with a TrueType font, hyperlinked in PDFs, and not
 % breaking across lines.
@@ -43,15 +40,13 @@
 % For greater control over customising lists.
 \usepackage{enumitem}
 
-% Lots of people seem to include this package by default. It provides a LaTeX 
+% Lots of people seem to include this package by default. It provides a LaTeX
 % interface to the micro-typographic extensions of pdfTeX.
 \usepackage{microtype}
 
-% The listings package is a source code printer for LATEX. You can typeset stand
+% The listings package is a source code printer for LaTeX. You can typeset stand
 % alone files as well as listings with an environment similar to verbatim as
-% well as you can print code snippets using a command similar to \verb. Many
-% parameters control the output and if your preferred programming language
-% isn't already supported, you can make your own definition.
+% well as you can print code snippets using a command similar to \verb.
 \usepackage{listings}
 
 % This package implements high-level interface commands for class file writers
@@ -64,35 +59,67 @@
 \usepackage{alltt}
 \renewcommand{\ttdefault}{txtt}
 
-\usepackage[noline,ruled]{algorithm2e}          % for algorithms
-\usepackage{caption}                            % for subfloats
-\usepackage[nodayofweek]{datetime}              % for \formatdate
-\usepackage{float}                              % for setting float specifiers
-\usepackage{../lib/gnuplot-lua-tikz/gnuplot-lua-tikz}                   % for plots produced by GNUplot
-\usepackage{pdfpages}                           % for inserting compliance sheet as a PDF
-\usepackage{pgfplots}                           % for matlab2tikz plots
-\usepackage{subcaption}                         % for subfloats
-\usepackage{tabularx}                           % for simple column stretching
-\usepackage{tikz}                               % for graphics
-\usetikzlibrary{positioning,shapes,shadows,arrows}
-\usepackage{verbatim}                           % for comment environment
+% This style option improves the interface for defining floating objects such
+% as figures and tables in LaTeX. It adds the notion of a `float style' that
+% governs appearance of floats. New kinds of floats may be defined using a
+% \newfloat command analogous to \newtheorem. This style option also
+% incorporates the functionality of David Carlisle's style option here, giving
+% floating environments a [H] option which means `PUT IT HERE' (as opposed to
+% the standard [h] option which means `You may put it here if you like').
+\usepackage{float}
+
+% This is the style file for the gnuplot PGF/TikZ terminal. It is associated
+% with the 'gnuplot.lua' script.
+\usepackage{../lib/gnuplot-lua-tikz/gnuplot-lua-tikz}
+
+% The datetime package is a LaTeX package that provides various different
+% formats for \today, and provides commands for displaying the current time.
+\usepackage[nodayofweek]{datetime}
+
+% This package simplifies the insertion of external multi-page PDF or PS
+% documents. It supports pdfTeX, VTeX, and XeTeX.
+\usepackage{pdfpages}
+
+% The caption package provides many ways to customise the captions in floating
+% environments such figure and table.
+\usepackage{caption}
+
+% This package supports typesetting of sub-captions (by using the the
+% sub-caption feature of the caption package).
+\usepackage{subcaption}
+
+% A new environment, tabularx, is defined, which takes the same arguments as
+% tabular*, but modifies the widths of certain columns, rather than the inter
+% column space, to set a table with the requested total width. The columns that
+% may stretch are marked with the new token X in the preamble argument.
+% NOTE: Requires the array package
+\usepackage{array}
+\usepackage{tabularx}
+
+% This package reimplements the LATEX verbatim and verbatim* environments. In
+% addition it provides a comment environment that skips any commands or text
+% between \begin{comment} and the next \end{comment}. It also defines the
+% command verbatiminput to input a whole file verbatim.
+\usepackage{verbatim}
 
 \begin{comment}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Gantt charts
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage{tikz}
 \usetikzlibrary{calendar}
 \usepackage{pgfgantt}
 \end{comment}
 
-% My custom packages
-\usepackage{escape}                             % for \escape
-\usepackage{citationneeded}                     % for \citeNeeded
-\usepackage{pieplots}                           % for \pieplots, \pieplot
-\usepackage{pgf-pie}                            % for \pie
+\usepackage[noline,ruled]{algorithm2e}
+\usepackage{pgfplots}
+\usepackage{tikz}
+\usetikzlibrary{positioning,shapes,shadows,arrows}
 
+% My custom packages.
+\usepackage{escape,citationneeded,pieplots,pgf-pie}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Custom colours
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \definecolor{darkGreen}{rgb}{0,0.6,0}
 \definecolor{gray}{rgb}{0.5,0.5,0.5}
 \definecolor{mauve}{rgb}{0.58,0,0.82}
@@ -140,7 +167,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % To allow us to easily format a table row.
-% See http://www.latex-community.org/forum/viewtopic.php?f=5&t=3293
+% See: http://www.latex-community.org/forum/viewtopic.php?f=5&t=3293
 \newcolumntype{+}{>{\global\let\currentrowstyle\relax}}
 \newcolumntype{^}{>{\currentrowstyle}}
 \newcommand\rowstyle[1]{\gdef\currentrowstyle{#1}#1\ignorespaces}
@@ -151,7 +178,8 @@
 \def\nobreakhline{%
     \noalign{\ifnum0=`}\fi
         \penalty\@M
-        \futurelet\@let@token\LT@@nobreakhline}
+        \futurelet\@let@token\LT@@nobreakhline
+    }%
 \def\LT@@nobreakhline{%
     \ifx\@let@token\hline
         \global\let\@gtempa\@gobble
@@ -167,7 +195,8 @@
     \multispan\LT@cols
         \unskip\leaders\hrule\@height\arrayrulewidth\hfill\cr
     \noalign{\penalty\@M}%
-    \@gtempa}
+    \@gtempa
+}
 \makeatother
 
 % \tableHeader{...}
@@ -176,8 +205,7 @@
 }
 
 % \command{CMD}
-\lstdefinelanguage{none}{}
-\newcommand\command[1]{\lstinline[language={none}]`#1`}
+\newcommand\command[1]{\lstinline`#1`}
 
 % \dataset{DATASET}
 \newcommand\dataset[1]{`\escape{#1}'}
@@ -191,9 +219,6 @@
 % \software{NAME}[CMD]
 \NewDocumentCommand\software{om}{``#2'' \IfNoValueTF{#1}{}{(\command{#1})}}
 
-% Simple command I defined to allow me to mark TODO items in red
-\newcommand\todo[1]{\textbf{\textcolor{red}{#1}}}
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % \begin{specifications}
 % \specificationGroup{GROUP_NAME}
@@ -203,20 +228,26 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \makeatletter
 \NewDocumentEnvironment{specifications}{}{%
-    \def\@hline{}%
+    \def\specifications@hline{}%
     %
     \newenvironment{specificationGroup}[1]{%
-        \@hline \underline{##1} &%
-        \def\@hline{\\}%
+        \gdef\specificationGroup@name{##1}%
+        %
+        \specifications@hline\underline{\specificationGroup@name}&%
+        \def\specifications@hline{\\}%
     }{%
-        \def\@hline{\\[1em]}%
+        \def\specifications@hline{\\[1em]}%
     }%
     \newcommand\specification[2]{%
-        \@hline ##1 & ##2%
-        \def\@hline{\\}%
+        \gdef\specification@name{##1}%
+        \gdef\specification@value{##2}%
+        %
+        \specifications@hline\specification@name&\specification@value%
+        \def\specifications@hline{\\}%
     }%
     %
-    \begin{tabular}{|+>{\bfseries}l|^p{8cm}|}%
+    \def\specification@width{8cm}%
+    \begin{tabular}{|+>{\bfseries}l|^p{\specification@width}|}%
         \tableHeader{Item & Specification}%
 }{%
         \\\hline%
@@ -231,15 +262,18 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \makeatletter
 \NewDocumentEnvironment{datasetDescription}{m}{%
-    \def\@hline{}%
+    \def\datasetDescription@hline{}%
     %
     \newcommand\datasetProperty[2]{%
-        \@hline ##1 & ##2%
-        \def\@hline{\\}%
+        \gdef\datasetProperty@name{##1}%
+        \gdef\datasetProperty@value{##2}%
+        %
+        \datasetDescription@hline\datasetProperty@name&\datasetProperty@value%
+        \def\datasetDescription@hline{\\}%
     }%
     %
-    \def\tablewidth{8cm}%
-    \begin{longtable}{|+>{\bfseries}l|^p{\tablewidth}|}%
+    \def\datasetDescription@width{8cm}%
+    \begin{longtable}{|+>{\bfseries}l|^p{\datasetDescription@width}|}%
         \tableHeader{Property & Value}%
         \datasetProperty{Identifier}{\escape{#1}}%
 }{%
@@ -267,8 +301,12 @@
     \newpage%
 }
 
-% Makes references hyperlinks in PDF output. Also allows automatic references
-% using \autoref.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% More packages
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Makes references into hyperlinks in PDF output. Also allows automatic
+% references using \autoref.
 %
 % Note that this package must be almost last in the preamble. In particular, it
 % must appear *after* "float" and *before* "algorithm".

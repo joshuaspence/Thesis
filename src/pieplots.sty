@@ -1,5 +1,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Some LaTeX commands for showing multiple pie charts.
+% Some LaTeX commands for showing multiple pie charts. This package also allows
+% these pie charts to span multiple pages, and will automatically arrange them
+% accordingly.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{pieplots}
@@ -11,14 +13,18 @@
 \RequirePackage{tikz}       % for \tikzpicture
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Defines a single pie plot.
 % \pieplot{CAPTION}{CONTENT}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand\pieplot[2]{%
+    \def\pieplot@caption{#1}%
+    \def\pieplot@content{#2}%
+    %
     \minipage[t]{.3\textwidth}%
         \centering%
-        {#2}%
+        \pieplot@content%
         \captionsetup{type=subfigure,labelformat=parens,labelsep=space,skip=3pt,list=false}%
-        \captionof{subfigure}{#1}%
+        \captionof{subfigure}{\pieplot@caption}%
         \vspace{1em}%
     \endminipage%
     \hfil\ignorespaces%
@@ -33,6 +39,7 @@
     \global\pieplots@starttrue%
     \def\pieplots@label{#1}%
     \def\pieplots@caption{#2}%
+    %
     \setbox\pieplots@box=\vbox\bgroup\parindent=0pt \offinterlineskip \parfillskip=0pt%
 }{%
     \par\egroup\pieplots@split%
