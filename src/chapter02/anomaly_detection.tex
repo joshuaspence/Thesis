@@ -1,5 +1,5 @@
 Anomaly detection is the process of detecting patterns in a given data set that
-do not conform to an ``expected'' behavior \cite{Chandola:2007}, although it is
+do not conform to an ``expected'' behaviour \cite{Chandola:2007}, although it is
 often difficult to accurate predict expected patterns and distributions for data
 sets. The terms `anomaly' and `outlier' are used synonymously, both within this
 thesis and more generally in the field of statistics.
@@ -18,9 +18,9 @@ domains \cite{Chandola:2007}. Over time, many techniques for anomaly detection
 have been developed for specific application domains, as well as more generic
 techniques \cite{Chandola:2007}.
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % What are Anomalies?
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{What are Anomalies?}
 \label{anomalyDetection:whatAre}
 Anomalies are patterns in data that do not conform to a well defined notion of
@@ -39,9 +39,9 @@ $O_3$, are considered to be anomalies.
     \label{fig:2d-anomalies}
 \end{figure}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Challenges
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Challenges}
 \label{anomalyDetection:challenges}
 A straightforward anomaly detection approach, is to define a region representing
@@ -58,10 +58,11 @@ to the boundary can actually be normal, and vice-versa.
 
 \item When anomalies are the result of malicious actions, the malicious
 adversaries often adapt themselves to make the anomalous observations appear
-like normal, thereby making the task of defining normal behavior more difficult.
+like normal, thereby making the task of defining normal behaviour more
+difficult.
 
-\item In many domains normal behavior keeps evolving and a current notion of
-normal behavior might not be sufficiently representative in the future.
+\item In many domains normal behaviour keeps evolving and a current notion of
+normal behaviour might not be sufficiently representative in the future.
 
 \item The exact notion of an anomaly is different for different application
 domains. For example, in the medical domain a small deviation from normal (for
@@ -70,7 +71,7 @@ deviation in the stock market domain (for example, fluctuations in the value of
 a stock) might be considered as normal. Thus applying a technique developed in
 one domain to another is not straightforward.
 
-\item Availability of labeled data for training/validation of models used by
+\item Availability of labelled data for training/validation of models used by
 anomaly detection techniques is usually a major issue.
 
 \item Often the data contains noise which tends to be similar to the actual
@@ -81,7 +82,7 @@ anomalies and hence is difficult to distinguish and remove.
 Due to the above challenges, the anomaly detection problem, in its most general
 form, is not easy to solve. In fact, most of the existing anomaly detection
 techniques solve a specific formulation of the problem. The formulation is
-induced by various factors such as nature of the data, availability of labeled
+induced by various factors such as nature of the data, availability of labelled
 data, type of anomalies to be detected, etc. Often, these factors are determined
 by the application domain in which the anomalies need to be detected.
 
@@ -89,9 +90,9 @@ Researchers have adopted concepts from diverse disciplines such as statistics,
 data mining, statistics, information theory and spectral theory in order to gain
 an increased understanding of anomalies \cite{Chandola:2007}.
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Similar Problems
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Similar Problems}
 \label{anomalyDetection:similarProblems}
 Anomaly detection is an intentionally broad specifier for a class of
@@ -111,12 +112,12 @@ an indication of the future state of a system. The distinction between novel
 pattern and anomalies is that novel patterns are incorporated into the data
 model after detection \cite{Chandola:2007}.
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Classification
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Classification}
 \label{anomalyDetection:classification}
-In general, two different kinds of outliers exist: \emph{global outliers} and 
+In general, two different kinds of outliers exist: \emph{global outliers} and
 \emph{local outliers}. Global outliers are distinct with respect to the whole
 data set, while local outliers are distinct with respect to data points in their
 local neighbourhood \cite{Vries:2011}. The task of global outlier detection has
@@ -129,9 +130,9 @@ reduced-dimensional space --- to create an accurate approximation for
 $k$-nearest-neighbour distances, which is used as the core density measurement
 within \gls{LOF} \cite{Vries:2011}.
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Types of Anomalies
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Types of Anomalies}
 \label{anomalyDetection:types}
 Anomalies can be classified into three categories \cite{Chandola:2007}:
@@ -190,12 +191,12 @@ low value by itself is not an anomaly.
 
 \end{description}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Distance Based
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Distance Based}
 \label{anomalyDetection:approaches:distance}
-In this approach, one looks at the local neighborhood of points for an example
+In this approach, one looks at the local neighbourhood of points for an example
 typically defined by the $k$ nearest examples (also known as neighbours). If the
 neighbouring points are relatively close, then the example is considered normal;
 if the neighbouring points are far away, then the example is considered unusual.
@@ -214,13 +215,13 @@ major problem for many real databases where there are often millions of records
 Researchers have tried a variety of approaches to find these outliers
 efficiently. The simplest are those using nested loops \cite{Bay:2003}. In the
 basic version one compares each example with every other example to determine
-its $k$ nearest neighbors. Given the neighbors for each example in the data set,
-simply select the top $n$ candidates according to the outlier definition. This
-approach has quadratic complexity as we must make all pairwise distance
+its $k$ nearest neighbours. Given the neighbours for each example in the data
+set, simply select the top $n$ candidates according to the outlier definition.
+This approach has quadratic complexity as we must make all pairwise distance
 computations between examples.
 
 Another method for finding outliers is to use a spatial indexing structure such
-as a KD-tree, R-tree, or X-tree to find the nearest neighbors of each candidate
+as a KD-tree, R-tree, or X-tree to find the nearest neighbours of each candidate
 point. One queries the index structure for the closest $k$ points to each
 example, and as before one simply selects the top candidates according to the
 outlier definition. For low-dimensional data sets this approach can work
@@ -233,9 +234,9 @@ break down as the dimensionality increases \cite{Bay:2003}.
 \label{anomalyDetection:approaches:distance:pruning}
 % TODO
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Distribution Based
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Distribution Based}
 \label{anomalyDetection:approaches:distribution}
 A common distribution considered when modelling data is the `Normal'
@@ -244,23 +245,23 @@ $k$ standard deviations $\sigma$ from the mean $\mu$ is the area between
 $\mu - k\sigma$ and $\mu + k\sigma$.
 % TODO
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Principal Component Analysis Based
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Principal Component Analysis Based}
 \label{anomalyDetection:pca}
 % TODO
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Clustering Based
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Clustering Based}
 \label{anomalyDetection:clustering}
 % TODO
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Density Based
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Density Based}
 \label{anomalyDetection:density}
 % TODO
