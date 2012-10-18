@@ -6,18 +6,19 @@ linear algebra, vector calculus and graph theory. However, the provided
 background material is not intended to be comprehensive, and it is expected that
 the reader is familiar with these fields of mathematics. In
 \autoref{reconfigurableComputing}, I provide an overview of reconfigurable
-computing, including an explanation of \glspl{FPGA}.
+computing, including an explanation of \glspl{FPGA} and an overview of
+\gls{HLS}.
 
 In \autoref{software}, I profile the execution of an anomaly detection algorithm
 and explore possible improvements to the algorithm, in particular by outsourcing
-various stages of the algorithm to an FPGA device. In \autoref{hardware},
-I describe the implementation of the improved algorithm and detail the process
-that was followed in order to construct the hardware processing device.
-\begin{comment}
-In \autoref{results}, I record results obtained by benchmarking the device that
-was previously designed and constructed, and comparing the expected improvements
-to the algorithm's execution with the measured results.
-\end{comment}
+various stages of the algorithm to an FPGA device. I proceed to make iterative
+refinements to the algorithm from its base implementation towards a hardware
+design.
+
+In \autoref{hardware}, I propose several hardware implementations and discuss
+design considerations, as well as the design process itself, that must be
+considered for these designs. I also detail the results of some initial testing
+investigating the performance expectations from differing hardware designs.
 
 I conclude in \autoref{conclusions} by reflecting upon the results obtained
 through this research, and making suggestions for further research in this
