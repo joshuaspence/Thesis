@@ -25,7 +25,6 @@ This \progLang{MATLAB} code formed the foundation on which all successive code
 of this \thesis{} eventuates. The design flow that was adopted for the
 development process is illustrated in \autoref{thesis:designFlow}.
 
-% TODO: Flow chart
 \begin{figure}
     \centering
     \input{chapter04/thesis-design_method.tikz.tex}
@@ -38,21 +37,35 @@ development process is illustrated in \autoref{thesis:designFlow}.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Data Sets Used For Testing, Profiling and Benchmarking}
 \label{software:datasets}
-A total of 25 data sets were used for testing, profiling and benchmarking the
-commute distance using anomaly detection algorithm. These data sets are
-described in detail in \autoref{dataSets}.
+A total of 21 data sets were used for testing, profiling and benchmarking the
+commute distance using anomaly detection algorithm. A brief description of each
+data set is provided in \autoref{dataSets:brief}. These data sets are
+described in detail in \autoref{dataSets}. Further information
 
 \begin{table}
     \centering
     \begin{datasets}
+        \dataSetBrief{testoutrank}{441}{2}
+        \dataSetBrief{ball1}{551}{2}
         \dataSetBrief{testCD}{640}{2}
+        \dataSetBrief{runningex1k}{1000}{2}
         \dataSetBrief{testCDST}{2000}{2}
         \dataSetBrief{testCDST2}{2000}{2}
         \dataSetBrief{testCDST3}{2000}{2}
-        \dataSetBrief{testoutrank}{441}{2}
+        \dataSetBrief{runningex10k}{10000}{2}
+        \dataSetBrief{runningex20k}{20000}{2}
+        \dataSetBrief{segmentation}{2100}{20}
+        \dataSetBrief{spam\_train}{4501}{58}
+        \dataSetBrief{runningex30k}{30000}{2}
         \dataSetBrief{pendigits}{4601}{58}
-        \dataSetBrief{musk}{67557}{43}
-        % TODO: ...
+        \dataSetBrief{runningex40k}{40000}{2}
+        \dataSetBrief{runningex50k}{50000}{2}
+        \dataSetBrief{spam}{4601}{58}
+        \dataSetBrief{letter-recognition}{20000}{17}
+        \dataSetBrief{mesh\_network}{1193}{392}
+        \dataSetBrief{magicgamma}{19020}{11}
+        \dataSetBrief{musk}{6598}{167}
+        \dataSetBrief{connect4}{67557}{43}
     \end{datasets}
     \caption{Brief description of the data sets}
     \label{dataSets:brief}
