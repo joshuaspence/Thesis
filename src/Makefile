@@ -93,7 +93,7 @@ export LC_ALL		?= C
 # to allow everything to be cleaned.
 #neverclean		?= *.pdf
 #
-# If you list any files or wildcards here, they will *always* be cleaned. They 
+# If you list any files or wildcards here, they will *always* be cleaned. They
 # will also be added to the generated .gitignore file.
 #alwaysclean		?= *.pdf
 #
@@ -128,7 +128,7 @@ export LC_ALL		?= C
 # Joshua Spence (2012-09-19):
 # * Bumped version to 2.2.1-alpha10-josh
 # * Add a phony "_all" target.
-# * Fixed makefile to use a recursive wildcard to look for source files in 
+# * Fixed makefile to use a recursive wildcard to look for source files in
 #   subdirectories.
 # * Fixed makefile to properly clean files from subdirectories.
 # * Added a target to generate a gitignore file. Note that this is not perfect.
@@ -1211,7 +1211,7 @@ all_files.jpeg		?= $(call rwildcard,,*.jpeg)
 all_files.eps.gz	?= $(call rwildcard,,*.eps.gz)
 all_files.eps		?= $(call rwildcard,,*.eps)
 
-# Utility function to act as a recursive implementation of the makefile 
+# Utility function to act as a recursive implementation of the makefile
 # "wildcard" macro.
 # $(call rwildcard,BASE_DIRECTORY,ARG1 ARG2 ...)
 rwildcard = $(foreach d,$(wildcard $1*),$(call rwildcard,$d/,$2)\
@@ -1315,7 +1315,7 @@ default_files_scripts		:= $(call concat-files,tex.pl tex.py tex.sh,default)
 files_source		:= $(call concat-files,tex)
 files_source_gen	:= $(call concat-files,rst lhs)
 files_scripts		:= $(call concat-files,tex.pl tex.py tex.sh)
-	
+
 # Utility function for obtaining stems
 # $(call get-stems,suffix,[prefix])
 get-stems	= $(sort $($(if $2,$2_,)files.$1:%.$1=%))
@@ -4239,4 +4239,3 @@ endef
 -include $(HOME)/.latex-makefile/Targets.ini
 #
 # vim: noet sts=0 sw=8 ts=8
-

@@ -38,9 +38,9 @@ d = size(X,2);
 if d == 2 || d == 3
     f = figure
     if d == 2
-        scatter(X(:,1),X(:,2),'x');
+        scatter(X(:,1),X(:,2),5,'filled');
     elseif d == 3
-        scatter3(X(:,1),X(:,2),X(:,3),'x');
+        scatter3(X(:,1),X(:,2),X(:,3),5,'filled');
     end
     %matlab2tikz(out_file,'height','\\figureheight','width','\\figurewidth','showInfo',false);
     print(f,'-dpng',out_file);
