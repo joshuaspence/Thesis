@@ -4,29 +4,29 @@
 \RequirePackage{expl3}  % for \ExplSyntaxOn, \ExplSyntaxOff
 \RequirePackage{xparse} % for \NewDocumentCommand
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%===============================================================================
 % Formatting
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%===============================================================================
 \newcommand\formatPerson[1]{\emph{#1}}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%===============================================================================
 % Lookup table
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%===============================================================================
 \ExplSyntaxOn
-\prop_new:N \g__JS_name_prop
-\cs_new_protected:Npn \__JS_format:n #1 {#1}
+\prop_new:N\g__JS_name_prop
+\cs_new_protected:Npn\__JS_format:n #1 {#1}
 
 % \definePerson{key}{name}
 \NewDocumentCommand{\definePerson}{mm}{%
-    \prop_gput:Nnn \g__JS_name_prop{#1}{#2}%
+    \prop_gput:Nnn\g__JS_name_prop{#1}{#2}%
 }
 
 % \getPerson{key}
 % \getPerson*{key}
 \NewDocumentCommand{\getPerson}{sm}{%
     \IfBooleanTF{#1}%
-        {\cs_set_eq:NN \__JS_format:n \use:n}%
-        {\cs_set_eq:NN \__JS_format:n \formatPerson}%
-    \__JS_format:n{\prop_get:Nn \g__JS_name_prop{#2}}%
+        {\cs_set_eq:NN\__JS_format:n\use:n}%
+        {\cs_set_eq:NN\__JS_format:n\formatPerson}%
+    \__JS_format:n{\prop_get:Nn\g__JS_name_prop{#2}}%
 }
 \ExplSyntaxOff

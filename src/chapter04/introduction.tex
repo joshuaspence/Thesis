@@ -38,9 +38,34 @@ process is as follows:
 \end{enumerate}
 
 % TODO: Flow chart
+\begin{figure}
+    \centering
+    \input{chapter04/thesis-design_method.tikz.tex}
+    \caption{Design flow for this Thesis}
+    \label{thesis:designFlow}
+\end{figure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Data Sets Used For Testing and Profiling
+% Data Sets Used For Testing, Profiling and Benchmarking
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Data Sets Used For Testing and Profiling}
+\subsection{Data Sets Used For Testing, Profiling and Benchmarking}
 \label{software:datasets}
+A total of 25 data sets were used for testing, profiling and benchmarking the
+commute distance using anomaly detection algorithm. These data sets are
+described in detail in \autoref{dataSets}.
+
+\begin{table}
+    \centering
+    \begin{datasets}
+        \dataSetBrief{testCD}{640}{2}
+        \dataSetBrief{testCDST}{2000}{2}
+        \dataSetBrief{testCDST2}{2000}{2}
+        \dataSetBrief{testCDST3}{2000}{2}
+        \dataSetBrief{testoutrank}{441}{2}
+        \dataSetBrief{pendigits}{4601}{58}
+        \dataSetBrief{musk}{67557}{43}
+        % TODO: ...
+    \end{datasets}
+    \caption{Brief description of the data sets}
+    \label{dataSets:brief}
+\end{table}

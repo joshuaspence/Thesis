@@ -35,11 +35,11 @@ use constant COL_PROPORTIONREL => 9;
 
 sub format_name($) {
     my $function = $_[0];
-    
+
     if ($function =~ m/${\OTHER_FUNCTION}/) {
         $function = OTHER_NAME;
     }
-    
+
     return $function;
 }
 
@@ -78,11 +78,11 @@ sub get_colour($) {
     if (scalar(@colours) <= 0) {
         die('No more available colours');
     }
-    
+
     my $colour;
     if (exists $default_colours{format_name($_[0])}) {
         my $requested_colour = $default_colours{format_name($_[0])};
-        
+
         for (my $i = 0; $i < scalar(@colours); $i++) {
             $colour = shift(@colours);
             if ($colour ne $requested_colour) {
@@ -91,7 +91,7 @@ sub get_colour($) {
                 $i++;
             }
         }
-        
+
         return $requested_colour;
     } else {
         $colour = shift(@colours);
@@ -120,7 +120,7 @@ for (<FILE>) {
         $in_header = 0;
         next;
     }
-    
+
     my @columns        = csv_get_fields($_);
     my $profile        = $columns[COL_PROFILE];
     my $dataset        = $columns[COL_DATASET];
@@ -128,12 +128,12 @@ for (<FILE>) {
     my $function       = $columns[COL_FUNCTION];
     my $selftime_rel   = $columns[COL_SELFTIMEREL];
     my $proportion_rel = $columns[COL_PROPORTIONREL];
-    
+
     # If this function is fairly small, bundle it with other small functions
     if ($proportion_rel < THRESHOLD) {
         $function = OTHER_FUNCTION;
     }
-    
+
     if ($iteration eq 'average') {
         if (!exists $data{$dataset}) {
             $data{$dataset} = ();
@@ -147,7 +147,7 @@ for (<FILE>) {
         if (!exists $function_colours{$function}) {
             $function_colours{$function} = get_colour($function);
         }
-        
+
         $data{$dataset}{$profile}{$function} += $proportion_rel;
     }
 }
@@ -158,7 +158,7 @@ open(TEX, ">:utf8", "$output_file") or die("Cannot open file: $output_file");
 
 if (basename($0) =~ m/all_datasets.tex.pl/) {
     print TEX "\\begin{pieplots}{fig:profiling:c}{C profiling plots}\n";
-    
+
     for my $dataset (keys %data) {
         print TEX "\\pieplot{\\escape{$dataset}}{\\input{${\THIS_DIR}/$dataset}}\n";
     }
@@ -169,14 +169,14 @@ if (basename($0) =~ m/all_datasets.tex.pl/) {
     my @the_functions = ();
     for my $function (keys %function_colours) {
         push(@the_colours, $function_colours{$function});
-        
+
         $function = format_name($function);
         push(@the_functions, "1/\\escape{$function}");
     }
-    
+
     my $colour_string   = join(',', @the_colours);
     my $function_string = join(",\n", @the_functions);
-    
+
     print TEX <<END_OF_TEX;
 \\pielegend[bound,color={$colour_string}]{
 $function_string
@@ -186,25 +186,25 @@ END_OF_TEX
     my $the_dataset = basename($0, ".tex.pl");
     my $the_profile = PROFILE;
     my @output = (); # buffered output
-    
+
     # Colours
     my @the_colours = ();
     for my $function (keys %{$data{$the_dataset}{$the_profile}}) {
         push(@the_colours, $function_colours{$function});
     }
-    
+
     my $colour_string = join(',', @the_colours);
     print TEX <<END_OF_TEX;
 \\pie[bound,text=none,radius=1.5,color={$colour_string}]{
 END_OF_TEX
-    
+
     # Data
     for my $function (keys %{$data{$the_dataset}{$the_profile}}) {
         my $proportion = format_number(100 * $data{$the_dataset}{$the_profile}{$function});
         $function = format_name($function);
         push(@output, "$proportion/\\escape{$function}");
     }
-    
+
     print TEX join(",\n", @output);
     print TEX <<END_OF_TEX;
 

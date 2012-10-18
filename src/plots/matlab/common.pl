@@ -51,16 +51,16 @@ sub format_name($) {
     $function =~ s/\s*\(MEX-file\)//;
     $function =~ s/\s*\(Java method\)//;
     $function =~ s/\(\)//;
-    
+
     my $OTHER_FUNCTION = OTHER_FUNCTION;
     if ($function =~ m/$OTHER_FUNCTION/) {
         $function = OTHER_NAME;
     }
-    
+
     if (exists $function_map{$function}) {
         $function = $function_map{$function};
     }
-    
+
     return $function;
 }
 
@@ -109,11 +109,11 @@ sub get_colour($) {
     if (scalar(@colours) <= 0) {
         die('No more available colours');
     }
-    
+
     my $colour;
     if (exists $default_colours{format_name($_[0])}) {
         my $requested_colour = $default_colours{format_name($_[0])};
-        
+
         for (my $i = 0; $i < scalar(@colours); $i++) {
             $colour = shift(@colours);
             if ($colour ne $requested_colour) {
@@ -122,7 +122,7 @@ sub get_colour($) {
                 $i++;
             }
         }
-        
+
         return $requested_colour;
     } else {
         $colour = shift(@colours);
@@ -151,7 +151,7 @@ for (<FILE>) {
         $in_header = 0;
         next;
     }
-    
+
     my @columns       = csv_get_fields($_);
     my $profile       = $columns[COL_PROFILE];
     my $dataset       = $columns[COL_DATASET];
@@ -159,12 +159,12 @@ for (<FILE>) {
     my $function      = $columns[COL_FUNCTION];
     my $totaltime_rel = $columns[COL_TOTALTIMEREL];
     my $selftime_rel  = $columns[COL_SELFTIMEREL];
-    
+
     # If this function is fairly small, bundle it with other small functions
     if ($selftime_rel < THRESHOLD) {
         $function = OTHER_FUNCTION;
     }
-    
+
     if ($iteration eq 'average') {
         if (!exists $data{$dataset}) {
             $data{$dataset} = ();
@@ -178,7 +178,7 @@ for (<FILE>) {
         if (!exists $function_colours{$function}) {
             $function_colours{$function} = get_colour($function);
         }
-        
+
         $data{$dataset}{$profile}{$function} += $selftime_rel;
     }
 }
@@ -190,25 +190,25 @@ binmode(TEX, ":utf8");
 
 if (basename($0) =~ m/all_datasets.tex.pl/) {
     print TEX "\\begin{pieplots}{fig:profiling:matlab}{MATLAB profiling plots}\n";
-    
+
     for my $dataset (keys %data) {
         print TEX "\\pieplot{\\escape{$dataset}}{\\input{${\THIS_DIR}/$dataset}}\n";
     }
     print TEX "\\end{pieplots}\n";
-} elsif (basename($0) =~ m/legend.tex.pl/) {    
+} elsif (basename($0) =~ m/legend.tex.pl/) {
     # Colours
     my @the_colours = ();
     my @the_functions = ();
     for my $function (keys %function_colours) {
         push(@the_colours, $function_colours{$function});
-        
+
         $function = format_name($function);
         push(@the_functions, "1/\\escape{$function}");
     }
-    
+
     my $colour_string = join(',', @the_colours);
     my $function_string = join(",\n", @the_functions);
-    
+
     print TEX <<END_OF_TEX;
 \\pielegend[bound,radius=1.5,color={$colour_string}]{
 $function_string
@@ -218,18 +218,18 @@ END_OF_TEX
     my $the_dataset = basename($0, ".tex.pl");
     my $the_profile = PROFILE;
     my @output = (); # buffered output
-    
+
     # Colours
     my @the_colours = ();
     for my $function (keys %{$data{$the_dataset}{$the_profile}}) {
         push(@the_colours, $function_colours{$function});
     }
-    
+
     my $colour_string = join(',', @the_colours);
     print TEX <<END_OF_TEX;
 \\pie[bound,text=none,radius=1.5,color={$colour_string}]{
 END_OF_TEX
-    
+
     # Data
     for my $function (keys %{$data{$the_dataset}{$the_profile}}) {
         my $proportion = 100 * $data{$the_dataset}{$the_profile}{$function};
@@ -237,7 +237,7 @@ END_OF_TEX
         $function = format_name($function);
         push(@output, "$proportion/\\escape{$function}");
     }
-    
+
     print TEX join(",\n", @output);
     print TEX <<END_OF_TEX;
 

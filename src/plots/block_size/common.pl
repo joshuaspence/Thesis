@@ -45,7 +45,7 @@ for (<DATA>) {
         $in_header = 0;
         next;
     }
-    
+
     my @columns    = csv_get_fields($_);
     my $dataset    = $columns[COL_DATASET];
     my $block_size = $columns[COL_BLOCKSIZE];
@@ -53,7 +53,7 @@ for (<DATA>) {
     my $functime   = $columns[COL_FUNCTIME_NORM];
     my $totaltime  = $columns[COL_TOTALTIME_NORM];
     my $pruned     = $columns[COL_PRUNED_NORM];
-    
+
     if (!exists $data{$dataset}) {
         $data{$dataset} = ();
     }
@@ -63,7 +63,7 @@ for (<DATA>) {
     if (!($block_size ~~ @block_sizes)) {
         push(@block_sizes, $block_size);
     }
-    
+
     $data{$dataset}{$block_size}{'distcalls'} = $distcalls;
     $data{$dataset}{$block_size}{'functime'}  = $functime;
     $data{$dataset}{$block_size}{'totaltime'} = $totaltime;
@@ -182,7 +182,7 @@ if ($loop_over =~ m/dataset/) {
     my $colour_counter = 0;
     for my $dataset (sort keys %data) {
         my $dataset_clean = latex_escape($dataset);
-        
+
         my $the_column;
         my $no_blocking_value;
         if (basename($0) =~ m/legend.tex.pl/) {
@@ -238,7 +238,7 @@ END_OF_GNUPLOT
     my $colour_counter = 0;
     for my $blocksize (@block_sizes) {
         my $blocksize_text = latex_escape("block_size=$blocksize");
-        
+
         my $the_column;
         if (basename($0) =~ m/total_run_time_complexity.tex.pl/) {
             $the_column = ${\(COL_TOTALTIME + 1)};
@@ -319,12 +319,12 @@ if (basename($0) =~ m/legend.tex.pl/) {
             } elsif ($line =~ m/\\gpsetlinewidth\{${\FLOAT_REGEX}\}$/) {
                 push(@output, $line);
             }
-            
+
             next;
         }
     }
     close(LEGEND);
-    
+
     open(LEGEND, ">$output_file") || die("Cannot open file: $output_file");
     print LEGEND join("\n", @output);
     close(LEGEND);

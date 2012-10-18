@@ -1,11 +1,12 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{escape}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%===============================================================================
 % A LaTeX macro to escape underscores.
+%-------------------------------------------------------------------------------
 % \escape{TEXT}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%===============================================================================
 \DeclareRobustCommand*{\escape}[1]{%
     \begingroup\@active\scantokens{#1\endinput}\endgroup}
-\begingroup\lccode`\~=`\_\relax%
-    \lowercase{\endgroup\def\@active{\catcode`\_=\active \let~\_}}
+\begingroup\lccode`\~=`\_\relax
+    \lowercase{\endgroup\def\@active{\catcode`\_=\active\let~\_}}

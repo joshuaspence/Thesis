@@ -15,9 +15,9 @@
 \RequirePackage{ifthen}     % for \ifthenelse
 \RequirePackage{scalefnt}   % for \scalefont
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%===============================================================================
 % Definitions
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%===============================================================================
 \newlength{\pgfpie@angleEnd}
 \newcounter{pgfpie@explodeLength}
 \newcounter{pgfpie@colorLength}
@@ -63,15 +63,15 @@
 \pgfkeys{/scale font/.is if=scalefont}
 \let\scalefontorg\scalefont
 \renewcommand{\scalefont}[1]{%
-    \ifscalefont%
+    \ifscalefont
         \pgfmathparse{#1/\pgfpie@sum*3+0.9}%
         \scalefontorg{\pgfmathresult}%
-    \fi%
+    \fi
 }
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%===============================================================================
 % Default values
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%===============================================================================
 \def\pgfpie@default@explode{0}
 \def\pgfpie@default@color{{%
     blue!60,%
@@ -97,9 +97,9 @@
 \def\pgfpie@default@scalefont{false}
 \def\pgfpie@default@bound{false}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%===============================================================================
 % Draw a single sector of a pie plot.
-%------------------------------------------------
+%-------------------------------------------------------------------------------
 % Arguments:
 %     #1: begin angle
 %     #2: end angle
@@ -109,7 +109,7 @@
 %     #6: fill color
 %     #7: radius
 %     #8: center
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%===============================================================================
 \newcommand\pgfpie@slice[8]{%
     % If the start angle is equal to the end angle, then we don't have to draw
     % anything
@@ -159,47 +159,45 @@
     }%
 }
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%===============================================================================
 % Calculate the colour that a slice should be.
-%------------------------------------------------
+%-------------------------------------------------------------------------------
 % Arguments:
-%     #1: an integer representing the index of
-%         the current slice
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%     #1: an integer representing the index of the current slice
+%===============================================================================
 \newcommand\pgfpie@findColor[1]{%
     \pgfmathparse{int(mod(#1,\value{pgfpie@colorLength}))}%
-    \let\ci\pgfmathresult%
+    \let\ci\pgfmathresult
     \foreach \c [count=\j from 0] in \color {%
-        \ifnum\j=\ci%
+        \ifnum\j=\ci
             \xdef\thecolor{\c}%
-            \breakforeach%
+            \breakforeach
         \fi%
     }%
 }
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Calculate the radius by which a slice should be
-% exploded by.
-%------------------------------------------------
+%===============================================================================
+% Calculate the radius by which a slice should be exploded by.
+%-------------------------------------------------------------------------------
 % Arguments:
-%     #1: an integer representing the index of
-%         the current slice
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%     #1: an integer representing the index of the current slice
+%===============================================================================
 \newcommand\pgfpie@findExplode[1]{%
     \pgfmathparse{int(mod(#1,\value{pgfpie@explodeLength}))}%
-    \let\ei\pgfmathresult%
+    \let\ei\pgfmathresult
     \foreach \e [count=\j from 0] in \explode {%
-        \ifnum\j=\ei%
+        \ifnum\j=\ei
             \xdef\theexplode{\e}%
-            \breakforeach%
-        \fi%
+            \breakforeach
+        \fi
     }%
 }
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%===============================================================================
 % Draw a pie plot.
+%-------------------------------------------------------------------------------
 % \pie[OPTIONS]{DATA}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%===============================================================================
 \newcommand\pie[2][]{%
     % Load default parameters
     \pgfkeys{%
@@ -276,30 +274,31 @@
     %
     % Draw the legend
     \ifthenelse{\equal{\pgfpie@text}{legend}}{%
-        \coordinate[xshift=0.8cm,yshift=(\value{pgfpie@sliceLength}*0.5+1)*0.5cm] (legendpos) at (current bounding box.east);%
+        \coordinate[xshift=0.8cm,yshift=(\value{pgfpie@sliceLength}*0.5+1)*0.5cm] (legendpos) at (current bounding box.east);
         %
-        \begin{scope}[node distance=0.5cm]%
+        \begin{scope}[node distance=0.5cm]
             \foreach \p/\t [count=\i from 0] in {#2} {%
                 \pgfpie@findColor{\i}%
-                \node[draw,fill=\thecolor,\style,below of=legendpos,label=0:\t] (legendpos) {};%
+                \node[draw,fill=\thecolor,\style,below of=legendpos,label=0:\t] (legendpos) {};
             }%
         \end{scope}%
     }{}%
     %
     % Set the bounding box
-    \ifbound%
-        \pgfresetboundingbox%
-        \path[use as bounding box] ($(\pos)-(\theradius,\theradius)$) rectangle ($(\pos)+(\theradius,\theradius)$);%
-    \fi%
+    \ifbound
+        \pgfresetboundingbox
+        \path[use as bounding box] ($(\pos)-(\theradius,\theradius)$) rectangle ($(\pos)+(\theradius,\theradius)$);
+    \fi
     %
     % End of drawing
     \end{tikzpicture}%
 }
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Draw the legend (only) pie plot.
+%===============================================================================
+% Draw the legend (only) of a pie plot.
+%-------------------------------------------------------------------------------
 % \pielegend[OPTIONS]{DATA}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%===============================================================================
 \newcommand\pielegend[2][]{%
     % Load default parameters
     \pgfkeys{%
@@ -323,17 +322,17 @@
     \begin{tikzpicture}%
     %
     % Draw the legend
-    \coordinate[xshift=0.8cm,yshift=(\value{pgfpie@sliceLength}*0.5+1)*0.5cm] (legendpos) at (current bounding box.east);%
+    \coordinate[xshift=0.8cm,yshift=(\value{pgfpie@sliceLength}*0.5+1)*0.5cm] (legendpos) at (current bounding box.east);
     %
-    \begin{scope}[node distance=0.5cm]%
+    \begin{scope}[node distance=0.5cm]
         \foreach \p/\t [count=\i from 0] in {#2} {%
             \pgfpie@findColor{\i}%
-            \node[draw,fill=\thecolor,\style,below of=legendpos,label=0:\t] (legendpos) {};%
+            \node[draw,fill=\thecolor,\style,below of=legendpos,label=0:\t] (legendpos) {};
         }%
     \end{scope}%
     %
     % Bound option does nothing for \pielegend
-    \ifbound\fi%
+    \ifbound\fi
     %
     % End of drawing
     \end{tikzpicture}%
