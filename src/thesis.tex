@@ -115,14 +115,13 @@
 % My custom packages.
 \usepackage{escape,citationneeded,pieplots,pgf-pie}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Custom colours
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \definecolor{darkGreen}{rgb}{0,0.6,0}
 \definecolor{gray}{rgb}{0.5,0.5,0.5}
 \definecolor{mauve}{rgb}{0.58,0,0.82}
-\definecolor{green}{rgb}{0,1,0}
+\definecolor{brightGreen}{rgb}{0,1,0}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Source code formatting
@@ -164,27 +163,33 @@
 % Custom commands
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+%===============================================================================
 % To allow us to easily format a table row.
 % See: http://www.latex-community.org/forum/viewtopic.php?f=5&t=3293
+%===============================================================================
 \newcolumntype{+}{>{\global\let\currentrowstyle\relax}}
 \newcolumntype{^}{>{\currentrowstyle}}
 \newcommand\rowstyle[1]{\gdef\currentrowstyle{#1}#1\ignorespaces}
 
+%===============================================================================
 % A command to allow a \hline in a longtable, without affecting page breaks.
 % See: http://tex.stackexchange.com/questions/6350/how-to-disable-pagebreak-on-hline-in-longtable
+%-------------------------------------------------------------------------------
+% \nobreakhline
+%===============================================================================
 \makeatletter
 \def\nobreakhline{%
     \noalign{\ifnum0=`}\fi
-        \penalty\@M
-        \futurelet\@let@token\LT@@nobreakhline
-    }%
+    \penalty\@M
+    \futurelet\@let@token\LT@@nobreakhline
+}%
 \def\LT@@nobreakhline{%
     \ifx\@let@token\hline
         \global\let\@gtempa\@gobble
-        \gdef\LT@sep{\penalty\@M\vskip\doublerulesep}% <-- change here
+        \gdef\LT@sep{\penalty\@M\vskip\doublerulesep}%
     \else
         \global\let\@gtempa\@empty
-        \gdef\LT@sep{\penalty\@M\vskip-\arrayrulewidth}% <-- change here
+        \gdef\LT@sep{\penalty\@M\vskip-\arrayrulewidth}%
     \fi
     \ifnum0=`{\fi}%
     \multispan\LT@cols
@@ -197,33 +202,80 @@
 }
 \makeatother
 
+%===============================================================================
+% Format a table header row.
+%-------------------------------------------------------------------------------
 % \tableHeader{...}
+%===============================================================================
 \newcommand\tableHeader[1]{%
 	\hline\rowstyle{\bfseries}#1\\*\nobreakhline%
 }
 
+%===============================================================================
+% Create a blank page
+%-------------------------------------------------------------------------------
+% \blankpage
+%===============================================================================
+\newcommand{\blankpage}{%
+    \newpage
+    \thispagestyle{empty}%
+    \mbox{}%
+    \newpage
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Custom formatting commands
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%===============================================================================
+% Format the name of a command line command.
+%-------------------------------------------------------------------------------
 % \command{CMD}
+%===============================================================================
 \newcommand\command[1]{\lstinline`#1`}
 
+%===============================================================================
+% Format the name of a data set.
+%-------------------------------------------------------------------------------
 % \dataset{DATASET}
+%===============================================================================
 \newcommand\dataset[1]{`\escape{#1}'}
 
+%===============================================================================
+% Format a computer host name.
+%-------------------------------------------------------------------------------
 % \hostname{HOSTNAME}
+%===============================================================================
 \newcommand\hostname[1]{\emph{#1}}
 
-% \programmingLanguage{LANG}
-\newcommand\programmingLanguage[1]{\lstinline`#1`}
+%===============================================================================
+% Format the name of a programming language.
+%-------------------------------------------------------------------------------
+% \progLang{LANG}
+%===============================================================================
+\newcommand\progLang[1]{\lstinline`#1`}
 
+%===============================================================================
+% Format the name of a software package.
+%-------------------------------------------------------------------------------
 % \software{NAME}[CMD]
+%===============================================================================
 \NewDocumentCommand\software{om}{``#2'' \IfNoValueTF{#1}{}{(\command{#1})}}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Custom environments
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%===============================================================================
+% An environment for displaying the specifications of a host.
+%-------------------------------------------------------------------------------
 % \begin{specifications}
 % \specificationGroup{GROUP_NAME}
 % \specification{NAME}{VALUE}
 % \endspecificationGroup
 % \end{specifications}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%===============================================================================
 \makeatletter
 \NewDocumentEnvironment{specifications}{}{%
     \def\specifications@hline{}%
@@ -245,11 +297,11 @@
     }%
     %
     \def\specification@width{8cm}%
-    \begin{tabular}{|+>{\bfseries}l|^p{\specification@width}|}%
+    \begin{longtable}{|+>{\bfseries}l|^p{\specification@width}|}%
         \tableHeader{Item & Specification}%
 }{%
-        \\\hline%
-    \end{tabular}%
+        \\\hline
+    \end{longtable}%
 }
 \makeatother
 
@@ -261,6 +313,9 @@
 \makeatletter
 \NewDocumentEnvironment{datasetDescription}{m}{%
     \def\datasetDescription@hline{}%
+    \def\datasetDescription@width{8cm}%
+    \def\datasetDescription@minipage@width{0.4\textwidth}%
+    \def\datasetDescription@graphic@width{0.9\textwidth}%
     %
     \newcommand\datasetProperty[2]{%
         \gdef\datasetProperty@name{##1}%
@@ -270,34 +325,78 @@
         \def\datasetDescription@hline{\\}%
     }%
     %
-    \def\datasetDescription@width{8cm}%
     \begin{longtable}{|+>{\bfseries}l|^p{\datasetDescription@width}|}%
         \tableHeader{Property & Value}%
-        \datasetProperty{Identifier}{\escape{#1}}%
+        \datasetProperty{Identifier}{\dataset{#1}}%
 }{%
         \\\hline%
-    \end{longtable}%
+    \end{longtable}
     %
-    \begin{figure}[H]%
-        \centering%
-        %\graphicspath
-        \IfFileExists{../img/datasets/#1.png}{\includegraphics[width=0.5\textwidth]{datasets/#1}}{}%
-        \includegraphics[width=0.5\textwidth]{pca/#1}%
-        \caption{A \gls{PCA} plot for the \escape{#1} data set.}%
-        \label{dataSets:#1:pca}%
-    \end{figure}%
+    \IfFileExists{../img/datasets/#1.png}{%
+        \setcounter{subfigure}{0}%
+        \begin{figure}%
+            \centering
+            \minipage{\datasetDescription@minipage@width}%
+                \centering
+                \includegraphics[width=\datasetDescription@graphic@width]{datasets/#1}%
+                \captionsetup{type=subfigure,labelformat=parens,labelsep=space,skip=3pt,list=false}%
+                \captionof{subfigure}{Raw data plot}%
+                \label{datasets:#1:plots:plot}%
+            \endminipage
+            \quad
+            \minipage{\datasetDescription@minipage@width}%
+                \centering
+                \includegraphics[width=\datasetDescription@graphic@width]{pca/#1}%
+                \captionsetup{type=subfigure,labelformat=parens,labelsep=space,skip=3pt,list=false}%
+                \captionof{subfigure}{\Gls{PCA} plot}%
+                \label{datasets:#1:plot}%
+                \label{datasets:#1:plots:pca}%
+            \endminipage
+            %
+            \caption{Plots for the \dataset{#1} data set}%
+            \label{datasets:#1:plots}%
+        \end{figure}%
+    }{%
+        \begin{figure}%
+            \centering
+            \includegraphics[width=\textwidth]{pca/#1}%
+            \caption{A \gls{PCA} plot for the \dataset{#1} data set}%
+            \label{datasets:#1:plots}%
+        \end{figure}%
+    }%
 }
 \makeatother
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Create a blank page
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand{\blankpage}{%
-    \newpage%
-    \thispagestyle{empty}%
-    \mbox{}%
-    \newpage%
+%===============================================================================
+% An environment for displaying a brief description of all data sets.
+%-------------------------------------------------------------------------------
+% \begin{datasets}
+% \dataset{DATASET}{SIZE}{DIMENSIONALITY}
+% \end{datasets}
+%===============================================================================
+\makeatletter
+\NewDocumentEnvironment{datasets}{m}{%
+    \def\datasets@hline{}%
+    \def\datasets@width{8cm}%
+    \def\datasets@minipage@width{0.4\textwidth}%
+    \def\datasets@graphic@width{0.9\textwidth}%
+    %
+    \newcommand\dataSetBrief[3]{%
+        \gdef\dataset@name{##1}%
+        \gdef\dataset@size{##2}%
+        \gdef\dataset@dimensionality{##3}%
+        %
+        \datasets@hline\dataset@name&\dataset@size&\dataset@dimensionality%
+        \def\datasets@hline{\\}%
+    }%
+    %
+    \begin{longtable}{|+>{\bfseries}l|^c|^c|}%
+        \tableHeader{Name & Size ($M$) & Dimensionality ($N$)}%
+}{%
+        \\\hline
+    \end{longtable}%
 }
+\makeatother
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % More packages
@@ -308,7 +407,7 @@
 %
 % Note that this package must be almost last in the preamble. In particular, it
 % must appear *after* "float" and *before* "algorithm".
-\usepackage[breaklinks=true,hidelinks,\pdfmetadata]{hyperref}
+\usepackage[breaklinks,hidelinks,\pdfmetadata]{hyperref}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Graphics directory
@@ -325,9 +424,14 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Glossary
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\usepackage[toc,xindy]{glossaries} % note that hyperref must be loaded first
+\usepackage[acronym,toc,xindy]{glossaries} % note that hyperref must be loaded first
 \makeglossaries
 \input{acronym}
+
+% Show abbreviated acronyms in the table of contents.
+\usepackage{etoolbox}
+\pretocmd{\listoffigures}{\glslocalunsetall[acronym]}{}{}
+\apptocmd{\listoffigures}{\glslocalresetall[acronym]}{}{}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Bibliography
@@ -336,8 +440,9 @@
 \bibliography{thesis}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                               END OF PREAMBLE                                %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
-
 \pagestyle{empty} % suppress page numbers
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -368,7 +473,7 @@
                 \tikzstyle{every node}=[font=\large]
                 \coordinate (name-pos)          at (-5.4, -1.6);
                 \coordinate (sid-pos)           at (-5.4, -3.0);
-                \coordinate (date-pos)          at (-5.4, -5.8);
+                \coordinate (date-pos)          at (-5.4, -5.9);
                 \coordinate (uos-pos)           at (-7.4, -7.7);
                 \coordinate (assessment-pos)    at (-7.4, -9.8);
                 \node[anchor=west] (name)       at (name-pos)       {\studentName*{}};
@@ -407,12 +512,7 @@
 \pdfbookmark[1]{Publications}{publications}
 \chapter*{Publications}
 \label{publications}
-This Thesis is based on the following publications:
-\begin{enumerate}
-    \item \fullcite{Vries:2010}
-    \item \fullcite{Khoa:2012}
-    \item \fullcite{Bay:2003}
-\end{enumerate}
+\input{publications}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Abstract
@@ -455,6 +555,9 @@ This Thesis is based on the following publications:
 \pdfbookmark[1]{\listtablename}{lot}
 \listoftables
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Blank page to mark the start of the Thesis content.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \blankpage
 \pagenumbering{arabic}
 
@@ -515,6 +618,13 @@ This Thesis is based on the following publications:
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Bibliography
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Allow URLs to break at numbers, uppercase characters and lowercase characters,
+% with different penalties.
+\defcounter{biburlnumpenalty}{3000}
+\defcounter{biburlucpenalty}{6000}
+\defcounter{biburllcpenalty}{9000}
+
+% Add everything to the bibliography, even if it wasn't cited.
 \nocite{*}
 \printbibliography
 

@@ -29,7 +29,7 @@ sub date_position($) {
     my $month;
     my $day;
     ($dummy,$dummy,$dummy,$day,$month,$dummy,$dummy) = strptime($_[0]);
-    
+
     my $width = ($month - $start_month) * $divisions;
     $width = $width + (($day - 1) / days_in_month($month));
     $width = START_INDEX + $width;
@@ -68,12 +68,12 @@ A Gantt chart showing the anticipated schedule for the project is shown in
 END
 
 # TASKS
-for my $task (@{$data->{task}}) {   
+for my $task (@{$data->{task}}) {
     my $start  = date_position($task->{start});
     my $end    = date_position($task->{end});
     my $length = $end - $start;
     print OUTPUT "\\ganttbar[name=$task->{id}]{$task->{name}}{$start}{$length} \\ganttnewline\n";
-    
+
     if (ref($task->{dependency}) eq 'ARRAY') {
         for my $dep (@{$task->{dependency}}) {
             print OUTPUT "\\ganttlink{$dep->{id}}{$task->{id}}\n";
@@ -84,10 +84,10 @@ for my $task (@{$data->{task}}) {
 }
 
 # MILESTONES
-for my $milestone (@{$data->{milestone}}) {    
+for my $milestone (@{$data->{milestone}}) {
     my $position = date_position($milestone->{date});
     print OUTPUT "\\ganttmilestone[name=$milestone->{id}]{$milestone->{name}}{$position} \\ganttnewline\n";
-    
+
     if (ref($milestone->{dependency}) eq 'ARRAY') {
         for my $dep (@{$milestone->{dependency}}) {
             print OUTPUT "\\ganttlink{$dep->{id}}{$milestone->{id}}\n";

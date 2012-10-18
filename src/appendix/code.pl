@@ -36,7 +36,7 @@ open(OUTPUT, ">$output_file") || die("Cannot open output file: $output_file");
 foreach my $source_file (@source_files) {
     my $source_file = catfile(SOURCE_DIR, $source_file);
     (-f $source_file) || die("Source file not found: $source_file");
-    
+
     if (basename($0) =~ m/code-c.tex.pl/) {
         print OUTPUT "\\lstset{language=C}\n";
     } elsif (basename($0) =~ m/code-matlab.tex.pl/) {
@@ -45,7 +45,7 @@ foreach my $source_file (@source_files) {
         die("No action to take for script: ${\(basename($0))}");
     }
     print OUTPUT "\\begin{lstlisting}[basicstyle=\\tiny\\ttfamily]\n";
-    
+
     # Concatenate file contents
     open(FILE, "<$source_file");
     {
@@ -54,7 +54,7 @@ foreach my $source_file (@source_files) {
         print OUTPUT <FILE>;
     }
     close(FILE);
-    
+
     print OUTPUT "\\end{lstlisting}\n";
 }
 

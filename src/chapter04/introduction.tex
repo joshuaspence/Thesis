@@ -1,9 +1,9 @@
 In this chapter, I recount the design process that was adopted in order to
 transform the anomaly detection using commute time algorithm into a hardware
 design. Specifically, this chapter analyses software implementations of the
-algorithm (in both \programmingLanguage{MATLAB} and \programmingLanguage{C}), in
-order to identify performance bottlenecks that the algorithm faces on a typical
-microprocess-based system.
+algorithm (in both \progLang{MATLAB} and \progLang{C}), in order to identify
+performance bottlenecks that the algorithm faces on a typical microprocess-based
+system.
 
 Essentially, this chapter details a range of tests that were performed at
 various stages along the development process in order to evaluate and compare
@@ -17,22 +17,22 @@ the performance of several variations of the basic algorithm implementation.
 The base implementation of the anomaly detection using commute time algorithm,
 on which much of the research of this Thesis is based, was generously provided
 by \citeauthor{Khoa:2012}. \citeauthor{Khoa:2012} had designed a
-\programmingLanguage{MATLAB} implementation of the algorithm as a part of his
-research for \fullcite{Khoa:2012} \cite{Khoa:2012}.
+\progLang{MATLAB} implementation of the algorithm as a part of his research for
+\fullcite{Khoa:2012} \cite{Khoa:2012}.
 
-This \programmingLanguage{MATLAB} code formed the foundation on which all
-successive code of this Thesis eventuates. The design flow that was adopted for
-the development process is as follows:
+This \progLang{MATLAB} code formed the foundation on which all successive code
+of this Thesis eventuates. The design flow that was adopted for the development
+process is as follows:
 \begin{enumerate}
-    \item \programmingLanguage{MATLAB} $\longrightarrow$
-        \programmingLanguage{MATLAB}+\programmingLanguage{C} (using
-        \programmingLanguage{MEX} files).
-    \item \programmingLanguage{MATLAB}+\programmingLanguage{C} $\longrightarrow$
-        Pure \programmingLanguage{C}.
-    \item Pure \programmingLanguage{C} $\longrightarrow$ Pure
-        \programmingLanguage{C} with \software{AutoESL} directives for \gls{HDL}
+    \item \progLang{MATLAB} $\longrightarrow$
+        \progLang{MATLAB}+\progLang{C} (using
+        \progLang{MEX} files).
+    \item \progLang{MATLAB}+\progLang{C} $\longrightarrow$
+        Pure \progLang{C}.
+    \item Pure \progLang{C} $\longrightarrow$ Pure
+        \progLang{C} with \software{AutoESL} directives for \gls{HDL}
         synthesis.
-    \item  Pure \programmingLanguage{C} with \software{AutoESL} directives
+    \item  Pure \progLang{C} with \software{AutoESL} directives
         $\longrightarrow$ pcore.
     % TODO
 \end{enumerate}
