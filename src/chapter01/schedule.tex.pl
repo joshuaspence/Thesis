@@ -101,7 +101,7 @@ for my $milestone (@{$data->{milestone}}) {
 print OUTPUT <<END;
         \\end{ganttchart}
     }
-    \\caption{Schedule for Thesis work}
+    \\caption{Schedule for \thesis{} work}
     \\label{ganttChart}
 \\end{figure}
 END

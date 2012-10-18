@@ -7,11 +7,11 @@
 \gls{HLS} is a process of converting a program that was written in a
 higher-level language (such as \progLang{C}, \progLang{C++} or
 \progLang{SystemC}) into an \gls{RTL} implementation for use with an \gls{FPGA}.
-In particular, the \gls{HLS} tool \software{AutoESL} was used for this Thesis.
-When synthesising an \gls{RTL} implementation, there are two competing design
-goals that could be targeted. The first is to create a design with the smallest
-area; the second is a design with the highest throughput. Each design goal may
-have a bit emphasis depending on the nature of the application.
+In particular, the \gls{HLS} tool \software{AutoESL} was used for this
+\thesis{}. When synthesising an \gls{RTL} implementation, there are two
+competing design goals that could be targeted. The first is to create a design
+with the smallest area; the second is a design with the highest throughput. Each
+design goal may have a bit emphasis depending on the nature of the application.
 
 The key advantage of \gls{HLS} tools is that development time for a high-level
 programming language is much smaller than development time for a \gls{RTL}
@@ -274,7 +274,7 @@ Arbitrary precision types
 \label{hls:directives}
 \nocite{Xilinx:ReferenceGuide}
 \software{AutoESL} uses directives (set using either a command in a
-\progLang{tcl} script or using the \command{#pragma} preprocessor directive) to
+\progLang{tcl} script or using the \command{\#pragma} preprocessor directive) to
 specify specific \gls{RTL} implementation details or optimizations that should
 be applied to the source code. In this section, some of the more important
 directives will be described.

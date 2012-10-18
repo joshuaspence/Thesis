@@ -228,11 +228,14 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %===============================================================================
-% Format the name of a command line command.
+% Format the name of a command line command. Also allows words to be broken over
+% multiple lines
+%
+% See: http://jevopi.blogspot.com.au/2010/04/latex-lstinline-and-hyphenations.html
 %-------------------------------------------------------------------------------
 % \command{CMD}
 %===============================================================================
-\newcommand\command[1]{\lstinline`#1`}
+\newcommand\command[1]{\lstinline[breaklines,literate={\_}{}{0\discretionary{\_}{}{\_}}]`#1`}
 
 %===============================================================================
 % Format the name of a data set.
@@ -382,11 +385,11 @@
     \def\datasets@graphic@width{0.9\textwidth}%
     %
     \newcommand\dataSetBrief[3]{%
-        \gdef\dataset@name{##1}%
-        \gdef\dataset@size{##2}%
-        \gdef\dataset@dimensionality{##3}%
+        \gdef\dataSetBrief@name{##1}%
+        \gdef\dataSetBrief@size{##2}%
+        \gdef\dataSetBrief@dimensionality{##3}%
         %
-        \datasets@hline\dataset@name&\dataset@size&\dataset@dimensionality%
+        \datasets@hline\dataSetBrief@name&\dataSetBrief@size&\dataSetBrief@dimensionality%
         \def\datasets@hline{\\}%
     }%
     %
@@ -426,7 +429,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage[acronym,toc,xindy]{glossaries} % note that hyperref must be loaded first
 \makeglossaries
-\input{acronym}
+\loadglsentries{acronym}
 
 % Show abbreviated acronyms in the table of contents.
 \usepackage{etoolbox}

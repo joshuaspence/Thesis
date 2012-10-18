@@ -4,6 +4,7 @@
 \usepackage{definevariable} % for \defineVariable
 \usepackage{persons} % for \definePerson, \getPerson, \formatPerson
 
+\defineVariable\thesis{}{Thesis}
 \defineVariable\thesisTitle{\textsc}{Implementation of Random Projection Algorithms Using an FPGA}
 \defineVariable\thesisDate{}{2012}
 \defineVariable\studentName{\formatPerson}{\getPerson*{Spence}}
@@ -13,7 +14,7 @@
 \defineVariable\schoolName{}{School of Electrical Engineering}
 \defineVariable\studentID{}{308216350}
 \defineVariable\universityName{}{The University of Sydney}
-\defineVariable\uosAssessment{}{Thesis}
+\defineVariable\uosAssessment{}{\thesis}
 \defineVariable\uosCode{}{ELEC4712/ELEC4713}
 
 \urldef{\gitRepoHTTP}\url{https://github.com/joshuaspence/ThesisCode.git}
@@ -35,3 +36,7 @@
     pdfkeywords={commute time,anomaly detection,FPGA},
     pdfdisplaydoctitle={true}
 }
+
+% Copyrights and trademarks
+\newcommand\IntelXeon{Intel\textsuperscript{\textregistered} Xeon\textsuperscript{\textregistered}}
+\newcommand\IntelCoreiSeven{Intel\textsuperscript{\textregistered} Core\textsuperscript{\texttrademark} i7}
