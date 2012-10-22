@@ -1,0 +1,1 @@
+../../plots/block_size/generate_all.sh
