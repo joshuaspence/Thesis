@@ -20,7 +20,7 @@
 % Pretty much all of the ams maths packages.
 \usepackage{amsmath,amsthm,amssymb,amsfonts}
 
-% Allows inclusion of graphics easily and configurably.
+% Allows inclusion of graphics easily and "configurably".
 \usepackage{graphicx}
 
 % Typesets URLs sensibly --- with a TrueType font, hyperlinked in PDFs, and not
@@ -226,6 +226,13 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Custom formatting commands
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%===============================================================================
+% Format the name of an algorithm.
+%-------------------------------------------------------------------------------
+% \algm{}
+%===============================================================================
+\newcommand\algm[1]{\emph{#1}}
 
 %===============================================================================
 % Format the name of a command line command. Also allows words to be broken over
@@ -488,15 +495,15 @@
         }
     ]{../forms/compliance_sheet}
 
-\begin{comment}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Statement of Achievement
+% NOTE: This is located in {chapter01/contributions}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \clearpage
 \pdfbookmark[1]{Statement of Achievement}{statement-of-achievement}
 \chapter*{Statement of Achievement}
 \label{statement-of-achievement}
-% This is located in {chapter01/contributions}
+\input{chapter01/contributions}
 \end{comment}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -593,7 +600,7 @@
 \include{chapter04/main}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% CHAPTER 05: Hardware Design and Implementation
+% CHAPTER 05: Hardware Design and Implementationtion
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Hardware Design and Implementation}
 \label{hardware}
@@ -621,8 +628,9 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Bibliography
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Allow URLs to break at numbers, uppercase characters and lowercase characters,
-% with different penalties.
+
+% Allow URLs to break at numbers, upper-case characters and lower-case
+% characters, with different penalties.
 \defcounter{biburlnumpenalty}{3000}
 \defcounter{biburlucpenalty}{6000}
 \defcounter{biburllcpenalty}{9000}

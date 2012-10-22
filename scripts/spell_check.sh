@@ -20,7 +20,7 @@ for FILE in $(find "$DOC_ROOT" -type f \( -name "*.tex" -o -name "*.bib" \)); do
     if [[ -f "$FILE.sh" || -f "$FILE.pl" || -f "$FILE.py" ]]; then
         continue
     fi
-    
+
     # Run the spell checker
     echo "Spell checking '$FILE'..."
     aspell \

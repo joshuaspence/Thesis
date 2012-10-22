@@ -35,7 +35,7 @@ while (<STDIN>) {
         $in_header = 0;
         next;
     }
-    
+
     # Parse CSV
     if ($csv->parse($_)) {
         my @columns = $csv->fields();

@@ -15,4 +15,4 @@
 DOC_ROOT="$(dirname $0)/../src"
 #-------------------------------------------------------------------------------
 
-grep --recursive --line-number --color=auto --include="*.tex" "%.*TODO" "$DOC_ROOT"
+grep --recursive --line-number --color=auto --include="*.tex" --include="*.sty" --include="*.bib" "%.*TODO" "$DOC_ROOT"

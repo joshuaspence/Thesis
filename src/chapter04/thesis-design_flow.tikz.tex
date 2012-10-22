@@ -1,0 +1,21 @@
+\begin{tikzpicture}[
+        >=latex,
+        block/.style = {rectangle, draw, text width = 5em, text centered, rounded corners, minimum height = 4em},
+        arrow/.style = {draw, -latex'},
+        node distance = 3cm,
+        auto]
+    % Place nodes
+    \node [block]                   (matlab)    {\software{MATLAB}};
+    \node [block, below of=matlab]  (mex)       {\progLang{MEX}};
+    \node [block, below of=mex]     (cpp)       {\progLang{C/C++}};
+    \node [block, below of=cpp]     (autoesl)   {\software{AutoESL}};
+    \node [block, below of=autoesl] (pcore)     {pcore};
+    \node [block, below of=pcore]   (bitstream) {bitstream};
+
+    % Edges
+    \path [arrow] (matlab.south)  -| (mex.north);
+    \path [arrow] (mex.south)     -| (cpp.north);
+    \path [arrow] (cpp.south)     -| (autoesl.north);
+    \path [arrow] (autoesl.south) -| (pcore.north);
+    \path [arrow] (pcore.south)   -| (bitstream.north);
+\end{tikzpicture}

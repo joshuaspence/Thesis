@@ -21,7 +21,7 @@
     <task id="task10" name="Testing and debugging" start="2012-09-10" end="2012-09-21"/>
     <task id="task11" name="Performance benchmarking" start="2012-09-17" end="2012-09-28"/>
     <task id="task12" name="Review" start="2012-08-24" end="2012-10-19"/>
-    
+
     <milestone id="milestone1" name="Topic Proposal Due" date="2012-04-20"/>
     <milestone id="milestone2" name="Progress Report" date="2012-06-01">
         <dependency id="milestone1"/>

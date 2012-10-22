@@ -2,7 +2,7 @@
 
 ################################################################################
 #
-# Script to remove comments from C/C++ source code, as well as make various 
+# Script to remove comments from C/C++ source code, as well as make various
 # other modifications to improve the readability of the code.
 #
 # Usage:
