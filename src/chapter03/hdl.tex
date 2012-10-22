@@ -8,6 +8,22 @@
 \subsubsection{Introduction}
 \label{vhdl:introduction}
 % TODO
+Modern \gls{FPGA} devices can many circuit elements, often comprising hundreds
+of \glspl{LUT}, hundreds of embedded memories and hundreds of multipliers.
+Programming these elements individually would be an intractable task for the
+designer, and so instead it is common for the designer to describe the design in
+terms of logical expressions, and then allowing for synthesis and layout tools
+to program the individual \gls{FPGA} elements \cite{Hauck:2003}.
+
+\gls{RTL} is a popular discipline for describing an \gls{FPGA}'s logical
+expressions, allowing the design to describe the logic between each pair of
+register stages \cite{Hauck:2003}. \gls{VHDL} is a popular programming language
+that supports \gls{RTL} hardware descriptions. Verilog (IEEE 1364) is another
+popular hardware descriptive programming language that offers similar
+functionality to \gls{VHDL}. \gls{VHDL} and Verilog differ mainly in syntax ---
+\gls{VHDL} is derived from Ada, whereas Verilog is derived from C. However, both
+languages are \gls{IEEE} standards and are periodically reviewed to ensure that
+they comply to industry expectations.
 
 % Structural Description
 \subsubsection{Structural Description}
