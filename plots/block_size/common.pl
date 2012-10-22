@@ -7,13 +7,13 @@ use Cwd qw(abs_path);
 use File::Basename qw(basename dirname);
 use File::Spec::Functions qw(catdir catfile devnull updir);
 
-use lib catdir(dirname($0), updir(), updir(), updir(), 'scripts');
+use lib catdir(dirname($0), updir(), updir(), 'scripts');
 require 'util.pl';
 
 #===============================================================================
 # Configuration
 #===============================================================================
-use constant DATA_FILE             => catfile(updir(), updir(), updir(), 'data', 'profiling', 'block_size.csv');
+use constant DATA_FILE             => catfile(updir(), updir(), 'data', 'profiling', 'block_size.csv');
 use constant NO_BLOCKING_BLOCKSIZE => 0;
 
 use constant COL_DATASET           => 0;
@@ -75,7 +75,7 @@ close(DATA);
 open(GNUPLOT, "| gnuplot >${\(devnull())}");
 print GNUPLOT <<END_OF_GNUPLOT;
 reset
-set terminal tikz color size 10cm, 10cm
+set terminal tikz latex size 10cm, 10cm
 set datafile separator ','
 
 # Define axis
@@ -210,7 +210,7 @@ if ($loop_over =~ m/dataset/) {
 use strict; \\
 use warnings; \\
 \\
-use lib '${\(catdir(dirname($0), updir(), updir(), updir(), 'scripts'))}'; \\
+use lib '${\(catdir(dirname($0), updir(), updir(), 'scripts'))}'; \\
 require 'util.pl'; \\
 \\
 open(FILE, '<${\(catdir(dirname($0), DATA_FILE))}'); \\
@@ -254,7 +254,7 @@ END_OF_GNUPLOT
 use strict; \\
 use warnings; \\
 \\
-use lib '${\(catdir(dirname($0), updir(), updir(), updir(), 'scripts'))}'; \\
+use lib '${\(catdir(dirname($0), updir(), updir(), 'scripts'))}'; \\
 require 'util.pl'; \\
 \\
 open(FILE, '<${\(catfile(dirname($0), DATA_FILE))}'); \\
