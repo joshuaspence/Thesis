@@ -10,7 +10,7 @@ eigenvalues, as well as some of their basic properties.
 A vector $\mathbf{v}$ is an eigenvector of a matrix $M$ of eigenvalue $\lambda$
 if:
 \begin{equation}
-M\mathbf{v} = \lambda\textbf{v}
+    M\mathbf{v} = \lambda\textbf{v}
 \end{equation}
 
 If $\mathbf{v_1}$ is an eigenvector of $M$ of eigenvalue $\lambda_1$,
@@ -19,24 +19,24 @@ and $M$ is symmetric, then $\mathbf{v_1}$ is orthogonal to $\mathbf{v_2}$.
 
 For a symmetric matrix $M$, the multiplicity of an eigenvalue $\lambda$ is the
 dimension of the space of eigenvectors of eigenvalue $\lambda$. Also recall that
-every $n\times n$ symmetric matrix has $n$ eigenvalues, counted with
+every $n \times n$ symmetric matrix has $n$ eigenvalues, counted with
 multiplicity. Thus, it has an orthonormal basis of eigenvectors,
 $\begin{Bmatrix} \mathbf{v_1} & \ldots & \mathbf{v_n} \end{Bmatrix}$ with
 eigenvalues $\lambda_1\leq\lambda_2\leq\ldots\leq\lambda_3$ so that:
 \begin{equation}
-M\mathbf{v_i} = \lambda_i \mathbf{v_i} \quad \forall i
+    M\mathbf{v_i} = \lambda_i \mathbf{v_i} \quad \forall i
 \end{equation}
 
 If we let $V$ be the matrix whose $i$th column is $v_i$ and $\Lambda$ be the
 diagonal matrix whose $i$th diagonal is $\lambda_i$, we can write this more
 compactly as:
 \begin{equation}
-MV = V\Lambda
+    MV = V\Lambda
 \end{equation}
 
 Multiplying by $V^T$ on the right, we obtain the eigen-decomposition of $M$:
 \begin{equation}
-M = MVV^T = V{\Lambda}V^T = \sum_i \lambda_i\mathbf{v_i}\mathbf{v_i^T}
+    M = MVV^T = V{\Lambda}V^T = \sum_i \lambda_i \mathbf{v_i} \mathbf{v_i^T}
 \end{equation}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -59,31 +59,31 @@ where $\Re^+$ denotes the set of positive real numbers.
 The adjacency matrix of a weighted graph $G$ is be denoted $A_G$, and is given
 by:
 \begin{equation}
-A_{G}(i,j) :=
-    \left\{
-        \begin{array}{ll}
-            \mathit{w}(i,j) &   \quad \text{if $(i,j) \in E$}\\
-            0 &                 \quad \text{otherwise}
-        \end{array}
-    \right.
+    A_{G}(i,j) :=
+        \left\{
+            \begin{array}{ll}
+                \mathit{w}(i,j) &   \quad \text{if $(i,j) \in E$}\\
+                0 &                 \quad \text{otherwise}
+            \end{array}
+        \right.
 \end{equation}
 
 The degree matrix of a weighted graph $G$, denoted $D_G$, is the diagonal matrix
 such that:
 \begin{equation}
-D_G(i,i) = \sum_j A_G(i,j)
+    D_G(i,i) = \sum_j A_G(i,j)
 \end{equation}
 
 A Laplacian Matrix is a matrix representation of a graph, defined by the
 equation:
 \begin{equation}
-L_G = D_G - A_G
+    L_G = D_G - A_G
 \end{equation}
 
 For a vector $\textbf{x} \in \Re^V$, the Laplacian quadratic form of $G$ is:
 \begin{equation}
-\label{laplacianQuadraticForm}
-\textbf{x}^T L \textbf{x} = \sum_{(u,v) \in E} w_{u,v}(\textbf{x}(u) - \textbf{x}(v))^2
+    \label{laplacianQuadraticForm}
+    \textbf{x}^T L \textbf{x} = \sum_{(u,v) \in E} w_{u,v}(\textbf{x}(u) - \textbf{x}(v))^2
 \end{equation}
 
 From \autoref{laplacianQuadraticForm}, it can be seen that $L$ provides a
@@ -95,13 +95,13 @@ instead of the Laplacian \cite{Spielman:2010}. The normalized Laplacian is given
 by $D^{-1/2}LD^{-1/2}$ and is more closely related to the behaviour of random
 walks.
 
-Now, let $G_{1,2}$ be a graph on two vertices with a single edge of weight $1$.
+Now, let $G_{1,2}$ be a graph on two vertices with a single edge of weight 1.
 \begin{equation}
-L_{G_{1,2}} :=
-    \begin{bmatrix}
-        1 & -1\\
-        -1 & 1
-    \end{bmatrix}
+    L_{G_{1,2}} :=
+        \begin{bmatrix}
+            1 & -1\\
+            -1 & 1
+        \end{bmatrix}
 \end{equation}
 
 For the graph with $n$ vertices and just one edge between vertices $u$ and $v$,
@@ -119,51 +119,52 @@ course:
 
 For a weighted graph $G = (V,E,w)$, we define:
 \begin{equation}
-L_G := \sum_{(u,v) \in E} w(u,v)L_{G_{u,v}}
+    L_G := \sum_{(u,v) \in E} w(u,v)L_{G_{u,v}}
 \end{equation}
 
 % Properties
 \subsubsection{Properties}
 \label{laplacianMatrices:properties}
 Laplacian matrices of graphs are symmetric, have zero row-sums, and have
-nonpositive off-diagonal entries. We call any matrix that satisfies these
+non-positive off-diagonal entries. We call any matrix that satisfies these
 properties a Laplacian matrix, as there always exists some graph for which it is
 the Laplacian \cite{Spielman:2010}.
 
-For a graph $G$ and its Laplacian Matrix $L$ with eigenvalues $\lambda_0<
-\lambda_1<\ldots<\lambda_{n-1}$:
+For a graph $G$ and its Laplacian Matrix $L$ with eigenvalues
+$\lambda_0<\lambda_1<\ldots<\lambda_{n-1}$:
 
 \begin{itemize}
-\item $L$ is a symmetric matrix. This means the eigenvalues of $L$ are real, and
-its eigenvectors are real and orthogonal.
-\item $L$ is always positive-semidefinite ($\forall i,\lambda_i\geq 0;
-\lambda_0=0$).
-\item Let $G=(V,E)$ be a graph, and let $0=\lambda_1\leq\lambda_2\leq\ldots\leq
-\lambda_n$ be the eigenvalues of its Laplacian Matrix. Then, $\lambda_2>0$ if
-and only if $G$ is connected.
-\item The number of times $0$ appears as an eigenvalue in the Laplacian Matrix
-is the number of connected components in the graph.
-\item $\lambda_0$ is always $0$ because every Laplacian Matrix has an
-eigenvector of $\begin{bmatrix} 1 & 1 & \ldots & 1 \end{bmatrix}$ that, for each
-row, adds the corresponding node's degree to a ``-1'' for each neighbour,
-thereby producing zero by definition.
-\item The smallest non-zero eigenvalue of $L$ is called the spectral gap.
-\item If we arbitrarily assign an orientation to the edges in $G$ and label each
-edge, then we can define the vertex edge incidence matrix $Q$ by:
-\begin{equation}
-Q_{ij} :=
-    \left\{
-        \begin{array}{ll}
-            1 &     \quad \text{if $e_j$ starts from $i$}\\
-            -1 &    \quad \text{if $e_j$ ends at $i$}\\
-            0 &     \quad \text{otherwise}
-        \end{array}
-    \right.
-\end{equation}
-Then the Laplacian Matrix $L$ satisfies $L = Q^TQ$, regardless of the
-orientation of the edges.
-\item The second smallest eigenvalue of $L$ ($\lambda_2$) is the algebraic
-connectivity of $G$. $\lambda_2>0$ if and only if $G$ is connected.
+    \item $L$ is a symmetric matrix. This means the eigenvalues of $L$ are real,
+        and its eigenvectors are real and orthogonal.
+    \item $L$ is always positive-semidefinite
+        ($\forall i,\lambda_i\geq 0;\lambda_0 = 0$).
+    \item Let $G=(V,E)$ be a graph, and let
+        $0=\lambda_1\leq\lambda_2\leq\ldots\leq\lambda_n$ be the eigenvalues of
+        its Laplacian Matrix. Then, $\lambda_2>0$ if and only if $G$ is
+        connected.
+    \item The number of times 0 appears as an eigenvalue in the Laplacian matrix
+        is the number of connected components in the graph.
+    \item $\lambda_0$ is always 0 because every Laplacian matrix has an
+        eigenvector of $\begin{bmatrix} 1 & 1 & \ldots & 1 \end{bmatrix}$ that,
+        for each row, adds the corresponding node's degree to a ``-1'' for each
+        neighbour, thereby producing zero by definition.
+    \item The smallest non-zero eigenvalue of $L$ is called the spectral gap.
+    \item If we arbitrarily assign an orientation to the edges in $G$ and label
+        each edge, then we can define the vertex edge incidence matrix $Q$ by:
+        \begin{equation}
+            Q_{ij} :=
+                \left\{
+                    \begin{array}{ll}
+                        1 &     \quad \text{if $e_j$ starts from $i$}\\
+                        -1 &    \quad \text{if $e_j$ ends at $i$}\\
+                        0 &     \quad \text{otherwise}
+                    \end{array}
+                \right.
+        \end{equation}
+        Then the Laplacian Matrix $L$ satisfies $L = Q^TQ$, regardless of the
+        orientation of the edges.
+    \item The second smallest eigenvalue of $L$ ($\lambda_2$) is the algebraic
+    connectivity of $G$. $\lambda_2>0$ if and only if $G$ is connected.
 \end{itemize}
 
 % Applications
@@ -179,7 +180,7 @@ If $\textbf{p} \in \Re^V$ denotes the vector of potentials and $\textbf{i}_{ext}
 \in \Re^V$ the vectors of currents entering and leaving vertices, then these
 satisfy the relation:
 \begin{equation}
-L\textbf{p} = \textbf{i}_{ext}
+    L\textbf{p} = \textbf{i}_{ext}
 \end{equation}
 
 This equation can be exploited to compute the effective resistance between
@@ -188,14 +189,14 @@ vertices $u$ and $v$ is the difference in potential one must impose between $u$
 and $v$ to flow one unit of current from $u$ to $v$. To measure this, we compute
 the vector $\textbf{p}$ for which $L\textbf{p} = \textbf{i}_{ext}$, where:
 \begin{equation}
-\textbf{i}_{ext}(x) =
-    \left\{
-        \begin{array}{ll}
-            1 &     \quad \text{for $x=u$}\\
-            -1 &    \quad \text{for $x=v$}\\
-            0 &     \quad \text{otherwise}
-        \end{array}
-    \right.
+    \textbf{i}_{ext}(x) =
+        \left\{
+            \begin{array}{ll}
+                1 &     \quad \text{for $x=u$}\\
+                -1 &    \quad \text{for $x=v$}\\
+                0 &     \quad \text{otherwise}
+            \end{array}
+        \right.
 \end{equation}
 
 We then measure the difference between $\textbf{p}(u)$ and $\textbf{p}$(v).

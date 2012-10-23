@@ -434,14 +434,14 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Glossary
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\usepackage[toc,xindy]{glossaries} % note that hyperref must be loaded first
+\usepackage[acronym,toc,xindy]{glossaries} % note that hyperref must be loaded first
 \makeglossaries
 \loadglsentries{acronym}
 
 % Show abbreviated acronyms in the table of contents.
 \usepackage{etoolbox}
-%\pretocmd{\listoffigures}{\glslocalunsetall[acronym]}{}{}
-%\apptocmd{\listoffigures}{\glslocalresetall[acronym]}{}{}
+\pretocmd{\listoffigures}{\glslocalunsetall[acronym]}{}{}
+\apptocmd{\listoffigures}{\glslocalresetall[acronym]}{}{}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Bibliography
