@@ -26,7 +26,7 @@
 \SetKwFunction{Top}{top}
 
 \Begin{
-    $\Cutoff \leftarrow 0$\tcp*[l]{set the cutoff for pruning to $0$}
+    \Cutoff $\leftarrow$ 0\tcp*[l]{set the cutoff for pruning to $0$}
     %$\Outliers \leftarrow \emptyset$\;\tcp*[l]{initialize to the empty set}
     \BlankLine
     \While(\tcp*[h]{load a block of examples from \Data}){$\Block \leftarrow \GetNextBlock{\Data}$}{
@@ -46,7 +46,7 @@
         }
         \BlankLine
         %$\Outliers \leftarrow \Top{\Block \cup \Outliers, \NumN}$\;
-        $\Cutoff \leftarrow \Min_{\OutlierIterator \in \Outliers}(\Score(\OutlierIterator))$\;\tcp*[l]{the cutoff is the score of the weakest outlier}
+        $\Cutoff \leftarrow \Min_{\OutlierIterator \in \Outliers}(\Score(\OutlierIterator))$\tcp*[l]{the cutoff is the score of the weakest outlier}
     }
     \KwRet{\Outliers}\;
 }

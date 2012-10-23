@@ -1,7 +1,7 @@
 In this chapter, I recount the design process that was adopted in order to
-transform the anomaly detection using commute time algorithm into a hardware
-design. Specifically, this chapter analyses software implementations of the
-algorithm (in both \progLang{MATLAB} and \progLang{C}), in order to identify
+transform the \algm{anomaly detection using commute time} algorithm into a
+hardware design. Specifically, this chapter analyses software implementations of
+the algorithm (in both \progLang{MATLAB} and \progLang{C}), in order to identify
 performance bottlenecks that the algorithm faces on a typical
 microprocessor-based system.
 
@@ -15,11 +15,11 @@ implementation.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Base Implementation and Design Flow}
 \label{software:baseImplementation}
-The base implementation of the anomaly detection using commute time algorithm,
-on which much of the research of this \thesis{} is based, was generously
-provided by \citeauthor{Khoa:2012}. \citeauthor{Khoa:2012} had designed a
+The base implementation of the \algm{anomaly detection using commute time}
+algorithm, on which much of the research of this \thesis{} is based, was
+generously provided by \getPerson{Khoa}. \citeauthor{Khoa:2012} had designed a
 \progLang{MATLAB} implementation of the algorithm as a part of his research for
-\fullcite{Khoa:2012} \cite{Khoa:2012}.
+\citetitle{Khoa:2012} \cite{Khoa:2012}.
 
 This \progLang{MATLAB} code formed the foundation on which all successive code
 of this \thesis{} eventuates. The design flow that was adopted for the
@@ -40,7 +40,8 @@ development process is illustrated in \autoref{thesis:designFlow}.
 A total of 21 data sets were used for testing, profiling and benchmarking the
 commute distance using anomaly detection algorithm. A brief description of each
 data set is provided in \autoref{dataSets:brief}. These data sets are
-described in detail in \autoref{dataSets}. Further information
+described in detail in \autoref{dataSets}. Further information regarding the
+data sets can be found in \autoref{dataSets}.
 
 \begin{table}
     \centering

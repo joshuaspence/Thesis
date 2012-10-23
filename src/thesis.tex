@@ -208,7 +208,7 @@
 % \tableHeader{...}
 %===============================================================================
 \newcommand\tableHeader[1]{%
-	\hline\rowstyle{\bfseries}#1\\*\nobreakhline%
+	\hline\rowstyle{\bfseries}#1\tabularnewline*\nobreakhline\endfirsthead%
 }
 
 %===============================================================================
@@ -270,7 +270,7 @@
 %-------------------------------------------------------------------------------
 % \software{NAME}[CMD]
 %===============================================================================
-\NewDocumentCommand\software{om}{``#2'' \IfNoValueTF{#1}{}{(\command{#1})}}
+\NewDocumentCommand\software{om}{``#2''\IfNoValueTF{#1}{}{\space(\command{#1})}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Custom environments
@@ -385,7 +385,7 @@
 % \end{datasets}
 %===============================================================================
 \makeatletter
-\NewDocumentEnvironment{datasets}{m}{%
+\NewDocumentEnvironment{datasets}{}{%
     \def\datasets@hline{}%
     \def\datasets@width{8cm}%
     \def\datasets@minipage@width{0.4\textwidth}%
@@ -396,14 +396,14 @@
         \gdef\dataSetBrief@size{##2}%
         \gdef\dataSetBrief@dimensionality{##3}%
         %
-        \datasets@hline\dataSetBrief@name&\dataSetBrief@size&\dataSetBrief@dimensionality%
-        \def\datasets@hline{\\}%
+        \datasets@hline\dataSetBrief@name&\dataSetBrief@size&\dataSetBrief@dimensionality
+        \def\datasets@hline{\tabularnewline}%
     }%
     %
     \begin{longtable}{|+>{\bfseries}l|^c|^c|}%
         \tableHeader{Name & Size ($M$) & Dimensionality ($N$)}%
 }{%
-        \\\hline
+        \tabularnewline\hline
     \end{longtable}%
 }
 \makeatother
