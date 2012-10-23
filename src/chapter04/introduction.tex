@@ -5,6 +5,15 @@ the algorithm (in both \progLang{MATLAB} and \progLang{C}), in order to identify
 performance bottlenecks that the algorithm faces on a typical
 microprocessor-based system.
 
+In order to choose which step of the outlier detection algorithm would be best
+suited for implementation on \gls{FPGA}-based hardware, it was first necessary
+to \emph{profile} the execution of the algorithm under various test cases. This
+task was performed using \software{MATLAB} with the source code listed in
+\autoref{sourceCode:matlab}. Using \software{MATLAB}'s \command{profile}
+command, I was able to analyse the algorithm and make an assessment of the
+running time of the algorithm. The results of the algorithm profiling appear in
+the following sections.
+
 Essentially, this chapter details a range of tests and benchmarks that were
 performed at various stages along the development process in order to evaluate
 and compare the performance of several variations of the basic algorithm
