@@ -1,32 +1,65 @@
-In order to profile the original \software{MATLAB} code as supplied by
-\getPerson{Khoa}, I
-
- \software{MATLAB} with the source code listed in
-\autoref{sourceCode:matlab}. Using \software{MATLAB}'s \command{profile}
-command, I was able to analyse the algorithm and make an assessment of the
-running time of the algorithm. The results of the algorithm profiling appear in
-the following sections.
+Using \software{MATLAB}'s \command{profile} command, I was able to analyse and
+profile the \algm{anomaly detection using commute distance} algorithm and make
+an assessment of the running time of the algorithm. By analysing the code in
+order to determine which regions are most limiting to the algorithm's
+performance, I was able to determine an ideal candidate function for a hardware
+implementation. The results of the algorithm profiling appear in the following
+sections.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Method
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Method}
+\label{software:algorithmProfiling:matlab:method}
+In order to profile the provided \software{MATLAB} code, it was necessary to
+gain a basic understanding of the structure of the source code, as well as
+insight into how the algorithm is intended to be used (i.e.\ pre-conditions,
+post-conditions, etc.).
+
+In order to facilitate later testing of other algorithm implementations, the
+decision was made to modify the original code so as to provide more verbose
+logging, as well as ensuring that all variables and plots that were produced by
+the algorithm were stored on the file system. Furthermore, the original
+\command{TopN_Outlier_Pruning_Block} function was revised, adding minor
+optimizations as well as improving the code's aesthetics. The \software{MATLAB}
+code for the \command{TopN_Outlier_Pruning_Block} function that was used for
+profiling can be found in \autoref{sourceCode:matlab}.
+
+The algorithm profiling was performed on all data set instances so as to gain a
+comprehensive insight into the strengths and deficiencies of the chosen
+algorithm. The \software{MATLAB} \command{profile} command records information
+regarding execution time, number of calls, parent functions, child functions,
+code line hit count and code line execution time. This data is collected in
+real-time during the algorithm's execution and is prepared into a report at
+program completion. The timing information that is recorded by the
+\command{profile} command relates to \gls{CPU} time --- that is, to the amount
+of time for which the \gls{CPU} was used for processing instructions of the
+code. This timing information, contrary to \emph{real} time, discounts idle
+\gls{CPU} cycles that are caused as a result of \gls{IO} operations.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Results
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Results}
 \label{software:algorithmProfiling:matlab:results}
-This section details the results of profiling the original (\software{MATLAB})
-code across numerous data sets. The following plots compare the self execution
-time of functions composing the \command{commute_distance_anomaly} algorithm.
+The following plots compare the `self time' of functions comprising the
+\algm{anomaly detection using commute distance} algorithm. Self time is a more
+relevant metric than total time, as total time is a cumulative measure that
+includes all self times of functions called by some outer function. Self time,
+on the other hand, is the time spent in a function excluding the time spent in
+its child functions. Self time also includes overhead resulting from the process
+of profiling.
 
-The data for the plots was obtained using the \software{MATLAB}
-\command{profile} command. Descriptions of the data sets can be found in
-\autoref{dataSets}.
+It is my aim to select a single function as a candidate for a hardware
+implementation, selecting the function that has the most significant impact on
+the total algorithm execution time. As such, functions with a relatively small
+self time need not be considered, and have excluded from the following plots.
+Specifically, any function with a self time less than 3\% of the total execution
+time has been aggregated and is represented in the plots as ``Other'' functions.
 
-Please note that, in the following plots, any functions with a self time less
-than 3\% of the total execution time have been aggregated and are represented in
-the plots by ``Other''.
+The legend shown in \autoref{profiling:matlab:legend} is common amongst all of
+the \software{MATLAB} profiling results plots shown in
+\autoref{fig:profiling:matlab}.
 
 \begin{figure}
     \centering
@@ -83,8 +116,8 @@ set is exhausted. \citeauthor{Bay:2003} proved that the number of trials
 expected to achieve $k$ examples within distance $d$ is given by:
 
 \begin{equation}
-\label{eqn:outlierPruneComplexity}
-E[Y] \leq \frac{k}{\pi(\textbf{x})} + \Bigg(1 - \sum_{y=k}^{N} P(Y=y)\Bigg) \times N
+    E[Y] \leq \frac{k}{\pi(\textbf{x})} + \Bigg(1-\sum_{y=k}^{N} P(Y=y)\Bigg) \times N
+    \label{eqn:outlierPruneComplexity}
 \end{equation}
 
 Where $\pi(x)$ is the probability that a random drawn example lies within
