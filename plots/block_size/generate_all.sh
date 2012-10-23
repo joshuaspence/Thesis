@@ -2,10 +2,12 @@
 
 PLOTS="
     distance_calls
-    function_execution_time
+    function_execution_time.linear
+    function_execution_time.logarithmic
     function_run_time_complexity
     legend
-    total_execution_time
+    total_execution_time.linear
+    total_execution_time.logarithmic
     total_run_time_complexity
     vectors_pruned
 "

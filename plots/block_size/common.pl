@@ -75,7 +75,7 @@ close(DATA);
 open(GNUPLOT, "| gnuplot >${\(devnull())}");
 print GNUPLOT <<END_OF_GNUPLOT;
 reset
-set terminal tikz latex size 10cm, 10cm
+set terminal tikz color size 10cm, 10cm
 set datafile separator ','
 
 # Define axis
@@ -215,10 +215,10 @@ if ($loop_over =~ m/dataset/) {
         } elsif (basename($0) =~ m/distance_calls.tex.pl/) {
             $the_column = ${\(COL_DISTCALLS_NORM + 1)};
             $no_blocking_value = $data{$dataset}{${\NO_BLOCKING_BLOCKSIZE}}{'distcalls'};
-        } elsif (basename($0) =~ m/function_execution_time.tex.pl/) {
+        } elsif (basename($0) =~ m/function_execution_time.(linear|logarithmic).tex.pl/) {
             $the_column = ${\(COL_FUNCTIME_NORM + 1)};
             $no_blocking_value = $data{$dataset}{${\NO_BLOCKING_BLOCKSIZE}}{'functime'};
-        } elsif (basename($0) =~ m/total_execution_time.tex.pl/) {
+        } elsif (basename($0) =~ m/total_execution_time.(linear|logarithmic).tex.pl/) {
             $the_column = ${\(COL_TOTALTIME_NORM + 1)};
             $no_blocking_value = $data{$dataset}{${\NO_BLOCKING_BLOCKSIZE}}{'totaltime'};
         } elsif (basename($0) =~ m/vectors_pruned.tex.pl/) {
