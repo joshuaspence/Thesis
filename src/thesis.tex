@@ -69,7 +69,7 @@
 
 % This is the style file for the gnuplot PGF/TikZ terminal. It is associated
 % with the 'gnuplot.lua' script.
-\usepackage{../lib/gnuplot-lua-tikz/gnuplot-lua-tikz}
+\usepackage{gnuplot-lua-tikz}
 
 % The datetime package is a LaTeX package that provides various different
 % formats for \today, and provides commands for displaying the current time.
@@ -392,7 +392,7 @@
     \def\datasets@graphic@width{0.9\textwidth}%
     %
     \newcommand\dataSetBrief[3]{%
-        \gdef\dataSetBrief@name{##1}%
+        \gdef\dataSetBrief@name{\escape{##1}}%
         \gdef\dataSetBrief@size{##2}%
         \gdef\dataSetBrief@dimensionality{##3}%
         %

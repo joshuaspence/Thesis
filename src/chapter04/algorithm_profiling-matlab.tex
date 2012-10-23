@@ -1,12 +1,15 @@
-In order to choose which step of the outlier detection algorithm would be best
-suited for implementation on \gls{FPGA}-based hardware, it was first necessary
-to \emph{profile} the execution of the algorithm under various test cases. This
-task was performed using \software{MATLAB}, using code supplied by
-\citeauthor{Khoa:2012} that was used to test and verify the conclusions of
-\citetitle{Khoa:2012}. Using \software{MATLAB}'s \command{profile} command, I
-was able to analyse the algorithm and make an assessment of the running time of
-the algorithm. The results of the algorithm profiling appear in the following
-sections.
+In order to profile the original \software{MATLAB} code as supplied by
+\getPerson{Khoa}, I
+
+ \software{MATLAB} with the source code listed in
+\autoref{sourceCode:matlab}. Using \software{MATLAB}'s \command{profile}
+command, I was able to analyse the algorithm and make an assessment of the
+running time of the algorithm. The results of the algorithm profiling appear in
+the following sections.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Method
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Results

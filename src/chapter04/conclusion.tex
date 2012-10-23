@@ -1,0 +1,63 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% The Function
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{The Function}
+\label{software:algorithmProfiling:theFunction}
+The function that was identified in the aforementioned tests as being most
+significant to the execution time of the \algm{anomaly detection using commute
+time} algorithm, and thus an ideal candidate for hardware acceleration, was the
+\command{Top_N_Outlier_Pruning_Block} function. This function was originally
+proposed by \citeauthor{Bay:2003} in \citetitle{Bay:2003}.
+
+Essentially, this function simply performs a nested loops comparison of the
+distances between pairwise vectors. Consequently, in the worst case, the
+performance of this algorithm is very poor --- and it could require $O(N^2)$
+distance computations and $O(N/blocksize \times N)$ data accesses
+\cite{Bay:2003}. However, the use of randomization as well as pruning improves
+the average-case complexity of the algorithm to be somewhat near-linear. In
+particular, \citeauthor{Bay:2003}
+
+The main idea of the nested loop algorithm is that for each vector in the data
+set, we keep track of the closest neighbours found so far. When an vector's
+closest neighbours achieve a score lower than the cutoff, the data set is pruned
+from the current block because it can no longer be an outlier. As the algorithm
+proceeds to process more vectors, it is able to find more extreme outliers and
+the cutoff increases along with pruning efficiency \cite{Bay:2003}. The score
+function can be any monotonically decreasing function of the nearest neighbour
+distances such as the distance to the $k$th nearest neighbour, or the average
+distance to the k neighbours \cite{Bay:2003}.
+
+In \citetitle{Bay:2003}, \citeauthor{Bay:2003} proves that the performance of
+this method is dependent
+
+Surprisingly, the first term which represents the number of distance
+computations to eliminate non-outliers does not depend on $N$ . The second term,
+which represents the expected cost of outliers (i.e, we must compare with
+everything in the database and then conclude that nothing is close) does depend
+on $N$, yielding an overall quadratic dependency to process $N$ examples in
+total. However, note that we typically set the program parameters to return a
+small and possibly fixed number of outliers. Thus the first term dominates and
+we obtain near linear performance.
+
+The main goal of our experimental study was to show that our algorithm could
+scale to very large data sets. We showed that on large, real, high-dimensional
+data sets the algorithm had near linear scaling performance. However, the
+algorithm depends on a number of assumptions, violations of which can lead to
+poor performance.
+
+Although this pr
+
+\begin{enumerate}
+    \item The algorithm assumes that the data is in random order. If the data is
+        not in random order and is sorted then the performance can be poor.
+    \item The outlier algorithm depends on the independence of examples. If
+        examples are dependent in such a way that they have similar values (and
+        will likely be in the set of $k$ nearest neighbours) this can cause
+        performance to be poor as the algorithm may have to scan the entire data
+        set to find the dependent examples.
+    \item The third situation when our algorithm can perform poorly occurs when
+        the data does not contain outliers. For example, our experiment with the
+        examples drawn from a uniform distribution had very poor scaling.
+        However, we believe data sets of this type are likely to be rare as most
+        physical quantities one can measure have distributions with tails.
+\end{enumerate}
