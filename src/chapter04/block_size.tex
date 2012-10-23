@@ -31,7 +31,7 @@ all of the figures in this section (i.e.\
 \autoref{blockSizeProfiling:totalRunTimeComplexity} and
 \autoref{blockSizeProfiling:functionRunTimeComplexity}).
 
-\begin{figure}[H]
+\begin{figure}
     \centering
     \input{plots/block_size/legend}
     \caption[Block size profiling legend]
@@ -39,7 +39,7 @@ all of the figures in this section (i.e.\
     \label{blockSizeProfiling:legend}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}
     \centering
     \input{plots/block_size/total_execution_time}
     \caption{Total algorithm execution time with various block size
@@ -47,14 +47,14 @@ all of the figures in this section (i.e.\
     \label{blockSizeProfiling:totalExecutionTime}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}
     \centering
     \input{plots/block_size/function_execution_time}
     \caption{Function execution time with various block size implementations}
     \label{blockSizeProfiling:functionExecutionTime}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}
     \centering
     \input{plots/block_size/distance_calls}
     \caption{Number of calls to the \command{distance} function with various
@@ -62,27 +62,44 @@ all of the figures in this section (i.e.\
     \label{blockSizeProfiling:distanceCalls}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}
     \centering
     \input{plots/block_size/vectors_pruned}
     \caption{Number of vectors pruned with various block size implementations}
     \label{blockSizeProfiling:vectorsPruned}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}
     \centering
-    \input{plots/block_size/total_run_time_complexity}
+    \input{plots/block_size/total_run_time_complexity.lin}
     \caption{Total run time complexity with various block size implementations}
-    \label{blockSizeProfiling:totalRunTimeComplexity}
+    \label{blockSizeProfiling:totalRunTimeComplexity:linear}
+\end{figure}
+\begin{figure}
+    \centering
+    \input{plots/block_size/total_run_time_complexity.log}
+    \caption{Total run time complexity with various block size implementations}
+    \label{blockSizeProfiling:totalRunTimeComplexity:logarithmic}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}
     \centering
-    \input{plots/block_size/function_run_time_complexity}
+    \input{plots/block_size/function_run_time_complexity.lin}
     \caption
         [Function run time complexity with various block size implementations]
         {Function run time complexity (for the
             \command{TopN_Outlier_Pruning_Block} function) with various block
             size implementations}
-    \label{blockSizeProfiling:functionRunTimeComplexity}
+    \label{blockSizeProfiling:functionRunTimeComplexity:linear}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \input{plots/block_size/function_run_time_complexity.log}
+    \caption
+        [Function run time complexity with various block size implementations]
+        {Function run time complexity (for the
+            \command{TopN_Outlier_Pruning_Block} function) with various block
+            size implementations}
+    \label{blockSizeProfiling:functionRunTimeComplexity:logarithmic}
 \end{figure}
