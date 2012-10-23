@@ -16,8 +16,7 @@ require 'util.pl';
 use constant DATA_FILE        => catfile(updir(), updir(), 'data', 'profiling', 'matlab.csv');
 use constant THIS_DIR         => 'plots/matlab'; # for LaTeX \input command
 
-use constant OTHER_FUNCTION   => '__other__';
-use constant OTHER_NAME       => 'Other';
+use constant OTHER_FUNCTION   => 'Other';
 use constant THRESHOLD        => '0.03';
 use constant PROFILE          => 'matlab_unsorted_inline';
 
@@ -52,11 +51,6 @@ sub format_name($) {
     $function =~ s/\s*\(Java method\)//;
     $function =~ s/\(\)//;
 
-    my $OTHER_FUNCTION = OTHER_FUNCTION;
-    if ($function =~ m/$OTHER_FUNCTION/) {
-        $function = OTHER_NAME;
-    }
-
     if (exists $function_map{$function}) {
         $function = $function_map{$function};
     }
@@ -78,9 +72,10 @@ my %default_colours = (
     'iterapp'                       => 'green!60',
     'mx_d_preconditioner'           => 'magenta!60',
     'princomp'                      => 'purple!60',
-    ${\OTHER_NAME}                  => 'white!60'
+    ${\OTHER_FUNCTION}              => 'white!60'
 );
 
+# All available colours
 my @colours = (
     'blue!60',
     'cyan!60',
@@ -105,6 +100,7 @@ my @colours = (
     'teal!60',
     'violet!60'
 );
+
 sub get_colour($) {
     if (scalar(@colours) <= 0) {
         die('No more available colours');
@@ -156,7 +152,7 @@ for (<FILE>) {
     my $profile       = $columns[COL_PROFILE];
     my $dataset       = $columns[COL_DATASET];
     my $iteration     = $columns[COL_ITERATION];
-    my $function      = $columns[COL_FUNCTION];
+    my $function      = format_name($columns[COL_FUNCTION]);
     my $totaltime_rel = $columns[COL_TOTALTIMEREL];
     my $selftime_rel  = $columns[COL_SELFTIMEREL];
 
@@ -186,7 +182,6 @@ close(FILE);
 
 # Write to output file
 open(TEX, ">$output_file") or die("Cannot open file: $output_file");
-binmode(TEX, ":utf8");
 
 if (basename($0) =~ m/all_datasets.tex.pl/) {
     print TEX "\\begin{pieplots}{fig:profiling:matlab}{MATLAB profiling plots}\n";
@@ -201,8 +196,6 @@ if (basename($0) =~ m/all_datasets.tex.pl/) {
     my @the_functions = ();
     for my $function (keys %function_colours) {
         push(@the_colours, $function_colours{$function});
-
-        $function = format_name($function);
         push(@the_functions, "1/\\escape{$function}");
     }
 

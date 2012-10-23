@@ -107,31 +107,55 @@ END_OF_GNUPLOT
 # DISTANCE CALLS
 ################################################################################
 set log x
-set xlabel "Block size"
+set xlabel "\\textbf{Block size}"
 set format x "\$10^{%L}\$"
-set ylabel "Calls to the distance function (normalised)"
+set ylabel "\\textbf{Calls to the distance function (normalised)}"
 END_OF_GNUPLOT
-} elsif (basename($0) =~ m/function_execution_time.tex.pl/) {
+} elsif (basename($0) =~ m/function_execution_time.linear.tex.pl/) {
     $loop_over = 'dataset';
     print GNUPLOT <<END_OF_GNUPLOT;
 ################################################################################
 # FUNCTION EXECUTION TIME
 ################################################################################
 set log x
-set xlabel "Block size"
+set xlabel "\\textbf{Block size}"
 set format x "\$10^{%L}\$"
-set ylabel "Function execution time (normalised)"
+set ylabel "\\textbf{Function execution time (normalised)}"
 END_OF_GNUPLOT
-} elsif (basename($0) =~ m/total_execution_time/) {
+} elsif (basename($0) =~ m/function_execution_time.logarithmic.tex.pl/) {
+    $loop_over = 'dataset';
+    print GNUPLOT <<END_OF_GNUPLOT;
+################################################################################
+# FUNCTION EXECUTION TIME
+################################################################################
+set log x
+set xlabel "\\textbf{Block size}"
+set format x "\$10^{%L}\$"
+set ylabel "\\textbf{Function execution time (normalised)}"
+set logscale xy
+END_OF_GNUPLOT
+} elsif (basename($0) =~ m/total_execution_time.linear.tex.pl/) {
     $loop_over = 'dataset';
     print GNUPLOT <<END_OF_GNUPLOT;
 ################################################################################
 # TOTAL EXECUTION TIME
 ################################################################################
 set log x
-set xlabel "Block size"
+set xlabel "\\textbf{Block size}"
 set format x "\$10^{%L}\$"
-set ylabel "Total execution time (normalised)"
+set ylabel "\\textbf{Total execution time (normalised)}"
+END_OF_GNUPLOT
+} elsif (basename($0) =~ m/total_execution_time.logarithmic.tex.pl/) {
+    $loop_over = 'dataset';
+    print GNUPLOT <<END_OF_GNUPLOT;
+################################################################################
+# TOTAL EXECUTION TIME
+################################################################################
+set log x
+set xlabel "\\textbf{Block size}"
+set format x "\$10^{%L}\$"
+set ylabel "\\textbf{Total execution time (normalised)}"
+set logscale xy
 END_OF_GNUPLOT
 } elsif (basename($0) =~ m/vectors_pruned.tex.pl/) {
     $loop_over = 'dataset';
@@ -140,20 +164,20 @@ END_OF_GNUPLOT
 # NUMBER OF VECTORS PRUNED
 ################################################################################
 set log x
-set xlabel "Block size"
+set xlabel "\\textbf{Block size}"
 set format x "\$10^{%L}\$"
-set ylabel "Number of vectors pruned (normalised)"
+set ylabel "\\textbf{Number of vectors pruned (normalised)}"
 END_OF_GNUPLOT
-} elsif (basename($0) =~ m/function_run_time_complexity/) {
+} elsif (basename($0) =~ m/function_run_time_complexity.tex.pl/) {
     $loop_over = "blocksize";
     print GNUPLOT <<END_OF_GNUPLOT;
 ################################################################################
 # FUNCTION RUN TIME COMPLEXITY
 ################################################################################
 set log x
-set xlabel "Problem size"
+set xlabel "\\textbf{Problem size}"
 set format x "\$10^{%L}\$"
-set ylabel "Execution time"
+set ylabel "\\textbf{Function execution time}"
 END_OF_GNUPLOT
 } elsif (basename($0) =~ m/total_run_time_complexity.tex.pl/) {
     $loop_over = 'blocksize';
@@ -162,9 +186,9 @@ END_OF_GNUPLOT
 # TOTAL RUN TIME COMPLEXITY
 ################################################################################
 set log x
-set xlabel "Problem size"
+set xlabel "\\textbf{Problem size}"
 set format x "\$10^{%L}\$"
-set ylabel "Execution time"
+set ylabel "\\textbf{Total execution time}"
 END_OF_GNUPLOT
 } else {
     close(GNUPLOT);
@@ -229,7 +253,7 @@ for my \\\\\$line (<FILE>) { \\
 close(FILE);\\"" \\
         using ${\(COL_BLOCKSIZE + 1)}:$the_column smooth unique \\
         title '$dataset_clean' with linespoints lt 1 lc $colour_counter, \\
-    $no_blocking_value title '$dataset_clean*' with line lt 0 lc $colour_counter \\
+    $no_blocking_value title '$dataset_clean (no blocking)' with line lt 0 lc $colour_counter \\
 END_OF_GNUPLOT
         push(@all_data, $data);
         $colour_counter++;

@@ -16,8 +16,7 @@ require 'util.pl';
 use constant DATA_FILE         => catfile(updir(), updir(), 'data', 'profiling', 'c.csv');
 use constant THIS_DIR          => 'plots/c'; # for LaTeX \input command
 
-use constant OTHER_FUNCTION    => '__other__';
-use constant OTHER_NAME        => 'Other';
+use constant OTHER_FUNCTION    => 'Other';
 use constant THRESHOLD         => '0.01';
 use constant PROFILE           => 'TopN_Outlier_Pruning_Block_UNSORTED';
 
@@ -35,11 +34,6 @@ use constant COL_PROPORTIONREL => 9;
 
 sub format_name($) {
     my $function = $_[0];
-
-    if ($function =~ m/${\OTHER_FUNCTION}/) {
-        $function = OTHER_NAME;
-    }
-
     return $function;
 }
 
@@ -47,9 +41,10 @@ my %default_colours = (
     'top_n_outlier_pruning_block' => 'yellow!60',
     'distance_squared'            => 'blue!60',
     'add_neighbour'               => 'orange!60',
-    ${\OTHER_NAME}                => 'white!60'
+    ${\OTHER_FUNCTION}            => 'white!60'
 );
 
+# All available colours
 my @colours = (
     'blue!60',
     'cyan!60',
@@ -125,7 +120,7 @@ for (<FILE>) {
     my $profile        = $columns[COL_PROFILE];
     my $dataset        = $columns[COL_DATASET];
     my $iteration      = $columns[COL_ITERATION];
-    my $function       = $columns[COL_FUNCTION];
+    my $function       = format_name($columns[COL_FUNCTION]);
     my $selftime_rel   = $columns[COL_SELFTIMEREL];
     my $proportion_rel = $columns[COL_PROPORTIONREL];
 
@@ -154,7 +149,7 @@ for (<FILE>) {
 close(FILE);
 
 # Write to output file
-open(TEX, ">:utf8", "$output_file") or die("Cannot open file: $output_file");
+open(TEX, ">$output_file") or die("Cannot open file: $output_file");
 
 if (basename($0) =~ m/all_datasets.tex.pl/) {
     print TEX "\\begin{pieplots}{fig:profiling:c}{C profiling plots}\n";
