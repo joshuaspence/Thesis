@@ -188,6 +188,7 @@ set log x
 set xlabel "\\\\textbf{Problem size}"
 set format x "\$10^{%L}\$"
 set ylabel "\\\\textbf{Total execution time}"
+set log y
 END_OF_GNUPLOT
 } else {
     close(GNUPLOT);
