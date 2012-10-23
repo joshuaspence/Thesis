@@ -9,11 +9,28 @@ the algorithm. The results of the algorithm profiling appear in the following
 sections.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Profiling Results
+% Results
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Profiling Results}
-\label{algorithmPerformance:bottleneck}
-% TODO
+\section{Results}
+\label{software:algorithmProfiling:matlab:results}
+This section details the results of profiling the original (\software{MATLAB})
+code across numerous data sets. The following plots compare the self execution
+time of functions composing the \command{commute_distance_anomaly} algorithm.
+
+The data for the plots was obtained using the \software{MATLAB}
+\command{profile} command. Descriptions of the data sets can be found in
+\autoref{dataSets}.
+
+Please note that, in the following plots, any functions with a self time less
+than 3\% of the total execution time have been aggregated and are represented in
+the plots by ``Other''.
+
+\begin{figure}
+    \input{plots/matlab/legend}
+    \caption{Common legend for MATLAB profiling plots}
+    \label{profiling:matlab:legend}
+\end{figure}
+\input{plots/matlab/all_datasets}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Performance Bottleneck

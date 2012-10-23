@@ -1,1 +1,88 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Introduction
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Introduction}
+\label{software:blockSize:introduction}
+To further investigate the
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Results
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Results}
+\label{software:blockSize:profiling}
+This section details the results of profiling the initial \progLang{C}
+implementation of the \command{TopN_Outlier_Pruning_Block} function across
+numerous data sets, and with a varying block size. In addition, the execution
+time of the algorithm was compared with a modified implementation which does not
+use blocking in any way.
+
+The data for the plots was obtained using the \software{MATLAB}
+\command{profile} command. Descriptions of the data sets can be found in
+\autoref{dataSets}.
+
 % TODO
+
+Please note that the legend in \autoref{blockSizeProfiling:legend} is common to
+all of the figures in this section (i.e.\
+\autoref{blockSizeProfiling:totalExecutionTime},
+\autoref{blockSizeProfiling:functionExecutionTime},
+\autoref{blockSizeProfiling:distanceCalls},
+\autoref{blockSizeProfiling:vectorsPruned},
+\autoref{blockSizeProfiling:totalRunTimeComplexity} and
+\autoref{blockSizeProfiling:functionRunTimeComplexity}).
+
+\begin{figure}[H]
+    \centering
+    \input{plots/block_size/legend}
+    \caption[Block size profiling legend]
+        {The legend for all figures in \autoref{profiling:blockSize}}
+    \label{blockSizeProfiling:legend}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \input{plots/block_size/total_execution_time}
+    \caption{Total algorithm execution time with various block size
+        implementations}
+    \label{blockSizeProfiling:totalExecutionTime}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \input{plots/block_size/function_execution_time}
+    \caption{Function execution time with various block size implementations}
+    \label{blockSizeProfiling:functionExecutionTime}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \input{plots/block_size/distance_calls}
+    \caption{Number of calls to the \command{distance} function with various
+        block size implementations}
+    \label{blockSizeProfiling:distanceCalls}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \input{plots/block_size/vectors_pruned}
+    \caption{Number of vectors pruned with various block size implementations}
+    \label{blockSizeProfiling:vectorsPruned}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \input{plots/block_size/total_run_time_complexity}
+    \caption{Total run time complexity with various block size implementations}
+    \label{blockSizeProfiling:totalRunTimeComplexity}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \input{plots/block_size/function_run_time_complexity}
+    \caption
+        [Function run time complexity with various block size implementations]
+        {Function run time complexity (for the
+            \command{TopN_Outlier_Pruning_Block} function) with various block
+            size implementations}
+    \label{blockSizeProfiling:functionRunTimeComplexity}
+\end{figure}
