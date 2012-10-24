@@ -93,6 +93,7 @@ if (basename($0) =~ m/legend.tex.pl/) {
 # LEGEND
 ################################################################################
 set key above
+set border 3 back ls 11 # this seems to hide the border... so we can draw only the legend
 set terminal tikz color size 10cm, 20cm
 END_OF_GNUPLOT
 } elsif (basename($0) =~ m/distance_calls.tex.pl/) {
