@@ -2,33 +2,131 @@
 % Introduction
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Introduction}
-\label{software:algorithmProfiling:c:introduction}
+\label{profiling:c:introduction}
+Once the \progLang{MATLAB} code had been profiled and a candidate function had
+been selected for hardware implementation, the next step in my design process
+was to translate the \progLang{MATLAB} code for this function into, initially, a
+\software{MATLAB} MEX file written in \progLang{C} and, later, a standalone
+\progLang{C} application.
+
+In order to profile the \progLang{C} application, I utilised the
+\software{GNU Profiler}[gprof], which was linked in with the executable using
+the \software{GCC Compiler Collection}[gcc] \progLang{C} compiler.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Method
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Method}
-\label{software:algorithmProfiling:c:method}
+\label{profiling:c:method}
+In order to allow for a standalone \progLang{C} application to be developed,
+without necessitating the translation of the complete \algm{anomaly detection
+using commute distance} algorithm from \progLang{MATLAB} to \progLang{C}, I
+developed \command{vardump} (variable dump) functions to store the arguments to
+the \command{TopN_Outlier_Pruning_Block} function into a binary file, together
+with the expected outliers and outlier scores. In this way, I was able to
+incrementally test the standalone \progLang{C} program and ensure that the
+detected outliers matched those of the original \software{MATLAB}
+implementation.
+
+The compiler flags that were used for the \software{MATLAB} MEX file compilation
+are as follows:
+\begin{itemize}[noitemsep]
+    \item \lstinline|-glnxa64|
+    \item \lstinline|-D__MEX__|
+    \item \lstinline|-I/usr/local/MATLAB/R2012a/extern/include|
+    \item \lstinline|-largeArrayDims|
+    \item \lstinline|-O|
+    \item \lstinline|-DNDEBUG|
+    \item \lstinline|-DSORTED_INSERT|
+    \item \lstinline|-DBLOCKING|
+    \item \lstinline|-DUSE_DYNAMIC_ARRAY_SIZE=0|
+    \item \lstinline|CFLAGS=|
+        \begin{itemize}[noitemsep]
+            \item \lstinline|-D_GNU_SOURCE|
+            \item \lstinline|-fexceptions|
+            \item \lstinline|-fPIC|
+            \item \lstinline|-fno-omit-frame-pointer|
+            \item \lstinline|-pthread|
+            \item \lstinline|-std=c99|
+            \item \lstinline|-W|
+            \item \lstinline|-Wall|
+            \item \lstinline|-Wextra|
+            \item \lstinline|-pedantic|
+            \item \lstinline|-fmessage-length=0|
+            \item \lstinline|-Wno-unused-label|
+            \item \lstinline|-O3|
+            \item \lstinline|-DNDEBUG|
+            \item \lstinline|-DSORTED_INSERT|
+            \item \lstinline|-DBLOCKING|
+            \item \lstinline|-DUSE_DYNAMIC_ARRAY_SIZE=0|
+        \end{itemize}
+    \item \lstinline|CXXFLAGS=|
+        \begin{itemize}[noitemsep]
+            \item \lstinline|-D_GNU_SOURCE|
+            \item \lstinline|-fPIC|
+            \item \lstinline|-fno-omit-frame-pointer|
+            \item \lstinline|-pthread|
+            \item \lstinline|-std=c++0x|
+            \item \lstinline|-W|
+            \item \lstinline|-Wall|
+            \item \lstinline|-Wextra|
+            \item \lstinline|-pedantic|
+            \item \lstinline|-fmessage-length=0|
+            \item \lstinline|-Wno-unused-label|
+            \item \lstinline|-O3|
+            \item \lstinline|-DNDEBUG|
+            \item \lstinline|-DSORTED_INSERT|
+            \item \lstinline|-DBLOCKING|
+            \item \lstinline|-DUSE_DYNAMIC_ARRAY_SIZE=0|
+        \end{itemize}
+    \item \lstinline|LDFLAGS=|
+        \begin{itemize}[noitemsep]
+            \item \lstinline|-pthread|
+            \item \lstinline|-shared|
+            \item \lstinline|-Wl,--version-script,/usr/local/MATLAB/R2012a/extern/lib/glnxa64/mexFunction.map|
+            \item \lstinline|-Wl,--no-undefined|
+            \item \lstinline|-O3|
+        \end{itemize}
+\end{itemize}
+
+The compiler flags that were used with \command{gcc} for the standalone
+\progLang{C} application are as follows:
+\begin{itemize}[noitemsep]
+    \item \lstinline|-D__C__|
+    \item \lstinline|-D_GNU_SOURCE|
+    \item \lstinline|-fexceptions|
+    \item \lstinline|-fPIC|
+    \item \lstinline|-fno-omit-frame-pointer|
+    \item \lstinline|-pthread|
+    \item \lstinline|-std=c99|
+    \item \lstinline|-W|
+    \item \lstinline|-Wall|
+    \item \lstinline|-Wextra|
+    \item \lstinline|-pedantic|
+    \item \lstinline|-fmessage-length=0|
+    \item \lstinline|-Wno-unused-label|
+    \item \lstinline|-O3|
+    \item \lstinline|-DNDEBUG|
+    \item \lstinline|-DSORTED_INSERT|
+    \item \lstinline|-DBLOCKING|
+    \item \lstinline|-DUSE_DYNAMIC_ARRAY_SIZE=0|
+    \item \lstinline|-pg|
+\end{itemize}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Results
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Results}
-\label{software:algorithmProfiling:c:results}
-This section details the results of profiling the initial \progLang{C}
-implementation of the \command{TopN_Outlier_Pruning_Block} function across
-numerous data sets. The following plots compare the self execution time of
-sub-functions that are called during the execution of the
-\command{TopN_Outlier_Pruning_Block} function.
+\label{profiling:c:results}
+The following plots compare the `self time' of functions comprising the
+\algm{anomaly detection using commute distance} algorithm, specifically for a
+\progLang{C} implementation. Please note that in the following plots, any
+functions with a self time less than 1\% of the total execution time have been
+aggregated and are represented in the plots as ``Other'' functions.
 
-The data for the plots was obtained using \software{The GNU Profiler}[gprof].
-Descriptions of the data sets can be found in \autoref{dataSets}.
-
-Please note that in the following plots, any functions with a self time less
-than 1\% of the total execution time have been aggregated and are represented in
-the plots by ``Other''.
-
-% TODO: Flags
+The legend shown in \autoref{profiling:c:legend} is common amongst all of the
+the \progLang{C} profiling results plots shown in
+\autoref{fig:profiling:c}.
 
 \begin{figure}
     \centering
@@ -37,3 +135,13 @@ the plots by ``Other''.
     \label{profiling:c:legend}
 \end{figure}
 \input{plots/c/all_datasets}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Discussion
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Discussion}
+\label{profiling:c:discussion}
+The profiling results from the \progLang{C} implementation support the results
+obtained using the \progLang{MATLAB} implementation --- i.e., that improvements
+to the performance of the \command{distance_squared} function will yield the
+greatest improvement to the algorithm collectively.

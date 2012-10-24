@@ -86,11 +86,11 @@ END_OF_GNUPLOT
 
 # Output the header
 my $loop_over;
-if (basename($0) =~ m/legend.tex.pl/) {
+if (basename($0) =~ m/legend-datasets.tex.pl/) {
     $loop_over = 'dataset';
     print GNUPLOT <<END_OF_GNUPLOT;
 ################################################################################
-# LEGEND
+# LEGEND - DATASETS
 ################################################################################
 set key above
 set border 3 back ls 11 # this seems to hide the border... so we can draw only the legend
@@ -139,6 +139,16 @@ set log x
 set xlabel "\\\\textbf{Block size}"
 set format x "\$10^{%L}\$"
 set ylabel "\\\\textbf{Number of vectors pruned (normalised)}"
+END_OF_GNUPLOT
+} elsif (basename($0) =~ m/legend-block_sizes.tex.pl/) {
+    $loop_over = "blocksize";
+    print GNUPLOT <<END_OF_GNUPLOT;
+################################################################################
+# LEGEND - BLOCK SIZES
+################################################################################
+set key above
+set border 3 back ls 11 # this seems to hide the border... so we can draw only the legend
+set terminal tikz color size 10cm, 20cm
 END_OF_GNUPLOT
 } elsif (basename($0) =~ m/function_run_time_complexity.lin.tex.pl/) {
     $loop_over = "blocksize";
@@ -205,7 +215,7 @@ if ($loop_over =~ m/dataset/) {
 
         my $the_column;
         my $no_blocking_value;
-        if (basename($0) =~ m/legend.tex.pl/) {
+        if (basename($0) =~ m/legend-datasets.tex.pl/) {
             $the_column = ${\(COL_DISTCALLS_NORM + 1)};
             $no_blocking_value = $data{$dataset}{${\NO_BLOCKING_BLOCKSIZE}}{'distcalls'};
         } elsif (basename($0) =~ m/distance_calls.tex.pl/) {
@@ -260,7 +270,9 @@ END_OF_GNUPLOT
         my $blocksize_text = latex_escape("block_size=$blocksize");
 
         my $the_column;
-        if (basename($0) =~ m/total_run_time_complexity.(lin|log).tex.pl/) {
+        if (basename($0) =~ m/legend-block_sizes.tex.pl/) {
+            $the_column = ${\(COL_TOTALTIME + 1)};
+        } elsif (basename($0) =~ m/total_run_time_complexity.(lin|log).tex.pl/) {
             $the_column = ${\(COL_TOTALTIME + 1)};
         } elsif (basename($0) =~ m/function_run_time_complexity.(lin|log).tex.pl/) {
             $the_column = ${\(COL_FUNCTIME + 1)};
@@ -309,7 +321,7 @@ close(GNUPLOT);
 # Remove data point from legend output file.
 # This is used so that we can show one (common) legend for all data sets instead
 # of showing one legend per plot.
-if (basename($0) =~ m/legend.tex.pl/) {
+if (basename($0) =~ m/legend-.+.tex.pl/) {
     open(LEGEND, "<$output_file") || die("Cannot open file: $output_file");
     my @output = ();
     my $in_legend = 0;

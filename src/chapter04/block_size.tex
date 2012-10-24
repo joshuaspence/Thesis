@@ -6,6 +6,13 @@
 To further investigate the
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Method
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Method}
+\label{profiling:blockSize:method}
+% TODO
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Results
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Results}
@@ -22,23 +29,23 @@ The data for the plots was obtained using the \software{MATLAB}
 
 % TODO
 
-Please note that the legend in \autoref{profiling:blockSize:legend} is common to
-all of the figures in this section (i.e.\
-\autoref{profiling:blockSize:totalExecutionTime},
+Please note that the legend in \autoref{profiling:blockSize:legend:datasets} is
+common to \autoref{profiling:blockSize:totalExecutionTime},
 \autoref{profiling:blockSize:functionExecutionTime},
-\autoref{profiling:blockSize:distanceCalls},
-\autoref{profiling:blockSize:vectorsPruned},
-\autoref{profiling:blockSize:totalRunTimeComplexity:lin},
-\autoref{profiling:blockSize:totalRunTimeComplexity:log},
-\autoref{profiling:blockSize:functionRunTimeComplexity:lin} and
-\autoref{profiling:blockSize:functionRunTimeComplexity:log}).
+\autoref{profiling:blockSize:distanceCalls} and
+\autoref{profiling:blockSize:vectorsPruned}. Additionally, the legend in
+\autoref{profiling:blockSize:legend:block_sizes} is common to
+\autoref{profiling:blockSize:totalRunTimeComplexity:linear},
+\autoref{profiling:blockSize:totalRunTimeComplexity:logarithmic},
+\autoref{profiling:blockSize:functionRunTimeComplexity:linear} and
+\autoref{profiling:blockSize:functionRunTimeComplexity:logarithmic}.
 
 \begin{figure}
     \centering
-    \input{plots/block_size/legend}
-    \caption[Block size profiling legend]
-        {The legend for all figures in \autoref{profiling:blockSize}}
-    \label{profiling:blockSize:legend}
+    \input{plots/block_size/legend-datasets}
+    \caption[Block size profiling legend]{The data sets legend for all figures
+        in \autoref{profiling:blockSize}}
+    \label{profiling:blockSize:legend:datasets}
 \end{figure}
 
 \begin{figure}
@@ -75,18 +82,28 @@ all of the figures in this section (i.e.\
 
 \begin{figure}
     \centering
+    \input{plots/block_size/legend-block_sizes}
+    \caption[Block size profiling legend]{The block sizes legend for all figures
+        in \autoref{profiling:blockSize}}
+    \label{profiling:blockSize:legend:block_sizes}
+\end{figure}
+
+\begin{figure}
+    \centering
     \begin{minipage}{\textwidth}
         \centering
         \input{plots/block_size/total_run_time_complexity.lin}
-        \caption{Total run time complexity with various block size
-            implementations}
+        \caption[Total run time complexity with various block size
+            implementations (linear)]{Total run time complexity (for the
+            \command{TopN_Outlier_Pruning_Block} function) with various block
+            size implementations}
         \label{profiling:blockSize:totalRunTimeComplexity:linear}
     \end{minipage}
     \begin{minipage}{\textwidth}
         \centering
         \input{plots/block_size/total_run_time_complexity.log}
         \caption[Total run time complexity with various block size
-            implementations]{Total run time complexity (for the
+            implementations (logarithmic)]{Total run time complexity (for the
             \command{TopN_Outlier_Pruning_Block} function) with various block
             size implementations}
         \label{profiling:blockSize:totalRunTimeComplexity:logarithmic}
@@ -99,7 +116,7 @@ all of the figures in this section (i.e.\
         \centering
         \input{plots/block_size/function_run_time_complexity.lin}
         \caption[Function run time complexity with various block size
-            implementations]{Function run time complexity (for the
+            implementations (linear)]{Function run time complexity (for the
             \command{TopN_Outlier_Pruning_Block} function) with various block
             size implementations}
         \label{profiling:blockSize:functionRunTimeComplexity:linear}
@@ -108,9 +125,24 @@ all of the figures in this section (i.e.\
        \centering
         \input{plots/block_size/function_run_time_complexity.log}
         \caption[Function run time complexity with various block size
-            implementations]{Function run time complexity (for the
+            implementations (logarithmic)]{Function run time complexity (for the
             \command{TopN_Outlier_Pruning_Block} function) with various block
             size implementations}
         \label{profiling:blockSize:functionRunTimeComplexity:logarithmic}
     \end{minipage}
 \end{figure}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Discussion
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Discussion}
+\label{algorithmPerformance:discussion}
+* Most data sets seem to perform better without blocking, although not significantly.
+* Most data sets seems to perform a lot worse with large block sizes (>1000)
+    - Fairly stable with block size of < 1000 or > 1000000
+* Data sets letter-recognition and magicgamma and connect4 and musk and spam_train and spam and runningex30k performed significantly better without blocking (at least 5 times when compared to a block size > 1000000)
+* The total number of calls to the distance function is nearly linear in the block size
+* Segmentation, pendigits, spam and mesh_network had no change in the number of calls to dist function compared with block size
+* Generally, the smaller the block size was, the fast the algorithm executed.
+* The larger the block size, the more that vectors are pruned (conversely, without blocking, not many vectors are pruned)
+*

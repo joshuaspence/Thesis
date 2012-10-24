@@ -5,7 +5,8 @@ PLOTS="
     function_execution_time
     function_run_time_complexity.lin
     function_run_time_complexity.log
-    legend
+    legend-datasets
+    legend-block_sizes
     total_execution_time
     total_run_time_complexity.lin
     total_run_time_complexity.log
