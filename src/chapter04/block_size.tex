@@ -137,12 +137,47 @@ common to \autoref{profiling:blockSize:totalExecutionTime},
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Discussion}
 \label{algorithmPerformance:discussion}
-* Most data sets seem to perform better without blocking, although not significantly.
-* Most data sets seems to perform a lot worse with large block sizes (>1000)
-    - Fairly stable with block size of < 1000 or > 1000000
-* Data sets letter-recognition and magicgamma and connect4 and musk and spam_train and spam and runningex30k performed significantly better without blocking (at least 5 times when compared to a block size > 1000000)
-* The total number of calls to the distance function is nearly linear in the block size
-* Segmentation, pendigits, spam and mesh_network had no change in the number of calls to dist function compared with block size
-* Generally, the smaller the block size was, the fast the algorithm executed.
-* The larger the block size, the more that vectors are pruned (conversely, without blocking, not many vectors are pruned)
-*
+The results collected above
+
+\begin{itemize}
+    \item Most data sets seem to perform better without blocking than with,
+        although the performance difference between a small block size (less
+        than 1000), compared to no blocking, is not significant.
+    \item Most data sets seems to perform significantly worse with large block
+        sizes (greater than 1000), when compared with smaller block sizes (less
+        than 1000).
+    \item Fairly stable with block size of < 1000 or > 1000000
+    \item Seven data sets (\dataset{letter-recognition}, \dataset{magicgamma},
+        \dataset{connect4}, \dataset{musk}, \dataset{spam_train}, \dataset{spam}
+        and \dataset{runningex30k}) performed significantly better without
+        blocking (at least 5 times when compared to a block size > 1000000)
+    \item The total number of calls to the distance function is nearly linear in
+        the block size.
+    \item Four data sets (\dataset{segmentation}, \dataset{pendigits},
+        \dataset{spam} and \dataset{mesh_network}) had no change in the number
+        of calls to the \command{distance_squared} function compared with block
+        size.
+    \item Generally, the smaller the block size was, the faster the algorithm
+        executed.
+    \item The larger the block size, the more that vectors are pruned
+        (conversely, without blocking, not many vectors are pruned).
+\end{itemize}
+
+% Lines of best fit
+\begin{longtable}{|+>{\bfseries}c|^l|^c|}
+    \tableHeader{Block size & Fit & Coefficient of determination ($R^2$)}
+    0 &         $2.95232268646359 \times 10^-6 \times x^{1.5701731748}$ &   0.8252617823 \\
+    1 &         $1.99974741419878 \times 10^-6 \times x^{1.6279693701}$ &   0.8472712848 \\
+    10 &        $2.47146286428157 \times 10^-6 \times x^{1.5942823477}$ &   0.8514101635 \\
+    15 &        $2.61779443859478 \times 10^-6 \times x^{1.5882193828}$ &   0.8273032456 \\
+    30 &        $2.85347906672221 \times 10^-6 \times x^{1.5810782275}$ &   0.8407365739 \\
+    40 &        $2.393            \times 10^-6 \times x^{1.6026893824}$ &   0.8369025885 \\
+    45 &        $2.11550069078546 \times 10^-6 \times x^{1.6215256016}$ &   0.8176455619 \\
+    60 &        $1.90246021613607 \times 10^-6 \times x^{1.6408351928}$ &   0.807660717 \\
+    90 &        $1.8552473060756  \times 10^-6 \times x^{1.6472982903}$ &   0.7956635499 \\
+    100 &       $2.45648959267628 \times 10^-6 \times x^{1.5966255392}$ &   0.8105129767 \\
+    1000 &      $4.80646490593615 \times 10^-6 \times x^{1.5689092708}$ &   0.8328463309 \\\
+    10000 &     $1.07142672605121 \times 10^-6 \times x^{1.8339855181}$ &   0.9182785472 \\
+    100000 &    $8.59282468122866 \times 10^-8 \times x^{2.172997051}$  &   0.933976207 \\
+    1000000 &   $8.04573229523765 \times 10^-8 \times x^{2.1829343104}$ &   0.9298342132 \\
+\end{longtable}
