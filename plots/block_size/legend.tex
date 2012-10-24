@@ -1,10 +1,8 @@
 \begin{tikzpicture}[gnuplot]
-\gpcolor{\gprgb{502}{502}{502}}
-\gpsetlinetype{gp lt plot 0}
+\gpsetlinetype{gp lt border}
 \gpsetlinewidth{1.00}
-\node[gp node right] at (7.623,19.666) {ball1};
-\gpcolor{gp lt color axes}
-\draw[gp path] (7.807,19.666)--(8.723,19.666);
+\draw[gp path] (1.196,0.616)--(1.376,0.616);
+\gpsetlinetype{gp lt plot 0}
 \node[gp node right] at (7.623,19.358) {ball1 (no blocking)};
 \gpcolor{gp lt color axes}
 \gpsetlinetype{gp lt axes}
@@ -169,4 +167,7 @@
 \gpcolor{gp lt color 3}
 \gpsetlinetype{gp lt axes}
 \draw[gp path] (7.807,7.038)--(8.723,7.038);
+\gpsetlinetype{gp lt border}
+\draw[gp path] (1.196,6.387)--(1.196,0.616)--(9.447,0.616)--(9.447,6.387)--cycle;
+\gpdefrectangularnode{gp plot 1}{\pgfpoint{1.196cm}{0.616cm}}{\pgfpoint{9.447cm}{6.387cm}}
 \end{tikzpicture}

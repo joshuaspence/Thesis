@@ -1,8 +1,8 @@
 \begin{tikzpicture}[gnuplot]
 %% generated with GNUPLOT 4.4p3 (Lua 5.1.4; terminal rev. 97, script rev. 96a)
-%% Wed 24 Oct 2012 11:33:51 EST
-\gpcolor{\gprgb{502}{502}{502}}
-\gpsetlinetype{gp lt plot 0}
+%% Wed 24 Oct 2012 11:48:43 EST
+\gpcolor{gp lt color border}
+\gpsetlinetype{gp lt border}
 \gpsetlinewidth{1.00}
 \draw[gp path] (1.688,0.985)--(1.868,0.985);
 \draw[gp path] (8.447,0.985)--(8.267,0.985);
@@ -112,11 +112,11 @@
 \draw[gp path] (8.447,0.985)--(8.447,1.165);
 \draw[gp path] (8.447,8.631)--(8.447,8.451);
 \node[gp node center] at (8.447,0.677) {$10^{5}$};
-\draw[gp path] (1.688,8.631)--(1.688,0.985)--(8.447,0.985);
-\gpcolor{gp lt color border}
+\draw[gp path] (1.688,8.631)--(1.688,0.985)--(8.447,0.985)--(8.447,8.631)--cycle;
 \node[gp node center,rotate=-270] at (0.246,4.808) {\textbf{Function execution time}};
 \node[gp node center] at (5.067,0.215) {\textbf{Problem size}};
 \gpcolor{gp lt color axes}
+\gpsetlinetype{gp lt plot 0}
 \draw[gp path] (3.140,1.906)--(3.360,2.175)--(3.504,2.277)--(3.941,2.905)--(4.114,2.930)%
   --(4.619,3.660)--(4.667,3.266)--(5.413,3.570)--(5.434,3.904)--(5.787,4.664)--(6.194,5.683)%
   --(6.287,4.213)--(6.823,4.427)--(6.872,5.660)--(7.269,6.922)--(7.550,7.133)--(7.769,7.572)%
@@ -431,6 +431,9 @@
 \gppoint{gp mark 14}{(6.823,7.021)}
 \gppoint{gp mark 14}{(6.872,7.014)}
 \gppoint{gp mark 14}{(7.269,7.558)}
+\gpcolor{gp lt color border}
+\gpsetlinetype{gp lt border}
+\draw[gp path] (1.688,8.631)--(1.688,0.985)--(8.447,0.985)--(8.447,8.631)--cycle;
 %% coordinates of the plot area
 \gpdefrectangularnode{gp plot 1}{\pgfpoint{1.688cm}{0.985cm}}{\pgfpoint{8.447cm}{8.631cm}}
 \end{tikzpicture}

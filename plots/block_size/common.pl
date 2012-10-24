@@ -78,11 +78,6 @@ reset
 set terminal tikz color size 9cm, 9cm
 set datafile separator ','
 
-# Define axis
-# Remove border on top and right and set color to gray
-set style line 11 lc rgb '#808080' lt 1
-set border 3 back ls 11
-
 # Global options
 set autoscale
 set nokey
