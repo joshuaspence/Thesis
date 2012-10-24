@@ -2,14 +2,14 @@ In this chapter, I recount the design process that was adopted in order to
 transform the \algm{anomaly detection using commute time} algorithm into a
 hardware design. Specifically, this chapter analyses software implementations of
 the algorithm (in both \progLang{MATLAB} and \progLang{C}), in order to identify
-performance bottlenecks that the algorithm faces on a typical
+performance bottlenecks that the algorithm faces when deployed on a typical
 microprocessor-based system.
 
 In order to choose which step of the outlier detection algorithm would be best
 suited for implementation on \gls{FPGA}-based hardware, it was first necessary
-to \emph{profile} the execution of the algorithm under various test cases. This
-task was performed using \software{MATLAB} with the source code listed in
-\autoref{sourceCode:matlab}. Using \software{MATLAB}'s \command{profile}
+to profile the execution of the algorithm under various test cases. This task
+was performed using \software{MATLAB} with the source code listed in
+\autoref{sourceCode:matlab}. Using the \software{MATLAB} \command{profile}
 command, I was able to analyse the algorithm and make an assessment of the
 running time of the algorithm. The results of the algorithm profiling appear in
 the following sections.
@@ -34,6 +34,7 @@ This \progLang{MATLAB} code formed the foundation on which all successive code
 of this \thesis{} eventuates. The design flow that was adopted for the
 development process is illustrated in \autoref{thesis:designFlow}.
 
+% TODO: Fix graphic
 \begin{figure}
     \centering
     \input{chapter04/thesis-design_flow.tikz.tex}

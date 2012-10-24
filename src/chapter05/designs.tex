@@ -1,0 +1,52 @@
+In this section, I propose several alternative hardware designs for the
+implementation of the \algm{anomaly detection using commute distance} algorithm.
+Whilst I was unable to successfully implement any of the proposed designs (due
+to time constraints), I am confident that I have, conceptually, made strong
+progress with the designs. As such, implementation and hardware-level
+optimizations are left as future works.
+
+The software-based algorithm profiling (see \autoref{software}) revealed,
+without ambiguity, that the single most limiting function that comprises the
+\algm{anomaly detection using commute distance} algorithm is the
+\command{distance_squared} function. Due to the size of the data sets that we
+were dealing with, the nested for loop approach employed for the algorithm
+became prohibitive and resulted in hundreds of thousands of calls to the
+\command{distance_squared} function. Not only do these calls each have an
+associated overhead (exclusive to software implementations), but the contents of
+the function itself were, indeed, another for loop, iteratively summing the
+squares of the distance between the two input vectors.
+
+The \command{distance_squared} function is simple, both in purpose and in
+implementation. However, the nature of the operations that the function
+performs are ill-suited for an instruction-based microprocessor. The repetitive
+and parallel nature of the function provides encouragement in favour of an
+accelerated design based on hardware resources.
+
+The distinguishing characterstic between the following designs is in the
+location of the hardware-software interface. The partitioning of the original
+algorithm into hardware and software co-operative components defines the
+interface between the hardware and the software themselves, as well as
+intrinsically establishing a protocol through which the two co-processors must
+interact.
+
+Arguably, should the entirity of the algorithm be aptly suited for a pure
+hardware implementation, the most successful implementation would be a pure
+hardware solution. Hardware, including \glspl{FPGA} offer a much finer control
+over the specific resources that are available, when compared with software.
+Instead, software offers a portable and flexible mechanism to access hardware
+resources, but in doing so compromise features and execution speed.
+
+However, a software approach will most often be far less costly than a hardware
+approach, and thus there is a need to achieve a price-performance compromise
+through clever design decisions. For example, \gls{FPGA} devices, whilst
+powerful and reconfigurable, are fairly limited in terms of specific resources.
+For example, these devices usually have very limited amounts of memory
+available.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Distance Calculation
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Distance Calculation}
+\label{hardware:designs:distanceCalculation}
+I will begin by proposing a simple, but also na\"{\i}ve design so that the
+strengths and weaknesses of this basic design can be explored and criticised.

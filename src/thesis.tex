@@ -240,7 +240,7 @@
 %-------------------------------------------------------------------------------
 % \algm{}
 %===============================================================================
-\newcommand\algm[1]{\emph{#1}}
+\newcommand\algm[1]{#1}
 
 %===============================================================================
 % Format the name of a command line command. Also allows words to be broken over
@@ -278,7 +278,7 @@
 %-------------------------------------------------------------------------------
 % \software{NAME}[CMD]
 %===============================================================================
-\NewDocumentCommand\software{om}{``#2''\IfNoValueTF{#1}{}{\space(\command{#1})}}
+\NewDocumentCommand\software{om}{#2\IfNoValueTF{#1}{}{\space(\command{#1})}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Custom environments
@@ -377,7 +377,7 @@
     }{%
         \begin{figure}%
             \centering
-            \includegraphics[width=\textwidth]{pca/#1}%
+            \includegraphics[width=0.5\textwidth]{pca/#1}%
             \caption{A \gls{PCA} plot for the \dataset{#1} data set}%
             \label{datasets:#1:plots}%
         \end{figure}%

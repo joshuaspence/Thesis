@@ -3,7 +3,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Introduction}
 \label{profiling:matlab:introduction}
-Using \software{MATLAB}'s \command{profile} command, I was able to analyse and
+Using the \software{MATLAB} \command{profile} command, I was able to analyse and
 profile the \algm{anomaly detection using commute distance} algorithm and make
 an assessment of the running time of the algorithm. By analysing the code in
 order to determine which regions are most limiting to the algorithm's
@@ -51,16 +51,17 @@ The following plots compare the `self time' of functions comprising the
 \algm{anomaly detection using commute distance} algorithm. Self time is a more
 relevant metric than total time, as total time is a cumulative measure that
 includes all self times of functions called by some outer function. Self time,
-on the other hand, is the time spent in a function excluding the time spent in
-its child functions. Self time also includes overhead resulting from the process
-of profiling.
+on the other hand, is the time spent \emph{in} a function excluding the time
+spent in its child functions. Self time also includes overhead resulting from
+the process of profiling.
 
 It is my aim to select a single function as a candidate for a hardware
 implementation, selecting the function that has the most significant impact on
 the total algorithm execution time. As such, functions with a relatively small
-self time need not be considered, and have excluded from the following plots.
-Specifically, any function with a self time less than 3\% of the total execution
-time has been aggregated and is represented in the plots as ``Other'' functions.
+self time need not be considered, and have been excluded from the following
+plots. Specifically, any function with a self time less than 3\% of the total
+execution time has been aggregated and is represented in the plots as ``Other''
+functions.
 
 The legend shown in \autoref{profiling:matlab:legend} is common amongst all of
 the \software{MATLAB} profiling results plots shown in

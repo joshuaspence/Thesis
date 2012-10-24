@@ -101,7 +101,7 @@ the algorithm.
 
 \begin{figure}
     \centering
-    \includegraphics[width=\textwidth]{datasets/testCD-annotated}
+    \includegraphics[width=0.5\textwidth]{datasets/testCD-annotated}
     \caption{An annotated plot of the \dataset{testCD} data set}
     \label{datasets:testCD:plots:annotated}
 \end{figure}
@@ -297,9 +297,9 @@ the algorithm.
     \datasetProperty{Number of instances ($M$)}{2100}
     \datasetProperty{Number of attributes ($N$)}{19 + 1 class attribute}
     \datasetProperty{Attribute information}{
-        \textbf{\texttt{region-centroid-col}:} The column of the center pixel of
+        \textbf{\texttt{region-centroid-col}:} The column of the centre pixel of
             the region.\newline
-        \textbf{\texttt{region-centroid-row}:} The row of the center pixel of
+        \textbf{\texttt{region-centroid-row}:} The row of the centre pixel of
             the region.\newline
         \textbf{\texttt{region-pixel-count}:} The number of pixels in a region
             (\ensuremath{=9}).\newline
@@ -332,16 +332,16 @@ the algorithm.
             \ensuremath{\left(2B-\left(G+R\right)\right)}.\newline
         \textbf{\texttt{exgreen-mean}:} Measure the excess green:
             \ensuremath{\left(2G-\left(R+B\right)\right)}.\newline
-        \textbf{\texttt{value-mean}:} 3-d nonlinear transformation of RGB.
+        \textbf{\texttt{value-mean}:} 3-d non-linear transformation of RGB.
             \newline
         \textbf{\texttt{saturation-mean}:} See \texttt{value-mean}.\newline
         \textbf{\texttt{hue-mean}:} See \texttt{value-mean}.
     }
     %
     \datasetProperty{Data set information}{
-    The instances were drawn randomly from a database of 7 outdoor images. The
-    images were unsegmented to create a classification for every pixel. Each
-    instance is a $3 \times 3$ region.
+        The instances were drawn randomly from a database of 7 outdoor images.
+        The images were unsegmented to create a classification for every pixel.
+        Each instance is a $3 \times 3$ region.
     }
 \end{datasetDescription}
 
@@ -439,7 +439,7 @@ the algorithm.
         with an integrated LCD display and a cordless stylus. The input and
         display areas are located in the same place. The tablet sends $x$ and
         $y$ tablet coordinates and pressure level values of the pen at fixed
-        time intervals (sampling rate) of 100 miliseconds.
+        time intervals (sampling rate) of 100 milliseconds.
         \newline
         The writers are asked to write 250 digits in random order inside boxes
         of 500 by 500 tablet pixel resolution. In the study, only the
@@ -453,13 +453,13 @@ the algorithm.
         taller than they are wide.
         \newline
         In order to represent digits as constant length feature vectors, the
-        data was resampled using simple linear interpolation between pairs of
-        points. The resampled digits are represented as a sequence of $T$ points
-        $\left(x_t,y_t\right)_{t=1}^T$, regularly spaced in arc length, as
-        opposed to the input sequence, which is regularly spaced in time.
+        data was re-sampled using simple linear interpolation between pairs of
+        points. The re-sampled digits are represented as a sequence of $T$
+        points $\left(x_t,y_t\right)_{t=1}^T$, regularly spaced in arc length,
+        as opposed to the input sequence, which is regularly spaced in time.
         \newline
         So, the input vector size is $2 \times T$, twice the number of points
-        resampled. The value $T=8$ gave the best trade-off between accuracy and
+        re-sampled. The value $T=8$ gave the best trade-off between accuracy and
         complexity.
     }
 \end{datasetDescription}
@@ -708,7 +708,7 @@ the algorithm.
             \texttt{fSize}.\newline
         \textbf{\texttt{fConc1}:} Ratio of highest pixel over
             \command{fSize}.\newline
-        \textbf{\texttt{fAsym}:} Distance from highest pixel to center,
+        \textbf{\texttt{fAsym}:} Distance from highest pixel to centre,
             projected onto major axis (in millimetres).\newline
         \textbf{\texttt{fM3Long}:} Third root of third moment along major axis
             (in millimetres).\newline
@@ -716,7 +716,7 @@ the algorithm.
             (in millimetres).\newline
         \textbf{\texttt{fAlpha}:} Angle of major axis with vector to origin (in
             degrees).\newline
-        \textbf{\texttt{fDist}:} Distance from origin to center of ellipse (in
+        \textbf{\texttt{fDist}:} Distance from origin to centre of ellipse (in
             millimetres).\newline
         \textbf{\texttt{class}:} Either gamma (signal) or hadron (background).
     }
