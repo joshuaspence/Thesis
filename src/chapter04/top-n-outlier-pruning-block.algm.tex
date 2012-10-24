@@ -27,7 +27,7 @@
 
 \Begin{
     \Cutoff $\leftarrow$ 0\tcp*[l]{set the cutoff for pruning to $0$}
-    %$\Outliers \leftarrow \emptyset$\;\tcp*[l]{initialize to the empty set}
+    $\Outliers \leftarrow \emptyset$\;\tcp*[l]{initialize to the empty set}
     \BlankLine
     \While(\tcp*[h]{load a block of examples from \Data}){$\Block \leftarrow \GetNextBlock{\Data}$}{
         \ForEach{$\BlockIterator \in \Block$}{

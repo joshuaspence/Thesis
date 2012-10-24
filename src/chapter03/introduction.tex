@@ -8,11 +8,18 @@ consumption \cite{Hauck:2007}.
 
 \glspl{FPGA} are devices that combine the advantages of hardware implementations
 with the flexibility of software implementations. The computations are
-programmed into the silicon chip such that an FPGA system can be programmed and
-reprogrammed many times. The utility of FPGAs does, however, come at a price.
-Whilst, compared to a microprocessor, FPGAs are typically several orders of
-magnitude faster and more power efficient, the task of creating efficient
-programs for these devices is difficult.
+programmed into the silicon chip such that an \gls{FPGA} system can be
+programmed and reprogrammed many times. The utility of FPGAs does, however, come
+at a price. Whilst, compared to a microprocessor, \glspl{FPGA} are typically
+several orders of magnitude faster and more power efficient, the task of
+creating efficient programs for these devices is difficult.
+
+It is the goal of an \gls{FPGA} to provide more performance than pure software
+implementations running on general-purpose processors, as well as providing
+flexibility over a fixed-solution \gls{ASIC} implementation. In order to realise
+this goal, it is essential that the \gls{FPGA} is a reconfigurable device
+\cite{Hauck:2007}. A defining characteristic that allows this purpose is that
+an \gls{FPGA} is used as a `blank hardware device for the end user.
 
 Typically, \glspl{FPGA} are useful only for operations that process large
 streams of data, such as signal processing, networking, and the like. Compared
@@ -35,27 +42,3 @@ hardware-software co-design, designers need to be aware of both hardware and
 software limitations and issues. Essentially, a designer must be aware of the
 hardware architecture that best supports a design, as well as the software flow
 that supports the design process.
-
-In many real-life situations, the performance of a software implementation is
-adequate, for one of several reason:
-\begin{itemize}
-    \item Efficient algorithms exist for solving the problem.
-    \item The complexity (size) of the majority of real-life data sets is
-        relatively small.
-    \item The system has sufficient resources that can be allocated to the
-        problem.
-\end{itemize}
-
-However in many other situations, the deficiencies in a software approach are
-not adequate ...
-% TODO
-
-\glspl{FPGA} trade speed and power for configurability when compared to
-\glspl{ASIC} \cite{Hauck:2007}.
-
-It is the goal of an \gls{FPGA} to provide more performance than pure software
-implementations running on general-purpose processors, as well as providing
-flexibility over a fixed-solution \gls{ASIC} implementation. In order to realise
-this goal, it is essential that the \gls{FPGA} is a reconfigurable device
-\cite{Hauck:2007}. A defining characteristic that allows this purpose is that
-an \gls{FPGA} is used as a ``blank'' hardware device for the end user.

@@ -1,4 +1,3 @@
-% TODO: Finish this
 \LinesNumbered
 
 \SetKwInput{InputX}{$X$}
@@ -33,6 +32,6 @@
     \BlankLine
     $\varKnnGraph\longleftarrow\ConstructKnnGraph(\varX,\varKnn)$\;\tcp*[l]{Construct the mutual k-nearest neighbour graph from the data set}
     $\varLaplacian\longleftarrow\ConstructLaplacianMatrix()$\;\tcp*[l]{Compute the graph Laplacian matrix L and its pseudoinverse L+}
-    $\varOutliers\longleftarrow\FindOutliers()$\;\tcp*[l]{Find top N anomalies using the distance-based technique on commute time with pruning rule (using k2) described in Algorithm 1. The commute time between two nodes i and j can be computed using Equation 2.4}
+    $\varOutliers\longleftarrow\FindOutliers()$\;\tcp*[l]{Find top N anomalies using the distance-based technique on commute time with pruning rule.}
     \KwRet{\varOutliers}\;
 }

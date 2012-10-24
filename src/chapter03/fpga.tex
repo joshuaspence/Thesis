@@ -51,7 +51,7 @@ sequential logic. The logic and routing elements of an \gls{FPGA} are controlled
 by programming points, which may be based on Antifuse, Flash or \gls{SRAM}
 technology. With the corresponding memory bits programmed, by way of a
 configuration file or a bitstream, an \gls{FPGA} can be made to implement the
-user's desired function. For this reason, glspl{FPGAs} are referred to as
+user's desired function. For this reason, \glspl{FPGA} are referred to as
 \emph{field programmable} devices, as opposed to \emph{mask programmable}
 devices, which have their  functionality fixed by masks during fabrication.
 
@@ -135,7 +135,7 @@ with enough logic blocks it is possible to perform any desired computation
 
 Note that the interconnect structure shown in \autoref{fig:fpga:architecture} is
 not representative of any actual interconnect structure that is currently in
-use, but rather acts as a placeholder for visual demonstration. In reality,
+use, but rather acts as a place holder for visual demonstration. In reality,
 there are a wide range of methodologies relating to \gls{FPGA} interconnect
 structure. Some of the more common configurations are described below.
 \begin{description}
@@ -222,10 +222,10 @@ that would be required for such units.
 \paragraph{Random Access Memory}
 \label{fpga:architecture:ram}
 Whilst it is possible to implement programmable memory using logic blocks,
-it is a far more efficient use of FPGA resources to provide dedicated on-chip
-\gls{RAM} for this purpose. The grouping of banks of memory cells allows for
-extremely fast lookup table operations, as well as providing memory resources
-for queueing, buffering and general usage.
+it is a far more efficient use of \gls{FPGA} resources to provide dedicated
+on-chip \gls{RAM} for this purpose. The grouping of banks of memory cells allows
+for extremely fast lookup table operations, as well as providing memory
+resources for queueing, buffering and general usage.
 
 \paragraph{Processing Blocks}
 \label{fpga:architecture:processor}
@@ -275,7 +275,7 @@ medium is not persistent.
 \label{fpga:configuration:flash}
 Flash memory holds some improvements over \gls{SRAM} for the configuration of
 \glspl{FPGA}, namely that the memory is non-volatile. This simplifies the
-boot-up process by removing the necessity to redownload the bitstream at power
+boot-up process by removing the necessity to re-download the bitstream at power
 on. Flash memory, however, has a limited write cycle lifetime and often has
 slower write speeds than \gls{SRAM}.
 
@@ -285,7 +285,7 @@ slower write speeds than \gls{SRAM}.
 Antifuse is a metal-based link that behaves the opposite of a fuse
 \cite{Hauck:2007}. Antifuse is initially in a `normally open' state, but through
 a high-current programming process these links can be melted to form a circuit
-connection. The clear disadvantage of antifuse is that it is non-reprogrammable.
+connection. The clear disadvantage of Antifuse is that it is non-reprogrammable.
 It does, however, have some distinct benefits over \gls{SRAM} and Flash memory:
 \begin{itemize}
     \item Antifuse links can be made very small compared to \gls{SRAM} cells.

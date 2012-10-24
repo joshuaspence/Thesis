@@ -1,22 +1,31 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Introduction
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Introductions}
-\label{anomalyDetection:commuteTime:introduction}
-This section provides an overview of a method for anomaly detection using
-commute time. This method was proposed by \citeauthor{Khoa:2012} in
-\fullcite{Khoa:2012} \cite{Khoa:2012}. An introduction to commute time was
-presented in \autoref{commuteTime}. The method described in this section forms
-the base algorithm that will be implemented in hardware during this \thesis{}.
+\subsection{Introduction}
+\label{commuteTime:introduction}
+Commute time is a robust distance metric derived from a random walk on graphs
+\cite{Khoa:2012}. In \citetitle{Khoa:2012}, \citeauthor{Khoa:2012} demonstrated
+how commute time can be used as a distance measure for data mining tasks such as
+anomaly detection and clustering. A prohibitive limitation of this technique is
+that the calculation of commute time involves the Eigen decomposition of the
+graph Laplacian, making it impractical for large graphs.
 
-Commute time is an Euclidean distance in the space spanned by eigenvectors of
-the graph Laplacian matrix. Commute time forms an interesting basis for an
-anomaly detection algorithm because, unlike traditional Euclidean distance,
-the commute time between two nodes can capture both the distance between them
-and the data densities so that we can capture both global and local anomalies in
-the data set \cite{Khoa:2012}.
+Specifically, commute time is an Euclidean distance in the space spanned by
+eigenvectors of the graph Laplacian matrix. Commute time forms an interesting
+and promising basis for an anomaly detection algorithm because, unlike
+traditional Euclidean distance, the commute time between two nodes can capture
+both the distance between them and the data densities so that we can capture
+both global and local anomalies in the data set \cite{Khoa:2012}.
 
-% TODO: Replace with a tikzpicture
+The commute time between two nodes $i$ and $j$ in a graph is the number of steps
+that a random walk, starting from $i$ will take to visit $j$ and then come back
+to $i$ for the first time. The fact that the commute time is averaged over all
+paths (and not just the shortest path) makes it more robust to data
+perturbations and it can also capture graph density \cite{Khoa:2012}. Since it
+is a measure which can capture the geometrical structure of the data and is
+robust to noise, commute time can be applied in methods where Euclidean or other
+distances are used and thus the limitations of these metrics can be avoided.
+
 \begin{figure}
     \centering
     \includegraphics[width=0.3\textwidth]{commute-time/example}
@@ -38,7 +47,6 @@ and the cluster changes dramatically whilst the average pair-wise commute times
 of all nodes within the cluster is largely unaffected. This property is
 illustrated in \autoref{fig:commuteTime:example2}.
 
-% TODO: Replace with a tikzpicture
 \begin{figure}
     \centering
     \includegraphics[width=0.3\textwidth]{commute-time/example2}
@@ -46,57 +54,110 @@ illustrated in \autoref{fig:commuteTime:example2}.
         increases when the cluster is denser]{The commute distance from an
         anomaly ($s$) to a node in a cluster ($t$) increases when the cluster is
         denser \cite{Khoa:2012}}
+    \label{fig:commuteTime:example2}
 \end{figure}
 
-\citeauthor{Khoa:2012} was able to devise and prove an anomaly detection
-algorithm (using the commute time metric) to detect global and local outliers.
-Extending this algorithm, \citeauthor{Khoa:2012} was able to use graph component
-sampling and Eigenspace approximation in order to avoid the $O(n^3)$ Eigen
-decomposition of the graph Laplacian. Furthermore, a pruning technique was used
-in attempt to improve the run time complexity of the algorithm to $O(n\log n)$.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Limitations
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Limitations}
+\label{commuteTime:limitations}
+While commute time is a robust measure for detecting both global and local
+anomalies, the main drawback is its computational time. The direct computation
+of commute time involves the Eigen decomposition of the graph Laplacian matrix,
+which is proportional to $O(n^3)$ and thus is not feasible for large graphs
+\cite{Khoa:2012}.
+
+It is possible, however, to sample the graph components in order to reduce the
+graph size, and then an Eigenspace approximation to approximate the commute time
+on the sampled graph. This is precisely how \citeauthor{Khoa:2012} developed a
+anomaly detection algorithm using commute distance and Eigenspace approximation
+(see \autoref{commuteTime:anomalyDetection}).
+
+\begin{comment}
+An easy way to sample a graph is selecting nodes from it uniformly at random.
+However, sampling in this way can break the graph geometry structure and
+anomalies may not be chosen after sampling. To resolve this, we propose a
+sampling strategy called component sampling. After creating the mutual
+k1-nearest neighbour graph, the graph tends to have many connected components
+corresponding to different data clusters.
+
+Anomalies are likely isolated nodes or nodes in very small components. For nodes
+in normal components (we have a threshold to distinguish between normal and
+anomalous components), they are uniformly sampled with the same ratio
+p = 50k1/n, which is chosen from preliminary experimental results. For nodes in
+anomalous components, we leave all of them intact. Then we rebuild a mutual
+k1-nearest neighbour graph for the sampled data. Sampling in this way will
+maintain the geometry of the original graph and the relative densities of normal
+clusters. Anomalies are also not discarded in this sampling strategy.
+
+\begin{equation}
+    c_{ij} = V_G(x_i - x_j)^T (x_i - x_j)
+\end{equation}
+\end{comment}
+
+The commute time between nodes on the graph can be viewed as the squared
+Euclidean distance in the node space spanned by eigenvectors of the graph
+Laplacian matrix.
+
+Denote $\tilde{V}$, $\tilde{S}$ be a matrix containing $m$ largest eigenvectors
+of $L^+$ and its corresponding diagonal matrix, and
+$\tilde{x}_i = \tilde{S}^{-1/2}\tilde{V}^Te_i$, the approximate commute time is:
+\begin{equation}
+    \tilde{c}_{ij} = V_G(\tilde{x}_i - \tilde{x}_j)^T(\tilde{x}_i - \tilde{x}_j)
+\end{equation}
+
+The commute time $c_{ij}$ in an $n$ dimensional space is transformed to the
+commute time $\tilde{c}_{ij}$ in an $m$ dimensional space. Therefore, we just
+need to compute the $m$ smallest eigenvectors with non-zero eigenvalues of $L$
+(i.e.\ the largest eigenvectors of $L^+$) to approximate the commute time.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Random Walks
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Random Walks}
-\label{anomalyDetection::randomWalks}
+\label{randomWalks}
+Assume we are given a connected undirected and weighted graph $G=(V,E,W)$ with
+edge weights $(w_{ij})_{i,j \in V}>=0$ be the graph adjacency matrix. A degree
+of a node $i$ is $d_i=\sum_{j\in N(i)}w_{ij}$ where $N(i)$ is a set of
+neighbours of node $i$. All nodes non-adjacent to $i$ are assumed to have a
+weight of $w_{ij}=0$.
 
-\cite{Khoa:2012}
-While commute time is a robust measure for detecting both global and local anomalies, the main drawback is its computational time. The direct computation of commute time involves the eigen decomposition of the graph Laplacian matrix which is proportional to $O(N^3)$ and is not feasible for large graphs ($N$ is the number of nodes). In this work, the graph components are sampled to reduce the graph size and then eigenspace approximation in [60] is applied to approximate the commute time on the sampled graph.
+A random walk is a sequence of nodes on a graph visited by a random walker:
+starting from a node, the random walker moves to one of its neighbours with some
+probability. Then from that node, it proceeds to one of its own neighbours with
+some probability, and so on \cite{Khoa:2012}. The random walk is a finite Markov
+chain that is time-reversible, which means the reverse Markov chain has the same
+transition probability matrix as the original Markov chain \cite{Lovasz:1996}.
 
-An easy way to sample a graph is selecting nodes from it uniformly at random. However, sampling in this way can break the graph geometry structure and anomalies may not be chosen after sampling. To resolve this, we propose a sampling strategy called component sampling. After creating the mutual k1-nearest neighbour graph, the graph tends to have many connected components corresponding to different data clusters.
-Anomalies are likely isolated nodes or nodes in very small components. For nodes in normal components (we have a threshold to distinguish between normal and anomalous components), they are uniformly sampled with the same ratio p = 50k1 /n, which is chosen from preliminary experimental results. For nodes in anomalous components, we leave all of them intact. Then we rebuild a mutual k1 -nearest neighbour graph for
-the sampled data. Sampling in this way will maintain the geometry of the original graph and the relative densities of normal clusters. Anomalies are also not discarded in this sampling strategy.
-
-\begin{equation}
-    c_{ij} = V_G(x_i - x_j)^T (x_i - x_j)
-\end{equation}
-Therefore, the commute time between nodes on the graph can be viewed as the
-squared Euclidean distance in the node space spanned by eigenvectors of the graph
-Laplacian matrix.
-
-Denote $\tilde{V}$, $\tilde{S}$ be a matrix containing $m$ largest eigenvectors of $L^+$ and its corresponding diagonal matrix, and $\tilde{x}_i = \tilde{S}^{-1/2}\tilde{V}^Te_i$, the approximate commute time is:
-\begin{equation}
-    \tilde{c}_{ij} = V_G(\tilde{x}_i - \tilde{x}_j)^T(\tilde{x}_i - \tilde{x}_j)
-\end{equation}
-
-The commute time $c_{ij}$ in an $n$ dimensional space is transformed to the commute time $\tilde{c}_{ij}$ in an $m$ dimensional space. Therefore, we just need to compute the $m$ smallest eigen-vectors with nonzero eigenvalues of $L$ (i.e.\ the largest eigenvectors of $L^+$) to approximate the commute time.
+The probability that a random walker selects a particular node from is
+neighbours is determined by the edge weights of the graph. The larger the weight
+$w_{ij}$ of the edge connecting nodes $i$ and $j$, the more often the random
+walker travels through that edge.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Anomaly Detection Using Commute Time
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Anomaly Detection Using Commute Time}
-\label{anomalyDetection:commuteTime:algorithm}
+\label{commuteTime:anomalyDetection}
+\citeauthor{Khoa:2012} was able to devise and prove an anomaly detection
+algorithm (using the commute time metric) to detect global and local outliers.
+Extending this algorithm, \citeauthor{Khoa:2012} was able to use graph component
+sampling and Eigenspace approximation in order to avoid the $O(n^3)$ Eigen
+decomposition of the graph Laplacian. Furthermore, a pruning technique was used
+in attempt to improve the run time complexity of the algorithm to $O(n \log n)$.
+
 The algorithm proposed by \citeauthor{Khoa:2012} in \fullcite{Khoa:2012}
 \cite{Khoa:2012} is presented in \autoref{algm:anomalyDetection:commuteTime}.
 This section describes in detail each stage of the algorithm.
 
-\begin{algorithm}[t]
+\begin{algorithm}
     \input{chapter02/anomaly-detection_commute-time.algm}
     \caption{Anomaly detection using commute time}
     \label{algm:anomalyDetection:commuteTime}
 \end{algorithm}
 
+\begin{comment}
 % Construction of the k-Nearest Neighbour Graph
 \subsubsection{Construction of the $k$-Nearest Neighbour Graph}
 \label{anomalyDetection:commuteTime:algorithm:knnGraph}
@@ -126,3 +187,4 @@ eigenvectors
 The $k$-nearest neighbour graph with $n$ nodes is built in $O(n \log n)$ using kd-tree with the assumption that the dimensionality of the data is not very high. The average degree of each node is $O(k)$ ($k << n$). So the graph is sparse and thus finding connected components take $O(kn)$. After sampling, the size of graph is $O(n_s)$ ($n_s << n$). The standard method for eigen decomposition of $L_s$ is $O({n_s}^3$. Since $L_s$ is sparse, it would take $O(Nn_s) = O(k{n_s}^2$ where $N$ is the number of nonzeros. The computation of just the $m$ smallest eigenvectors ($m < n_s$) is less expensive than that.
 
 The typical distance-based anomaly detection takes $O({n_s}^2$) for the neighbourhood search. Pruning can scale it nearly linear [5]. We only need to compute the commute times $O(n_s)$ times each of which takes $O(m)$. So the time needed for two steps is proportional to $O(n \log n + kn + k{n_s}^2 + mn_s = O(n \log n)$, as $n_s << n$.
+\end{comment}

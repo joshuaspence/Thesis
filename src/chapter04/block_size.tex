@@ -3,14 +3,32 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Introduction}
 \label{profiling:blockSize:introduction}
-To further investigate the
+To further investigate the effect of blocking within the
+\command{TopN_Outlier_Pruning_Block} algorithm, it was decided to map a series
+of key metrics against the block size, and to vary this block size over a wide
+range for all of our test data sets. The key metrics of interest to these tests
+were:
+\begin{itemize}
+    \item Total execution time of the \algm{anomaly detection using commute
+        distance} algorithm.
+    \item Total execution time of the \command{TopN_Outlier_Pruning_Block}
+        function itself.
+    \item The number of vectors that were pruned from the input data set
+        during the execution of the algorithm.
+    \item Number of calls that were made to the \command{distance_squared}
+        function throughout the algorithm's execution.
+\end{itemize}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Method
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Method}
 \label{profiling:blockSize:method}
-% TODO
+In order to investigate the effect of blocking on the performance of the
+\command{TopN_Outlier_Pruning_Block} algorithm, a suite of test scripts were
+constructed to iterate through all of the test data sets, running the
+\algm{anomaly detection using commute distance} algorithm over each data set
+and for each block size to be tested.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Results
@@ -26,8 +44,6 @@ use blocking in any way.
 The data for the plots was obtained using the \software{MATLAB}
 \command{profile} command. Descriptions of the data sets can be found in
 \autoref{dataSets}.
-
-% TODO
 
 Please note that the legend in \autoref{profiling:blockSize:legend:datasets} is
 common to \autoref{profiling:blockSize:totalExecutionTime},
@@ -137,47 +153,71 @@ common to \autoref{profiling:blockSize:totalExecutionTime},
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Discussion}
 \label{algorithmPerformance:discussion}
-The results collected above
-
+The results collected above all support the hypothesis that blocking had little
+effect on the \command{TopN_Outlier_Pruning_Block} algorithm's performance. In
+fact, large block sizes had a negative impact on the algorithm's performance,
+although this could have been due to a limitation of hardware resources on the
+testing hosts. The following remarks regarding the effect of blocking were
+inferred from the test results gathered:
 \begin{itemize}
     \item Most data sets seem to perform better without blocking than with,
         although the performance difference between a small block size (less
-        than 1000), compared to no blocking, is not significant.
+        than 1000) when compared to no blocking, is not significant.
     \item Most data sets seems to perform significantly worse with large block
         sizes (greater than 1000), when compared with smaller block sizes (less
         than 1000).
-    \item Fairly stable with block size of < 1000 or > 1000000
-    \item Seven data sets (\dataset{letter-recognition}, \dataset{magicgamma},
-        \dataset{connect4}, \dataset{musk}, \dataset{spam_train}, \dataset{spam}
-        and \dataset{runningex30k}) performed significantly better without
-        blocking (at least 5 times when compared to a block size > 1000000)
+    \item Block sizes larger than 100000 did not seem to further affect the
+        algorithm's performance. However. this was likely to be due to the fact
+        that the largest data set that was used for testing was only 67557
+        (< 100000) vectors.
+    \item Seven of the test data sets (namely \dataset{letter-recognition},
+        \dataset{magicgamma}, \dataset{connect4}, \dataset{musk},
+        \dataset{spam_train}, \dataset{spam} and \dataset{runningex30k})
+        performed significantly better without blocking. These data sets
+        performed at least 5 times faster when compared to a block size of
+        greater than 100000.
     \item The total number of calls to the distance function is nearly linear in
         the block size.
-    \item Four data sets (\dataset{segmentation}, \dataset{pendigits},
-        \dataset{spam} and \dataset{mesh_network}) had no change in the number
-        of calls to the \command{distance_squared} function compared with block
-        size.
+    \item Four of the test data sets (namely \dataset{segmentation},
+        \dataset{pendigits}, \dataset{spam} and \dataset{mesh_network}) had no
+        change in the number of calls to the \command{distance_squared} function
+        compared with block size.
     \item Generally, the smaller the block size was, the faster the algorithm
         executed.
-    \item The larger the block size, the more that vectors are pruned
-        (conversely, without blocking, not many vectors are pruned).
+    \item The larger the block size, the more the number of vectors that are
+        pruned during the algorithm's execution. Conversely, without blocking at
+        all, very few vectors were pruned.
 \end{itemize}
 
+Fitting lines of best fit to the data points shown in
+\autoref{profiling:blockSize:functionRunTimeComplexity:logarithmic} provides a
+validation of the scaling performance of the
+\command{TopN_Outlier_Pruning_Block} algorithm. The data shown in
+\autoref{tbl:topn_outlier_pruning_block:lobf} shows that, for our test data
+sets, the runtime performance of the \command{TopN_Outlier_Pruning_Block}
+algorithm varied between $O(n^1.57)$ and $O(n^2.18)$, depending on the value
+chosen for the block size.
+
 % Lines of best fit
-\begin{longtable}{|+>{\bfseries}c|^l|^c|}
-    \tableHeader{Block size & Fit & Coefficient of determination ($R^2$)}
-    0 &         $2.95232268646359 \times 10^-6 \times x^{1.5701731748}$ &   0.8252617823 \\
-    1 &         $1.99974741419878 \times 10^-6 \times x^{1.6279693701}$ &   0.8472712848 \\
-    10 &        $2.47146286428157 \times 10^-6 \times x^{1.5942823477}$ &   0.8514101635 \\
-    15 &        $2.61779443859478 \times 10^-6 \times x^{1.5882193828}$ &   0.8273032456 \\
-    30 &        $2.85347906672221 \times 10^-6 \times x^{1.5810782275}$ &   0.8407365739 \\
-    40 &        $2.393            \times 10^-6 \times x^{1.6026893824}$ &   0.8369025885 \\
-    45 &        $2.11550069078546 \times 10^-6 \times x^{1.6215256016}$ &   0.8176455619 \\
-    60 &        $1.90246021613607 \times 10^-6 \times x^{1.6408351928}$ &   0.807660717 \\
-    90 &        $1.8552473060756  \times 10^-6 \times x^{1.6472982903}$ &   0.7956635499 \\
-    100 &       $2.45648959267628 \times 10^-6 \times x^{1.5966255392}$ &   0.8105129767 \\
-    1000 &      $4.80646490593615 \times 10^-6 \times x^{1.5689092708}$ &   0.8328463309 \\\
-    10000 &     $1.07142672605121 \times 10^-6 \times x^{1.8339855181}$ &   0.9182785472 \\
-    100000 &    $8.59282468122866 \times 10^-8 \times x^{2.172997051}$  &   0.933976207 \\
-    1000000 &   $8.04573229523765 \times 10^-8 \times x^{2.1829343104}$ &   0.9298342132 \\
-\end{longtable}
+\begin{table}
+    \begin{longtable}{|+>{\bfseries}c|^l|^c|}
+        \tableHeader{Block size & Fit & Coefficient of determination ($R^2$)}
+        0 &         $2.95232268646359 \times 10^-6 \times n^{1.5701731748}$ &   0.8252617823 \\
+        1 &         $1.99974741419878 \times 10^-6 \times n^{1.6279693701}$ &   0.8472712848 \\
+        10 &        $2.47146286428157 \times 10^-6 \times n^{1.5942823477}$ &   0.8514101635 \\
+        15 &        $2.61779443859478 \times 10^-6 \times n^{1.5882193828}$ &   0.8273032456 \\
+        30 &        $2.85347906672221 \times 10^-6 \times n^{1.5810782275}$ &   0.8407365739 \\
+        40 &        $2.393            \times 10^-6 \times n^{1.6026893824}$ &   0.8369025885 \\
+        45 &        $2.11550069078546 \times 10^-6 \times n^{1.6215256016}$ &   0.8176455619 \\
+        60 &        $1.90246021613607 \times 10^-6 \times n^{1.6408351928}$ &   0.807660717 \\
+        90 &        $1.8552473060756  \times 10^-6 \times n^{1.6472982903}$ &   0.7956635499 \\
+        100 &       $2.45648959267628 \times 10^-6 \times n^{1.5966255392}$ &   0.8105129767 \\
+        1000 &      $4.80646490593615 \times 10^-6 \times n^{1.5689092708}$ &   0.8328463309 \\\
+        10000 &     $1.07142672605121 \times 10^-6 \times n^{1.8339855181}$ &   0.9182785472 \\
+        100000 &    $8.59282468122866 \times 10^-8 \times n^{2.172997051}$  &   0.933976207 \\
+        1000000 &   $8.04573229523765 \times 10^-8 \times n^{2.1829343104}$ &   0.9298342132 \\\hline
+    \end{longtable}
+    \caption{Scaling performance of the \command{TopN_Outlier_Pruning_Block}
+        algorithm}
+    \label{tbl:topn_outlier_pruning_block:lobf}
+\end{table}

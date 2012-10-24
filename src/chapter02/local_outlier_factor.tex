@@ -1,0 +1,13 @@
+\gls{LOF} is a formula that captures the degree to which a data point is an
+outlier with respect to its local neighbourhood. In this context, `local' means
+that the determination of the data points does not depend on knowledge of the
+global distribution of the data set.
+
+Although the use of \gls{LOF} for outlier detection is well established,
+standard implementations are inherently very computationally intensive in
+high-dimensional settings due to the difficulties surrounding the efficient
+computation of $k$-nearest-neighbour sets for high-dimensional data. Projection
+of the data into a lower-dimensional subspace has the potential for speeding up
+the computation of neighbourhoods; however, the question arises as to whether
+neighbourhood information is sufficiently well preserved by the projection
+\cite{Khoa:2012}.
