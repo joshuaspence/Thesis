@@ -75,7 +75,7 @@ close(DATA);
 open(GNUPLOT, "| gnuplot >${\(devnull())}");
 print GNUPLOT <<END_OF_GNUPLOT;
 reset
-set terminal tikz color size 10cm, 10cm
+set terminal tikz color size 9cm, 9cm
 set datafile separator ','
 
 # Define axis

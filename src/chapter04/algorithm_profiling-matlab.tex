@@ -1,3 +1,8 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Introduction
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Introduction}
+\label{profiling:matlab:introduction}
 Using \software{MATLAB}'s \command{profile} command, I was able to analyse and
 profile the \algm{anomaly detection using commute distance} algorithm and make
 an assessment of the running time of the algorithm. By analysing the code in
@@ -10,7 +15,7 @@ sections.
 % Method
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Method}
-\label{software:algorithmProfiling:matlab:method}
+\label{profiling:matlab:method}
 In order to profile the provided \software{MATLAB} code, it was necessary to
 gain a basic understanding of the structure of the source code, as well as
 insight into how the algorithm is intended to be used (i.e.\ pre-conditions,
@@ -41,7 +46,7 @@ code. This timing information, contrary to \emph{real} time, discounts idle
 % Results
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Results}
-\label{software:algorithmProfiling:matlab:results}
+\label{profiling:matlab:results}
 The following plots compare the `self time' of functions comprising the
 \algm{anomaly detection using commute distance} algorithm. Self time is a more
 relevant metric than total time, as total time is a cumulative measure that
@@ -70,82 +75,34 @@ the \software{MATLAB} profiling results plots shown in
 \input{plots/matlab/all_datasets}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Performance Bottleneck
+% Discussion
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Performance Bottleneck}
-\label{algorithmPerformance:bottleneck}
+\subsection{Discussion}
+\label{algorithmPerformance:discussion}
 From observations of the results of the algorithm profiling, it was observed
-that the performance of the `anomaly detection using commute-distance' algorithm
-is bottle-necked significantly by a function named
-\command{TopN_Outlier_Pruning_Block}. The MATLAB code for this function can be
-found in \autoref{sourceCode:matlab}. Analysis of this function, as well as
-discussions with \citeauthor{Khoa:2012} revealed that the algorithm was
-originally devised by \citeauthor{Bay:2003} and published in the paper
-\citetitle{Bay:2003}. The general steps of the algorithm are described in
-\autoref{algm:TopNOutlierPruningBlock}.
+that the performance of the \algm{anomaly detection using commute distance}
+algorithm is bottle-necked significantly by the function named
+\command{TopN_Outlier_Pruning_Block}. The \software{MATLAB} code for this
+function can be found in \autoref{sourceCode:matlab}.
 
-\begin{algorithm}
-    \input{chapter04/top-n-outlier-pruning-block.algm}
-    \caption{TopN\_Outlier\_Pruning\_Block}
-    \label{algm:TopNOutlierPruningBlock}
-\end{algorithm}
+Analysis of this function, as well as discussions with \citeauthor{Khoa:2012}
+revealed that the algorithm was originally devised by \citeauthor{Bay:2003} and
+published in the paper \citetitle{Bay:2003}. The general steps of the algorithm
+are described in \autoref{algm:TopNOutlierPruningBlock}. The function itself
+will be discussed in \autoref{profiling:function}.
 
-In this algorithm, the \command{score} function can be any monotonically
-decreasing function of the nearest neighbour distances such as the distance to
-the $k$th nearest neighbour, or the average distance to the $k$ neighbours
-\cite{Bay:2003}.
+More specifically, it was apparent that within the
+\command{Top_N_Outlier_Pruning_Block} function, there was a single step that
+dominated valuable \gls{CPU} cycles. This step was the calculate of the square
+of the Euclidean distance between two multidimensional vectors. Due to the
+``nested for loop'' structure of the algorithm, there were a significant number
+of calls to the \command{distance_squared} function. For one particular data
+set, the \dataset{connect4} data set, calls to the \command{distance_squared}
+function accounted for 43.3\% of all function calls made throughout the
+algorithm's execution.
 
-The main idea of the nested loop algorithm is that for each example in the
-input set \verb+Data+, the algorithm keeps track of the closest neighbours found
-so far. When an example's closest neighbours achieve a score lower than the
-\verb+cutoff+, the example is discarded because it can no longer be an outlier.
-As more examples are processed, the algorithm finds more extreme outliers and
-the \verb+cutoff+ increases along with pruning efficiency \cite{Bay:2003}.
-
-In the worst case, the performance of the algorithm is very poor --- due to the
-nested loops, it could require $O(N^{2})$ distance computations and
-$O(\frac{N}{blocksize} \times N)$ data accesses. However, \citeauthor{Bay:2003}
-proved (through application of the algorithm to both real and synthetic data
-sets) that the algorithm performs considerably better than the expected
-$O(N^{2})$ running time in the average case. The performance improvements over
-similar algorithms were attributed to the application of randomization and
-pruning techniques. The outlier pruning problem can be considered similar to the
-problem of conducting a set of independent Bernoulli trials in which examples
-are analysed until $k$ examples within distance $d$ are found, or until the data
-set is exhausted. \citeauthor{Bay:2003} proved that the number of trials
-expected to achieve $k$ examples within distance $d$ is given by:
-
-\begin{equation}
-    E[Y] \leq \frac{k}{\pi(\textbf{x})} + \Bigg(1-\sum_{y=k}^{N} P(Y=y)\Bigg) \times N
-    \label{eqn:outlierPruneComplexity}
-\end{equation}
-
-Where $\pi(x)$ is the probability that a random drawn example lies within
-distance $d$ of point $x$ and $P(Y=y)$ is the probability of obtaining the $k$th
-success on trial $y$.
-
-The first term in \autoref{eqn:outlierPruneComplexity} represents the number of
-distance computations to eliminate non-outliers, and does not depend on $N$. The
-second term represents the expected cost of outliers, and does depend on $N$,
-yielding an overall quadratic dependency to process $N$ examples in total.
-However, note that we typically set the program parameters to return a small an
-possibly fixed number of outliers. Thus the first term dominates and we obtain
-near linear performance \cite{Bay:2003}. More specifically, it was determined
-that the primary factor determining the scaling is how the cut-off changes as
-$N$ increases.
-
-There are, however, some limitations of the aforementioned algorithm.
-Specifically:
-\begin{enumerate}
-    \item The algorithm assumes that the data is in random order. If the data is
-        not in random order and is sorted then the performance can be poor.
-    \item The algorithm depends on the independence of examples. If examples are
-        dependent in such a way that they have similar values (and will likely
-        be in the set of $k$ nearest neighbours) this can cause performance to
-        be poor as the algorithm may have to scan the entire data set to find
-        the dependent examples.
-    \item The algorithm can perform poorly occurs when the data does not contain
-        outliers.
-\end{enumerate}
-
-% TODO
+The extensive and repeated use of the \command{distance_squared} function, as
+well as the simple structure of the function itself, provide initial confidence
+that the \algm{anomaly detection using commute distance} algorithm could be
+improved, in terms of performance and resource utilisation, through a hardware
+design.
