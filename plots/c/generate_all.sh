@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 ################################################################################
 #
@@ -6,36 +6,12 @@
 #
 ################################################################################
 
-PLOTS="
-	ball1
-	connect4
-	letter-recognition
-	magicgamma
-	mesh_network
-	musk
-	pendigits
-	runningex1k
-	runningex10k
-	runningex20k
-	runningex30k
-	runningex40k
-	runningex50k
-	segmentation
-	spam
-	spam_train
-	testCD
-	testCDST
-	testCDST2
-	testCDST3
-	testoutrank
-	all_datasets
-	legend
-"
+source $(dirname $0)/common.sh
 
 echo "Generating C profiling plots..."
 for PLOT in $PLOTS; do
-	OUTPUT="$(dirname $0)/${PLOT}.tex"
-	SCRIPT="$(dirname $0)/$(basename ${OUTPUT}).pl"
-	echo "$(basename ${SCRIPT}) --> $(basename ${OUTPUT})"
+    OUTPUT=$(get_output_name $PLOT)
+    SCRIPT=$(get_script_name $PLOT)
+    echo "$(basename ${SCRIPT}) --> $(basename ${OUTPUT})"
 	perl "$SCRIPT" "$OUTPUT" $@
 done

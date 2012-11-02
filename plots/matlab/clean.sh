@@ -2,16 +2,15 @@
 
 ################################################################################
 #
-# Generate all MATLAB profiling plots from the CSV data file.
+# Clean all generated graphs.
 #
 ################################################################################
 
 source $(dirname $0)/common.sh
 
-echo "Generating MATLAB profiling plots..."
+echo "Cleaning MATLAB profiling plots..."
 for PLOT in $PLOTS; do
     OUTPUT=$(get_output_name $PLOT)
-    SCRIPT=$(get_script_name $PLOT)
-    echo "$(basename ${SCRIPT}) --> $(basename ${OUTPUT})"
-	perl "$SCRIPT" "$OUTPUT" $@
+    echo "Deleting $(basename ${OUTPUT})"
+    rm "$OUTPUT" $@ 2>/dev/null
 done

@@ -23,6 +23,13 @@ my $output_file = $ARGV[0];
 # If the output file already exists, check if forced execution was specified
 my $force = 0;
 GetOptions("f|force" => \$force);
+if ($force) {
+    print STDERR <<EOF;
+Let's not regenerate these figures unless we really have to... it requires a lot
+of memory for MATLAB to load the FIG files.
+EOF
+    $force = 0;
+}
 (-f $output_file) && !$force && exit 0;
 
 # The figure file

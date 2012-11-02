@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 ################################################################################
 #
@@ -7,33 +7,12 @@
 #
 ################################################################################
 
-DATASETS="
-	ball1
-	connect4
-	letter-recognition
-	magicgamma
-	mesh_network
-	musk
-	pendigits
-	runningex1k
-	runningex10k
-	runningex20k
-	runningex30k
-	runningex40k
-	runningex50k
-	segmentation
-	spam
-	spam_train
-	testCD
-	testCDST
-	testCDST2
-	testCDST3
-	testoutrank
-"
+source $(dirname $0)/common.sh
 
+echo "Generating PCA plots..."
 for DATASET in $DATASETS; do
-	OUTPUT="$(dirname $0)/${DATASET}.png"
-	SCRIPT="$(dirname $0)/$(basename ${OUTPUT}).pl"
+	OUTPUT=$(get_output_name $DATASET)
+	SCRIPT=$(get_script_name $DATASET)
 	echo "$(basename ${SCRIPT}) --> $(basename ${OUTPUT})"
 	perl "$SCRIPT" "$OUTPUT" $@
 done

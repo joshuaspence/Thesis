@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 ################################################################################
 #
@@ -6,22 +6,12 @@
 #
 ################################################################################
 
-PLOTS="
-    distance_calls
-    function_execution_time
-    function_run_time_complexity.lin
-    function_run_time_complexity.log
-    legend
-    total_execution_time
-    total_run_time_complexity.lin
-    total_run_time_complexity.log
-    vectors_pruned
-"
+source $(dirname $0)/common.sh
 
 echo "Generating block size profiling plots..."
 for PLOT in $PLOTS; do
-	OUTPUT="$(dirname $0)/${PLOT}.tex"
-	SCRIPT="$(dirname $0)/$(basename ${OUTPUT}).pl"
+    OUTPUT=$(get_output_name $PLOT)
+    SCRIPT=$(get_script_name $PLOT)
     echo "$(basename ${SCRIPT}) --> $(basename ${OUTPUT})"
 	perl "$SCRIPT" "$OUTPUT" $@
 done
