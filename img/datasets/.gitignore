@@ -1,2 +1,5 @@
 # The dataset PNG plots can be regenerated easily.
 *.png
+
+# Placeholders to mark data sets that cannot be plotted.
+*.png.none

@@ -10,7 +10,9 @@ all symlink to the `common.pl` script), which can be used to regenerate the PNG
 plots. This should rarely need to be done, but is included here for
 completeness.
 
-Plots are only generated for 2D or 3D data sets.
+Plots are only generated for 2D or 3D data sets. If an attempt is made to plot a
+data set of a higher dimension, then an empty (placeholder) file will be
+created, with a name `DATASET.png.none`.
 
 # Dependencies
 - bash

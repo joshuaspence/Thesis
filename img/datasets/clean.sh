@@ -12,5 +12,5 @@ echo "Cleaning data set plots..."
 for DATASET in $DATASETS; do
     OUTPUT=$(get_output_name $DATASET)
     echo "Deleting $(basename ${OUTPUT})"
-    rm "$OUTPUT" $@ 2>/dev/null
+    rm "$OUTPUT" "${OUTPUT}.none" $@ 2>/dev/null
 done
