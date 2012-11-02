@@ -1,0 +1,6 @@
+# LaTeX output and auxillary files
+*.aux
+*.log
+*.out
+*.pdf
+*.toc
