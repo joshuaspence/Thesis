@@ -69,7 +69,7 @@
 
 % This is the style file for the gnuplot PGF/TikZ terminal. It is associated
 % with the 'gnuplot.lua' script.
-\usepackage{../lib/gnuplot-lua-tikz/gnuplot-lua-tikz}
+\usepackage{gnuplot-lua-tikz}
 
 % The datetime package is a LaTeX package that provides various different
 % formats for \today, and provides commands for displaying the current time.
@@ -208,7 +208,7 @@
 % \tableHeader{...}
 %===============================================================================
 \newcommand\tableHeader[1]{%
-	\hline\rowstyle{\bfseries}#1\\*\nobreakhline%
+	\hline\rowstyle{\bfseries}#1\tabularnewline*\nobreakhline\endfirsthead%
 }
 
 %===============================================================================
@@ -270,7 +270,7 @@
 %-------------------------------------------------------------------------------
 % \software{NAME}[CMD]
 %===============================================================================
-\NewDocumentCommand\software{om}{``#2'' \IfNoValueTF{#1}{}{(\command{#1})}}
+\NewDocumentCommand\software{om}{``#2''\IfNoValueTF{#1}{}{\space(\command{#1})}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Custom environments
@@ -385,25 +385,25 @@
 % \end{datasets}
 %===============================================================================
 \makeatletter
-\NewDocumentEnvironment{datasets}{m}{%
+\NewDocumentEnvironment{datasets}{}{%
     \def\datasets@hline{}%
     \def\datasets@width{8cm}%
     \def\datasets@minipage@width{0.4\textwidth}%
     \def\datasets@graphic@width{0.9\textwidth}%
     %
     \newcommand\dataSetBrief[3]{%
-        \gdef\dataSetBrief@name{##1}%
+        \gdef\dataSetBrief@name{\escape{##1}}%
         \gdef\dataSetBrief@size{##2}%
         \gdef\dataSetBrief@dimensionality{##3}%
         %
-        \datasets@hline\dataSetBrief@name&\dataSetBrief@size&\dataSetBrief@dimensionality%
-        \def\datasets@hline{\\}%
+        \datasets@hline\dataSetBrief@name&\dataSetBrief@size&\dataSetBrief@dimensionality
+        \def\datasets@hline{\tabularnewline}%
     }%
     %
     \begin{longtable}{|+>{\bfseries}l|^c|^c|}%
         \tableHeader{Name & Size ($M$) & Dimensionality ($N$)}%
 }{%
-        \\\hline
+        \tabularnewline\hline
     \end{longtable}%
 }
 \makeatother
@@ -434,19 +434,19 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Glossary
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\usepackage[acronym,toc,xindy]{glossaries} % note that hyperref must be loaded first
+\usepackage[toc,xindy]{glossaries} % note that hyperref must be loaded first
 \makeglossaries
 \loadglsentries{acronym}
 
 % Show abbreviated acronyms in the table of contents.
 \usepackage{etoolbox}
-\pretocmd{\listoffigures}{\glslocalunsetall[acronym]}{}{}
-\apptocmd{\listoffigures}{\glslocalresetall[acronym]}{}{}
+%\pretocmd{\listoffigures}{\glslocalunsetall[acronym]}{}{}
+%\apptocmd{\listoffigures}{\glslocalresetall[acronym]}{}{}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Bibliography
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\usepackage[language=australian]{biblatex} % use biblatex instead of bibtex
+\usepackage[backend=bibtex,language=australian]{biblatex} % use biblatex instead of bibtex
 \bibliography{thesis}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -504,7 +504,6 @@
 \chapter*{Statement of Achievement}
 \label{statement-of-achievement}
 \input{chapter01/contributions}
-\end{comment}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Acknowledgements

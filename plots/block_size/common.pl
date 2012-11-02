@@ -7,13 +7,13 @@ use Cwd qw(abs_path);
 use File::Basename qw(basename dirname);
 use File::Spec::Functions qw(catdir catfile devnull updir);
 
-use lib catdir(dirname($0), updir(), updir(), updir(), 'scripts');
+use lib catdir(dirname($0), updir(), updir(), 'scripts');
 require 'util.pl';
 
 #===============================================================================
 # Configuration
 #===============================================================================
-use constant DATA_FILE             => catfile(updir(), updir(), updir(), 'data', 'profiling', 'block_size.csv');
+use constant DATA_FILE             => catfile(updir(), updir(), 'data', 'profiling', 'block_size.csv');
 use constant NO_BLOCKING_BLOCKSIZE => 0;
 
 use constant COL_DATASET           => 0;
@@ -107,9 +107,9 @@ END_OF_GNUPLOT
 # DISTANCE CALLS
 ################################################################################
 set log x
-set xlabel "Block size"
+set xlabel "\\\\textbf{Block size}"
 set format x "\$10^{%L}\$"
-set ylabel "Calls to the distance function (normalised)"
+set ylabel "\\\\textbf{Calls to the distance function (normalised)}"
 END_OF_GNUPLOT
 } elsif (basename($0) =~ m/function_execution_time.tex.pl/) {
     $loop_over = 'dataset';
@@ -118,20 +118,20 @@ END_OF_GNUPLOT
 # FUNCTION EXECUTION TIME
 ################################################################################
 set log x
-set xlabel "Block size"
+set xlabel "\\\\textbf{Block size}"
 set format x "\$10^{%L}\$"
-set ylabel "Function execution time (normalised)"
+set ylabel "\\\\textbf{Function execution time (normalised)}"
 END_OF_GNUPLOT
-} elsif (basename($0) =~ m/total_execution_time/) {
+} elsif (basename($0) =~ m/total_execution_time.tex.pl/) {
     $loop_over = 'dataset';
     print GNUPLOT <<END_OF_GNUPLOT;
 ################################################################################
 # TOTAL EXECUTION TIME
 ################################################################################
 set log x
-set xlabel "Block size"
+set xlabel "\\\\textbf{Block size}"
 set format x "\$10^{%L}\$"
-set ylabel "Total execution time (normalised)"
+set ylabel "\\\\textbf{Total execution time (normalised)}"
 END_OF_GNUPLOT
 } elsif (basename($0) =~ m/vectors_pruned.tex.pl/) {
     $loop_over = 'dataset';
@@ -140,31 +140,55 @@ END_OF_GNUPLOT
 # NUMBER OF VECTORS PRUNED
 ################################################################################
 set log x
-set xlabel "Block size"
+set xlabel "\\\\textbf{Block size}"
 set format x "\$10^{%L}\$"
-set ylabel "Number of vectors pruned (normalised)"
+set ylabel "\\\\textbf{Number of vectors pruned (normalised)}"
 END_OF_GNUPLOT
-} elsif (basename($0) =~ m/function_run_time_complexity/) {
+} elsif (basename($0) =~ m/function_run_time_complexity.lin.tex.pl/) {
     $loop_over = "blocksize";
     print GNUPLOT <<END_OF_GNUPLOT;
 ################################################################################
 # FUNCTION RUN TIME COMPLEXITY
 ################################################################################
 set log x
-set xlabel "Problem size"
+set xlabel "\\\\textbf{Problem size}"
 set format x "\$10^{%L}\$"
-set ylabel "Execution time"
+set ylabel "\\\\textbf{Function execution time}"
 END_OF_GNUPLOT
-} elsif (basename($0) =~ m/total_run_time_complexity.tex.pl/) {
+} elsif (basename($0) =~ m/function_run_time_complexity.log.tex.pl/) {
+    $loop_over = "blocksize";
+    print GNUPLOT <<END_OF_GNUPLOT;
+################################################################################
+# FUNCTION RUN TIME COMPLEXITY
+################################################################################
+set log x
+set xlabel "\\\\textbf{Problem size}"
+set format x "\$10^{%L}\$"
+set ylabel "\\\\textbf{Function execution time}"
+set log y
+END_OF_GNUPLOT
+} elsif (basename($0) =~ m/total_run_time_complexity.lin.tex.pl/) {
     $loop_over = 'blocksize';
     print GNUPLOT <<END_OF_GNUPLOT;
 ################################################################################
 # TOTAL RUN TIME COMPLEXITY
 ################################################################################
 set log x
-set xlabel "Problem size"
+set xlabel "\\\\textbf{Problem size}"
 set format x "\$10^{%L}\$"
-set ylabel "Execution time"
+set ylabel "\\\\textbf{Total execution time}"
+END_OF_GNUPLOT
+} elsif (basename($0) =~ m/total_run_time_complexity.log.tex.pl/) {
+    $loop_over = 'blocksize';
+    print GNUPLOT <<END_OF_GNUPLOT;
+################################################################################
+# TOTAL RUN TIME COMPLEXITY
+################################################################################
+set log x
+set xlabel "\\\\textbf{Problem size}"
+set format x "\$10^{%L}\$"
+set ylabel "\\\\textbf{Total execution time}"
+set log y
 END_OF_GNUPLOT
 } else {
     close(GNUPLOT);
@@ -210,7 +234,7 @@ if ($loop_over =~ m/dataset/) {
 use strict; \\
 use warnings; \\
 \\
-use lib '${\(catdir(dirname($0), updir(), updir(), updir(), 'scripts'))}'; \\
+use lib '${\(catdir(dirname($0), updir(), updir(), 'scripts'))}'; \\
 require 'util.pl'; \\
 \\
 open(FILE, '<${\(catdir(dirname($0), DATA_FILE))}'); \\
@@ -229,7 +253,7 @@ for my \\\\\$line (<FILE>) { \\
 close(FILE);\\"" \\
         using ${\(COL_BLOCKSIZE + 1)}:$the_column smooth unique \\
         title '$dataset_clean' with linespoints lt 1 lc $colour_counter, \\
-    $no_blocking_value title '$dataset_clean*' with line lt 0 lc $colour_counter \\
+    $no_blocking_value title '$dataset_clean (no blocking)' with line lt 0 lc $colour_counter \\
 END_OF_GNUPLOT
         push(@all_data, $data);
         $colour_counter++;
@@ -240,9 +264,9 @@ END_OF_GNUPLOT
         my $blocksize_text = latex_escape("block_size=$blocksize");
 
         my $the_column;
-        if (basename($0) =~ m/total_run_time_complexity.tex.pl/) {
+        if (basename($0) =~ m/total_run_time_complexity.(lin|log).tex.pl/) {
             $the_column = ${\(COL_TOTALTIME + 1)};
-        } elsif (basename($0) =~ m/function_run_time_complexity.tex.pl/) {
+        } elsif (basename($0) =~ m/function_run_time_complexity.(lin|log).tex.pl/) {
             $the_column = ${\(COL_FUNCTIME + 1)};
         } else {
             close(GNUPLOT);
@@ -254,7 +278,7 @@ END_OF_GNUPLOT
 use strict; \\
 use warnings; \\
 \\
-use lib '${\(catdir(dirname($0), updir(), updir(), updir(), 'scripts'))}'; \\
+use lib '${\(catdir(dirname($0), updir(), updir(), 'scripts'))}'; \\
 require 'util.pl'; \\
 \\
 open(FILE, '<${\(catfile(dirname($0), DATA_FILE))}'); \\

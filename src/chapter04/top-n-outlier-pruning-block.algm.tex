@@ -1,54 +1,52 @@
-% TODO: Finish this
-
 \LinesNumbered
 
-% Algorithm parameters
-\SetKwInput{K}{k}\K{The number of nearest neighbours to consider}
-\SetKwInput{N}{N}\N{The number of outliers to return}
-\SetKwInput{Data}{Data}\Data{A set of $M$ vector of size $N$, in random order}
-\SetKwInOut{Outliers}\Outliers{A set of size $N$ containing the indexes of the identified vectors}
-\SetKwInOut{OutlierScores}\Outliers{A set of size $N$ containing the scores of the identified vectors}
+\SetKwInput{inNumK}{k}\inNumK{the number of nearest neighbours to consider}
+\SetKwInput{inNumN}{N}\inNumN{the number of outliers to return}
+\SetKwInput{inData}{data}\inData{a set of examples in random order}
+\SetKwInOut{outOutliers}{outliers}\outOutliers{a set of outliers}
+\SetKwInOut{outOutlierScores}{outlier\_scores}
 
-% Variables
-\SetKwData{B}{b}
+\SetKwData{BlockIterator}{b}
 \SetKwData{Block}{block}
 \SetKwData{Cutoff}{cutoff}
-\SetKwData{D}{d}
-\SetKwData{Data}{Data}
+\SetKwData{DataIterator}{d}
+\SetKwData{Data}{data}
+\SetKwData{NumK}{k}
+\SetKwData{NumN}{N}
 \SetKwData{Neighbours}{neighbours}
-\SetKwData{O}{o}
+\SetKwData{OutlierIterator}{o}
 \SetKwData{Outliers}{outliers}
 \SetKwData{Score}{score}
 
-% Functions
 \SetKwFunction{Closest}{closest}
 \SetKwFunction{Distance}{distance}
-\SetKwFunction{GetNextBlock}{getNextBlock}
-\SetKwFunction{MaxDist}{maxDist}
+\SetKwFunction{GetNextBlock}{get\_next\_block}
+\SetKwFunction{MaxDist}{max\_dist}
 \SetKwFunction{Min}{min}
 \SetKwFunction{Top}{top}
 
-\BlankLine
 \Begin{
-    $\Cutoff\leftarrow 0$\tcp*[l]{set the cutoff for pruning to $0$}
-    $\Outliers\leftarrow\emptyset$\tcp*[l]{initialize to the empty set}
+    \Cutoff $\leftarrow$ 0\tcp*[l]{set the cutoff for pruning to $0$}
+    %$\Outliers \leftarrow \emptyset$\;\tcp*[l]{initialize to the empty set}
     \BlankLine
-    \While(\tcp*[h]{load a block of examples from \varD}){$\Block \longleftarrow \GetNextBlock{\Data}$}{
-        $\Neighbours(\varB) \longleftarrow \emptyset, \quad \forall \, \varB \in \Block$\;
+    \While(\tcp*[h]{load a block of examples from \Data}){$\Block \leftarrow \GetNextBlock{\Data}$}{
+        \ForEach{$\BlockIterator \in \Block$}{
+            $\Neighbours[\BlockIterator] \leftarrow \emptyset$\;
+        }
         \BlankLine
-        \ForEach{$\varD \in \Data$}{
-            \ForEach{$\varB \in \Block \: : \: \varB \neq \varD$}{
-                \If{$|\Neighbours(\varB)| < \varK \: \lor \: \Distance{\varB, \varD} < \MaxDist{\varB, \Neighbours(\varB)}$}{
-                    $\Neighbours(\varB) \longleftarrow \Closest{\varB, \Neighbours(\varB)} \cup \varD, \varK)$\;
-                    \If{$\Score(\Neighbours(\varB), \varB) < \Cutoff$}{
-                        $\Block \longleftarrow \Block \setminus \varB$\;
+        \ForEach{$\DataIterator \in \Data$}{
+            \ForEach{$\BlockIterator \in \Block \: : \: \BlockIterator \neq \DataIterator$}{
+                \If{$|\Neighbours[\BlockIterator]|<\NumK \:\lor\: \Distance{\BlockIterator,\DataIterator}<\MaxDist{\BlockIterator,\Neighbours[\BlockIterator]}$}{
+                    $\Neighbours[\BlockIterator] \leftarrow \Closest{\BlockIterator,\Neighbours[\BlockIterator]}\cup\DataIterator,\NumK)$\;
+                    \If{$\Score(\Neighbours[\BlockIterator],\BlockIterator)<\Cutoff$}{
+                        $\Block\leftarrow\Block\setminus\BlockIterator$\;
                     }
                 }
             }
         }
         \BlankLine
-        $\Outliers \longleftarrow $\Top{$\Block \cup \Outliers$, $\varN$}\tcp*[l]{keep only the top n outliers}
-        $\Cutoff \longleftarrow \Min_{\varO \in \Outliers}(\Score(\varO))$\tcp*[l]{the cutoff is the score of the weakest outlier}
+        %$\Outliers \leftarrow \Top{\Block \cup \Outliers, \NumN}$\;
+        $\Cutoff \leftarrow \Min_{\OutlierIterator \in \Outliers}(\Score(\OutlierIterator))$\tcp*[l]{the cutoff is the score of the weakest outlier}
     }
     \KwRet{\Outliers}\;
 }
