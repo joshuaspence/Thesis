@@ -55,7 +55,7 @@ my $optionWordClassFreq=0; # Count words per word class (language) if set
 my $optionMacroStat=0; # Count macro, environment and package usage
 
 # Parsing details options
-my $strictness=0; # Flag to check for undefined environments 
+my $strictness=0; # Flag to check for undefined environments
 my $defaultVerbosity='0'; # Specification of default verbose output style
 my $printlevel=0; # Flag indicating level of verbose output
 my $showstates=0; # Flag to show internal state in verbose log
@@ -72,7 +72,7 @@ my $outputtemplate; # Output template
 my $finalLineBreak=1; # Add line break at end
 
 # Global settings
-my $optionFast=1; # Flag inticating fast method 
+my $optionFast=1; # Flag inticating fast method
 
 # Global variables and internal states (for internal use only)
 my $blankline=0; # Number of blank lines printed
@@ -429,7 +429,7 @@ my %STYLE_DESC=(
 my @LetterMacros=qw/ae AE o O aa AA oe OE ss
    alpha beta gamma delta epsilon zeta eta theta iota kappa lamda
    mu nu xi pi rho sigma tau upsilon phi chi psi omega
-   Gamma Delta Theta Lambda Xi Pi Sigma Upsilon Phi Psi Omega 
+   Gamma Delta Theta Lambda Xi Pi Sigma Upsilon Phi Psi Omega
    /;
 my $specialchars='\\\\('.join('|',@LetterMacros).')(\{\}|\s*|\b)';
 my $modifiedchars='\\\\[\'\"\`\~\^\=](@|\{@\})';
@@ -596,7 +596,7 @@ add_keys_to_hash(\%TeXmacro,1,
     '\includeonly','\includegraphics','\special',
     '\label','\ref','\pageref','\bibitem',
     '\eqlabel','\eqref','\hspace','\vspace','\addvspace',
-    '\newsavebox','\usebox', 
+    '\newsavebox','\usebox',
     '\newlength','\newcounter','\stepcounter','\refstepcounter','\usecounter',
     '\fontfamily','\fontseries',
     '\alph','\arabic','\fnsymbol','\roman','\value',
@@ -921,7 +921,7 @@ sub Parse_Arguments {
 # Parse individual option parameters
 sub parse_option {
   my $arg=shift @_;
-  return parse_options_preset($arg) 
+  return parse_options_preset($arg)
   || parse_options_parsing($arg)
   || parse_options_counts($arg)
   || parse_options_output($arg)
@@ -1260,7 +1260,7 @@ sub Apply_Options {
   flush_errorbuffer($Main);
   apply_language_options();
   if ($includeBibliography) {apply_include_bibliography();}
-  if ($showcodes>1 && !($STYLE{'<printlevel>'})) {%STYLE=%{$STYLES{'All'}};} 
+  if ($showcodes>1 && !($STYLE{'<printlevel>'})) {%STYLE=%{$STYLES{'All'}};}
   if ($showstates) {set_verbosity_options('+States');}
   if (!@sumweights) {set_verbosity_options('-Sums');}
   (defined ($printlevel=$STYLE{'<printlevel>'})) || ($printlevel=-1);
@@ -1671,7 +1671,7 @@ sub getMain {
 #  - subcount: count object for subcount (to be added to countsum)
 #  - subcounts: list of subcounts
 #  - errorcount: the number of errors reported
-# plus following elements used for the processing the LaTeX code 
+# plus following elements used for the processing the LaTeX code
 #  - line: the LaTeX paragraph being processed
 #  - texcode: what remains of LaTeX code to process (after line)
 #  - texlength: length of LaTeX code
@@ -2245,7 +2245,7 @@ sub _parse_envir {
       assert($envirname eq $1,$tex,"Environment \begin{$envirname} ended with end{$1}.");
     } else {
       error($tex,"Environment ended while waiting for \end{$envirname}.");
-    }  
+    }
   } else {
     # Keep parsing until appropriate \end arrives ignoring all else
     while (!$tex->{'eof'}) {
@@ -2386,7 +2386,7 @@ sub __gobble_option {
   return undef;
 }
 
-# Gobble all options, return the number of gobble options 
+# Gobble all options, return the number of gobble options
 sub __gobble_options {
   my $n=0;
   while (__gobble_option(@_)) {$n++}
@@ -2761,7 +2761,7 @@ sub __word_class {
   my $cl=join('+',@classes);
   if ($cl) {}
   elsif ($wd=~/\\/) {$cl='(macro)';}
-  else {$cl='(unidentified)';} 
+  else {$cl='(unidentified)';}
   return $cl;
 }
 
@@ -2871,7 +2871,7 @@ sub linebreak {
 # Print count summary for a count object
 sub print_count {
   my ($count,$class)=@_;
-  if ($htmlstyle) {print "<div class='".($class||'count')."'>\n";}  
+  if ($htmlstyle) {print "<div class='".($class||'count')."'>\n";}
   if ($outputtemplate) {
     _print_count_template($count,$outputtemplate);
   } elsif ($briefsum && @sumweights) {
@@ -2883,7 +2883,7 @@ sub print_count {
   } else {
     _print_count_details($count);
   }
-  if ($htmlstyle) {print "</div>\n";}  
+  if ($htmlstyle) {print "</div>\n";}
 }
 
 # Return count,header,... list filling in header if missing
@@ -3205,7 +3205,7 @@ sub print_help {
   print_reference();
 }
 
-# Print help title 
+# Print help title
 sub print_help_title {
   wprintstringdata('HelpTitle');
 }
@@ -3515,7 +3515,7 @@ sub wprintstringdata {
     error($Main,"No StringData $name.",'BUG');
     return;
   }
-  wprintlines(@_,@$data);  
+  wprintlines(@_,@$data);
 }
 
 # Divide array of lines by identifying headers
@@ -3599,7 +3599,7 @@ for more information about the script, e.g. news, updates, help, usage tips, kno
 
 :::::::::: License
 TeXcount version ${versionnumber}
-  
+
 Copyright ${copyrightyears} ${maintainer}
 
 The TeXcount script is published under the LaTeX Project Public License (LPPL)
@@ -3683,7 +3683,7 @@ Options:
   -char-only, ..., -letters-only    Like -letters, but counts alphabetic letters only.
   -countall, -count-all    The default setting in which all characters are included as either alphabets og logograms.
   -freq         Produce individual word frequency table.
-  -stat         Produce statistics on language/script usage. 
+  -stat         Produce statistics on language/script usage.
   -codes        Display output style code overview and explanation. This is on by default.
   -nocodes      Do not display output style code overview.
   -out=         Write output to file, give filename as option value.
@@ -3741,4 +3741,3 @@ See the documentation for more details.
 Command line options and most %TC commands (prefixed by % rather than %TC:) may be placed in an options file. This is particularly useful for defining your own output templates and macro handling rules.
 
 ::::::::::::::::::::::::::::::::::::::::
-

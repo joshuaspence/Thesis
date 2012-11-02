@@ -1,0 +1,3 @@
+# These plots can take a long time to generate, and require a fair amount of
+# memory. Consequently, I will put them in version control.
+#*.png

@@ -6,6 +6,7 @@ use warnings;
 use Cwd qw(abs_path);
 use File::Basename qw(basename dirname);
 use File::Spec::Functions qw(catdir catfile devnull updir);
+use Getopt::Long;
 
 use lib catdir(dirname($0), updir(), updir(), 'scripts');
 require 'util.pl';
@@ -28,11 +29,18 @@ use constant COL_DISTCALLS         => 11;
 use constant COL_DISTCALLS_NORM    => 12;
 use constant COL_PRUNED            => 13;
 use constant COL_PRUNED_NORM       => 14;
+
+use constant GNUPLOT_EXE           => "gnuplot >${\(devnull())}";
 #-------------------------------------------------------------------------------
 
 # Make sure an output file was specified
 scalar(@ARGV) >= 1 || die('No output file specified!');
 my $output_file = $ARGV[0];
+
+# If the output file already exists, check if forced execution was specified
+my $force = 0;
+GetOptions("f|force" => \$force);
+(-f $output_file) && !$force && exit 0;
 
 # Parse the data
 my %data = ();
@@ -72,7 +80,7 @@ for (<DATA>) {
 close(DATA);
 
 # Create the graphs
-open(GNUPLOT, "| gnuplot >${\(devnull())}");
+open(GNUPLOT, "| ${\GNUPLOT_EXE}");
 print GNUPLOT <<END_OF_GNUPLOT;
 reset
 set terminal tikz color size 10cm, 10cm

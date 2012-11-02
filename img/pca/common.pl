@@ -6,6 +6,7 @@ use warnings;
 use Cwd qw(abs_path);
 use File::Basename qw(basename dirname);
 use File::Spec::Functions qw(catdir catfile devnull updir);
+use Getopt::Long;
 
 #===============================================================================
 # Configuration
@@ -19,6 +20,11 @@ use constant MATLAB_TO_TIKZ_DIR => catdir(updir(), updir(), 'lib', 'matlab2tikz'
 scalar(@ARGV) >= 1 || die('No output file specified!');
 my $output_file = $ARGV[0];
 
+# If the output file already exists, check if forced execution was specified
+my $force = 0;
+GetOptions("f|force" => \$force);
+(-f $output_file) && !$force && exit 0;
+
 # The figure file
 my $data_file = catfile(dirname($0), DATA_DIR, basename($0, ".png.pl") . DATA_EXT);
 (-f $data_file) || die("Data file not found: $data_file");
@@ -29,7 +35,7 @@ print MATLAB <<END_OF_MATLAB;
 addpath('${\(catdir(dirname($0), MATLAB_TO_TIKZ_DIR))}');
 
 f = hgload('$data_file');
-% matlab2tikz('$data_file.tex','height','\\figureheight','width','\\figurewidth','showInfo',false);
+%matlab2tikz('$data_file.tex','height','\\figureheight','width','\\figurewidth','showInfo',false);
 print(f,'-dpng','$output_file');
 END_OF_MATLAB
 

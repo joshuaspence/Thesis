@@ -6,6 +6,7 @@ use warnings;
 use Cwd qw(abs_path);
 use File::Basename qw(basename dirname);
 use File::Spec::Functions qw(catdir catfile devnull updir);
+use Getopt::Long;
 
 use lib catdir(dirname($0), updir(), updir(), 'scripts');
 require 'util.pl';
@@ -135,6 +136,11 @@ sub format_number($) {
 # Make sure an output file was specified
 scalar(@ARGV) >= 1 || die('No output file specified!');
 my $output_file = $ARGV[0];
+
+# If the output file already exists, check if forced execution was specified
+my $force = 0;
+GetOptions("f|force" => \$force);
+(-f $output_file) && !$force && exit 0;
 
 # Parse the data
 my %data = ();

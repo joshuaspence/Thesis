@@ -141,7 +141,7 @@ where the options may be amongst the following:
 
 \input{sub_options}
 
-If more than one file is given, \TeXcount{} will perform the count on each of them printing the results for each, then print the total sum at the end. Note that files are parsed one by one in order of appearance and counts made per file; only afterwards are the totals computed. 
+If more than one file is given, \TeXcount{} will perform the count on each of them printing the results for each, then print the total sum at the end. Note that files are parsed one by one in order of appearance and counts made per file; only afterwards are the totals computed.
 
 
 \subsection{File encoding}
@@ -228,12 +228,12 @@ If included files are included in the count (\code{-inc}), counts per file will 
 
 By adding the option \code{-freq}, \TeXcount{} will output the word frequencies in order of descending frequency: this is only done for the total count, not per file. You may restrict the frequency table to words occurring at least $n$ times by specifying \code{-freq=\it{n}}. \TeXcount{} will count words irrespective of case, but the output will retain upper case where this is consistently used. Note that \TeXcount{} may not recognise that words are the same if they are written differently in the code, e.g. \code{{U}pper} and \code{Upper}.
 
-A frequency table for each script type (alphabetic, Han, etc. or script classes like Greek, Hebrew etc. if specified in \code{-alphabets=}) is produced by the option \code{-stat}. 
+A frequency table for each script type (alphabetic, Han, etc. or script classes like Greek, Hebrew etc. if specified in \code{-alphabets=}) is produced by the option \code{-stat}.
 
 
 \subsection{Parsing options}
 
-\TeXcount{} uses regular expressions to identify words and macro options. By default, these have been set so as to fit most common usages. However, some users may find the default to be too strict, e.g. not recognise options that are long and contain less common symbols. More permissive patterns may be selected by using the option \code{-relaxed}. This allows more general document elements to be identified as words or macro options, which may sometimes be desired, but may also have undesirable effects, so check the verbose output to verify that \TeXcount{} has counted the appropriate elements. Conversely, if the default settings tends to combine words that should be counted as separate words, you may try the option \code{-restricted}. 
+\TeXcount{} uses regular expressions to identify words and macro options. By default, these have been set so as to fit most common usages. However, some users may find the default to be too strict, e.g. not recognise options that are long and contain less common symbols. More permissive patterns may be selected by using the option \code{-relaxed}. This allows more general document elements to be identified as words or macro options, which may sometimes be desired, but may also have undesirable effects, so check the verbose output to verify that \TeXcount{} has counted the appropriate elements. Conversely, if the default settings tends to combine words that should be counted as separate words, you may try the option \code{-restricted}.
 
 Macro options, i.e. \code{[\ldots]} after macros and macro parameters are ignored. Since \TeXcount{} has no specific knowledge of which macros take options, this is a general rule applied to all macros that take parameters\footnote{For macros that take no parameters, \code{[\ldots]} is not interpreted as a macro option. While slightly inconsisten, this avoids e.g. \code{\{\bs{bf}[bold text]\}} to be gobbled up as a macro option and ignored}. In order to avoid that uses of [\ldots] that are not macro options are mistaken as such, \TeXcount{} makes some restrictions on what may be contained in such an option. By default, this restriction is relatively strict under the assumption that it is better to count a few macro options as words than risk large fragments of text to be ignored. However, if your document contains macro options with more complicated values (e.g. certain special characters or macros), using \code{-relaxed} may help handle these correctly.
 
@@ -332,7 +332,7 @@ There are basically two different ways in which you can add additional macro han
 
 The simplest method is to use \TeXcount{} instructions which are embedded in your \LaTeX{} document as \LaTeX{} comments on the format \code{\%TC:\textit{instruction}}. This approach is described in some detail in section \ref{subsec:TC_addrule}.
 
-It is also possible to modify the \TeXcount{} code. The macro handling rules are mostly defined in the hash tables named \code{TeXmacro}, \code{TeXenvir}, etc., and editing these definitions is simple and does not required in-depth knowledge of Perl. A brief overview of the \TeXcount{} code is provided in section \ref{sec:code}. 
+It is also possible to modify the \TeXcount{} code. The macro handling rules are mostly defined in the hash tables named \code{TeXmacro}, \code{TeXenvir}, etc., and editing these definitions is simple and does not required in-depth knowledge of Perl. A brief overview of the \TeXcount{} code is provided in section \ref{sec:code}.
 
 
 \subsection{Cautions!}
@@ -443,7 +443,7 @@ The list of parser states is in order of increasing priority: i.e. when a parser
 
 The formerly used numberic codes are listed at the end of the keyword list for each state. Before version 4, these numeric codes were used to specify parsing rules, but although these should still work, using the named keywords is highly recommended.
 
-The transitional states indicates an incrementation of one of the counters and then change to another state: e.g. if the \code{header} rule is specified, this will first cause the header counter to be incremented, and then a change to the \code{headerword} state in which word counts are added to the header word counter. 
+The transitional states indicates an incrementation of one of the counters and then change to another state: e.g. if the \code{header} rule is specified, this will first cause the header counter to be incremented, and then a change to the \code{headerword} state in which word counts are added to the header word counter.
 
 \subsubsection{Adding a macro handling rule}
 
@@ -453,7 +453,7 @@ where the macro name includes the backslash and the parameter rules can be an in
 
 If a list, \code{[\textit{rule},\textit{rule},\ldots]}, of parsing rules is provided, the macro will be assumed to take this number of parameters. Each rule is either a keyword signifying the rule, or parser state, with which the parameter will be parsed, or \code{option:\textit{key}} for optional \code{[]}-enclosed parameters. Additional \code{[]}-enclosed options, between or after the macro and the parameters, will be ignored.
 
-Macro handling rules specified for macros \code{\bs{\textit{name}}} automatically apply to \code{\bs{\textit{name}*}}: i.e. a \code{*} is automatically gobbled up as a macro modifier. 
+Macro handling rules specified for macros \code{\bs{\textit{name}}} automatically apply to \code{\bs{\textit{name}*}}: i.e. a \code{*} is automatically gobbled up as a macro modifier.
 
 Here are some examples together with corresponding macro definitions:
 
@@ -593,7 +593,7 @@ which has the same effect: it specifies handling rules for the \code{\bs{bibliog
 
 There are cases where a macro needs to be substituted with a text prior to parsing. One such case is when a macro contains a file path which is later used by a file inclusion macro. Since \TeXcount{} does not actually expand the macros, it will not be able to generate the file path from the macro. Instead, one may perform an explicit substitution
 \codeline{\%TC:subst \parm{macro} \parm{text}}
-which will then cause all occurrences of the macro to be substituted by the provided text prior to parsing. Note that this substitution will therefore also be found in the verbose output. 
+which will then cause all occurrences of the macro to be substituted by the provided text prior to parsing. Note that this substitution will therefore also be found in the verbose output.
 
 \begin{lstlisting}
 \newcommand\chappath{chapters}
@@ -679,7 +679,7 @@ There are some things that may be modified quite easily even without knowing Per
 
 \item[Adding macro handling rules]While you may add macro handling rules using \code{\%TC:} commands either in the document or in a separate option file, this is inconvenient for large numbers of macros or if you want these rules always to be included. Also, you might want to add such rules for specific packages. In either case, it might be practical to add these directly to the \TeXcount{} code. \TeXcount{} stores the rules in hashes (maps from a key to a value) named \code{\%TeXmacro}, \code{\%TeXenvir}, etc. There is more documentation on each of these in the code itself, and you may also inspect how rules have been defined for other macros and environments.
 
-\item[Output style]The ANSI colour codes for different levels of verbosity are encoded in the \code{\%STYLES} hashes and may be changed. The HTML style is encoded in the method \code{html_head()} and is easily modified. 
+\item[Output style]The ANSI colour codes for different levels of verbosity are encoded in the \code{\%STYLES} hashes and may be changed. The HTML style is encoded in the method \code{html_head()} and is easily modified.
 
 \item[Character and word definitions]\TeXcount{} identifies words as those that match one of a given set of regular expressions (defined in \code{@WordPatterns}). Note that \code{@WordPatterns} is changed by options \code{-chinese}, \code{-japanese} and  \code{-letters}. The pattern that is used within the word patterns to recognise letters is stored in \code{\$LetterPattern}. This is replaced if the \code{-relaxed} or \code{-restricted} option is set. Changing these definitions may be useful if you have special characters or wish to define words differently.
 

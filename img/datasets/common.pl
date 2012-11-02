@@ -6,12 +6,14 @@ use warnings;
 use Cwd qw(abs_path);
 use File::Basename qw(basename dirname);
 use File::Spec::Functions qw(catdir catfile devnull updir);
+use Getopt::Long;
 
 #===============================================================================
 # Configuration
 #===============================================================================
 use constant DATA_DIR => catdir(updir(), updir(), 'data', 'datasets');
 use constant DATA_EXT => '.csv';
+use constant MATLAB_EXE => "matlab -nosplash -nodisplay >${\(devnull())}";
 use constant MATLAB_TO_TIKZ_DIR => catdir(updir(), updir(), 'lib', 'matlab2tikz', 'src');
 #-------------------------------------------------------------------------------
 
@@ -19,12 +21,17 @@ use constant MATLAB_TO_TIKZ_DIR => catdir(updir(), updir(), 'lib', 'matlab2tikz'
 scalar(@ARGV) >= 1 || die('No output file specified!');
 my $output_file = $ARGV[0];
 
+# If the output file already exists, check if forced execution was specified
+my $force = 0;
+GetOptions("f|force" => \$force);
+(-f $output_file) && !$force && exit 0;
+
 # The data file
 my $data_file = catfile(dirname($0), DATA_DIR, basename($0, ".png.pl") . DATA_EXT);
 (-f $data_file) || die("Data file not found: $data_file");
 
 # Create the graphs
-open(MATLAB, "|matlab -nosplash -nodisplay >${\(devnull())}");
+open(MATLAB, "|${\MATLAB_EXE}");
 print MATLAB <<END_OF_MATLAB;
 addpath('${\(catdir(dirname($0), MATLAB_TO_TIKZ_DIR))}');
 
@@ -44,6 +51,8 @@ if d == 2 || d == 3
     end
     %matlab2tikz(out_file,'height','\\figureheight','width','\\figurewidth','showInfo',false);
     print(f,'-dpng',out_file);
+else
+    fclose(fopen(out_file,'wb'));
 end
 END_OF_MATLAB
 
