@@ -35,7 +35,7 @@ PLOTS="
 echo "Generating MATLAB profiling plots..."
 for PLOT in $PLOTS; do
 	OUTPUT="$(dirname $0)/${PLOT}.tex"
-	SCRIPT="$(dirname $0)/${OUTPUT}.pl"
+	SCRIPT="$(dirname $0)/$(basename ${OUTPUT}).pl"
 	echo "$(basename ${SCRIPT}) --> $(basename ${OUTPUT})"
-	perl "$SCRIPT" "$OUTPUT"
+	perl "$SCRIPT" "$OUTPUT" $@
 done

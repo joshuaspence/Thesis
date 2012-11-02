@@ -13,7 +13,7 @@ Thesis will be output to `src/thesis.pdf`.
 make -C src
 ```
 
-I have used the latex-makefile (http://code.google.com/p/latex-makefile/), by
+I have used the [latex-makefile](http://code.google.com/p/latex-makefile/), by
 Chris Monson, to build the LaTeX project. This makefile has proved to be a
 useful tool to manage the convoluted LaTeX build process, and also for the
 generation of TeX files from scripting language (Python, Perl and Shell)
@@ -22,3 +22,4 @@ scripts. This feature was used to create plots from my raw data.
 # Dependencies
 The following are required to compile my Thesis. Please note that this list is
 not exhaustive.
+    - TODO

@@ -6,5 +6,5 @@
 #
 ################################################################################
 
-./img/generate_all.sh
-./plots/generate_all.sh
+$(dirname $0)/img/generate_all.sh $@
+$(dirname $0)/plots/generate_all.sh $@

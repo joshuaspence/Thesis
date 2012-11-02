@@ -33,7 +33,7 @@ DATASETS="
 echo "Generating data set plots..."
 for DATASET in $DATASETS; do
 	OUTPUT="$(dirname $0)/${DATASET}.png"
-	SCRIPT="$(dirname $0)/${OUTPUT}.pl"
+	SCRIPT="$(dirname $0)/$(basename ${OUTPUT}).pl"
 	echo "$(basename ${SCRIPT}) --> $(basename ${OUTPUT})"
-	perl "$SCRIPT" "$OUTPUT"
+	perl "$SCRIPT" "$OUTPUT" $@
 done
