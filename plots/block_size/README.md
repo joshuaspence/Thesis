@@ -15,6 +15,6 @@ completeness.
 - gnuplot is required in order to regenerate the data plots.
 - The gnuplot Tikz terminal is required in order to regenerate the data plots.
 - The following Perl modules are required to regenerate the data plots:
-    -- Cwd
-    -- File::Basename
-    -- File::Spec
+    + Cwd
+    + File::Basename
+    + File::Spec

@@ -13,8 +13,9 @@ completeness.
 Plots are only generated for 2D or 3D data sets.
 
 # Dependencies
+- bash
 - MATLAB is required in order to regenerate the data plots.
 - The following Perl modules are required to regenerate the data plots:
-    -- Cwd
-    -- File::Basename
-    -- File::Spec
+    + Cwd
+    + File::Basename
+    + File::Spec

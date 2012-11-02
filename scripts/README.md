@@ -17,18 +17,18 @@ scripts are **not** strictly used in the build process.
 
 # Dependencies
 - **spell_check.sh**:
-    -- aspell
-    -- bash
+    + aspell
+    + bash
 - **strip_comments.pl**:
-    -- Perl
+    + Perl
 - **todos.sh**:
-    -- grep
+    + grep
 - **unique_from_csv.pl**:
-    - Perl
-    - Text::CSV (Perl module)
-    - List::MoreUtils (Perl module)
+    + Perl
+    + Text::CSV (Perl module)
+    + List::MoreUtils (Perl module)
 - **util.pl**:
-    - Perl
-    - Text::CSV (Perl module)
+    + Perl
+    + Text::CSV (Perl module)
 - **wordcount.sh**:
-    - pdftotext
+    + pdftotext

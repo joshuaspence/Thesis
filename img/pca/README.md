@@ -16,11 +16,12 @@ saved using MATLAB) from the
 directory.
 
 # Dependencies
+- bash
 - MATLAB is required in order to regenerate the data plots.
 - The following Perl modules are required to regenerate the data plots:
-    -- Cwd
-    -- File::Basename
-    -- File::Spec
+    + Cwd
+    + File::Basename
+    + File::Spec
 
 # Warning
 These plots can take a long time to generate, and require a fair amount of

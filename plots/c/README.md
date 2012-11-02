@@ -11,7 +11,8 @@ plots. This should rarely need to be done, but is included here for
 completeness.
 
 # Dependencies
+- bash
 - The following Perl modules are required to regenerate the data plots:
-    -- Cwd
-    -- File::Basename
-    -- File::Spec
+    + Cwd
+    + File::Basename
+    + File::Spec
