@@ -1,5 +1,11 @@
 #!/bin/sh
 
+################################################################################
+#
+# Generate all block size profiling plots from the CSV data file.
+#
+################################################################################
+
 PLOTS="
     distance_calls
     function_execution_time
@@ -12,6 +18,7 @@ PLOTS="
     vectors_pruned
 "
 
+echo "Generating block size profiling plots..."
 for PLOT in $PLOTS; do
 	OUTPUT="$(dirname $0)/${PLOT}.tex"
 	SCRIPT="$(dirname $0)/${OUTPUT}.pl"

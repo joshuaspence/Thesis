@@ -30,6 +30,7 @@ DATASETS="
 	testoutrank
 "
 
+echo "Generating data set plots..."
 for DATASET in $DATASETS; do
 	OUTPUT="$(dirname $0)/${DATASET}.png"
 	SCRIPT="$(dirname $0)/${OUTPUT}.pl"

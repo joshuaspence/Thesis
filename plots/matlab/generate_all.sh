@@ -1,5 +1,11 @@
 #!/bin/sh
 
+################################################################################
+#
+# Generate all MATLAB profiling plots from the CSV data file.
+#
+################################################################################
+
 PLOTS="
 	ball1
 	connect4
@@ -26,6 +32,7 @@ PLOTS="
 	legend
 "
 
+echo "Generating MATLAB profiling plots..."
 for PLOT in $PLOTS; do
 	OUTPUT="$(dirname $0)/${PLOT}.tex"
 	SCRIPT="$(dirname $0)/${OUTPUT}.pl"

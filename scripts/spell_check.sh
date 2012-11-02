@@ -17,6 +17,7 @@ TEX_COMMANDS=""
 #-------------------------------------------------------------------------------
 
 for FILE in $(find "$DOC_ROOT" -type f \( -name "*.tex" -o -name "*.bib" \)); do
+    # Exclude source files that are generates by a script
     if [[ -f "$FILE.sh" || -f "$FILE.pl" || -f "$FILE.py" ]]; then
         continue
     fi

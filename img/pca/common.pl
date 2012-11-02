@@ -29,7 +29,7 @@ print MATLAB <<END_OF_MATLAB;
 addpath('${\(catdir(dirname($0), MATLAB_TO_TIKZ_DIR))}');
 
 f = hgload('$data_file');
-% matlab2tikz('$data_file.tex','height','\\figureheight','width','\\figurewidth','showInfo',false);
+%matlab2tikz('$data_file.tex','height','\\figureheight','width','\\figurewidth','showInfo',false);
 print(f,'-dpng','$output_file');
 END_OF_MATLAB
 

@@ -12,6 +12,7 @@ use File::Spec::Functions qw(catdir catfile devnull updir);
 #===============================================================================
 use constant DATA_DIR => catdir(updir(), updir(), 'data', 'datasets');
 use constant DATA_EXT => '.csv';
+use constant MATLAB_EXE => "matlab -nosplash -nodisplay >${\(devnull())}";
 use constant MATLAB_TO_TIKZ_DIR => catdir(updir(), updir(), 'lib', 'matlab2tikz', 'src');
 #-------------------------------------------------------------------------------
 
@@ -24,7 +25,7 @@ my $data_file = catfile(dirname($0), DATA_DIR, basename($0, ".png.pl") . DATA_EX
 (-f $data_file) || die("Data file not found: $data_file");
 
 # Create the graphs
-open(MATLAB, "|matlab -nosplash -nodisplay >${\(devnull())}");
+open(MATLAB, "|${\MATLAB_EXE}");
 print MATLAB <<END_OF_MATLAB;
 addpath('${\(catdir(dirname($0), MATLAB_TO_TIKZ_DIR))}');
 

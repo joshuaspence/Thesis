@@ -28,6 +28,8 @@ use constant COL_DISTCALLS         => 11;
 use constant COL_DISTCALLS_NORM    => 12;
 use constant COL_PRUNED            => 13;
 use constant COL_PRUNED_NORM       => 14;
+
+use constant GNUPLOT_EXE           => "gnuplot >${\(devnull())}";
 #-------------------------------------------------------------------------------
 
 # Make sure an output file was specified
@@ -72,7 +74,7 @@ for (<DATA>) {
 close(DATA);
 
 # Create the graphs
-open(GNUPLOT, "| gnuplot >${\(devnull())}");
+open(GNUPLOT, "| ${\GNUPLOT_EXE}");
 print GNUPLOT <<END_OF_GNUPLOT;
 reset
 set terminal tikz color size 10cm, 10cm
