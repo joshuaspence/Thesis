@@ -2,6 +2,8 @@ This directory contains generally useful scripts for the Thesis, although these
 scripts are **not** strictly used in the build process.
 
 # Scripts
+- **prerequisite.Makefile**: A common Makefile used for generating LaTeX files
+    from raw data using `make`.
 - **spell_check.sh**: Locates all LaTeX source files and runs a spell check on
     each file.
 - **strip_comments.pl**: Removes C-style and C++-style comments from a file.

@@ -1,2 +1,10 @@
-# The block size profiling plots can be regenerated easily.
-*.tex
+# Automatically generated
+distance_calls.tex
+function_execution_time.tex
+function_run_time_complexity.lin.tex
+function_run_time_complexity.log.tex
+legend.tex
+total_execution_time.tex
+total_run_time_complexity.lin.tex
+total_run_time_complexity.log.tex
+vectors_pruned.tex

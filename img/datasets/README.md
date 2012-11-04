@@ -15,7 +15,6 @@ data set of a higher dimension, then an empty (placeholder) file will be
 created, with a name `DATASET.png.none`.
 
 # Dependencies
-- bash
 - MATLAB is required in order to regenerate the data plots.
 - The following Perl modules are required to regenerate the data plots:
     + Cwd

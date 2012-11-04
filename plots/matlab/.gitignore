@@ -1,2 +1,24 @@
-# The block size profiling plots can be regenerated easily.
-*.tex
+# Automatically generated
+ball1.tex
+connect4.tex
+letter-recognition.tex
+magicgamma.tex
+mesh_network.tex
+musk.tex
+pendigits.tex
+runningex1k.tex
+runningex10k.tex
+runningex20k.tex
+runningex30k.tex
+runningex40k.tex
+runningex50k.tex
+segmentation.tex
+spam.tex
+spam_train.tex
+testCD.tex
+testCDST.tex
+testCDST2.tex
+testCDST3.tex
+testoutrank.tex
+all_datasets.tex
+legend.tex

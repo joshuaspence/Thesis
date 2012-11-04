@@ -5,7 +5,6 @@ use warnings;
 
 use File::Basename qw(basename dirname);
 use File::Spec::Functions qw(catdir catfile updir);
-use Getopt::Long;
 
 #===============================================================================
 # Configuration
@@ -33,11 +32,6 @@ if (basename($0) =~ m/c.tex.pl/) {
 scalar(@ARGV) >= 1 || die('No output file specified');
 my $output_file = $ARGV[0];
 open(OUTPUT, ">$output_file") || die("Cannot open output file: $output_file");
-
-# If the output file already exists, check if forced execution was specified
-my $force = 0;
-GetOptions("f|force" => \$force);
-(-f $output_file) && !$force && exit 0;
 
 foreach my $source_file (@source_files) {
     my $source_file = catfile(SOURCE_DIR, $source_file);
