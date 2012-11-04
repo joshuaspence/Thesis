@@ -6,5 +6,6 @@
 #
 ################################################################################
 
+$(dirname $0)/code/clean.sh $@
 $(dirname $0)/img/clean.sh $@
 $(dirname $0)/plots/clean.sh $@
