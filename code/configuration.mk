@@ -7,7 +7,8 @@ TARGETS     := tex
 TITLE       := SOURCE CODE
 
 tex_TITLE   := source code transcriptions
-tex_TARGETS := c.tex matlab.tex
+tex_TARGETS := c.tex \
+               matlab.tex
 
 #------------------------------------------------------------------------------#
 #                                                                              #

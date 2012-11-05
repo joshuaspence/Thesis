@@ -12,15 +12,15 @@ Thesis will be output to `src/thesis.pdf`.
 make -C src
 ```
 
-I have used the [latex-makefile](http://code.google.com/p/latex-makefile/), by
-Chris Monson, to build the LaTeX project. This makefile has proved to be a
-useful tool to manage the convoluted LaTeX build process, and also for the
-generation of TeX files from scripting language (Python, Perl and Shell)
-scripts. This feature was used to create plots from my raw data.
+I have used [latex-makefile](http://code.google.com/p/latex-makefile/), by Chris
+Monson, to build the LaTeX project. This makefile has proved to be a useful tool
+to manage the convoluted LaTeX build process, and also for the generation of TeX
+files from scripting language (Python, Perl and Shell) scripts.
 
-Before building the Thesis itself, you will need to build all of the
-prerequisite files. This should only need to be done once. To build the
-prerequisite files, execute the following command.
+**NOTE**: Before building the Thesis itself, you will need to build all of the
+prerequisite files. This should only need to be done once. The prerequisite
+files are images, plots and TeX source files that are generated from some raw
+data. To build the prerequisite files, execute the following command.
 ```shell
 make -f prerequisite.mk
 ```

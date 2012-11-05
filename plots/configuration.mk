@@ -32,3 +32,17 @@ matlab_TARGETS     := $(foreach DATASET,$(DATASETS),$(addsuffix .tex,$(DATASET))
 #                          ADDITIONAL DEPENDENCIES                             #
 #                                                                              #
 #------------------------------------------------------------------------------#
+define c-dependency
+c/$(1): ../data/profiling/c.csv
+endef
+$(foreach TARGET,$(c_TARGETS),$(eval $(call c-dependency,$(TARGET))))
+
+define matlab-dependency
+matlab/$(1): ../data/profiling/matlab.csv
+endef
+$(foreach TARGET,$(matlab_TARGETS),$(eval $(call matlab-dependency,$(TARGET))))
+
+define block-size-dependency
+block_size/$(1): ../data/profiling/block_size.csv
+endef
+$(foreach TARGET,$(block_size_TARGETS),$(eval $(call block-size-dependency,$(TARGET))))

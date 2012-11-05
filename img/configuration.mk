@@ -7,7 +7,7 @@ TARGETS          := datasets
 TARGETS_NO_CLEAN := pca
 TITLE            := IMAGES
 
-datasets_TITLE   := block size profiling plots
+datasets_TITLE   := data set plots
 datasets_TARGETS := $(foreach DATASET,$(DATASETS_2D),$(addsuffix .png,$(DATASET)))
 
 pca_TITLE        := PCA plots
@@ -22,3 +22,12 @@ endef
 #                          ADDITIONAL DEPENDENCIES                             #
 #                                                                              #
 #------------------------------------------------------------------------------#
+define dataset-dependency
+datasets/$(1).png: ../data/datasets/$(1).csv
+endef
+$(foreach DATASET,$(DATASETS),$(eval $(call dataset-dependency,$(DATASET))))
+
+define pca-dependency
+pca/$(1).png: ../data/pca/$(1).fig
+endef
+$(foreach DATASET,$(DATASETS),$(eval $(call pca-dependency,$(DATASET))))
