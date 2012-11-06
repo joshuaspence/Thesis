@@ -1,0 +1,301 @@
+\documentclass{beamer}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Packages
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Warn about commands, classes and packages that are outdated and superseded.
+% Orthodox checks for pitfalls that are not technically incorrect.
+%\usepackage[l2tabu,orthodox,abort]{nag}
+
+% For font and input encoding.
+\usepackage[utf8]{inputenc}
+%\usepackage[T1]{fontenc}
+
+% Pretty much all of the ams maths packages.
+\usepackage{amsmath,amsthm,amssymb,amsfonts}
+
+% Allows inclusion of graphics easily and "configurably".
+\usepackage{graphicx}
+
+% Typesets URLs sensibly --- with a TrueType font, hyperlinked in PDFs, and not
+% breaking across lines.
+\usepackage{url}
+
+% Provides good access to colours.
+\usepackage{color}
+\usepackage{xcolor}
+
+% Count the number of used registers (counter, dimen, skip, muskip, box, token,
+% input, output, math families, languages, insertions). Also time the amount of
+% time required for LaTeX compilation.
+\usepackage[timer,left]{regstats}
+
+% For greater control over customising lists.
+\usepackage{enumitem}
+
+% The listings package is a source code printer for LaTeX. You can typeset stand
+% alone files as well as listings with an environment similar to verbatim as
+% well as you can print code snippets using a command similar to \verb.
+\usepackage{listings}
+
+% This package implements high-level interface commands for class file writers
+% which allows the separation of formatting commands (typically instances of
+% so-called `templates') and their arguments from the signature of
+% document-level commands.
+\usepackage{xparse}
+
+% This package allows verbatim text to be typeset in bold.
+\usepackage{alltt}
+\renewcommand{\ttdefault}{txtt}
+
+% This style option improves the interface for defining floating objects such
+% as figures and tables in LaTeX. It adds the notion of a `float style' that
+% governs appearance of floats. New kinds of floats may be defined using a
+% \newfloat command analogous to \newtheorem. This style option also
+% incorporates the functionality of David Carlisle's style option here, giving
+% floating environments a [H] option which means `PUT IT HERE' (as opposed to
+% the standard [h] option which means `You may put it here if you like').
+\usepackage{float}
+
+% This is the style file for the gnuplot PGF/TikZ terminal. It is associated
+% with the 'gnuplot.lua' script.
+\usepackage{gnuplot-lua-tikz}
+
+% The caption package provides many ways to customise the captions in floating
+% environments such figure and table.
+\usepackage{caption}
+
+% This package supports typesetting of sub-captions (by using the the
+% sub-caption feature of the caption package).
+\usepackage{subcaption}
+
+% A new environment, tabularx, is defined, which takes the same arguments as
+% tabular*, but modifies the widths of certain columns, rather than the inter
+% column space, to set a table with the requested total width. The columns that
+% may stretch are marked with the new token X in the preamble argument.
+% NOTE: Requires the array package
+\usepackage{array}
+\usepackage{tabularx}
+
+% This package reimplements the LATEX verbatim and verbatim* environments. In
+% addition it provides a comment environment that skips any commands or text
+% between \begin{comment} and the next \end{comment}. It also defines the
+% command verbatim to input a whole file verbatim.
+\usepackage{verbatim}
+
+\usepackage[noline,ruled]{algorithm2e}
+\usepackage{pgfplots}
+\usepackage{tikz}
+\usetikzlibrary{positioning,shapes,shadows,arrows}
+
+% My custom packages.
+\usepackage{escape,citationneeded,pieplots,persons,pgf-pie}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Beamer configuration.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% No navigation symbols
+\beamertemplatenavigationsymbolsempty
+
+% Load a theme
+\usetheme{Madrid}
+\useoutertheme[footline=authortitle,subsection=false]{miniframes}
+
+% Show notes
+%\setbeameroption{show notes}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Custom colours
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\definecolor{darkGreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+\definecolor{brightGreen}{rgb}{0,1,0}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Source code formatting
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Default settings
+\lstset{
+    basicstyle=\ttfamily,           % font
+                                    %
+    title=\lstname,                 % show the filename of files included with \lstinputlisting
+    captionpos=b,                   % sets the caption-position to bottom
+    backgroundcolor=\color{white},  % choose the background color
+                                    %
+    numbers=left,                   % where to put the line-numbers
+    numberstyle=\tiny\color{gray},  % the style that is used for the line-numbers
+    stepnumber=1,                   % the step between two line-numbers
+    numbersep=5pt,                  % how far the line-numbers are from the code
+                                    %
+    showspaces=false,               % show spaces adding particular underscores
+    showstringspaces=false,         % underline spaces within strings
+    showtabs=false,                 % show tabs within strings adding particular underscores
+    tabsize=4,                      % sets default tabsize
+    breaklines=true,                % sets automatic line breaking
+    breakatwhitespace=false,        % sets if automatic breaks should only happen at whitespace
+                                    %
+    keywordstyle=\color{blue},      % keyword style
+    commentstyle=\color{darkGreen}, % comment style
+    stringstyle=\color{mauve},      % string literal style
+    escapeinside={\%*}{*)},         % if you want to add a comment within your code
+    morekeywords={*,...}            % if you want to add more keywords to the set
+}
+\lstloadlanguages{C,Matlab}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Variables (to save retyping and reformatting these throughout the document).
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\input{variables}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Custom commands
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%===============================================================================
+% To allow us to easily format a table row.
+% See: http://www.latex-community.org/forum/viewtopic.php?f=5&t=3293
+%===============================================================================
+\newcolumntype{+}{>{\global\let\currentrowstyle\relax}}
+\newcolumntype{^}{>{\currentrowstyle}}
+\newcommand\rowstyle[1]{\gdef\currentrowstyle{#1}#1\ignorespaces}
+
+%===============================================================================
+% A command to allow a \hline in a longtable, without affecting page breaks.
+% See: http://tex.stackexchange.com/questions/6350/how-to-disable-pagebreak-on-hline-in-longtable
+%-------------------------------------------------------------------------------
+% \nobreakhline
+%===============================================================================
+\makeatletter
+\def\nobreakhline{%
+    \noalign{\ifnum0=`}\fi
+    \penalty\@M
+    \futurelet\@let@token\LT@@nobreakhline
+}%
+\def\LT@@nobreakhline{%
+    \ifx\@let@token\hline
+        \global\let\@gtempa\@gobble
+        \gdef\LT@sep{\penalty\@M\vskip\doublerulesep}%
+    \else
+        \global\let\@gtempa\@empty
+        \gdef\LT@sep{\penalty\@M\vskip-\arrayrulewidth}%
+    \fi
+    \ifnum0=`{\fi}%
+    \multispan\LT@cols
+        \unskip\leaders\hrule\@height\arrayrulewidth\hfill\cr
+    \noalign{\LT@sep}%
+    \multispan\LT@cols
+        \unskip\leaders\hrule\@height\arrayrulewidth\hfill\cr
+    \noalign{\penalty\@M}%
+    \@gtempa
+}
+\makeatother
+
+%===============================================================================
+% Format a table header row.
+%-------------------------------------------------------------------------------
+% \tableHeader{...}
+%===============================================================================
+\newcommand\tableHeader[1]{%
+	\hline\rowstyle{\bfseries}#1\tabularnewline*\nobreakhline\endfirsthead%
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Custom formatting commands
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%===============================================================================
+% Format the name of an algorithm.
+%-------------------------------------------------------------------------------
+% \algm{}
+%===============================================================================
+\newcommand\algm[1]{\emph{#1}}
+
+%===============================================================================
+% Format the name of a command line command. Also allows words to be broken over
+% multiple lines
+%
+% See: http://jevopi.blogspot.com.au/2010/04/latex-lstinline-and-hyphenations.html
+%-------------------------------------------------------------------------------
+% \command{CMD}
+%===============================================================================
+\newcommand\command[1]{\lstinline[breaklines,literate={\_}{}{0\discretionary{\_}{}{\_}}]`#1`}
+
+%===============================================================================
+% Format the name of a data set.
+%-------------------------------------------------------------------------------
+% \dataset{DATASET}
+%===============================================================================
+\newcommand\dataset[1]{`\escape{#1}'}
+
+%===============================================================================
+% Format a computer host name.
+%-------------------------------------------------------------------------------
+% \hostname{HOSTNAME}
+%===============================================================================
+\newcommand\hostname[1]{\emph{#1}}
+
+%===============================================================================
+% Format the name of a programming language.
+%-------------------------------------------------------------------------------
+% \progLang{LANG}
+%===============================================================================
+\newcommand\progLang[1]{\lstinline`#1`}
+
+%===============================================================================
+% Format the name of a software package.
+%-------------------------------------------------------------------------------
+% \software{NAME}[CMD]
+%===============================================================================
+\NewDocumentCommand\software{om}{``#2''\IfNoValueTF{#1}{}{\space(\command{#1})}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Graphics directory
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\graphicspath{{../img/}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Title page options
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\title{\thesisTitle*{}}
+\author{\studentName*{}}
+\date{\thesisDate*{}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Bibliography
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[backend=bibtex,language=australian]{biblatex} % use biblatex instead of bibtex
+\bibliography{thesis}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                               END OF PREAMBLE                                %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Title Page
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\pdfbookmark[0]{Preamble}{title}
+%\pdfbookmark[1]{Title page}{title}
+\begin{frame}
+    \titlepage
+\end{frame}
+
+\begin{comment}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Bibliography
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Allow URLs to break at numbers, upper-case characters and lower-case
+% characters, with different penalties.
+\defcounter{biburlnumpenalty}{3000}
+\defcounter{biburlucpenalty}{6000}
+\defcounter{biburllcpenalty}{9000}
+
+% Add everything to the bibliography, even if it wasn't cited.
+\nocite{*}
+\printbibliography
+\end{comment}
+
+\end{document}
