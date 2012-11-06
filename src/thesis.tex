@@ -428,20 +428,20 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Glossary
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\usepackage[acronym,toc,xindy]{glossaries} % note that hyperref must be loaded first
+\usepackage[toc,xindy]{glossaries} % note that hyperref must be loaded first
 \makeglossaries
 \loadglsentries{acronym}
 
 % Show abbreviated acronyms in the table of contents, etc.
 \usepackage{etoolbox}
-\pretocmd{\listoffigures}{\glslocalunsetall[acronym]}{}{}
-\apptocmd{\listoffigures}{\glslocalresetall[acronym]}{}{}
-\pretocmd{\listoftables}{\glslocalunsetall[acronym]}{}{}
-\apptocmd{\listoftables}{\glslocalresetall[acronym]}{}{}
-\pretocmd{\listofalgorithms}{\glslocalunsetall[acronym]}{}{}
-\apptocmd{\listofalgorithms}{\glslocalresetall[acronym]}{}{}
-\pretocmd{\tableofcontents}{\glslocalunsetall[acronym]}{}{}
-\apptocmd{\tableofcontents}{\glslocalresetall[acronym]}{}{}
+\pretocmd{\listoffigures}{\glslocalunsetall[\acronymtype]}{}{}
+\apptocmd{\listoffigures}{\glslocalresetall[\acronymtype]}{}{}
+\pretocmd{\listoftables}{\glslocalunsetall[\acronymtype]}{}{}
+\apptocmd{\listoftables}{\glslocalresetall[\acronymtype]}{}{}
+\pretocmd{\listofalgorithms}{\glslocalunsetall[\acronymtype]}{}{}
+\apptocmd{\listofalgorithms}{\glslocalresetall[\acronymtype]}{}{}
+\pretocmd{\tableofcontents}{\glslocalunsetall[\acronymtype]}{}{}
+\apptocmd{\tableofcontents}{\glslocalresetall[\acronymtype]}{}{}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Bibliography
@@ -627,7 +627,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Bibliography
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 % Allow URLs to break at numbers, upper-case characters and lower-case
 % characters, with different penalties.
 \defcounter{biburlnumpenalty}{3000}
