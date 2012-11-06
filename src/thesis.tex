@@ -432,7 +432,7 @@
 \makeglossaries
 \loadglsentries{acronym}
 
-% Show abbreviated acronyms in the table of contents.
+% Show abbreviated acronyms in the table of contents, etc.
 \usepackage{etoolbox}
 \pretocmd{\listoffigures}{\glslocalunsetall[acronym]}{}{}
 \apptocmd{\listoffigures}{\glslocalresetall[acronym]}{}{}
@@ -636,6 +636,6 @@
 
 % Add everything to the bibliography, even if it wasn't cited.
 \nocite{*}
-\printbibliography
+\printbibliography[heading=bibintoc]
 
 \end{document}
