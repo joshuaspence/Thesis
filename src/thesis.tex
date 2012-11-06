@@ -98,14 +98,8 @@
 % This package reimplements the LATEX verbatim and verbatim* environments. In
 % addition it provides a comment environment that skips any commands or text
 % between \begin{comment} and the next \end{comment}. It also defines the
-% command verbatiminput to input a whole file verbatim.
+% command verbatim to input a whole file verbatim.
 \usepackage{verbatim}
-
-\begin{comment}
-\usepackage{tikz}
-\usetikzlibrary{calendar}
-\usepackage{pgfgantt}
-\end{comment}
 
 \usepackage[noline,ruled]{algorithm2e}
 \usepackage{pgfplots}
@@ -599,7 +593,7 @@
 \include{chapter04/main}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% CHAPTER 05: Hardware Design and Implementationtion
+% CHAPTER 05: Hardware Design and Implementation
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Hardware Design and Implementation}
 \label{hardware}
@@ -622,7 +616,7 @@
 % Glossary
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \glsaddall
-%\printglossary
+\printglossary
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Bibliography
@@ -637,5 +631,4 @@
 % Add everything to the bibliography, even if it wasn't cited.
 \nocite{*}
 \printbibliography
-
 \end{document}
