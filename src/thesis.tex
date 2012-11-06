@@ -436,6 +436,12 @@
 \usepackage{etoolbox}
 \pretocmd{\listoffigures}{\glslocalunsetall[acronym]}{}{}
 \apptocmd{\listoffigures}{\glslocalresetall[acronym]}{}{}
+\pretocmd{\listoftables}{\glslocalunsetall[acronym]}{}{}
+\apptocmd{\listoftables}{\glslocalresetall[acronym]}{}{}
+\pretocmd{\listofalgorithms}{\glslocalunsetall[acronym]}{}{}
+\apptocmd{\listofalgorithms}{\glslocalresetall[acronym]}{}{}
+\pretocmd{\tableofcontents}{\glslocalunsetall[acronym]}{}{}
+\apptocmd{\tableofcontents}{\glslocalresetall[acronym]}{}{}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Bibliography
