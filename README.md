@@ -39,6 +39,12 @@ not exhaustive.
 - TODO
 --->
 
+# Presentation
+## Building
+To build the Thesis presentation, simply run the `make` command in the
+[src](https://github.com/joshuaspence/Thesis/tree/master/src) directory, as per
+the treatise. The presentation will be output to `src/presentation.pdf`.
+
 # Thesis Works
 The source code for the research completed as a part of this Thesis can be found
 in a separate repository, at https://github.com/joshuaspence/ThesisCode.
