@@ -88,6 +88,9 @@
 % For animations
 \usepackage{multimedia}
 
+% For \ifthenelse command
+\usepackage{ifthen}
+
 % My custom packages.
 \usepackage{escape,citationneeded,pieplots,persons,pgf-pie}
 
@@ -179,31 +182,43 @@
 %===============================================================================
 \makeatletter
 \newcommand\profilingPlots[3]{%
+    \def\profilingPlots@columnWidth{0.33\textwidth}%
+    \def\profilingPlots@pcaWidth{0.9\textwidth}%
+    \def\profilingPlots@plotWidth{0.7\textwidth}%
+    \def\profilingPlots@legendHeight{0.15\textheight}%
+    %
+    \vskip-1.5em%
     \begin{columns}[c]%
-        \column{0.33\textwidth}%
-        \begin{figure}%
-            \includegraphics[width=0.9\textwidth]{pca/#1}\\%
-            \resizebox{0.7\textwidth}{!}{\input{plots/c/#1}}%
-            \caption{\escape{#1}}%
-        \end{figure}%
+        \column{\profilingPlots@columnWidth}%
+        \ifthenelse{\equal{#1}{}}{}{
+            \begin{figure}%
+                \includegraphics[width=\profilingPlots@pcaWidth]{pca/#1}\\%
+                \resizebox{\profilingPlots@plotWidth}{!}{\input{plots/c/#1}}%
+                \caption{\escape{#1}}%
+            \end{figure}%
+        }%
         %
-        \column{0.33\textwidth}%
-        \begin{figure}%
-            \includegraphics[width=0.9\textwidth]{pca/#2}\\%
-            \resizebox{0.7\textwidth}{!}{\input{plots/c/#2}}%
-            \caption{\escape{#2}}%
-        \end{figure}%
+        \column{\profilingPlots@columnWidth}%
+        \ifthenelse{\equal{#2}{}}{}{
+            \begin{figure}%
+                \includegraphics[width=\profilingPlots@pcaWidth]{pca/#2}\\%
+                \resizebox{\profilingPlots@plotWidth}{!}{\input{plots/c/#2}}%
+                \caption{\escape{#2}}%
+            \end{figure}%
+        }%
         %
-        \column{0.33\textwidth}%
-        \begin{figure}%
-            \includegraphics[width=0.9\textwidth]{pca/#3}\\%
-            \resizebox{0.7\textwidth}{!}{\input{plots/c/#3}}%
-            \caption{\escape{#3}}%
-        \end{figure}%
+        \column{\profilingPlots@columnWidth}%
+        \ifthenelse{\equal{#3}{}}{}{
+            \begin{figure}%
+                \includegraphics[width=\profilingPlots@pcaWidth]{pca/#3}\\%
+                \resizebox{\profilingPlots@plotWidth}{!}{\input{plots/c/#3}}%
+                \caption{\escape{#3}}%
+            \end{figure}%
+        }%
     \end{columns}%
     \vfill
     \makebox[\textwidth][c]{%
-        \resizebox{!}{0.15\textheight}{%
+        \resizebox{!}{\profilingPlots@legendHeight}{%
             \input{plots/c/legend}%
         }%
     }%
@@ -345,6 +360,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Additional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\appendix
 \section{Additional}
 \label{additional}
 \include{presentation/additional}
