@@ -22,10 +22,6 @@
 % breaking across lines.
 \usepackage{url}
 
-% Provides good access to colours.
-\usepackage{color}
-\usepackage{xcolor}
-
 % Count the number of used registers (counter, dimen, skip, muskip, box, token,
 % input, output, math families, languages, insertions). Also time the amount of
 % time required for LaTeX compilation.
@@ -89,18 +85,26 @@
 \usepackage{tikz}
 \usetikzlibrary{positioning,shapes,shadows,arrows}
 
+% For animations
+\usepackage{multimedia}
+
 % My custom packages.
 \usepackage{escape,citationneeded,pieplots,persons,pgf-pie}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Beamer configuration.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Presentation mode
+\mode<presentation>
+
 % No navigation symbols
 \beamertemplatenavigationsymbolsempty
 
 % Load a theme
-\usetheme{Madrid}
-\useoutertheme[footline=authortitle,subsection=false]{miniframes}
+\usetheme{Warsaw}
+\useoutertheme[footline=authortitle]{miniframes}
+
+\setbeamerfont{caption}{size=\scriptsize}
 
 % Show notes
 %\setbeameroption{show notes}
@@ -154,52 +158,57 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %===============================================================================
-% To allow us to easily format a table row.
-% See: http://www.latex-community.org/forum/viewtopic.php?f=5&t=3293
-%===============================================================================
-\newcolumntype{+}{>{\global\let\currentrowstyle\relax}}
-\newcolumntype{^}{>{\currentrowstyle}}
-\newcommand\rowstyle[1]{\gdef\currentrowstyle{#1}#1\ignorespaces}
-
-%===============================================================================
-% A command to allow a \hline in a longtable, without affecting page breaks.
-% See: http://tex.stackexchange.com/questions/6350/how-to-disable-pagebreak-on-hline-in-longtable
+% Format a block size profiling plot.
 %-------------------------------------------------------------------------------
-% \nobreakhline
+% \blockSizeProfilingPlot{DATASET}
 %===============================================================================
 \makeatletter
-\def\nobreakhline{%
-    \noalign{\ifnum0=`}\fi
-    \penalty\@M
-    \futurelet\@let@token\LT@@nobreakhline
-}%
-\def\LT@@nobreakhline{%
-    \ifx\@let@token\hline
-        \global\let\@gtempa\@gobble
-        \gdef\LT@sep{\penalty\@M\vskip\doublerulesep}%
-    \else
-        \global\let\@gtempa\@empty
-        \gdef\LT@sep{\penalty\@M\vskip-\arrayrulewidth}%
-    \fi
-    \ifnum0=`{\fi}%
-    \multispan\LT@cols
-        \unskip\leaders\hrule\@height\arrayrulewidth\hfill\cr
-    \noalign{\LT@sep}%
-    \multispan\LT@cols
-        \unskip\leaders\hrule\@height\arrayrulewidth\hfill\cr
-    \noalign{\penalty\@M}%
-    \@gtempa
+\newcommand\blockSizeProfilingPlot[1]{%
+    \makebox[\textwidth][c]{%
+        \resizebox{!}{0.85\textheight}{%
+            \input{plots/block_size/#1}%
+        }%
+    }%
 }
 \makeatother
 
 %===============================================================================
-% Format a table header row.
+% Format a profiling plot.
 %-------------------------------------------------------------------------------
-% \tableHeader{...}
+% \profilingPlots{DATASET1}{DATASET2}{DATASET3}
 %===============================================================================
-\newcommand\tableHeader[1]{%
-	\hline\rowstyle{\bfseries}#1\tabularnewline*\nobreakhline\endfirsthead%
+\makeatletter
+\newcommand\profilingPlots[3]{%
+    \begin{columns}[c]%
+        \column{0.33\textwidth}%
+        \begin{figure}%
+            \includegraphics[width=0.9\textwidth]{pca/#1}\\%
+            \resizebox{0.7\textwidth}{!}{\input{plots/c/#1}}%
+            \caption{\escape{#1}}%
+        \end{figure}%
+        %
+        \column{0.33\textwidth}%
+        \begin{figure}%
+            \includegraphics[width=0.9\textwidth]{pca/#2}\\%
+            \resizebox{0.7\textwidth}{!}{\input{plots/c/#2}}%
+            \caption{\escape{#2}}%
+        \end{figure}%
+        %
+        \column{0.33\textwidth}%
+        \begin{figure}%
+            \includegraphics[width=0.9\textwidth]{pca/#3}\\%
+            \resizebox{0.7\textwidth}{!}{\input{plots/c/#3}}%
+            \caption{\escape{#3}}%
+        \end{figure}%
+    \end{columns}%
+    \vfill
+    \makebox[\textwidth][c]{%
+        \resizebox{!}{0.15\textheight}{%
+            \input{plots/c/legend}%
+        }%
+    }%
 }
+\makeatother
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Custom formatting commands
@@ -258,9 +267,11 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Title page options
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\title{\thesisTitle*{}}
-\author{\studentName*{}}
+\title{\texorpdfstring{\thesisTitle*{}}{\thesisTitle}}
+\author[\studentName*{}]{\texorpdfstring{\studentName*{}\\{\tiny{Supervisor: \supervisorName*{}}}}{\studentName*{}}}
 \date{\thesisDate*{}}
+\institute{\universityName*{}}
+\titlegraphic{\includegraphics[width=0.25\textwidth]{sydney_uni_coat_of_arms}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Bibliography
@@ -276,10 +287,11 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Title Page
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%\pdfbookmark[0]{Preamble}{title}
-%\pdfbookmark[1]{Title page}{title}
-\begin{frame}
+\begin{frame}[shrink]
     \titlepage
+    % Title
+    % Author names
+    % University logo
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -317,6 +329,7 @@
 \label{conclusion}
 \include{presentation/conclusion}
 
+\begin{comment}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Bibliography
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -327,5 +340,13 @@
 \defcounter{biburlucpenalty}{6000}
 \defcounter{biburllcpenalty}{9000}
 \printbibliography
+\end{comment}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Additional
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Additional}
+\label{additional}
+\include{presentation/additional}
 
 \end{document}
