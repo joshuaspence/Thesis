@@ -2,88 +2,44 @@
 % MATLAB Implementation
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{MATLAB Implementation}
-\begin{frame}{MATLAB Implementation}
-    % TODO
+\begin{frame}[label=matlab]{MATLAB Implementation}
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % C Implementation
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{C Implementation}
-\begin{frame}{C Implementation}
-    % TODO
+\begin{frame}[label=c]{C Implementation}
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Algorithm Profiling
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Algorithm Profiling}
-\begin{frame}{\escape{testCDST}, \escape{testCDST2}, \escape{testCDST3}}
-    \transduration{5}
-    \profilingPlots{testCDST}{testCDST2}{testCDST3}
-\end{frame}
-
-\begin{frame}{\escape{spam_train}, \escape{spam}, \escape{mesh_network}}
-    \transduration{5}
-    \profilingPlots{spam_train}{spam}{mesh_network}
-\end{frame}
-
-\begin{frame}{\escape{segmentation}, \escape{magicgamma}, \escape{connect4}}
-    \transduration{5}
-    \profilingPlots{segmentation}{magicgamma}{connect4}
-\end{frame}
-
-\begin{frame}{\escape{letter-recognition}, \escape{pendigits}, \escape{musk}}
-    \transduration{5}
-    \profilingPlots{letter-recognition}{pendigits}{musk}
-\end{frame}
-
-\begin{frame}{\escape{testoutrank}, \escape{testCD}, \escape{ball1}}
-    \transduration{5}
-    \profilingPlots{testoutrank}{testCD}{ball1}
-\end{frame}
-
-\begin{frame}{\escape{runningex1k}, \escape{runningex10k}, \escape{runningex20k}}
-    \transduration{5}
-    \profilingPlots{runningex1k}{runningex10k}{runningex20k}
-\end{frame}
-
-\begin{frame}{\escape{runningex30k}, \escape{runningex40k}}
-    \profilingPlots{runningex30k}{runningex40k}{} % TODO: runningex50k
-\end{frame}
+\profilingPlots{testoutrank}{runningex40k}{connect4}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Block Size Analysis
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Block Size Analysis}
-\begin{frame}{Total Execution Time}
-    \blockSizeProfilingPlot{total_execution_time}
-\end{frame}
-
-\begin{frame}{Function Execution Time}
+\begin{frame}[label=functionExecutionTime]{Function Execution Time}
     \blockSizeProfilingPlot{function_execution_time}
 \end{frame}
 
-\begin{frame}{Distance Calls}
+\begin{frame}[label=distanceCalls]{Distance Calls}
     \blockSizeProfilingPlot{distance_calls}
 \end{frame}
 
-\begin{frame}{Vectors Pruned}
+\begin{frame}[label=vectorsPruned]{Vectors Pruned}
     \blockSizeProfilingPlot{vectors_pruned}
 \end{frame}
 
-\begin{frame}{Total Run Time Complexity}{Linear}
-    \blockSizeProfilingPlot{total_run_time_complexity.lin}
-\end{frame}
+\begin{frame}[label=runTimeComplexity]{Function Run Time Complexity}
+    \begin{columns}[c]
+        \column{0.5\textwidth}
+        \blockSizeProfilingPlot{function_run_time_complexity.lin}
 
-\begin{frame}{Total Run Time Complexity}{Logarithmic}
-    \blockSizeProfilingPlot{total_run_time_complexity.log}
-\end{frame}
-
-\begin{frame}{Function Run Time Complexity}{Linear}
-    \blockSizeProfilingPlot{function_run_time_complexity.lin}
-\end{frame}
-
-\begin{frame}{Function Run Time Complexity}{Logarithmic}
-    \blockSizeProfilingPlot{function_run_time_complexity.log}
+        \column{0.5\textwidth}
+        \blockSizeProfilingPlot{function_run_time_complexity.log}
+    \end{columns}
 \end{frame}

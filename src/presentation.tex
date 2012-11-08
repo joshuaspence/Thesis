@@ -92,7 +92,8 @@
 
 % Load a theme
 \usetheme{Warsaw}
-\useoutertheme[footline=authortitle]{miniframes}
+%\useoutertheme[footline=authortitle]{miniframes}
+\useoutertheme{smoothbars}
 
 % For animations in beamer
 \usepackage{multimedia}
@@ -102,6 +103,9 @@
 
 % Show notes
 %\setbeameroption{show notes}
+
+% Hide navigation symbols
+%\setbeamertemplate{navigation symbols}{}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Custom colours
@@ -156,13 +160,14 @@
 %-------------------------------------------------------------------------------
 % \blockSizeProfilingPlot{DATASET}
 %===============================================================================
+\usepackage{adjustbox}
 \makeatletter
 \newcommand\blockSizeProfilingPlot[1]{%
-    \def\profilingPlots@width{\textwidth}%
-    \def\profilingPlots@height{0.85\textheight}%
+    \def\profilingPlots@width{0.9\textwidth}%
+    \def\profilingPlots@height{0.9\textheight}%
     %
-    \makebox[\profilingPlots@width][c]{%
-        \resizebox{!}{\profilingPlots@height}{%
+    \makebox[\textwidth][c]{%
+        \maxsizebox{\profilingPlots@width}{\profilingPlots@height}{%
             \input{plots/block_size/#1}%
         }%
     }%
@@ -182,41 +187,47 @@
     \def\profilingPlots@plotWidth{0.7\textwidth}%
     \def\profilingPlots@legendHeight{0.15\textheight}%
     %
-    \profilingPlots@verticalOffset
-    \begin{columns}[c]%
-        \column{\profilingPlots@columnWidth}%
-        \ifthenelse{\equal{#1}{}}{}{
-            \begin{figure}%
-                \includegraphics[width=\profilingPlots@pcaWidth]{pca/#1}\\%
-                \resizebox{\profilingPlots@plotWidth}{!}{\input{plots/c/#1}}%
-                \caption{\escape{#1}}%
-            \end{figure}%
+    \begin{frame}{%
+            \ifthenelse{\equal{#1}{}}{}{\escape{#1}\ifthenelse{\equal{#2}{}}{}{,\space}}%
+            \ifthenelse{\equal{#2}{}}{}{\escape{#2}\ifthenelse{\equal{#3}{}}{}{,\space}}%
+            \ifthenelse{\equal{#3}{}}{}{\escape{#3}}%
         }%
-        %
-        \column{\profilingPlots@columnWidth}%
-        \ifthenelse{\equal{#2}{}}{}{
-            \begin{figure}%
-                \includegraphics[width=\profilingPlots@pcaWidth]{pca/#2}\\%
-                \resizebox{\profilingPlots@plotWidth}{!}{\input{plots/c/#2}}%
-                \caption{\escape{#2}}%
-            \end{figure}%
+        \profilingPlots@verticalOffset
+        \begin{columns}[c]%
+            \column{\profilingPlots@columnWidth}%
+            \ifthenelse{\equal{#1}{}}{}{
+                \begin{figure}%
+                    \includegraphics[width=\profilingPlots@pcaWidth]{pca/#1}\\%
+                    \resizebox{\profilingPlots@plotWidth}{!}{\input{plots/c/#1}}%
+                    \caption{\escape{#1}}%
+                \end{figure}%
+            }%
+            %
+            \column{\profilingPlots@columnWidth}%
+            \ifthenelse{\equal{#2}{}}{}{
+                \begin{figure}%
+                    \includegraphics[width=\profilingPlots@pcaWidth]{pca/#2}\\%
+                    \resizebox{\profilingPlots@plotWidth}{!}{\input{plots/c/#2}}%
+                    \caption{\escape{#2}}%
+                \end{figure}%
+            }%
+            %
+            \column{\profilingPlots@columnWidth}%
+            \ifthenelse{\equal{#3}{}}{}{
+                \begin{figure}%
+                    \includegraphics[width=\profilingPlots@pcaWidth]{pca/#3}\\%
+                    \resizebox{\profilingPlots@plotWidth}{!}{\input{plots/c/#3}}%
+                    \caption{\escape{#3}}%
+                \end{figure}%
+            }%
+        \end{columns}%
+        \vfill
+        \makebox[\textwidth][c]{%
+            \resizebox{!}{\profilingPlots@legendHeight}{%
+                \input{plots/c/legend}%
+            }%
         }%
-        %
-        \column{\profilingPlots@columnWidth}%
-        \ifthenelse{\equal{#3}{}}{}{
-            \begin{figure}%
-                \includegraphics[width=\profilingPlots@pcaWidth]{pca/#3}\\%
-                \resizebox{\profilingPlots@plotWidth}{!}{\input{plots/c/#3}}%
-                \caption{\escape{#3}}%
-            \end{figure}%
-        }%
-    \end{columns}%
-    \vfill
-    \makebox[\textwidth][c]{%
-        \resizebox{!}{\profilingPlots@legendHeight}{%
-            \input{plots/c/legend}%
-        }%
-    }%
+    \end{frame}%
 }
 \makeatother
 
@@ -280,7 +291,10 @@
 \title{\thesisTitle*{}}
 \author[\studentName*{}]{\studentName*{}\\{\tiny{Supervisor: \supervisorName*{}}}}
 \date{\thesisDate*{}}
-\institute{\universityName*{}}
+\institute[\universityName*{}]{
+    \universityName*{}\\
+    \schoolName*{}
+}
 \titlegraphic{\includegraphics[width=0.25\textwidth]{sydney_uni_coat_of_arms}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -291,54 +305,42 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Title Page
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}[shrink]
-    \titlepage
-    % Title
-    % Author names
-    % University logo
-\end{frame}
+\frame[label=titlepage,shrink]{\titlepage}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Introduction
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Introduction}
-\label{introduction}
-\include{presentation/introduction}
+\input{presentation/introduction}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % The Algorithm
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{The Algorithm}
-\label{algorithm}
-\include{presentation/algorithm}
+\section{TheAlgorithm}
+\input{presentation/algorithm}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Software Implementation
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Software Implementation}
-\label{software}
-\include{presentation/software}
+\input{presentation/software}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Hardware Implementation
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Hardware Implementation}
-\label{hardware}
-\include{presentation/hardware}
+\input{presentation/hardware}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Conclusion
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Conclusion}
-\label{conclusion}
-\include{presentation/conclusion}
+\input{presentation/conclusion}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Additional
+% Appendix
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \appendix
-\section{Additional}
-\label{additional}
-\include{presentation/additional}
+\input{presentation/appendix/main}
 
 \end{document}

@@ -1,0 +1,33 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Algorithm Profiling
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Algorithm Profiling}
+\profilingPlots{testCDST}{testCDST2}{testCDST3}
+\profilingPlots{spam_train}{spam}{mesh_network}
+\profilingPlots{segmentation}{magicgamma}{connect4}
+\profilingPlots{letter-recognition}{pendigits}{musk}
+\profilingPlots{testoutrank}{testCD}{ball1}
+\profilingPlots{runningex1k}{runningex10k}{runningex20k}
+\profilingPlots{runningex30k}{runningex40k}{} % TODO: runningex50k
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Block Size Profiling
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Block Size Profiling}
+\begin{frame}[label=blockSize-legend]{Block Size Profiling Legend}
+    %\blockSizeProfilingPlot{legend}
+\end{frame}
+
+\begin{frame}[label=totalExecutionTime]{Total Execution Time}
+    \blockSizeProfilingPlot{total_execution_time}
+\end{frame}
+
+\begin{frame}[label=totalRunTimeComplexity]{Total Run Time Complexity}
+    \begin{columns}[c]
+        \column{0.4\textwidth}
+        \blockSizeProfilingPlot{total_run_time_complexity.lin}
+
+        \column{0.4\textwidth}
+        \blockSizeProfilingPlot{total_run_time_complexity.log}
+    \end{columns}
+\end{frame}
