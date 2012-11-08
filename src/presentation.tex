@@ -75,11 +75,13 @@
 
 % TODO
 \usepackage{pgfplots}
-\usepackage{tikz}
-\usetikzlibrary{positioning,shapes,shadows,arrows}
+\usepackage{tikz}\usetikzlibrary{positioning,shapes,shadows,arrows}
 
 % For \ifthenelse command
 \usepackage{ifthen}
+
+% For \adjustbox command
+\usepackage{adjustbox}
 
 % My custom packages
 \usepackage{escape,persons,pgf-pie}
@@ -102,7 +104,10 @@
 \setbeamerfont{caption}{size=\scriptsize}
 
 % Show notes
-%\setbeameroption{show notes}
+\setbeameroption{show notes}
+%\setbeameroption{show only notes}
+%\setbeameroption{hide notes}
+%\usepackage{pgfpages}\setbeameroption{show notes on second screen}
 
 % Hide navigation symbols
 %\setbeamertemplate{navigation symbols}{}
@@ -160,7 +165,6 @@
 %-------------------------------------------------------------------------------
 % \blockSizeProfilingPlot{DATASET}
 %===============================================================================
-\usepackage{adjustbox}
 \makeatletter
 \newcommand\blockSizeProfilingPlot[1]{%
     \def\profilingPlots@width{0.9\textwidth}%
@@ -286,16 +290,10 @@
 \graphicspath{{../img/}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Title page options
+% Bibliography
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\title{\thesisTitle*{}}
-\author[\studentName*{}]{\studentName*{}\\{\tiny{Supervisor: \supervisorName*{}}}}
-\date{\thesisDate*{}}
-\institute[\universityName*{}]{
-    \universityName*{}\\
-    \schoolName*{}
-}
-\titlegraphic{\includegraphics[width=0.25\textwidth]{sydney_uni_coat_of_arms}}
+\usepackage[backend=bibtex,language=australian]{biblatex} % use biblatex instead of bibtex
+\bibliography{thesis}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                               END OF PREAMBLE                                %
@@ -316,7 +314,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % The Algorithm
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{TheAlgorithm}
+\section{The Algorithm}
 \input{presentation/algorithm}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
