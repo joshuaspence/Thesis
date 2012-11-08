@@ -7,6 +7,7 @@
 % Warn about commands, classes and packages that are outdated and superseded.
 % Orthodox checks for pitfalls that are not technically incorrect.
 %\usepackage[l2tabu,orthodox,abort]{nag}
+\usepackage[l2tabu,orthodox]{nag}
 
 % For font and input encoding.
 \usepackage[utf8]{inputenc}
@@ -26,9 +27,6 @@
 % input, output, math families, languages, insertions). Also time the amount of
 % time required for LaTeX compilation.
 \usepackage[timer,left]{regstats}
-
-% For greater control over customising lists.
-\usepackage{enumitem}
 
 % The listings package is a source code printer for LaTeX. You can typeset stand
 % alone files as well as listings with an environment similar to verbatim as
@@ -66,33 +64,25 @@
 % sub-caption feature of the caption package).
 \usepackage{subcaption}
 
-% A new environment, tabularx, is defined, which takes the same arguments as
-% tabular*, but modifies the widths of certain columns, rather than the inter
-% column space, to set a table with the requested total width. The columns that
-% may stretch are marked with the new token X in the preamble argument.
-% NOTE: Requires the array package
-\usepackage{array}
-\usepackage{tabularx}
-
 % This package reimplements the LATEX verbatim and verbatim* environments. In
 % addition it provides a comment environment that skips any commands or text
 % between \begin{comment} and the next \end{comment}. It also defines the
 % command verbatim to input a whole file verbatim.
 \usepackage{verbatim}
 
+% TODO
 \usepackage[noline,ruled]{algorithm2e}
+
+% TODO
 \usepackage{pgfplots}
 \usepackage{tikz}
 \usetikzlibrary{positioning,shapes,shadows,arrows}
 
-% For animations
-\usepackage{multimedia}
-
 % For \ifthenelse command
 \usepackage{ifthen}
 
-% My custom packages.
-\usepackage{escape,citationneeded,pieplots,persons,pgf-pie}
+% My custom packages
+\usepackage{escape,persons,pgf-pie}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Beamer configuration.
@@ -100,13 +90,14 @@
 % Presentation mode
 \mode<presentation>
 
-% No navigation symbols
-\beamertemplatenavigationsymbolsempty
-
 % Load a theme
 \usetheme{Warsaw}
 \useoutertheme[footline=authortitle]{miniframes}
 
+% For animations in beamer
+\usepackage{multimedia}
+
+% Reduce the font size of captions
 \setbeamerfont{caption}{size=\scriptsize}
 
 % Show notes
@@ -167,8 +158,11 @@
 %===============================================================================
 \makeatletter
 \newcommand\blockSizeProfilingPlot[1]{%
-    \makebox[\textwidth][c]{%
-        \resizebox{!}{0.85\textheight}{%
+    \def\profilingPlots@width{\textwidth}%
+    \def\profilingPlots@height{0.85\textheight}%
+    %
+    \makebox[\profilingPlots@width][c]{%
+        \resizebox{!}{\profilingPlots@height}{%
             \input{plots/block_size/#1}%
         }%
     }%
@@ -182,12 +176,13 @@
 %===============================================================================
 \makeatletter
 \newcommand\profilingPlots[3]{%
+    \def\profilingPlots@verticalOffset{\vskip-1.5em}%
     \def\profilingPlots@columnWidth{0.33\textwidth}%
     \def\profilingPlots@pcaWidth{0.9\textwidth}%
     \def\profilingPlots@plotWidth{0.7\textwidth}%
     \def\profilingPlots@legendHeight{0.15\textheight}%
     %
-    \vskip-1.5em%
+    \profilingPlots@verticalOffset
     \begin{columns}[c]%
         \column{\profilingPlots@columnWidth}%
         \ifthenelse{\equal{#1}{}}{}{
@@ -282,17 +277,11 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Title page options
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\title{\texorpdfstring{\thesisTitle*{}}{\thesisTitle}}
-\author[\studentName*{}]{\texorpdfstring{\studentName*{}\\{\tiny{Supervisor: \supervisorName*{}}}}{\studentName*{}}}
+\title{\thesisTitle*{}}
+\author[\studentName*{}]{\studentName*{}\\{\tiny{Supervisor: \supervisorName*{}}}}
 \date{\thesisDate*{}}
 \institute{\universityName*{}}
 \titlegraphic{\includegraphics[width=0.25\textwidth]{sydney_uni_coat_of_arms}}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Bibliography
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\usepackage[backend=bibtex,language=australian]{biblatex} % use biblatex instead of bibtex
-\bibliography{thesis}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                               END OF PREAMBLE                                %
@@ -343,19 +332,6 @@
 \section{Conclusion}
 \label{conclusion}
 \include{presentation/conclusion}
-
-\begin{comment}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Bibliography
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-% Allow URLs to break at numbers, upper-case characters and lower-case
-% characters, with different penalties.
-\defcounter{biburlnumpenalty}{3000}
-\defcounter{biburlucpenalty}{6000}
-\defcounter{biburllcpenalty}{9000}
-\printbibliography
-\end{comment}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Additional
