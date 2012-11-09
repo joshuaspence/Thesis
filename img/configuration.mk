@@ -7,7 +7,7 @@ TARGETS_NO_CLEAN := datasets pca
 TITLE            := IMAGES
 
 datasets_TITLE   := data set plots
-datasets_TARGETS := $(foreach DATASET,$(DATASETS),$(addsuffix .png,$(DATASET)))
+datasets_TARGETS := $(foreach DATASET,$(DATASETS_2D) $(DATASETS_3D),$(addsuffix .png,$(DATASET)))
 define datasets_NO_CLEAN
 -@echo "Let's not delete these figures unless we really have to... MATLAB is required to" >&2
 -@echo "regenerate them." >&2

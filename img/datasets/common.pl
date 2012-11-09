@@ -37,10 +37,12 @@ n = size(X,1);
 d = size(X,2);
 
 f = figure
-if d == 2
-    scatter(X(:,1),X(:,2),5,'filled');
-else
-    scatter3(X(:,1),X(:,2),X(:,3),5,'filled');
+if d == 2 || d == 3
+    if d == 2
+        scatter(X(:,1),X(:,2),5,'filled');
+    elseif d == 3
+        scatter3(X(:,1),X(:,2),X(:,3),5,'filled');
+    end
 end
 %matlab2tikz(out_file,'height','\\figureheight','width','\\figurewidth','showInfo',false);
 print(f,'-dpng',out_file);

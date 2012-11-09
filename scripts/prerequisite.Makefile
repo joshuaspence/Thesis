@@ -36,6 +36,19 @@ DATASETS    := ball1 \
                testCDST2 \
                testCDST3 \
                testoutrank
+DATASETS_2D := ball1 \
+               runningex1k \
+               runningex10k \
+               runningex20k \
+               runningex30k \
+               runningex40k \
+               runningex50k \
+               testCD \
+               testCDST \
+               testCDST2 \
+               testCDST3 \
+               testoutrank
+DATASETS_3D :=
 EXTENSIONS  := png tex
 
 include configuration.mk

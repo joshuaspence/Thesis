@@ -10,5 +10,6 @@ all symlink to the `common.pl` script), which can be used to regenerate the PNG
 plots. This should rarely need to be done, but is included here for
 completeness.
 
-Data sets with more than 3 dimensions are plotted by using only data from the
-first three dimensions of the data set.
+Plots are only generated for 2D or 3D data sets. If an attempt is made to plot a
+data set of a higher dimension, then an empty (placeholder) file will be
+created, with a name `DATASET.png.none`.
