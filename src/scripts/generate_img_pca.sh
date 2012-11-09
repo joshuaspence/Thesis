@@ -1,1 +1,0 @@
-../../img/pca/generate_all.sh

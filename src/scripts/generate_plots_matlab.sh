@@ -1,1 +1,0 @@
-../../plots/matlab/generate_all.sh

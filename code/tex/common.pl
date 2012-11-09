@@ -55,7 +55,7 @@ foreach my $source_file (@source_files) {
     }
     close(FILE);
 
-    print OUTPUT "\\end{lstlisting}\n";
+    print OUTPUT "\n\\end{lstlisting}\n";
 }
 
 close(OUTPUT);

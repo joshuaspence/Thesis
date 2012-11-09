@@ -1,1 +1,0 @@
-../../img/datasets/generate_all.sh

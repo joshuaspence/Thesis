@@ -36,18 +36,6 @@ DATASETS    := ball1 \
                testCDST2 \
                testCDST3 \
                testoutrank
-DATASETS_2D := ball1 \
-               runningex1k \
-               runningex10k \
-               runningex20k \
-               runningex30k \
-               runningex40k \
-               runningex50k \
-               testCD \
-               testCDST \
-               testCDST2 \
-               testCDST3 \
-               testoutrank
 EXTENSIONS  := png tex
 
 include configuration.mk
@@ -69,12 +57,12 @@ endef
 # Used to create target rules using macro expansion.
 define expand-build-targets
 # $(1): Build targets
-.PHONY: $(1) pre-$(1) main-$(1) post-$(1)
-$(1): pre-$(1) main-$(1) post-$(1)
-pre-$(1):
+.PHONY: $(1) pre-build-$(1) build-$(1) post-build-$(1)
+$(1): pre-build-$(1) build-$(1) post-build-$(1)
+pre-build-$(1):
 	$$(call print-subheader-generate,$$($(1)_TITLE))
-main-$(1): $$(foreach TARGET,$$($(1)_TARGETS),$(1)/$$(TARGET))
-post-$(1):
+build-$(1): $$(foreach TARGET,$$($(1)_TARGETS),$(1)/$$(TARGET))
+post-build-$(1):
 	$$(call print-subfooter)
 
 endef
@@ -83,14 +71,12 @@ endef
 # Used to create target rules using macro expansion.
 define expand-clean-targets
 # $(1): Clean targets
-.PHONY: clean-$(1) pre-clean-$(1) main-clean-$(1) post-clean-$(1)
-clean-$(1): pre-clean-$(1) main-clean-$(1) post-clean-$(1)
-pre-clean-$(1):
+.PHONY: clean-$(1) force-clean-$(1)
+clean-$(1):
 	$$(call print-subheader-clean,$$($(1)_TITLE))
-main-clean-$(1):
 	@$$(foreach TARGET,$$($(1)_TARGETS),echo "Deleting $$(TARGET)"; rm --force "$(1)/$$(TARGET)";)
-post-clean-$(1):
 	$$(call print-subfooter)
+force-clean-$(1): clean-$(1)
 
 endef
 
@@ -120,13 +106,14 @@ endef
 # Used to create target rules using macro expansion.
 define expand-noclean-targets
 # $(1): Clean targets
-.PHONY: clean-$(1) pre-clean-$(1) main-clean-$(1) post-clean-$(1)
-clean-$(1): pre-clean-$(1) main-clean-$(1) post-clean-$(1)
-pre-clean-$(1):
+.PHONY: clean-$(1) force-clean-$(1)
+clean-$(1):
 	$$(call print-subheader-clean,$$($(1)_TITLE))
-main-clean-$(1):
 	$$($(1)_NO_CLEAN)
-post-clean-$(1):
+	$$(call print-subfooter)
+force-clean-$(1):
+	$$(call print-subheader-clean,$$($(1)_TITLE))
+	@$$(foreach TARGET,$$($(1)_TARGETS),echo "Deleting $$(TARGET)"; rm --force "$(1)/$$(TARGET)";)
 	$$(call print-subfooter)
 
 endef
@@ -213,6 +200,7 @@ define generate-rules
 endef
 $(foreach EXT,$(EXTENSIONS),$(eval $(call generate-rules,$(EXT))))
 
+
 #------------------------------------------------------------------------------#
 #                                                                              #
 #                                  TARGETS                                     #
@@ -232,11 +220,13 @@ post-all:
 	$(call print-footer)
 
 # Clean all generated files
-.PHONY: clean pre-clean main-clean post-clean
+.PHONY: clean force-clean pre-clean main-clean post-clean
 clean: pre-clean main-clean post-clean
+force-clean: pre-clean force-clean post-clean
 pre-clean:
 	$(call print-header-clean)
 main-clean: $(foreach TARGET,$(ALL_TARGETS),clean-$(TARGET))
+force-clean: $(foreach TARGET,$(ALL_TARGETS),force-clean-$(TARGET))
 post-clean:
 	$(call print-footer)
 

@@ -45,8 +45,9 @@ latex: $(MAIN)
 .PHONY: prerequisites
 prerequisites: $(PREREQUISITES)
 
-.PHONY: clean distclean
+.PHONY: clean force-clean distclean
 clean: clean-main
+force-clean: force-clean-prerequisites
 distclean: clean-main clean-prerequisites
 
 .PHONY: clean-main clean-prerequisites
@@ -54,3 +55,5 @@ clean-main:
 	@make --no-print-directory -C $(MAIN) clean
 clean-prerequisites:
 	@$(foreach SUBDIR,$(PREREQUISITES),make --no-print-directory -C $(SUBDIR) clean;)
+force-clean-prerequisites:
+	@$(foreach SUBDIR,$(PREREQUISITES),make --no-print-directory -C $(SUBDIR) force-clean;)

@@ -1,6 +1,6 @@
 # Plots
 This directory contains principal component analysis (PCA) plots of the
-[data/datasets](https://github.com/joshuaspence/Thesis/tree/master/data/datasets)
+[datasets](https://github.com/joshuaspence/Thesis/tree/master/data/datasets)
 which were used in this Thesis. The plots were produced by MATLAB and are stored
 as PNG files.
 
@@ -14,13 +14,6 @@ In order to plot the PCA plot, this script loads the PCA plot figure (which was
 saved using MATLAB) from the
 [data/pca](https://github.com/joshuaspence/Thesis/tree/master/data/pca)
 directory.
-
-# Dependencies
-- MATLAB is required in order to regenerate the data plots.
-- The following Perl modules are required to regenerate the data plots:
-    + Cwd
-    + File::Basename
-    + File::Spec
 
 # Warning
 These plots can take a long time to generate, and require a fair amount of

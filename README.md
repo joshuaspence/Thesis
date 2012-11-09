@@ -31,13 +31,25 @@ sources exist in the following locations:
 - [img](https://github.com/joshuaspence/Thesis/tree/master/img)
 - [plots](https://github.com/joshuaspence/Thesis/tree/master/plots)
 
-<!---
 ## Dependencies
 The following are required to compile my Thesis. Please note that this list is
 not exhaustive.
 
-- TODO
---->
+## Plotting
+- `gnuplot` is required in order to regenerate the data plots in the
+    [plots](https://github.com/joshuaspence/Thesis/tree/master/plots)
+    subdirectory.
+- The gnuplot Tikz terminal is required in order to regenerate the data plots.
+- MATLAB is required in order to regenerate the data plots.
+
+## Scripting
+- perl
+
+### Perl modules
+- Cwd
+- File::Basename
+- File::Spec
+- Text::CSV (from the `libtext-csv-perl` package)
 
 # Presentation
 ## Building
