@@ -43,7 +43,7 @@ not exhaustive.
 - MATLAB is required in order to regenerate the data plots.
 
 ## Scripting
-- perl
+- Perl
 
 ### Perl modules
 - Cwd
