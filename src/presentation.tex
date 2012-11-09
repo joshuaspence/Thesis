@@ -80,7 +80,7 @@
 % For \ifthenelse command
 \usepackage{ifthen}
 
-% For \adjustbox command
+% For \maxsizebox command
 \usepackage{adjustbox}
 
 % My custom packages
@@ -191,47 +191,41 @@
     \def\profilingPlots@plotWidth{0.7\textwidth}%
     \def\profilingPlots@legendHeight{0.15\textheight}%
     %
-    \begin{frame}{%
-            \ifthenelse{\equal{#1}{}}{}{\escape{#1}\ifthenelse{\equal{#2}{}}{}{,\space}}%
-            \ifthenelse{\equal{#2}{}}{}{\escape{#2}\ifthenelse{\equal{#3}{}}{}{,\space}}%
-            \ifthenelse{\equal{#3}{}}{}{\escape{#3}}%
+    \profilingPlots@verticalOffset
+    \begin{columns}[c]%
+        \column{\profilingPlots@columnWidth}%
+        \ifthenelse{\equal{#1}{}}{}{
+            \begin{figure}%
+                \includegraphics[width=\profilingPlots@pcaWidth]{pca/#1}\\%
+                \resizebox{\profilingPlots@plotWidth}{!}{\input{plots/c/#1}}%
+                \caption{\escape{#1}}%
+            \end{figure}%
         }%
-        \profilingPlots@verticalOffset
-        \begin{columns}[c]%
-            \column{\profilingPlots@columnWidth}%
-            \ifthenelse{\equal{#1}{}}{}{
-                \begin{figure}%
-                    \includegraphics[width=\profilingPlots@pcaWidth]{pca/#1}\\%
-                    \resizebox{\profilingPlots@plotWidth}{!}{\input{plots/c/#1}}%
-                    \caption{\escape{#1}}%
-                \end{figure}%
-            }%
-            %
-            \column{\profilingPlots@columnWidth}%
-            \ifthenelse{\equal{#2}{}}{}{
-                \begin{figure}%
-                    \includegraphics[width=\profilingPlots@pcaWidth]{pca/#2}\\%
-                    \resizebox{\profilingPlots@plotWidth}{!}{\input{plots/c/#2}}%
-                    \caption{\escape{#2}}%
-                \end{figure}%
-            }%
-            %
-            \column{\profilingPlots@columnWidth}%
-            \ifthenelse{\equal{#3}{}}{}{
-                \begin{figure}%
-                    \includegraphics[width=\profilingPlots@pcaWidth]{pca/#3}\\%
-                    \resizebox{\profilingPlots@plotWidth}{!}{\input{plots/c/#3}}%
-                    \caption{\escape{#3}}%
-                \end{figure}%
-            }%
-        \end{columns}%
-        \vfill
-        \makebox[\textwidth][c]{%
-            \resizebox{!}{\profilingPlots@legendHeight}{%
-                \input{plots/c/legend}%
-            }%
+        %
+        \column{\profilingPlots@columnWidth}%
+        \ifthenelse{\equal{#2}{}}{}{
+            \begin{figure}%
+                \includegraphics[width=\profilingPlots@pcaWidth]{pca/#2}\\%
+                \resizebox{\profilingPlots@plotWidth}{!}{\input{plots/c/#2}}%
+                \caption{\escape{#2}}%
+            \end{figure}%
         }%
-    \end{frame}%
+        %
+        \column{\profilingPlots@columnWidth}%
+        \ifthenelse{\equal{#3}{}}{}{
+            \begin{figure}%
+                \includegraphics[width=\profilingPlots@pcaWidth]{pca/#3}\\%
+                \resizebox{\profilingPlots@plotWidth}{!}{\input{plots/c/#3}}%
+                \caption{\escape{#3}}%
+            \end{figure}%
+        }%
+    \end{columns}%
+    \vfill
+    \makebox[\textwidth][c]{%
+        \resizebox{!}{\profilingPlots@legendHeight}{%
+            \input{plots/c/legend}%
+        }%
+    }%
 }
 \makeatother
 
