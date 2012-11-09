@@ -16,7 +16,7 @@
 % Algorithm Profiling
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Algorithm Profiling}
-\begin{frame}[label=profiling,fragile]{Algorithm Profiling}
+\begin{frame}[label=profiling]{Algorithm Profiling}
     \profilingPlots{testoutrank}{runningex40k}{connect4}
 
     \note{These graphs show the relative execution times of functions comprising
@@ -24,23 +24,24 @@
     graphs for the other 18 data sets are very similar.
 
     These graphs shows that the vast majority of the algorithm's execution time
-    is attributed to the \verb+distance_squared+ function --- a simple function
-    which returns the square of the Euclidean distance between two given
-    vectors.}
+    is attributed to the \escape{distance_squared} function --- a simple
+    function which returns the square of the Euclidean distance between two
+    given vectors.}
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Block Size Analysis
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Block Size Analysis}
-\begin{frame}[label=functionExecutionTime,fragile]
+\begin{frame}[label=functionExecutionTime]
         {Function Execution Time}
-        {\verb+TopN_Outlier_Pruning_Block+}
+        {\escape{TopN_Outlier_Pruning_Block}}
     \blockSizeProfilingPlot{function_execution_time}
 
     \note{This graph shows the total execution time of the
-    verb+TopN_Outlier_Pruning_Block+ function, sampled using 21 data sets with a
-    size ranging from 441 2-dimensional vectors to 67557 43-dimensional vectors.
+    \escape{TopN_Outlier_Pruning_Block} function, sampled using 21 data sets
+    with a size ranging from 441 2-dimensional vectors to 67557 43-dimensional
+    vectors.
 
     Each dataset was profiled with 13 different block sizes ranging from $10^0$
     to $10^6$. In addition, a modified algorithm which operated without blocking
@@ -53,8 +54,7 @@
 
     An interesting observation from this graph shows that there is no
     significant difference in the algorithm's performance for block sizes from
-    $10^0$ to $10^3$.
-    }
+    $10^0$ to $10^3$.}
 \end{frame}
 
 \begin{frame}[label=distanceCalls]{Distance Calls}
