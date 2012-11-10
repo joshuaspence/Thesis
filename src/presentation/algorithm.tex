@@ -23,6 +23,23 @@
             \input{chapter02/anomaly-detection_commute-time.algm}
         \end{algorithm}
     }
+    \note{The $k$-nearest neighbour graph with $n$ nodes is built in
+        $O(n \log n)$ using kd-tree with the assumption that the dimensionality
+        of the data is not very high. The average degree of each node is $O(k)$
+        ($k << n$). So the graph is sparse and thus finding connected components
+        takes $O(kn)$.
+
+        After sampling, the size of graph is $O(n_s)$ ($n_s << n$). The standard
+        method for eigen decomposition of $L_s$ is $O(n_s^3)$. Since $L_s$ is
+        sparse, it would take $O(Nn_s) = O(kn_s^2)$, where $N$ is the number of
+        nonzeros. The computation of just the $m$ smallest eigenvectors
+        ($m < n_s$) is less expensive than that.
+
+        The typical distance-based anomaly detection takes $O(n_s^2)$ for the
+        neighbourhood search. Pruning can scale it nearly linear. We only need
+        to compute the commute times $O(n_s)$ times, each of which takes $O(m)$.
+        So the time needed for two steps is proportional to
+        $O(n \log n + kn + kn_s^2 + mn_s) = O(n \log n)$ as $n_s << n$.}
 \end{frame}
 
 \begin{frame}[label=algorithm]{The Algorithm}{Outlier Pruning}\relax

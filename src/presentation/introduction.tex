@@ -5,13 +5,64 @@
 \subsection{Overview}
 \begin{frame}[label=overview]{Overview}
     \begin{itemize}
-        \item Anomaly detection algorithm using commute time and Eigenspace
-            approximation.
-        \item Software-hardware coprocessing.
-        \item Hardware implementation.
-        \item A bullet on FPGAs.
-        \item Reconfigurable computing is the application of FPGAs to computing problems.
+        \note{In this presentation, I will discuss the works and results of my
+            Thesis project, which was conducted during the year of 2012 under
+            the supervision of \supervisorName{}, and with assistance from PhD
+            student \getPerson{Frechtling}.}
+
+        \item Analysis and benchmarking of an anomaly detection algorithm.
+        \note[item]{I will provide an overview of my analysis and benchmarking
+            of an existing anomaly detection algorithm. This algorithm...}
+        \begin{itemize}
+            \item Uses commute time as a distance metric.
+            \note[item]{Uses commute time as a distance metric. Commute time
+                effectively captures both the distance between nodes, as well as
+                the data density around these nodes.}
+
+            \item Uses eigenspace embedding.
+            \note[item]{The use of Eigenspace embedding alleviates the $O(n^3)$
+                computational complexity of the commute time calculations.}
+            \note[item]{The graph components are sampled in order to reduce the
+                graph size, and then Eigenspace approximation is applied to
+                approximate the commute time on the sampled graph.}
+
+            \item Run time (using \emph{approximated} commute time) is
+                proportional to $O(n \log n)$, compared to:
+            \note[item]{}
+            \begin{itemize}
+                \item $O(n)$ using Euclidean distance.
+                \note[item]{}
+
+                \item $O(n^2)$ using \gls{LOF}.
+                \note[item]{}
+            \end{itemize}
+
+            \item Anomaly detection using \emph{approximated} commute time
+                preserves a high percentage (84.6\% on average) of top anomalies
+                discovered without using approximations.
+            \note[item]{}
+        \end{itemize}
+
+        \item Discussion of the use of \glspl{FPGA}.
+        \note[item]{\glspl{FPGA} are devices that combine the advantages of
+            hardware implementations (speed) with the flexibility of software
+            implementations (configurability).}
+
+        \item Exploration of the use of reconfigurable computing to solve
+            computing problems.
+        \note[item]{Reconfigurable computing is the application of \glspl{FPGA}
+            to solve computing problems.}
     \end{itemize}
+\end{frame}
+
+\begin{frame}[label=algorithm-performance]{Algorithm Performance}
+    \begin{columns}[c]
+        \column{0.5\textwidth}
+        \includegraphics[width=\textwidth]{algorithm/run-time}
+
+        \column{0.5\textwidth}
+        \includegraphics[width=\textwidth]{algorithm/accuracy}
+    \end{columns}
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
