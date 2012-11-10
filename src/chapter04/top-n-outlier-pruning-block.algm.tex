@@ -1,44 +1,52 @@
 \LinesNumbered
+\TitleOfAlgo{TopN\_Outlier\_Pruning\_Block}
 
+% Inputs
 \SetKwInput{InputK}{k}\InputK{the number of nearest neighbours to consider}
+\SetKwInput{InputBlockSize}{block\_size}{}
 \SetKwInput{InputN}{N}\InputN{the number of outliers to return}
 \SetKwInput{InputData}{data}\InputData{a set of examples in random order}
+
+% Outputs
 \SetKwInOut{Output}{outliers}\Output{a set of outliers}
 \SetKwInOut{OutputScores}{outlier\_scores}\OutputScores{}
 
-\SetKwData{BlockIterator}{b}
+% Variables
 \SetKwData{Block}{block}
+\SetKwData{BlockIterator}{b}
+\SetKwData{BlockSize}{block\_size}
 \SetKwData{Cutoff}{cutoff}
-\SetKwData{DataIterator}{d}
 \SetKwData{Data}{data}
+\SetKwData{DataIterator}{d}
+\SetKwData{Neighbours}{nn}
 \SetKwData{NumK}{k}
 \SetKwData{NumN}{N}
-\SetKwData{Neighbours}{neighbours}
-\SetKwData{OutlierIterator}{o}
 \SetKwData{Outliers}{outliers}
-\SetKwData{Score}{score}
+\SetKwData{OutliersIterator}{o}
 
+% Other functions
 \SetKwFunction{Closest}{closest}
-\SetKwFunction{Distance}{distance}
 \SetKwFunction{LoadBlock}{load\_next\_block}
-\SetKwFunction{MaxDist}{max\_dist}
+\SetKwFunction{Distance}{distance}
+\SetKwFunction{Max}{max$_{\BlockIterator\in\Block}$}
 \SetKwFunction{Min}{min}
+\SetKwFunction{Score}{score}
 \SetKwFunction{Top}{top}
 
 \Begin{
-    \Cutoff $\leftarrow$ 0\tcp*[l]{set the cutoff for pruning to $0$}
-    \Outliers $\leftarrow\emptyset$\tcp*[l]{initialize to the empty set}
+    \Cutoff $\leftarrow$ 0\;
+    \Outliers $\leftarrow\emptyset$\;
     \BlankLine
-    \While(\tcp*[h]{load a block of examples from \Data}){\Block $\leftarrow$ \LoadBlock{\Data}}{
-        \ForEach{\BlockIterator $\in$ \Block}{
+    \While{\Block $\leftarrow$ \LoadBlock{\BlockSize, \Data}}{
+        \lForEach{\BlockIterator $\in$ \Block}{
             $\Neighbours[\BlockIterator]\leftarrow\emptyset$\;
         }
         \BlankLine
         \ForEach{\DataIterator $\in$ \Data}{
             \ForEach{\BlockIterator $\in$ \Block $:$ \BlockIterator $\neq$ \DataIterator}{
-                \If{$|\Neighbours[\BlockIterator]|<$ \NumK $\:\lor\:$ \Distance{\BlockIterator, \DataIterator} $<$ \MaxDist{\BlockIterator, $\Neighbours[\BlockIterator]$}}{
-                    %$\Neighbours[\BlockIterator] \leftarrow$ \Closest{\BlockIterator, $\Neighbours[\BlockIterator]$} $\cup$ \DataIterator,\NumK)$\;
-                    \If{$\Score[\Neighbours[\BlockIterator],\BlockIterator)<\Cutoff$}{
+                \If{$|\Neighbours[\BlockIterator]|<$ \NumK $\:\lor\:$ \Distance{\BlockIterator, \DataIterator} $<$ \Max{\Distance{\BlockIterator, $\Neighbours[\BlockIterator]$}}}{
+                    $\Neighbours[\BlockIterator]\leftarrow$ \Closest{\BlockIterator, $\Neighbours[\BlockIterator]$ $\cup$ \DataIterator, \NumK}\;
+                    \If{\Score{$\Neighbours[\BlockIterator]$, \BlockIterator} $<$ \Cutoff}{
                         \Block $\leftarrow$ \Block $\setminus$ \BlockIterator\;
                     }
                 }
@@ -46,9 +54,8 @@
         }
         \BlankLine
         \Outliers $\leftarrow$ \Top{\Block $\cup$ \Outliers, \NumN}\;
-        \Cutoff $\leftarrow$ $\Min_{\OutlierIterator \in \Outliers}(\Score(\OutlierIterator))$\tcp*[l]{the cutoff is the score of the weakest outlier}
+        \Cutoff $\leftarrow$ $\Min_{\OutliersIterator \in \Outliers}(\Score(\OutliersIterator))$\;
     }
-
     \BlankLine
     \KwRet{\Outliers}\;
 }
