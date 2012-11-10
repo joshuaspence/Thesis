@@ -5,11 +5,34 @@
 % design. Note that the most important part of the hardware design is
 % parallelism, so it is important to mention how this was achieved.
 \subsection{Design}
-\begin{frame}[label=design]{Design}
-    % Block diagram showing hardware, software and interface
-    % Multiple functional units
-    % Instruction level parallelism
-    % Pipelining
+\begin{frame}[label=design]{Features}
+    \begin{itemize}
+        \item Majority of \escape{TopN_Outlier_Pruning_Block} function performed
+            in software.
+
+        \item Computation of expensive \escape{distance_squared} function
+            performed in hardware.
+        \begin{itemize}
+            \item Multiple functional units.
+            \item Pipelined design.
+            \item Separate hardware units for loading ``outer'' and ``inner''
+                vectors through DMA bus.
+        \end{itemize}
+
+        \item Software algorithm modified so as to utilise hardware
+            implementation.
+        \begin{itemize}
+            \item Software can begin to process the next block element whilst
+                waiting for \escape{distance_squared} computation to complete.
+            \item Thread management and interrupt facilities required (with
+                additional overhead).
+            \item Increased instruction-level parallelism.
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[label=design-diagram]{Diagram}
+
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
