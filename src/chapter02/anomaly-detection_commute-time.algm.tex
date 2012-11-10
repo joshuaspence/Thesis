@@ -1,38 +1,44 @@
-% TODO: Finish this
 \LinesNumbered
 
-\SetKwInput{InputX}{$X$}
-\SetKwInput{InputKnn}{$k_1$}
-\SetKwInput{InputKscore}{$k_2$}
-\SetKwInput{InputN}{$N$}
-\SetKwInOut{Output}{outliers}
+\SetKwInput{InputData}{data}\InputData{Data matrix}
+\SetKwInOut{OutputOutliers}{outliers}\OutputOutliers{the outliers that were discovered}
 
-\InputX{Data matrix}
-\InputKnn{the number of nearest neighbours to consider}
-\InputKscore{for estimating the anomaly score}
-\InputN{the number of anomalies to return}
-\Output{the outliers that were discovered}
+\SetKwData{Data}{data}
+\SetKwData{SampledVertices}{sampled\_vertices}
+\SetKwData{Outliers}{outliers}
 
-\SetKwData{varX}{$X$}
-\SetKwData{varKnn}{$k_1$}
-\SetKwData{varKscore}{$k_2$}
-\SetKwData{varN}{$N$}
-\SetKwData{varOutliers}{outliers}
+% Configuration
+\SetKwData{SamplingPercentage}{pSampling}%\SamplingPercentage{percentage of samples}
+\SetKwData{KGraph}{$k_1$}%\KnnGraph{the number of nearest neighbours of graph}
+\SetKwData{KOutlier}{$k_2$}%\KnnOutlier{number of k nearest neighbours for outlier detection}
+\SetKwData{Projections}{$k_{RP}$}
+\SetKwData{NumOutliers}{$N$}%\NumOutliers{the number of anomalies to return}
+\SetKwData{BlockSize}{$block_size$}
 
-\SetKwData{varKnnGraph}{knnGraph}
-\SetKwData{varLaplacian}{$L$}
-\SetKwData{varLaplacianInv}{$L^+$}
-
-\SetKwFunction{ConstructKnnGraph}{constructKnnGraph}
-\SetKwFunction{ConstructLaplacianMatrix}{constructLaplacianMatrix}
-\SetKwFunction{ConstructInvLaplacianMatrix}{constructPseudoinverseLaplacianMatrix}
+\SetKwFunction{KnnGraph}{knn\_graph}
+\SetKwFunction{ComponentSampling}{component\_sampling}
 \SetKwFunction{FindOutliers}{TopN\_Outlier\_Pruning\_Block}
 
 \Begin{
-    $\varOutliers\longleftarrow\emptyset$\tcp*[l]{initialize to the empty set}
+    \Outliers $\leftarrow\emptyset$\tcp*[l]{initialize to the empty set}
+
     \BlankLine
-    $\varKnnGraph\longleftarrow\ConstructKnnGraph(\varX,\varKnn)$\;\tcp*[l]{Construct the mutual k-nearest neighbour graph from the data set}
-    $\varLaplacian\longleftarrow\ConstructLaplacianMatrix()$\;\tcp*[l]{Compute the graph Laplacian matrix L and its pseudoinverse L+}
-    $\varOutliers\longleftarrow\FindOutliers()$\;\tcp*[l]{Find top N anomalies using the distance-based technique on commute time with pruning rule (using k2) described in Algorithm 1. The commute time between two nodes i and j can be computed using Equation 2.4}
-    \KwRet{\varOutliers}\;
+    \Data $\leftarrow$ \KnnGraph{\Data, \KGraph}\tcp*[l]{Construct the mutual $k_1$-nearest neighbour graph from the data set}
+
+    \BlankLine
+    \SampledVertices $\leftarrow$ \ComponentSampling{\Data, \SamplingPercentage, \KOutlier}\tcp*[l]{Do the graph component sampling}
+
+    \BlankLine
+    \tcp{Reconstruct the mutual $k_1$-nearest neighbour graph from sampled data}
+    % A = knn_components(X(sampled_vertices_all,:), k, graph_type, similarity);
+    % A = connect_components_mix(X(sampled_vertices_all,:), A);
+
+    \BlankLine
+    \tcp{Compute the Laplacian matrix of the sampled graph and its $m$ smallest eigenvectors}
+
+    \BlankLine
+    \Outliers $\leftarrow$ \FindOutliers{\Data, \KOutlier, \NumOutliers, \BlockSize}\tcp*[l]{Find top $N$ anomalies using the commute time based technique with pruning rule (using $k_2$)}
+
+    \BlankLine
+    \KwRet{\Outliers}\;
 }

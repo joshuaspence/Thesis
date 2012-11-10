@@ -1,0 +1,101 @@
+% TODO: Finish this
+\LinesNumbered
+
+\SetKwInput{InputX}{$X$}
+\SetKwInput{InputKnn}{$k_1$}
+\SetKwInput{InputKscore}{$k_2$}
+\SetKwInput{InputN}{$N$}
+\SetKwInOut{Output}{outliers}
+
+\InputX{Data matrix}
+\InputKnn{the number of nearest neighbours to consider}
+\InputKscore{for estimating the anomaly score}
+\InputN{the number of anomalies to return}
+\Output{the outliers that were discovered}
+
+\SetKwData{varX}{$X$}
+\SetKwData{varKnn}{$k_1$}
+\SetKwData{varKscore}{$k_2$}
+\SetKwData{varN}{$N$}
+\SetKwData{varOutliers}{outliers}
+
+\SetKwData{varKnnGraph}{knnGraph}
+\SetKwData{varLaplacian}{$L$}
+\SetKwData{varLaplacianInv}{$L^+$}
+
+\SetKwFunction{ConstructKnnGraph}{constructKnnGraph}
+\SetKwFunction{ConstructLaplacianMatrix}{constructLaplacianMatrix}
+\SetKwFunction{ConstructInvLaplacianMatrix}{constructPseudoinverseLaplacianMatrix}
+\SetKwFunction{FindOutliers}{TopN\_Outlier\_Pruning\_Block}
+
+\Begin{
+    $\varOutliers\longleftarrow\emptyset$\tcp*[l]{initialize to the empty set}
+    \BlankLine
+    \tcp{Construct the mutual $k_1$-nearest neighbour graph from the data set}
+    adjacencyMatrix = sparse(rows(data),rows(data))
+    dnn = zeros(1,k);
+    tree = kdtree_build(X);
+
+    \For{$i\leftarrow 1$ \KwTo $rows(data)$}{
+        % knn
+        q = X(i,:);
+        % the nearest point (the same point) is at the end, just ignore it
+        inn = kdtree_k_nearest_neighbors(tree, q, k+1);    % euclidean?
+        \For{$jleftarrow 1$ \KwTo $k$}{
+            dnn(j) = dist(X(i,:), X(inn(j),:));
+        }
+
+        \For{$l\leftarrow 1$ \KwTo $k$}{
+            if dnn(l) ~= 0
+                w = 1/dnn(l); % inverse of distance
+            else
+                w = 0;
+            end
+            A(i, inn(l)) = w;
+        }
+    }
+
+    \For{$i\leftarrow 1$ \KwTo $rows(data)$}{
+        \For{$j\leftarrow 1$ \KwTo $rows(data)$}{
+            if A(i,j) ~= A(j,i)
+                A(i,j) = 0;
+                A(j,i) = 0;
+            end
+        }
+    }
+
+    \BlankLine
+    \tcp{Do the graph component sampling}
+    sample graph A using a random walk with restart
+    % connected components
+    [ci, sizes] = components(A);
+
+    % sampling each big component
+    nClusters = size(sizes, 1);
+    sampled_vertices_all = [];
+    for i = 1 : nClusters
+        cluster_index = find(ci' == i);
+        cluster_size = size(cluster_index,2);
+
+        if cluster_size > outlying_cluster_size % sampling
+            index = randperm(cluster_size);
+            nSamples = round(pSampling*cluster_size);
+            sampled_vertices = cluster_index(index(1:nSamples));
+
+            sampled_vertices_all = [sampled_vertices_all sampled_vertices];
+        else
+            sampled_vertices_all = [sampled_vertices_all cluster_index];
+        end
+    end
+
+    Anew = A(sampled_vertices_all, sampled_vertices_all);
+
+    \BlankLine
+    \tcp{Reconstruct the mutual $k_1$-nearest neighbour graph from sampled data}
+    \BlankLine
+    \tcp{Compute the Laplacian matrix of the sampled graph and its $m$ smallest eigenvectors}
+    \BlankLine
+    \tcp{Find top $N$ anomalies using the commute time based technique with pruning rule (using $k_2$)}
+    \BlankLine
+    \KwRet{\varOutliers}\;
+}
