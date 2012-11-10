@@ -104,13 +104,19 @@
 \setbeamerfont{caption}{size=\scriptsize}
 
 % Show notes
-\setbeameroption{show notes}
+%\setbeameroption{show notes}
 %\setbeameroption{show only notes}
-%\setbeameroption{hide notes}
+\setbeameroption{hide notes}
 %\usepackage{pgfpages}\setbeameroption{show notes on second screen}
 
 % Hide navigation symbols
 %\setbeamertemplate{navigation symbols}{}
+
+% Set hidden elements to be greyed-out
+\setbeamercovered{transparent}
+
+\usepackage{parskip}
+\setlength{\parskip}{\smallskipamount}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Custom colours
@@ -167,11 +173,11 @@
 %===============================================================================
 \makeatletter
 \newcommand\blockSizeProfilingPlot[1]{%
-    \def\profilingPlots@width{0.9\textwidth}%
-    \def\profilingPlots@height{0.9\textheight}%
+    \def\blockSizeProfilingPlot@width{0.9\textwidth}%
+    \def\blockSizeProfilingPlot@height{0.9\textheight}%
     %
     \makebox[\textwidth][c]{%
-        \maxsizebox{\profilingPlots@width}{\profilingPlots@height}{%
+        \maxsizebox{\blockSizeProfilingPlot@width}{\blockSizeProfilingPlot@height}{%
             \input{plots/block_size/#1}%
         }%
     }%
@@ -185,7 +191,7 @@
 %===============================================================================
 \makeatletter
 \newcommand\profilingPlots[3]{%
-    \def\profilingPlots@verticalOffset{\vskip-1.5em}%
+    \def\profilingPlots@verticalOffset{}%
     \def\profilingPlots@columnWidth{0.33\textwidth}%
     \def\profilingPlots@pcaWidth{0.9\textwidth}%
     \def\profilingPlots@plotWidth{0.7\textwidth}%
@@ -341,6 +347,9 @@
 % Appendix
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \appendix
+\begin{frame}[label=additional]\relax
+    {\Huge Additional Slides}
+\end{frame}
 \input{presentation/appendix/main}
 
 \end{document}

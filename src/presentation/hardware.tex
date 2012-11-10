@@ -1,13 +1,4 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Zynq Platform
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Zynq Platform}
-\begin{frame}[label=zynq]{Zynq Platform}
-    \makebox[\textwidth][c]{
-        \includegraphics[height=0.88\textheight]{xilinx/zc702-base-board}}
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Design
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % In this section, illustrate the hardware and software interface for the
@@ -25,15 +16,9 @@
 % Results
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Results}
-% How many cycles the hardware design takes
-% Reference to Amdahl's Law
-% "On this hardware, we expect a speed up of X"
-% Performance estimates
-% Performance comparison
-% Complexity (scaling)
 \begin{frame}[label=performance-considerations]{Performance Considerations}
     \begin{itemize}
-        \item Cannot be data transfer faster than $O(n)$
+        \item Cannot transfer data faster than $O(n)$
         \item For each vector that is pruned from the block, we save (on
             average) $\frac{block\_size}{2}$ distance computations
     \end{itemize}
@@ -41,13 +26,33 @@
 
 \begin{frame}[label=performance-estimates]{Performance Estimates}
     The execution time for the proposed design is estimated to be the sum of:
-    \begin{enumerate}
-        \item<1-> Execution time of software implementation, excluding the
+    \begin{enumerate}[<+->]
+        \item Execution time of software implementation, excluding the
             distance\_squared function
-        \item<2-> Time required for DMA transfer of ``outer'' vector.
-        \item<3-> Time required for DMA transfer of ``inner'' vector, plus the time
+        \item Time required for DMA transfer of ``outer'' vector.
+        \item Time required for DMA transfer of ``inner'' vector, plus the time
             required for the hardware to complete the computation and return the
             result
-        \item<4-> Overheads associated with thread management
+        \item Overheads associated with thread management
     \end{enumerate}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Discussion
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Discussion}
+\begin{frame}[label=discussion]{Discussion}
+    \begin{itemize}
+        \item Hardware design takes X cycles
+
+        \item On this hardware, we expect a speed-up of X\%
+
+        \item Maximum expected improvement (using Amdahl's Law) is X\%
+        \note[item]{Amdahl's Law is used to find the maximum expected
+            improvement to an overall system when only part of the system is
+            improved. It is often used in parallel computing to predict the
+            theoretical maximum speed-up using multiple processors.}
+
+        \item Scaling
+    \end{itemize}
 \end{frame}

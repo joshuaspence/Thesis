@@ -4,12 +4,46 @@
 \subsection{Introduction}
 \begin{frame}[label=algorithm-introduction]{Introduction}
         {Anomaly Detection Using Commute Time}
-    {\LARGE \textbf{Anomaly Detection Using Commute Time}}\\
-    \bigskip
-    \fullcite{Khoa:2012}
+    {\Large \textbf{Anomaly Detection Using Commute Time}}\\
 
+    \medskip
+    {\small \fullcite{Khoa:2012}}
     \note{The algorithm that was selected for implementation was developed by
-        \citeauthor{Khoa:2012} and published in \citetitle{Khoa:2012}}
+        \citeauthor{Khoa:2012} and published in \citetitle{Khoa:2012}.}
+
+    \bigskip
+    \begin{columns}[c]
+        \column{0.5\textwidth}
+        \begin{figure}[H]
+            \includegraphics[width=0.7\textwidth]{algorithm/run-time}
+            \caption{\scriptsize Execution time of approximate commute time method versus
+                Euclidean distance and \gls{LOF} methods}
+        \end{figure}
+
+        \column{0.5\textwidth}
+        \begin{figure}[H]
+            \includegraphics[width=0.7\textwidth]{algorithm/accuracy}
+            \caption{\scriptsize Accuracy and execution time of approximated commute
+                distance method compared to non-approximated method}
+        \end{figure}
+    \end{columns}
+
+    \note{
+        These graphs show the measured performance of the chosen algorithm.
+
+        \begin{itemize}
+            \item The left graph shows how run time (using \emph{approximated}
+                commute time) is proportional to $O(n \log n)$, compared to:
+            \begin{itemize}
+                \item $O(n)$ using Euclidean distance
+                \item $O(n^2)$ using \gls{LOF}
+            \end{itemize}
+
+            \item The right graph shows how anomaly detection using
+                \emph{approximated} commute time preserves a high percentage
+                (84.6\% on average) of the top anomalies discovered without
+                using approximations.
+            \end{itemize}}
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
