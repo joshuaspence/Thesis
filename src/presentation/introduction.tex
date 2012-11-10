@@ -6,13 +6,14 @@
 \begin{frame}[label=overview]{Overview}
     \begin{itemize}
         \note{In this presentation, I will discuss the works and results of my
-            Thesis project, which was conducted during the year of 2012 under
+            \thesis{} project, which was conducted during the year of 2012 under
             the supervision of \supervisorName{}, and with assistance from PhD
             student \getPerson{Frechtling}.}
 
-        \item Analysis and benchmarking of an anomaly detection algorithm.
-        \note[item]{I will provide an overview of my analysis and benchmarking
-            of an existing anomaly detection algorithm. This algorithm...}
+        \item<1-> Analysis and benchmarking of an anomaly detection algorithm.
+        \note[item]<1>{I will provide an overview of my analysis and
+            benchmarking of an existing anomaly detection algorithm. This
+            algorithm:}
         \begin{itemize}
             \item Uses commute time as a distance metric.
             \note[item]{Uses commute time as a distance metric. Commute time
@@ -25,33 +26,21 @@
             \note[item]{The graph components are sampled in order to reduce the
                 graph size, and then Eigenspace approximation is applied to
                 approximate the commute time on the sampled graph.}
-
-            \item Run time (using \emph{approximated} commute time) is
-                proportional to $O(n \log n)$, compared to:
-            \note[item]{}
-            \begin{itemize}
-                \item $O(n)$ using Euclidean distance.
-                \note[item]{}
-
-                \item $O(n^2)$ using \gls{LOF}.
-                \note[item]{}
-            \end{itemize}
-
-            \item Anomaly detection using \emph{approximated} commute time
-                preserves a high percentage (84.6\% on average) of top anomalies
-                discovered without using approximations.
-            \note[item]{}
         \end{itemize}
 
-        \item Discussion of the use of \glspl{FPGA}.
-        \note[item]{\glspl{FPGA} are devices that combine the advantages of
+        \item<2-> Exploration of the use of reconfigurable computing to solve
+            computing problems.
+        \note[item]<2>{Reconfigurable computing is the application of
+            \glspl{FPGA} to solve computing problems.}
+        \note[item]<2>{\glspl{FPGA} are devices that combine the advantages of
             hardware implementations (speed) with the flexibility of software
             implementations (configurability).}
 
-        \item Exploration of the use of reconfigurable computing to solve
-            computing problems.
-        \note[item]{Reconfigurable computing is the application of \glspl{FPGA}
-            to solve computing problems.}
+        \item<3-> Discuss an architecture design for using hardware to
+            accelerate algorithms that involve repeated pairwise computations.
+        \note[item]<3>{I will also discuss an architecture which I have designed
+            for the acceleration of a class of algorithms using reconfigurable
+            hardware.}
     \end{itemize}
 \end{frame}
 
@@ -63,6 +52,22 @@
         \column{0.5\textwidth}
         \includegraphics[width=\textwidth]{algorithm/accuracy}
     \end{columns}
+
+    \note{
+        These graphs show the measured performance of the chosen algorithm.
+
+        \begin{itemize}
+            \item Run time (using \emph{approximated} commute time) is
+                proportional to $O(n \log n)$, compared to:
+            \begin{itemize}
+                \item $O(n)$ using Euclidean distance.
+                \item $O(n^2)$ using \gls{LOF}.
+            \end{itemize}
+
+            \item Anomaly detection using \emph{approximated} commute time
+                preserves a high percentage (84.6\% on average) of top anomalies
+                discovered without using approximations.
+            \end{itemize}}
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -110,15 +115,16 @@
 % This section should be short and memorable.
 \subsection{Aims}
 \begin{frame}[label=aims]{Aims}\relax
-    {\LARGE To \emph{investigate} the \emph{performance benefits} that can be
-    obtained by \emph{applying} \emph{reconfigurable computing design
-    principles} to an \textbf{anomaly detection algorithm} using commute time
-    and Eigenspace sampling.}
+    {\huge To \emph{investigate} the \emph{performance benefits} that can be
+        obtained by \emph{applying} \emph{reconfigurable computing design
+        principles} to an \textbf{anomaly detection algorithm} using commute
+        time and eigenspace sampling.}
 
     \note{The aim of this \thesis{} was to \emph{investigate} the
-    \textbf{performance benefits} that can be obtained by \emph{applying}
-    \textbf{reconfigurable computing design principles} to an \textbf{anomaly
-    detection algorithm} using commute time and Eigenspace sampling.}
+        \textbf{performance benefits} that can be obtained by \emph{applying}
+        \textbf{reconfigurable computing design principles} to an
+        \textbf{anomaly detection algorithm} using commute time and eigenspace
+        sampling.}
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

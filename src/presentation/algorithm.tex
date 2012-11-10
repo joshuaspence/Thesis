@@ -2,27 +2,27 @@
 % Introduction
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Introduction}
-\begin{frame}[label=algorithm-introduction]
-        {Introduction}
+\begin{frame}[label=algorithm-introduction]{Introduction}
         {Anomaly Detection Using Commute Time}
     {\LARGE \textbf{Anomaly Detection Using Commute Time}}\\
     \bigskip
     \fullcite{Khoa:2012}
 
     \note{The algorithm that was selected for implementation was developed by
-    \citeauthor{Khoa:2012} and published in \citetitle{Khoa:2012}}
+        \citeauthor{Khoa:2012} and published in \citetitle{Khoa:2012}}
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % The Algorithm
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{The Algorithm}
-\begin{frame}[label=algorithm]{The Algorithm}{Anomaly Detection Using Commute Time}\relax
+\begin{frame}[label=algorithm]{The Algorithm}
+        {Anomaly Detection Using Commute Time}\relax
     {\tiny
         \begin{algorithm}[H]
             \input{chapter02/anomaly-detection_commute-time.algm}
-        \end{algorithm}
-    }
+        \end{algorithm}}
+
     \note{The $k$-nearest neighbour graph with $n$ nodes is built in
         $O(n \log n)$ using kd-tree with the assumption that the dimensionality
         of the data is not very high. The average degree of each node is $O(k)$
@@ -42,16 +42,15 @@
         $O(n \log n + kn + kn_s^2 + mn_s) = O(n \log n)$ as $n_s << n$.}
 \end{frame}
 
-\begin{frame}[label=algorithm]{The Algorithm}{Outlier Pruning}\relax
+\begin{frame}[label=algorithm]{The Algorithm}
+        {Outlier Pruning}\relax
     {\tiny
         \begin{algorithm}[H]
             \input{chapter04/top-n-outlier-pruning-block.algm}
-        \end{algorithm}
-    }
+        \end{algorithm}}
 \end{frame}
 
-\begin{frame}[label=algorithm-animation]
-        {Animation}
+\begin{frame}[label=algorithm-animation]{Animation}
         {A short animation illustrating the algorithm execution}
     \centering
     \movie[once,showcontrols]
@@ -59,23 +58,24 @@
         {animation/testoutrank.avi}
 
     \note{This slide shows a short animation, illustrating the execution of the
-    chosen anomaly detection method on a data set of 441 2-dimensional
-    vectors.
+        chosen anomaly detection method on a data set of 441 2-dimensional
+        vectors.
 
-    In this animation, the yellow points indicate the current block that is
-    being processed. Each vector within the block is compared to all other
-    vectors in the data set, illustrated by the blue marker in the animation.
+        In this animation, the yellow points indicate the current block that is
+        being processed. Each vector within the block is compared to all other
+        vectors in the data set, illustrated by the blue marker in the
+        animation.
 
-    Each vector in the current block is given a score, a monotonic decreasing
-    function that provides a heuristic to estimate if any given vector may be an
-    outlier.
+        Each vector in the current block is given a score, a monotonic
+        decreasing function that provides a heuristic to estimate if any given
+        vector may be an outlier.
 
-    The current `best' outliers are highlighted in green in the animation. As
-    the algorithm processes further blocks of data, the set of current outliers
-    converges to the final set of outliers.
+        The current `best' outliers are highlighted in green in the animation.
+        As the algorithm processes further blocks of data, the set of current
+        outliers converges to the final set of outliers.
 
-    If the score for any vector in the current block becomes less than the
-    lowest score from the set of current outliers, then this vector is no longer
-    considered to be a possible outlier, and is pruned from the data set. The
-    pruned vectors appear in red in the animation.}
+        If the score for any vector in the current block becomes less than the
+        lowest score from the set of current outliers, then this vector is no
+        longer considered to be a possible outlier, and is pruned from the data
+        set. The pruned vectors appear in red in the animation.}
 \end{frame}
