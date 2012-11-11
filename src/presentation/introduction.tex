@@ -4,18 +4,18 @@
 % Briefly tell the audience what you are going to cover.
 \subsection{Overview}
 \begin{frame}[label=overview]{Overview}
-    \note{In this presentation, I will discuss the works and results of my
+    \note<1>{In this presentation, I will discuss the works and results of my
         \thesis{} project, which was conducted during the year of 2012 under the
         supervision of \supervisorName{}, and with assistance from PhD student
         \getPerson{Frechtling}.}
 
     \begin{itemize}
-        \item<1-> Analysis and benchmarking of an anomaly detection algorithm.
+        \item<2-> Analysis and benchmarking of an anomaly detection algorithm.
         \begin{itemize}
-            \item<1-> Uses commute time as a distance metric.
-            \item<1-> Uses eigenspace embedding.
+            \item<2-> Uses commute time as a distance metric.
+            \item<2-> Uses eigenspace embedding.
         \end{itemize}
-        \note[item]{I will provide an overview of my analysis and
+        \note<2>{I will provide an overview of my analysis and
             benchmarking of an existing anomaly detection algorithm. This
             algorithm:
             \begin{itemize}
@@ -31,15 +31,15 @@
         }
 
         \bigskip
-        \item<2-> Exploration of the use of reconfigurable computing to solve
+        \item<3-> Exploration of the use of reconfigurable computing to solve
             computing problems.
-        \note[item]{I will also discuss an architecture which I have designed
-            for the acceleration of a class of algorithms using reconfigurable
-            hardware.}
 
         \bigskip
-        \item<3->  Discuss an architecture design for using hardware to
+        \item<4-> Discuss an architecture design for using hardware to
             accelerate algorithms that involve repeated pairwise computations.
+        \note<4>{I will also discuss an architecture which I have designed
+            for the acceleration of a class of algorithms using reconfigurable
+            hardware.}
     \end{itemize}
 \end{frame}
 
@@ -50,38 +50,43 @@
 % on why your topic is important and of interest to them.
 \subsection{Motivation}
 \begin{frame}[label=motivation]{Motivation}
-    \note{There are several reasons that anomaly detection is an important
+    \note<1>{There are several reasons that anomaly detection is an important
         problem that deserves the attention of software and hardware engineers.}
 
-    \begin{itemize}[<+->]
-        \item Anomaly detection is a fundamental data mining task with the aim
-            to identify data points, events, transactions which deviate from the
-            norm.
+    \begin{itemize}
+        \item<2-> Anomaly detection is a fundamental data mining task with the
+            aim to identify data points, events, transactions which deviate from
+            the norm.
+        \note<2>{Anomaly detection is a fundamental data mining task with the
+            aim to identify data points, events, transactions which deviate from
+            the norm.}
 
         \medskip
-        \item The amount of data being collected and stored is continually
+        \item<3-> The amount of data being collected and stored is continually
             increasing.
-        \note[item]{The amount of data being collected and stored is
-            continually increasing.}
+        \note<3>{The amount of data being collected and stored is continually
+            increasing.}
 
         \medskip
-        \item When this data is analysed, the time taken, cost of analysis, and
-            energy required are all critical factors to consider, and algorithms
-            with scalability problems in these areas cannot be feasibly used.
+        \item<4-> When this data is analysed, the time taken, cost of analysis,
+            and energy required are all critical factors to consider, and
+            algorithms with scalability problems in these areas cannot be
+            feasibly used.
+        \note<4>{When this data is analysed, the time taken, cost of analysis,
+            and energy required are all critical factors to consider, and
+            algorithms with scalability problems in these areas cannot be
+            feasibly used.}
 
         \medskip
-        \item Anomaly detection is an important technique which can be
+        \item<5-> Anomaly detection is an important technique which can be
             applied to a wide range of applications.
-        \note[item]{Anomaly detection is an important technique which can be
+        \note<5>{Anomaly detection is an important technique which can be
             applied to a wide range of applications. These applications
             include...}
     \end{itemize}
 \end{frame}
 
 \begin{frame}[label=applications]{Applications}
-    \note{Anomaly detection is an interesting problem with a wide range of
-        applications, including:}
-
     \begin{itemize}
         \item Stock market analysis
         \note[item]{Stock market analysis}
@@ -140,24 +145,37 @@
 % What I contributed towards this research area.
 \subsection{Contributions}
 \begin{frame}[label=contributions]{Contributions}
-    \note{My contributions towards this research area include:}
+    \note<1>{My contributions towards this research area include:}
 
     \begin{enumerate}
-        \item<1-> A quantitative analysis and benchmarking of the properties of
+        \item<2-> A quantitative analysis and benchmarking of the properties of
             the chosen anomaly detection algorithm.
+        \note<2>{A quantitative analysis and benchmarking of the properties of
+            the chosen anomaly detection algorithm.}
 
         \bigskip
-        \item<2-> An architecture for accelerating a wide class of algorithms,
+        \item<3-> An architecture for accelerating a wide class of algorithms,
             involving repeated pairwise computations.
+        \note<3>{An architecture for accelerating a wide class of algorithms,
+            involving repeated pairwise computations.}
         \begin{itemize}
-            \item<2-> Anomaly detection
-            \item<2-> Cluster analysis
-            \item<2-> Statistical classification
-            \item<2-> Regression analysis
+            \item<3-> Anomaly detection
+            \note[item]<3>{Anomaly detection}
+
+            \item<3-> Cluster analysis
+            \note[item]<3>{Cluster analysis}
+
+            \item<3-> Statistical classification
+            \note[item]<3>{Statistical classification}
+
+            \item<3-> Regression analysis
+            \note[item]<3>{Regression analysis}
         \end{itemize}
 
         \bigskip
-        \item<3-> Implementation and performance estimates for a
+        \item<4-> Implementation and performance estimates for a
             software-hardware co-design for anomaly detection.
+        \note<4>{Implementation and performance estimates for a
+            software-hardware co-design for anomaly detection.}
     \end{enumerate}
 \end{frame}

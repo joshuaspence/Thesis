@@ -2,13 +2,13 @@
 % Introduction
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Introduction}
-\begin{frame}[label=algorithm-introduction]{Introduction}
+\begin{frame}<1-3>[label=algorithm-introduction]{Introduction}
         {Anomaly Detection Using Commute Time}
     {\Large \textbf{Anomaly Detection Using Commute Time}}\\
 
     \medskip
     {\small \fullcite{Khoa:2012}}
-    \note{The algorithm that was selected for implementation was developed by
+    \note<1>{The algorithm that was selected for implementation was developed by
         \citeauthor{Khoa:2012} and published in \citetitle{Khoa:2012}.}
 
     \medskip
@@ -28,22 +28,16 @@
         \end{figure}
     \end{columns}
 
-    \note{
-        These graphs show the measured performance of the chosen algorithm.
-
+    \note<1>{These graphs show the measured performance of the chosen algorithm.}
+    \note<2>{The left graph shows how run time (using \emph{approximated}
+        commute time) is proportional to $O(n \log n)$, compared to:
         \begin{itemize}
-            \item The left graph shows how run time (using \emph{approximated}
-                commute time) is proportional to $O(n \log n)$, compared to:
-            \begin{itemize}
-                \item $O(n)$ using Euclidean distance
-                \item $O(n^2)$ using \gls{LOF}
-            \end{itemize}
-
-            \item The right graph shows how anomaly detection using
-                \emph{approximated} commute time preserves a high percentage
-                (84.6\% on average) of the top anomalies discovered without
-                using approximations.
-            \end{itemize}}
+            \item $O(n)$ using Euclidean distance
+            \item $O(n^2)$ using \gls{LOF}
+        \end{itemize}}
+    \note<3>{The right graph shows how anomaly detection using
+        \emph{approximated} commute time preserves a high percentage (84.6\% on
+        average) of the top anomalies discovered without using approximations.}
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
