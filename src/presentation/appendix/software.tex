@@ -31,22 +31,20 @@
 % Block Size Profiling
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Block Size Profiling}
-\begin{frame}[label=block-size-legend,shrink]{Block Size Profiling Plots}{Legend}
-    \begin{figure}[H]
+\begin{frame}[label=block-size-legend]{Block Size Profiling Plots}{Legend}
     \blockSizeProfilingPlot{legend}
-    \end{figure}
 \end{frame}
 
-\begin{frame}{Total Execution Time}
+\begin{frame}{Total Execution Time}{\escape{commute_distance_anomaly}}
     \blockSizeProfilingPlot{total_execution_time}
 \end{frame}
 
-\begin{frame}{Total Run Time Complexity}
+\begin{frame}{Total Run Time Complexity}{\escape{commute_distance_anomaly}}
     \begin{columns}[c]
-        \column{0.4\textwidth}
+        \column{0.5\textwidth}
         \blockSizeProfilingPlot{total_run_time_complexity.lin}
 
-        \column{0.4\textwidth}
+        \column{0.5\textwidth}
         \blockSizeProfilingPlot{total_run_time_complexity.log}
     \end{columns}
 \end{frame}

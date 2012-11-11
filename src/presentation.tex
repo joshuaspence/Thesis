@@ -130,8 +130,8 @@
 %===============================================================================
 \makeatletter
 \newcommand\blockSizeProfilingPlot[1]{%
-    \def\blockSizeProfilingPlot@width{0.9\textwidth}%
-    \def\blockSizeProfilingPlot@height{0.9\textheight}%
+    \def\blockSizeProfilingPlot@width{\textwidth}%
+    \def\blockSizeProfilingPlot@height{0.85\textheight}%
     %
     \makebox[\textwidth][c]{%
         \maxsizebox{\blockSizeProfilingPlot@width}{\blockSizeProfilingPlot@height}{%
@@ -148,7 +148,7 @@
 %===============================================================================
 \makeatletter
 \newcommand\profilingPlots[3]{%
-    \def\profilingPlots@verticalOffset{}%
+    \def\profilingPlots@verticalOffset{\vskip-1em}%
     \def\profilingPlots@columnWidth{0.33\textwidth}%
     \def\profilingPlots@pcaWidth{0.9\textwidth}%
     \def\profilingPlots@plotWidth{0.7\textwidth}%

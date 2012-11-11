@@ -47,8 +47,7 @@
 % Algorithm Profiling
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Algorithm Profiling}
-\begin{frame}[label=profiling]{Algorithm Profiling}
-        {\escape{TopN_Outlier_Pruning_Block}}
+\begin{frame}{Algorithm Profiling}{\escape{TopN_Outlier_Pruning_Block}}
     \profilingPlots{testoutrank}{runningex40k}{connect4}
 
     \note{These graphs show the relative execution times of functions comprising
@@ -65,8 +64,7 @@
 % Block Size Analysis
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Block Size Analysis}
-\begin{frame}[label=functionExecutionTime]{Function Execution Time}
-        {\escape{TopN_Outlier_Pruning_Block}}
+\begin{frame}{Function Execution Time}{\escape{TopN_Outlier_Pruning_Block}}
     \blockSizeProfilingPlot{function_execution_time}
 
     \note{This graph shows the total execution time of the
@@ -88,25 +86,7 @@
         from $10^0$ to $10^3$.}
 \end{frame}
 
-\begin{frame}{Distance Calls and Vectors Pruned}
-        {\escape{TopN_Outlier_Pruning_Block}}
-    \begin{columns}[c]
-        \column{0.5\textwidth}
-        \begin{figure}[H]
-            \blockSizeProfilingPlot{distance_calls}
-            \caption{Distance calls}
-        \end{figure}
-
-        \column{0.5\textwidth}
-        \begin{figure}[H]
-            \blockSizeProfilingPlot{vectors_pruned}
-            \caption{Vectors pruned}
-        \end{figure}
-    \end{columns}
-\end{frame}
-
-\begin{frame}[label=runTimeComplexity]{Function Run Time Complexity}
-        {\escape{TopN_Outlier_Pruning_Block}}
+\begin{frame}[label=runTimeComplexity]{Function Run Time Complexity}{\escape{TopN_Outlier_Pruning_Block}}
     \begin{columns}[c]
         \column{0.5\textwidth}
         \begin{figure}[H]
