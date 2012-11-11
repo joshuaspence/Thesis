@@ -3,16 +3,43 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Method}
 \begin{frame}[label=method]{Method}
-    \begin{enumerate}[<+->]
-        \item MATLAB source code
+    \note<1>{And so, just to provide a quick outline of the various
+        implementation stages that were iterated through in order to realise my
+        hardware design.}
+
+    \begin{enumerate}
+        \item<2-> MATLAB source code
+        \note<2>{The initial implementation of the algorithm, as provided by
+            Khoa, comprised of MATLAB source code. This code formed the basis of
+            my analysis and benchmarking.}
+
         \bigskip
-        \item MATLAB source code + MEX file
+        \item<3-> MATLAB source code + MEX file
+        \note<3>{Following from this, a subset of the MATLAB source code (namely
+            that of the function that seemed most promising for a hardware
+            implementation) was rewritten as C++ source code using MEX header
+            files to interact with MATLAB.}
+
         \bigskip
-        \item C++ source code
+        \item<4-> C++ source code
+        \note<4>{The next stage involved the complete separation of the chosen
+            function from the algorithm framework in MATLAB. The source code was
+            rewritten as pure C++ and additional wrappers were created to
+            facilitate isolated testing.}
+
         \bigskip
-        \item AutoESL high level synthesis
+        \item<5-> AutoESL high level synthesis
+        \note<5>{Further analysis of the C++ function implementation provided
+            additional insight into the algorithm's key properties and
+            weaknesses, from which a smaller subset of source code was selected
+            for high level synthesis --- a process to convert C++ source code
+            into a low level hardware description language.}
+
         \bigskip
-        \item Hardware design
+        \item<6-> Hardware design
+        \note<6>{Following from the high level synthesis, and using the Xilinx
+            design suite, I was able to transform my high-level software design
+            into a low-level, parallelised hardware design.}
     \end{enumerate}
 \end{frame}
 

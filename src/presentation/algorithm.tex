@@ -49,25 +49,28 @@
     {\tiny
         \begin{algorithm}[H]
             \input{chapter02/anomaly-detection_commute-time.algm}
-        \end{algorithm}}
+        \end{algorithm}
+    }
 
-    \note{The $k$-nearest neighbour graph with $n$ nodes is built in
-        $O(n \log n)$ using kd-tree with the assumption that the dimensionality
-        of the data is not very high. The average degree of each node is $O(k)$
-        ($k << n$). So the graph is sparse and thus finding connected components
-        takes $O(kn)$.
+    \note<1>{The anomaly detection algorithm is described in the next two
+        slides, however due to time constraints I will not discuss the algorithm
+        in any great detail. Basically, the algorithm consists of:
+    }
 
-        After sampling, the size of graph is $O(n_s)$ ($n_s << n$). The standard
-        method for eigen decomposition of $L_s$ is $O(n_s^3)$. Since $L_s$ is
-        sparse, it would take $O(Nn_s) = O(kn_s^2)$, where $N$ is the number of
-        nonzeros. The computation of just the $m$ smallest eigenvectors
-        ($m < n_s$) is less expensive than that.
+    \note<2>{Constructing the $k$-nearest neighbour graph for the input data
+        set.}
+    \note<3>{Using graph component sampling and eigenspace embedding to reduce
+        the dimensionality of the data.}
+    \note<4>{Reconstructing the $k$-nearest neighbour graph using the sampled
+        data.}
+    \note<5>{Computing the Laplacian matrix of the sampled graph and its $m$
+        smallest eigenvectors.}
+    \note<6>{Performing distance based anomaly detection.}
 
-        The typical distance-based anomaly detection takes $O(n_s^2)$ for the
-        neighbourhood search. Pruning can scale it nearly linear. We only need
-        to compute the commute times $O(n_s)$ times, each of which takes $O(m)$.
-        So the time needed for two steps is proportional to
-        $O(n \log n + kn + kn_s^2 + mn_s) = O(n \log n)$ as $n_s << n$.}
+    \note<6>{From analysis of the run time performance of this anomaly detection
+        algorithm, to be discussed later, the
+        ``distance based anomaly detection'' stage of the algorithm was selected
+        as a canditate for a hardware implementation.}
 \end{frame}
 
 \begin{frame}[label=algorithm]{The Algorithm}
@@ -75,18 +78,24 @@
     {\tiny
         \begin{algorithm}[H]
             \input{chapter04/top-n-outlier-pruning-block.algm}
-        \end{algorithm}}
+        \end{algorithm}
+    }
+
+    \note{This slide describes the distance based anomaly detection method that
+        is to be implemented in hardware. To aide in the understanding of this
+        function, I will demonstrate an animation which clearly illustrates the
+        anomaly detection function's execution.}
 \end{frame}
 
-\begin{frame}[label=algorithm-animation]{Animation}
+\begin{frame}<1-2>[label=algorithm-animation]{Animation}
         {A short animation illustrating the algorithm execution}
     \centering
     \movie[once,showcontrols]
         {\includegraphics[width=0.8\textwidth]{pca/testoutrank}}
         {animation/testoutrank.avi}
 
-    \note{This slide shows a short animation, illustrating the execution of the
-        chosen anomaly detection method on a data set of 441 2-dimensional
+    \note<1>{This slide shows a short animation, illustrating the execution of
+        the chosen anomaly detection method on a data set of 441 2-dimensional
         vectors.
 
         In this animation, the yellow points indicate the current block that is
@@ -96,11 +105,11 @@
 
         Each vector in the current block is given a score, a monotonic
         decreasing function that provides a heuristic to estimate if any given
-        vector may be an outlier.
+        vector may be an outlier.}
 
-        The current `best' outliers are highlighted in green in the animation.
-        As the algorithm processes further blocks of data, the set of current
-        outliers converges to the final set of outliers.
+    \note<2>{The current `best' outliers are highlighted in green in the
+        animation. As the algorithm processes further blocks of data, the set of
+        current outliers converges to the final set of outliers.
 
         If the score for any vector in the current block becomes less than the
         lowest score from the set of current outliers, then this vector is no
