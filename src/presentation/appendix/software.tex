@@ -2,27 +2,46 @@
 % Algorithm Profiling
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Algorithm Profiling}
-\profilingPlots{testCDST}{testCDST2}{testCDST3}
-\profilingPlots{spam_train}{spam}{mesh_network}
-\profilingPlots{segmentation}{magicgamma}{connect4}
-\profilingPlots{letter-recognition}{pendigits}{musk}
-\profilingPlots{testoutrank}{testCD}{ball1}
-\profilingPlots{runningex1k}{runningex10k}{runningex20k}
-\profilingPlots{runningex30k}{runningex40k}{} % TODO: runningex50k
+\begin{frame}{Algorithm Profiling}{\escape{TopN_Outlier_Pruning_Block}}
+    \profilingPlots{testoutrank}{runningex40k}{connect4}
+\end{frame}
+\begin{frame}{Algorithm Profiling}{\escape{TopN_Outlier_Pruning_Block}}
+    \profilingPlots{testCDST}{testCDST2}{testCDST3}
+\end{frame}
+\begin{frame}{Algorithm Profiling}{\escape{TopN_Outlier_Pruning_Block}}
+    \profilingPlots{spam_train}{spam}{mesh_network}
+\end{frame}
+\begin{frame}{Algorithm Profiling}{\escape{TopN_Outlier_Pruning_Block}}
+    \profilingPlots{segmentation}{magicgamma}{connect4}
+\end{frame}
+\begin{frame}{Algorithm Profiling}{\escape{TopN_Outlier_Pruning_Block}}
+    \profilingPlots{letter-recognition}{pendigits}{musk}
+\end{frame}
+\begin{frame}{Algorithm Profiling}{\escape{TopN_Outlier_Pruning_Block}}
+    \profilingPlots{testoutrank}{testCD}{ball1}
+\end{frame}
+\begin{frame}{Algorithm Profiling}{\escape{TopN_Outlier_Pruning_Block}}
+    \profilingPlots{runningex1k}{runningex10k}{runningex20k}
+\end{frame}
+\begin{frame}{Algorithm Profiling}{\escape{TopN_Outlier_Pruning_Block}}
+    \profilingPlots{runningex30k}{runningex40k}{} % TODO: runningex50k
+\end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Block Size Profiling
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Block Size Profiling}
-\begin{frame}[label=blockSize-legend]{Block Size Profiling Legend}
-    %\blockSizeProfilingPlot{legend}
+\begin{frame}[label=block-size-legend,shrink]{Block Size Profiling Plots}{Legend}
+    \begin{figure}[H]
+    \blockSizeProfilingPlot{legend}
+    \end{figure}
 \end{frame}
 
-\begin{frame}[label=totalExecutionTime]{Total Execution Time}
+\begin{frame}{Total Execution Time}
     \blockSizeProfilingPlot{total_execution_time}
 \end{frame}
 
-\begin{frame}[label=totalRunTimeComplexity]{Total Run Time Complexity}
+\begin{frame}{Total Run Time Complexity}
     \begin{columns}[c]
         \column{0.4\textwidth}
         \blockSizeProfilingPlot{total_run_time_complexity.lin}
@@ -30,4 +49,12 @@
         \column{0.4\textwidth}
         \blockSizeProfilingPlot{total_run_time_complexity.log}
     \end{columns}
+\end{frame}
+
+\begin{frame}{Distance Calls}{\escape{TopN_Outlier_Pruning_Block}}
+    \blockSizeProfilingPlot{distance_calls}
+\end{frame}
+
+\begin{frame}{Vectors Pruned}{\escape{TopN_Outlier_Pruning_Block}}
+    \blockSizeProfilingPlot{vectors_pruned}
 \end{frame}
