@@ -6,7 +6,6 @@ use warnings;
 use Cwd qw(abs_path);
 use File::Basename qw(basename dirname);
 use File::Spec::Functions qw(catdir catfile devnull updir);
-use Getopt::Long;
 
 use lib catdir(dirname($0), updir(), updir(), 'scripts');
 require 'util.pl';
@@ -36,11 +35,6 @@ use constant GNUPLOT_EXE           => "gnuplot >${\(devnull())}";
 # Make sure an output file was specified
 scalar(@ARGV) >= 1 || die('No output file specified!');
 my $output_file = $ARGV[0];
-
-# If the output file already exists, check if forced execution was specified
-my $force = 0;
-GetOptions("f|force" => \$force);
-(-f $output_file) && !$force && exit 0;
 
 # Parse the data
 my %data = ();
@@ -336,11 +330,13 @@ if (basename($0) =~ m/legend.tex.pl/) {
             if ($line =~ m/^${\COMMENT_REGEX}/) {
                 next;
             } elsif ($line =~ m/^\\draw\[gp path\] \(${\FLOAT_REGEX},${\FLOAT_REGEX}\)--\(${\FLOAT_REGEX},${\FLOAT_REGEX}\);$/) {
+                print "now out of legend: $line\n";
                 $in_legend = 0;
             }
             push(@output, $line);
         } else {
-            if ($line =~ m/^\\gpcolor\{gp lt color border\}$/) {
+            if ($line =~ m/^\\gpcolor\{gp lt color border\}$/ || $line =~ m/^\\gpcolor\{color=gp lt color (axes|border)\}$/) {
+                print "now in legend: $line\n";
                 $in_legend = 1;
             } elsif ($line =~ m/^\\(begin|end)\{tikzpicture\}(\[gnuplot\])?$/) {
                 push(@output, $line);
