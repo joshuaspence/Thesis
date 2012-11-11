@@ -70,7 +70,7 @@
 % command verbatim to input a whole file verbatim.
 \usepackage{verbatim}
 
-% TODO
+% For typesetting algorithms
 \usepackage[noline,ruled]{algorithm2e}
 
 % TODO
@@ -110,52 +110,10 @@
 %\usepackage{pgfpages}\setbeameroption{show notes on second screen}
 
 % Hide navigation symbols
-%\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{navigation symbols}{}
 
 % Set hidden elements to be greyed-out
 \setbeamercovered{transparent}
-
-\usepackage{parskip}
-\setlength{\parskip}{\smallskipamount}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Custom colours
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\definecolor{darkGreen}{rgb}{0,0.6,0}
-\definecolor{gray}{rgb}{0.5,0.5,0.5}
-\definecolor{mauve}{rgb}{0.58,0,0.82}
-\definecolor{brightGreen}{rgb}{0,1,0}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Source code formatting
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Default settings
-\lstset{
-    basicstyle=\ttfamily,           % font
-                                    %
-    title=\lstname,                 % show the filename of files included with \lstinputlisting
-    captionpos=b,                   % sets the caption-position to bottom
-    backgroundcolor=\color{white},  % choose the background color
-                                    %
-    numbers=left,                   % where to put the line-numbers
-    numberstyle=\tiny\color{gray},  % the style that is used for the line-numbers
-    stepnumber=1,                   % the step between two line-numbers
-    numbersep=5pt,                  % how far the line-numbers are from the code
-                                    %
-    showspaces=false,               % show spaces adding particular underscores
-    showstringspaces=false,         % underline spaces within strings
-    showtabs=false,                 % show tabs within strings adding particular underscores
-    tabsize=4,                      % sets default tabsize
-    breaklines=true,                % sets automatic line breaking
-    breakatwhitespace=false,        % sets if automatic breaks should only happen at whitespace
-                                    %
-    keywordstyle=\color{blue},      % keyword style
-    commentstyle=\color{darkGreen}, % comment style
-    stringstyle=\color{mauve},      % string literal style
-    escapeinside={\%*}{*)},         % if you want to add a comment within your code
-    morekeywords={*,...}            % if you want to add more keywords to the set
-}
-\lstloadlanguages{C,Matlab}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Variables (to save retyping and reformatting these throughout the document).
@@ -292,7 +250,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Glossary
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\usepackage[toc,xindy]{glossaries} % note that hyperref must be loaded first
+\usepackage[nowarn,xindy]{glossaries} % note that hyperref must be loaded first
 \makeglossaries
 \loadglsentries{acronym}
 
