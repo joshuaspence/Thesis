@@ -24,30 +24,30 @@
     \Outliers $\leftarrow\emptyset$\tcp*[l]{initialize to the empty set}
 
     \uncover<2->{
-    \BlankLine
-    \Data $\leftarrow$ \KnnGraph{\Data, \KGraph}\tcp*[l]{Construct the mutual $k_1$-nearest neighbour graph from the data set}
+        \BlankLine
+        \Data $\leftarrow$ \KnnGraph{\Data, \KGraph}\tcp*[l]{Construct the mutual $k_1$-nearest neighbour graph from the data set}
     }
 
     \uncover<3->{
-    \BlankLine
-    \SampledVertices $\leftarrow$ \ComponentSampling{\Data, \SamplingPercentage, \KOutlier}\tcp*[l]{Do the graph component sampling}
+        \BlankLine
+        \SampledVertices $\leftarrow$ \ComponentSampling{\Data, \SamplingPercentage, \KOutlier}\tcp*[l]{Do the graph component sampling}
     }
 
     \uncover<4->{
-    \BlankLine
-    \tcp{Reconstruct the mutual $k_1$-nearest neighbour graph from sampled data}
-    % A = knn_components(X(sampled_vertices_all,:), k, graph_type, similarity);
-    % A = connect_components_mix(X(sampled_vertices_all,:), A);
+        \BlankLine
+        \tcp{Reconstruct the mutual $k_1$-nearest neighbour graph from sampled data}
+        % A = knn_components(X(sampled_vertices_all,:), k, graph_type, similarity);
+        % A = connect_components_mix(X(sampled_vertices_all,:), A);
     }
 
     \uncover<5->{
-    \BlankLine
-    \tcp{Compute the Laplacian matrix of the sampled graph and its $m$ smallest eigenvectors}
+        \BlankLine
+        \tcp{Compute the Laplacian matrix of the sampled graph and its $m$ smallest eigenvectors}
     }
 
     \uncover<6->{
-    \BlankLine
-    \Outliers $\leftarrow$ \FindOutliers{\Data, \KOutlier, \NumOutliers, \BlockSize}\tcp*[l]{Find top $N$ anomalies using the commute time based technique with pruning rule (using $k_2$)}
+        \BlankLine
+        \Outliers $\leftarrow$ \FindOutliers{\Data, \KOutlier, \NumOutliers, \BlockSize}\tcp*[l]{Find top $N$ anomalies using the commute time based technique with pruning rule (using $k_2$)}
     }
 
     \BlankLine

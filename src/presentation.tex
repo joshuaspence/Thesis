@@ -7,7 +7,6 @@
 % Warn about commands, classes and packages that are outdated and superseded.
 % Orthodox checks for pitfalls that are not technically incorrect.
 %\usepackage[l2tabu,orthodox,abort]{nag}
-\usepackage[l2tabu,orthodox]{nag}
 
 % For font and input encoding.
 \usepackage[utf8]{inputenc}
@@ -144,10 +143,10 @@
 %===============================================================================
 % Format a profiling plot.
 %-------------------------------------------------------------------------------
-% \profilingPlots{DATASET1}{DATASET2}{DATASET3}
+% \profilingPlots{c|matlab}{DATASET1}{DATASET2}{DATASET3}
 %===============================================================================
 \makeatletter
-\newcommand\profilingPlots[3]{%
+\newcommand\profilingPlots[4]{%
     \def\profilingPlots@verticalOffset{\vskip-1em}%
     \def\profilingPlots@columnWidth{0.33\textwidth}%
     \def\profilingPlots@pcaWidth{0.9\textwidth}%
@@ -157,36 +156,53 @@
     \profilingPlots@verticalOffset
     \begin{columns}[c]%
         \column{\profilingPlots@columnWidth}%
-        \ifthenelse{\equal{#1}{}}{}{
-            \begin{figure}%
-                \includegraphics[width=\profilingPlots@pcaWidth]{pca/#1}\\%
-                \resizebox{\profilingPlots@plotWidth}{!}{\input{plots/c/#1}}%
-                \caption{\escape{#1}}%
-            \end{figure}%
-        }%
-        %
-        \column{\profilingPlots@columnWidth}%
-        \ifthenelse{\equal{#2}{}}{}{
+        \ifthenelse{\equal{#2}{}}{}{%
             \begin{figure}%
                 \includegraphics[width=\profilingPlots@pcaWidth]{pca/#2}\\%
-                \resizebox{\profilingPlots@plotWidth}{!}{\input{plots/c/#2}}%
+                \resizebox{\profilingPlots@plotWidth}{!}{\input{plots/#1/#2}}%
                 \caption{\escape{#2}}%
             \end{figure}%
         }%
         %
         \column{\profilingPlots@columnWidth}%
-        \ifthenelse{\equal{#3}{}}{}{
+        \ifthenelse{\equal{#3}{}}{}{%
             \begin{figure}%
                 \includegraphics[width=\profilingPlots@pcaWidth]{pca/#3}\\%
-                \resizebox{\profilingPlots@plotWidth}{!}{\input{plots/c/#3}}%
+                \resizebox{\profilingPlots@plotWidth}{!}{\input{plots/#1/#3}}%
                 \caption{\escape{#3}}%
             \end{figure}%
         }%
+        %
+        \column{\profilingPlots@columnWidth}%
+        \ifthenelse{\equal{#4}{}}{}{%
+            \begin{figure}%
+                \includegraphics[width=\profilingPlots@pcaWidth]{pca/#4}\\%
+                \resizebox{\profilingPlots@plotWidth}{!}{\input{plots/#1/#4}}%
+                \caption{\escape{#4}}%
+            \end{figure}%
+        }%
     \end{columns}%
-    \vfill
+    \ifthenelse{\equal{#1}{matlab}}{}{%
+        \vfill
+        \makebox[\textwidth][c]{%
+            \resizebox{!}{\profilingPlots@legendHeight}{%
+                \input{plots/#1/legend}%
+            }%
+        }%
+    }%
+}
+\makeatother
+
+%===============================================================================
+% Format a profiling plot legend
+%-------------------------------------------------------------------------------
+% \profilingPlotLegend{c|matlab}
+%===============================================================================
+\makeatletter
+\newcommand\profilingPlotLegend[1]{%
     \makebox[\textwidth][c]{%
-        \resizebox{!}{\profilingPlots@legendHeight}{%
-            \input{plots/c/legend}%
+        \maxsizebox{\textwidth}{0.8\textheight}{%
+            \input{plots/#1/legend}%
         }%
     }%
 }

@@ -1,0 +1,44 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% The Algorithm
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{The Algorithm}
+\begin{frame}{The Algorithm}{Anomaly Detection Using Commute Time}\relax
+    {\tiny
+        \begin{algorithm}[H]
+            \input{chapter02/anomaly-detection_commute-time.algm}
+        \end{algorithm}
+    }
+
+    \note<1>{The anomaly detection algorithm is described in the next two
+        slides, however due to time constraints I will not discuss the algorithm
+        in any great detail. Basically, the algorithm consists of:
+    }
+
+    \note<2>{Constructing the $k$-nearest neighbour graph for the input data
+        set.}
+    \note<3>{Using graph component sampling and eigenspace embedding to reduce
+        the dimensionality of the data.}
+    \note<4>{Reconstructing the $k$-nearest neighbour graph using the sampled
+        data.}
+    \note<5>{Computing the Laplacian matrix of the sampled graph and its $m$
+        smallest eigenvectors.}
+    \note<6>{Performing distance based anomaly detection.}
+
+    \note<6>{From analysis of the run time performance of this anomaly detection
+        algorithm, to be discussed later, the
+        ``distance based anomaly detection'' stage of the algorithm was selected
+        as a canditate for a hardware implementation.}
+\end{frame}
+
+\begin{frame}[shrink]{The Algorithm}{Outlier Pruning}\relax
+    {\tiny
+        \begin{algorithm}[H]
+            \input{chapter04/top-n-outlier-pruning-block.algm}
+        \end{algorithm}
+    }
+
+    \note{This slide describes the distance based anomaly detection method that
+        is to be implemented in hardware. To aide in the understanding of this
+        function, I will demonstrate an animation which clearly illustrates the
+        anomaly detection function's execution.}
+\end{frame}

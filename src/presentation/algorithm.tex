@@ -2,8 +2,7 @@
 % Introduction
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Introduction}
-\begin{frame}<1-3>[label=algorithm-introduction]{Introduction}
-        {Anomaly Detection Using Commute Time}
+\begin{frame}<1-3>{Introduction}{Anomaly Detection Using Commute Time}
     {\Large \textbf{Anomaly Detection Using Commute Time}}\\
 
     \medskip
@@ -16,24 +15,25 @@
         \column{0.5\textwidth}
         \begin{figure}[H]
             \includegraphics[width=0.7\textwidth]{algorithm/run-time}
-            \caption{\scriptsize Execution time of approximate commute time method versus
-                Euclidean distance and \gls{LOF} methods}
+            \caption{Execution time of approximate commute time method versus
+                Euclidean distance and local outlier factor methods}
         \end{figure}
 
         \column{0.5\textwidth}
         \begin{figure}[H]
             \includegraphics[width=0.7\textwidth]{algorithm/accuracy}
-            \caption{\scriptsize Accuracy and execution time of approximated commute
+            \caption{Accuracy and execution time of approximated commute
                 distance method compared to non-approximated method}
         \end{figure}
     \end{columns}
 
-    \note<1>{These graphs show the measured performance of the chosen algorithm.}
+    \note<1>{These graphs show the measured performance of the chosen
+        algorithm.}
     \note<2>{The left graph shows how run time (using \emph{approximated}
         commute time) is proportional to $O(n \log n)$, compared to:
         \begin{itemize}
             \item $O(n)$ using Euclidean distance
-            \item $O(n^2)$ using \gls{LOF}
+            \item $O(n^2)$ using local outlier factor
         \end{itemize}}
     \note<3>{The right graph shows how anomaly detection using
         \emph{approximated} commute time preserves a high percentage (84.6\% on
@@ -44,51 +44,7 @@
 % The Algorithm
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{The Algorithm}
-\begin{frame}[label=algorithm]{The Algorithm}
-        {Anomaly Detection Using Commute Time}\relax
-    {\tiny
-        \begin{algorithm}[H]
-            \input{chapter02/anomaly-detection_commute-time.algm}
-        \end{algorithm}
-    }
-
-    \note<1>{The anomaly detection algorithm is described in the next two
-        slides, however due to time constraints I will not discuss the algorithm
-        in any great detail. Basically, the algorithm consists of:
-    }
-
-    \note<2>{Constructing the $k$-nearest neighbour graph for the input data
-        set.}
-    \note<3>{Using graph component sampling and eigenspace embedding to reduce
-        the dimensionality of the data.}
-    \note<4>{Reconstructing the $k$-nearest neighbour graph using the sampled
-        data.}
-    \note<5>{Computing the Laplacian matrix of the sampled graph and its $m$
-        smallest eigenvectors.}
-    \note<6>{Performing distance based anomaly detection.}
-
-    \note<6>{From analysis of the run time performance of this anomaly detection
-        algorithm, to be discussed later, the
-        ``distance based anomaly detection'' stage of the algorithm was selected
-        as a canditate for a hardware implementation.}
-\end{frame}
-
-\begin{frame}[label=algorithm]{The Algorithm}
-        {Outlier Pruning}\relax
-    {\tiny
-        \begin{algorithm}[H]
-            \input{chapter04/top-n-outlier-pruning-block.algm}
-        \end{algorithm}
-    }
-
-    \note{This slide describes the distance based anomaly detection method that
-        is to be implemented in hardware. To aide in the understanding of this
-        function, I will demonstrate an animation which clearly illustrates the
-        anomaly detection function's execution.}
-\end{frame}
-
-\begin{frame}<1-2>[label=algorithm-animation]{Animation}
-        {A short animation illustrating the algorithm execution}
+\begin{frame}<1-2>[label=animation]{Animation}{A short animation illustrating the algorithm execution}
     \centering
     \movie[once,showcontrols]
         {\includegraphics[width=0.8\textwidth]{pca/testoutrank}}
