@@ -3,7 +3,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Briefly tell the audience what you are going to cover.
 \subsection{Overview}
-\begin{frame}[label=overview]{Overview}
+\begin{frame}{Overview}
     \note<1>{Good afternoon...
 
         My name is \studentName{}. In this presentation, I will discuss the
@@ -22,26 +22,29 @@
             algorithm:
             \begin{itemize}
                 \item Uses commute time as a distance metric. Commute time
-                effectively captures both the distance between nodes, as well as
-                the data density around these nodes.
-                \item The use of eigenspace embedding alleviates the $O(n^3)$
-                computational complexity of the commute time calculations.
-                \item The graph components are sampled in order to reduce the
-                graph size, and then eigenspace approximation is applied to
-                approximate the commute time on the sampled graph.
+                    effectively captures both the distance between nodes, as
+                    well as the data density around these nodes.
+                \item The algorithm also uses eigenspace embedding in order to
+                    alleviate the $O(n^3)$ computational complexity of the
+                    commute time calculations.
+                %\item The graph components are sampled in order to reduce the
+                %   graph size, and then eigenspace approximation is applied to
+                %   approximate the commute time on the sampled graph.
             \end{itemize}
         }
 
         \bigskip
         \item<3-> Exploration of the use of reconfigurable computing to solve
-            computing problems.
+            algorithmic problems.
+        \note<3>{I will also briefly discuss the use of reconfigurable computing
+            to solve algorithmic problems.}
 
         \bigskip
         \item<4-> Discuss an architecture design for using hardware to
             accelerate algorithms that involve repeated pairwise computations.
-        \note<4>{I will also discuss an architecture which I have designed
-            for the acceleration of a class of algorithms using reconfigurable
-            hardware.}
+        \note<4>{And finally, I will also discuss an architecture which I have
+            designed for the acceleration of a class of algorithms using
+            reconfigurable hardware.}
     \end{itemize}
 \end{frame}
 
@@ -51,17 +54,15 @@
 % Briefly tell the audience why you are doing your research. Sell your audience
 % on why your topic is important and of interest to them.
 \subsection{Motivation}
-\begin{frame}[label=motivation]{Motivation}
+\begin{frame}{Motivation}
     \note<1>{There are several reasons that anomaly detection is an important
         problem that deserves the attention of software and hardware engineers.}
 
     \begin{itemize}
-        \item<2-> Anomaly detection is a fundamental data mining task with the
-            aim to identify data points, events, transactions which deviate from
-            the norm.
+        \item<2-> Anomaly detection is a fundamental data mining task.
         \note<2>{Anomaly detection is a fundamental data mining task with the
-            aim to identify data points, events, transactions which deviate from
-            the norm.}
+            aim to identify data points, events and transactions which deviate
+            from the norm.}
 
         \medskip
         \item<3-> The amount of data being collected and stored is continually
@@ -70,25 +71,27 @@
             increasing.}
 
         \medskip
-        \item<4-> When this data is analysed, the time taken, cost of analysis,
-            and energy required are all critical factors to consider, and
-            algorithms with scalability problems in these areas cannot be
-            feasibly used.
+        \item<4-> Scalability problems exist with current algorithms.
         \note<4>{When this data is analysed, the time taken, cost of analysis,
             and energy required are all critical factors to consider, and
             algorithms with scalability problems in these areas cannot be
             feasibly used.}
 
         \medskip
-        \item<5-> Anomaly detection is an important technique which can be
+        \item<5-> Real time appliations.
+        \note<5>{There is an increased demand for real-time anomaly detection,
+            particularly in the financial sectors.}
+
+        \medskip
+        \item<6-> Anomaly detection is an important technique which can be
             applied to a wide range of applications.
-        \note<5>{Anomaly detection is an important technique which can be
+        \note<6>{Anomaly detection is an important technique which can be
             applied to a wide range of applications. These applications
             include...}
     \end{itemize}
 \end{frame}
 
-\begin{frame}[label=applications]{Applications}
+\begin{frame}{Applications}
     \begin{itemize}
         \item Stock market analysis
         \note[item]{Stock market analysis}
@@ -128,7 +131,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % This section should be short and memorable.
 \subsection{Aims}
-\begin{frame}[label=aims]{Aims}\relax
+\begin{frame}{Aims}\relax
     {\huge To \emph{investigate} the \emph{performance benefits} that can be
         obtained by \emph{applying} \emph{reconfigurable computing design
         principles} to an \textbf{anomaly detection algorithm} using commute
@@ -146,7 +149,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % What I contributed towards this research area.
 \subsection{Contributions}
-\begin{frame}[label=contributions]{Contributions}
+\begin{frame}{Contributions}
     \note<1>{My contributions towards this research area include:}
 
     \begin{enumerate}
@@ -175,9 +178,9 @@
         \end{itemize}
 
         \bigskip
-        \item<4-> Implementation and performance estimates for a
+        \item<4-> Initial implementation and performance estimates for a
             software-hardware co-design for anomaly detection.
-        \note<4>{Implementation and performance estimates for a
+        \note<4>{An initial implementation and performance estimates for a
             software-hardware co-design for anomaly detection.}
     \end{enumerate}
 \end{frame}

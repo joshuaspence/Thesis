@@ -66,7 +66,7 @@
 % Block Size Profiling
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Block Size Profiling}
-\begin{frame}[label=block-size-legend]{Block Size Profiling Plots}{Legend}
+\begin{frame}{Block Size Profiling Plots}{Legend}
     \blockSizeProfilingPlot{legend}
 \end{frame}
 
@@ -90,4 +90,43 @@
 
 \begin{frame}{Vectors Pruned}{\escape{TopN_Outlier_Pruning_Block}}
     \blockSizeProfilingPlot{vectors_pruned}
+\end{frame}
+
+\begin{frame}{Function Execution Time}{\escape{TopN_Outlier_Pruning_Block}}
+    \blockSizeProfilingPlot{function_execution_time}
+
+    \note{This graph shows the total execution time of the
+        \escape{TopN_Outlier_Pruning_Block} function, sampled using 21 data
+        sets with a size ranging from 441 2-dimensional vectors to 67557
+        43-dimensional vectors.
+
+        Each dataset was profiled with 13 different block sizes ranging from
+        $10^0$ to $10^6$. In addition, a modified algorithm which operated
+        without blocking was profiled for comparison.
+
+        %Each coloured plot in this graph represents a single data set. The solid
+        %lines show how the total execution time varies with block size. The
+        %dashed plots of the same colour illustrate a baseline comparison to the
+        %modified (no blocking) algorithm.
+
+        An interesting observation from this graph shows that there is no
+        significant difference in the algorithm's performance for block sizes
+        from $10^0$ to $10^3$.}
+\end{frame}
+
+
+\begin{frame}{Function Run Time Complexity}{\escape{TopN_Outlier_Pruning_Block}}
+    \begin{columns}[c]
+        \column{0.5\textwidth}
+        \begin{figure}[H]
+            \blockSizeProfilingPlot{function_run_time_complexity.lin}
+            \caption{Linear plot}
+        \end{figure}
+
+        \column{0.5\textwidth}
+        \begin{figure}[H]
+            \blockSizeProfilingPlot{function_run_time_complexity.log}
+            \caption{Logarithmic plot}
+        \end{figure}
+    \end{columns}
 \end{frame}

@@ -2,7 +2,7 @@
 % Method
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Method}
-\begin{frame}[label=method]{Method}
+\begin{frame}<1-2>[label=method]{Method}
     \note<1>{And so, just to provide a quick outline of the various
         implementation stages that were iterated through in order to realise my
         hardware design.}
@@ -43,16 +43,24 @@
     \end{enumerate}
 \end{frame}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Algorithm Profiling
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Algorithm Profiling}
-\begin{frame}{Algorithm Profiling}{\escape{TopN_Outlier_Pruning_Block}}
+\begin{frame}{Algorithm Profiling (MATLAB)}{\escape{commute_distance_anomaly}}
+    \profilingPlots{matlab}{testoutrank}{runningex40k}{connect4}
+
+    \note{These graphs show the results of initial algorithm profiling from the
+        MATLAB source code. For every tested data set, the largest function in
+        terms of execution timed was named \escape{TopN_Outlier_Pruning_Block},
+        and involved a sophisticated nested-for loops method of discovering
+        outliers in a data set of fixed dimensionality.}
+\end{frame}
+
+\againframe<3-4>{method}
+
+\begin{frame}{Algorithm Profiling (C)}{\escape{TopN_Outlier_Pruning_Block}}
     \profilingPlots{c}{testoutrank}{runningex40k}{connect4}
 
     \note{These graphs show the relative execution times of functions comprising
-        the anomaly detection algorithm, executed on 3 different data sets. The
-        graphs for the other 18 data sets are very similar.
+        the \escape{TopN_Outlier_pruning_Block} function, executed on 3
+        different data sets.
 
         These graphs shows that the vast majority of the algorithm's execution
         time is attributed to the \escape{distance_squared} function --- a
@@ -60,44 +68,4 @@
         between two given vectors.}
 \end{frame}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Block Size Analysis
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Block Size Analysis}
-\begin{frame}{Function Execution Time}{\escape{TopN_Outlier_Pruning_Block}}
-    \blockSizeProfilingPlot{function_execution_time}
-
-    \note{This graph shows the total execution time of the
-        \escape{TopN_Outlier_Pruning_Block} function, sampled using 21 data
-        sets with a size ranging from 441 2-dimensional vectors to 67557
-        43-dimensional vectors.
-
-        Each dataset was profiled with 13 different block sizes ranging from
-        $10^0$ to $10^6$. In addition, a modified algorithm which operated
-        without blocking was profiled for comparison.
-
-        Each coloured plot in this graph represents a single data set. The solid
-        lines show how the total execution time varies with block size. The
-        dashed plots of the same colour illustrate a baseline comparison to the
-        modified (no blocking) algorithm.
-
-        An interesting observation from this graph shows that there is no
-        significant difference in the algorithm's performance for block sizes
-        from $10^0$ to $10^3$.}
-\end{frame}
-
-\begin{frame}[label=runTimeComplexity]{Function Run Time Complexity}{\escape{TopN_Outlier_Pruning_Block}}
-    \begin{columns}[c]
-        \column{0.5\textwidth}
-        \begin{figure}[H]
-            \blockSizeProfilingPlot{function_run_time_complexity.lin}
-            \caption{Linear plot}
-        \end{figure}
-
-        \column{0.5\textwidth}
-        \begin{figure}[H]
-            \blockSizeProfilingPlot{function_run_time_complexity.log}
-            \caption{Logarithmic plot}
-        \end{figure}
-    \end{columns}
-\end{frame}
+\againframe<5->{method}
