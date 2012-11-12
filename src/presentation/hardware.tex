@@ -32,53 +32,9 @@
 \end{frame}
 
 \begin{frame}[label=design-diagram]{Diagram}
-    \maxsizebox{\textwidth}{\textheight}{\begin{tikzpicture}[
-            >=latex,
-            node distance = 4em,
-            interconnect/.style = {
-                rectangle,
-                draw,
-                text centered,
-                rounded corners,
-                minimum width = 60em,
-                minimum height = 5em
-                },
-            pcore/.style = {
-                rectangle,
-                draw,
-                text centered,
-                rounded corners,
-                text width = 10em,
-                minimum height = 2em,
-                },
-            dma/.style = {
-                rectangle,
-                draw,
-                text centered,
-                rounded corners,
-                text width = 10em,
-                minimum height = 2em,
-                },
-            arrow/.style = {
-                draw,
-                -latex'},
-            auto]
-         \node [interconnect] (axi) {AXI Interconnect Block};
-
-         \node [dma, below=of axi.east, anchor=east] (dma-inner1) {AXI DMA};
-         \node [pcore,left=of dma-inner1] (pcore-inner1) {AutoESL AXI Lite PCORE};
-         \path [arrow] (dma-inner1.west) -| (pcore-inner1.east);
-
-         \node [dma, below=of dma-inner1.east, anchor=east] (dma-inner2) {AXI DMA};
-         \node [pcore,left=of dma-inner2] (pcore-inner2) {AutoESL AXI Lite PCORE};
-
-         \node [dma, below=of dma-inner2.east, anchor=east] (dma-inner3) {AXI DMA};
-         \node [pcore,left=of dma-inner3] (pcore-inner3) {AutoESL AXI Lite PCORE};
-
-         \node [pcore,below=of axi.west, anchor=west] (pcore-outer) {AutoESL AXI Lite PCORE};,
-         \node [dma, right=of pcore-outer] (dma-outer) {AXI DMA};
-         \draw[thick,dotted] ($(pcore-outer.north west)+(-0.5,0.5)$) rectangle ($(dma-outer.south east)+(0.5,-0.5)$);
-    \end{tikzpicture}}
+    \maxsizebox{\textwidth}{0.85\textheight}{
+        \includegraphics{design/block-diagram}
+    }
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

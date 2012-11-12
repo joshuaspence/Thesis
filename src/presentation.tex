@@ -102,10 +102,17 @@
 \setbeamerfont{caption}{size=\scriptsize}
 
 % Show notes
-%\setbeameroption{show notes}
-%\setbeameroption{show only notes}
-%\setbeameroption{hide notes}
-\usepackage{pgfpages}\setbeameroption{show notes on second screen}
+\ifthenelse{\equal{\jobname}{\detokenize{presentation-slides}}}{
+    \setbeameroption{hide notes}
+}{\ifthenelse{\equal{\jobname}{\detokenize{presentation-notes}}}{
+    \setbeameroption{show only notes}
+}{\ifthenelse{\equal{\jobname}{\detokenize{presentation-combined}}}{
+    \usepackage{pgfpages}\setbeameroption{show notes on second screen}
+}{
+    \makeatletter
+    \@latex@error{Unknown job}
+    \makeatother
+}}}
 
 % Hide navigation symbols
 \setbeamertemplate{navigation symbols}{}
